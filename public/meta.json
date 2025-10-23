@@ -1,0 +1,42 @@
+{
+  "name": "KonXC - PT Koneksi Jaringan Indonesia",
+  "short_name": "KonXC",
+  "description": "Mitra teknologi terpercaya yang menyederhanakan teknologi untuk pertumbuhan bisnis",
+  "version": "1.0.0",
+  "author": "PT Koneksi Jaringan Indonesia",
+  "website": "https://www.konxc.space",
+  "logo": "/favicon.svg",
+  "theme_color": "#3b82f6",
+  "background_color": "#f9fafb",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "id",
+  "categories": ["technology", "business", "it-support"],
+  "keywords": [
+    "IT support Jakarta",
+    "software development Indonesia", 
+    "digitalisasi UMKM",
+    "teknologi bisnis",
+    "cloud services",
+    "branding digital",
+    "retail teknologi"
+  ],
+  "social": {
+    "linkedin": "https://www.linkedin.com/company/konxc",
+    "instagram": "https://www.instagram.com/konxc.id"
+  },
+  "contact": {
+    "email": "info@konxc.space",
+    "phone": "+62-xxx-xxx-xxxx",
+    "address": "Jakarta, Indonesia"
+  },
+  "services": [
+    "IT Support & Maintenance",
+    "Software Development", 
+    "Branding & Digital Marketing",
+    "Retail Teknologi",
+    "Cloud & SaaS Solutions"
+  ]
+}
