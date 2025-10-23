@@ -1,20 +1,18 @@
 ---
+import Head from './Head.astro';
+
 export interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description, ...props } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="id">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content="PT Koneksi - Membangun ekosistem digital Indonesia yang kompetitif dan sehat melalui gotong royong. We Will Shine, TrackMe, 2USE LLM." />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <Head title={title} description={description} {...props} />
   </head>
   <body>
     <slot />
