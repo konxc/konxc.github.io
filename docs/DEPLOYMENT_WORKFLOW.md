@@ -27,14 +27,17 @@
 - Commit dan push perubahan ke repository
 
 ### 2. Deployment Phase
-- Jalankan script deploy manual: `./scripts/deploy-manual.sh`
+- Jalankan script deploy manual: `bash ./scripts/deploy-manual.sh`
 - Script akan:
   - Pull latest changes dari main
   - Install dependencies dengan pnpm
-  - Build project dengan Astro
+  - Build project dengan Astro ke folder `dist/`
+  - Copy built files ke temporary directory
   - Switch ke branch gh-pages
-  - Copy built files ke root
+  - **Hapus semua file lama** di gh-pages
+  - **Copy hanya hasil build** dari temporary directory
   - Commit dan push ke gh-pages branch
+  - Kembali ke branch main
 
 ### 3. GitHub Pages Deployment
 - GitHub Pages otomatis detect perubahan di branch gh-pages
@@ -52,9 +55,11 @@
 ## ⚠️ Important Notes
 
 - **Branch Separation**: Main untuk development, gh-pages untuk deployment
+- **Build Only**: Branch gh-pages **hanya berisi hasil build**, tidak ada source code
 - **Manual Process**: Deployment harus dilakukan secara manual
 - **Script Dependency**: Pastikan pnpm dan Node.js terinstall
-- **Timing**: GitHub Pages butuh waktu untuk update
+- **Timing**: GitHub Pages butuh waktu 2-5 menit untuk update
+- **Clean Deploy**: Setiap deploy membersihkan gh-pages terlebih dahulu
 
 ## 🛠️ Maintenance
 

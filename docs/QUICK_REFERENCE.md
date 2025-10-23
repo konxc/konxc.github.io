@@ -3,19 +3,11 @@
 ## 🚀 Quick Deploy Commands
 
 ```bash
-# Linux/macOS
-./scripts/deploy-manual.sh
-
-# Windows (Git Bash/WSL)
-./scripts/deploy-manual.bat
-
-# Manual (if scripts fail)
-git checkout main && git pull origin main
-pnpm install && pnpm run build
-git checkout gh-pages && cp -r dist/* .
-git add . && git commit -m "Deploy: $(date)"
-git push origin gh-pages && git checkout main
+# Semua Platform (Linux/macOS/Windows Git Bash)
+bash ./scripts/deploy-manual.sh
 ```
+
+**Important**: Branch gh-pages hanya berisi hasil build, tidak ada source code!
 
 ## 🔧 Development Commands
 

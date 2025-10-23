@@ -10,7 +10,7 @@ Repository ini berisi source code untuk website resmi KonXC. Website ini dibangu
 - **Astro** - Static site generator
 - **Tailwind CSS** - CSS framework
 - **pnpm** - Package manager
-- **GitHub Pages** - Hosting platform
+- **GitHub Pages** - Hosting platform (manual deployment)
 
 ## 🚀 Quick Start
 
@@ -50,37 +50,20 @@ Website akan tersedia di `http://localhost:4321`
 
 Karena masalah billing dengan GitHub Actions, deployment dilakukan secara manual menggunakan script yang telah disediakan.
 
+**Branch gh-pages hanya berisi hasil build**, tidak ada source code!
+
 ### Cara Deploy Manual
 
-#### Menggunakan Script (Recommended)
 ```bash
-# Linux/macOS
-./scripts/deploy-manual.sh
-
-# Windows (Git Bash/WSL)
-./scripts/deploy-manual.bat
+# Linux/macOS/Windows (Git Bash)
+bash ./scripts/deploy-manual.sh
 ```
 
-#### Manual Step-by-Step
-```bash
-# 1. Pastikan di branch main dan pull latest changes
-git checkout main
-git pull origin main
-
-# 2. Install dependencies dan build
-pnpm install
-pnpm run build
-
-# 3. Deploy ke branch gh-pages
-git checkout gh-pages
-cp -r dist/* .
-git add .
-git commit -m "Deploy: $(date '+%Y-%m-%d %H:%M:%S') - Manual deployment"
-git push origin gh-pages
-
-# 4. Kembali ke main
-git checkout main
-```
+Script akan otomatis:
+1. Pull latest changes dari main
+2. Build project
+3. **Deploy hanya hasil build** ke branch gh-pages
+4. Push ke GitHub Pages
 
 ### 📚 Dokumentasi Lengkap
 Lihat [docs/DEPLOY_MANUAL.md](./docs/DEPLOY_MANUAL.md) untuk dokumentasi deploy yang lebih detail.
@@ -95,10 +78,15 @@ Lihat [docs/DEPLOY_MANUAL.md](./docs/DEPLOY_MANUAL.md) untuk dokumentasi deploy 
 │   └── components/        # Reusable components
 ├── scripts/               # Deployment scripts
 ├── docs/                  # Documentation
+├── dist/                  # Build output (git ignored)
 ├── astro.config.mjs       # Astro configuration
 ├── tailwind.config.js     # Tailwind configuration
 └── package.json           # Dependencies
 ```
+
+### Branch Structure
+- **main**: Development branch (source code)
+- **gh-pages**: Deployment branch (build files only)
 
 ## 🔧 Maintenance Guide
 
@@ -107,6 +95,7 @@ Lihat [docs/DEPLOY_MANUAL.md](./docs/DEPLOY_MANUAL.md) untuk dokumentasi deploy 
 1. **Development Workflow**:
    - Buat perubahan di branch `main`
    - Test lokal dengan `pnpm dev`
+   - Test build dengan `pnpm build`
    - Deploy menggunakan script manual
 
 2. **Update Content**:
@@ -122,13 +111,14 @@ Lihat [docs/DEPLOY_MANUAL.md](./docs/DEPLOY_MANUAL.md) untuk dokumentasi deploy 
    - [ ] Pastikan perubahan sudah di-commit di branch main
    - [ ] Test build lokal dengan `pnpm build`
    - [ ] Jalankan script deploy manual
-   - [ ] Verifikasi website di https://www.konxc.space
+   - [ ] Verifikasi website di https://www.konxc.space (tunggu 2-5 menit)
 
 ### Troubleshooting
 
 - **Build Error**: Periksa syntax Astro dan dependencies
 - **Deploy Error**: Pastikan pnpm terinstall dan script executable
-- **Website tidak update**: Tunggu beberapa menit, GitHub Pages butuh waktu
+- **Website tidak update**: Tunggu 2-5 menit, GitHub Pages butuh waktu
+- **Lihat dokumentasi lengkap**: `docs/TROUBLESHOOTING.md`
 
 ## 📞 Support
 
