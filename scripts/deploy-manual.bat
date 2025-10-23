@@ -60,37 +60,56 @@ if [ ! -d "$DIST_DIR" ]; then
     exit 1
 fi
 
-# Check if gh-pages branch exists
+# Save current directory
+REPO_DIR=$(pwd)
+
+# Create temporary directory for deployment
+TEMP_DIR=$(mktemp -d)
+echo -e "${BLUE}📁 Copying build files to temporary directory...${NC}"
+cp -r $DIST_DIR/* $TEMP_DIR/
+cp -r $DIST_DIR/.* $TEMP_DIR/ 2>/dev/null || true
+
+# Switch to gh-pages branch
+echo -e "${BLUE}📋 Switching to gh-pages branch...${NC}"
 if git show-ref --verify --quiet refs/heads/$DEPLOY_BRANCH; then
-    echo -e "${BLUE}📋 Switching to existing gh-pages branch...${NC}"
     git checkout $DEPLOY_BRANCH
-    git pull $REMOTE_NAME $DEPLOY_BRANCH
+    # Configure pull strategy for this branch
+    git config pull.rebase false
+    git pull $REMOTE_NAME $DEPLOY_BRANCH || true
 else
-    echo -e "${BLUE}📋 Creating new gh-pages branch...${NC}"
     git checkout --orphan $DEPLOY_BRANCH
-    git rm -rf . 2>/dev/null || true
 fi
 
-# Copy dist contents to root (Windows compatible)
-echo -e "${BLUE}📁 Copying build files...${NC}"
-cp -r $DIST_DIR/* .
-cp $DIST_DIR/.* . 2>/dev/null || true
+# Remove all files in gh-pages except .git
+echo -e "${BLUE}🧹 Cleaning gh-pages branch...${NC}"
+find . -maxdepth 1 ! -name '.git' ! -name '.' ! -name '..' -exec rm -rf {} +
+
+# Copy files from temp directory
+echo -e "${BLUE}📂 Deploying build files...${NC}"
+cp -r $TEMP_DIR/* .
+cp -r $TEMP_DIR/.* . 2>/dev/null || true
+
+# Clean up temp directory
+rm -rf $TEMP_DIR
+
+# Add .nojekyll to bypass Jekyll processing
+touch .nojekyll
 
 # Add all files
-git add .
+git add -A
 
 # Check if there are changes to commit
 if git diff --staged --quiet; then
     echo -e "${YELLOW}⚠️  No changes to deploy. Build is identical to current deployment.${NC}"
 else
     # Commit changes
-    COMMIT_MSG="Deploy: $(date '+%Y-%m-%d %H:%M:%S') - Manual deployment from main"
+    COMMIT_MSG="Deploy: $(date '+%Y-%m-%d %H:%M:%S')"
     echo -e "${BLUE}💾 Committing changes...${NC}"
     git commit -m "$COMMIT_MSG"
     
     # Push to gh-pages branch
     echo -e "${BLUE}🚀 Pushing to gh-pages branch...${NC}"
-    git push $REMOTE_NAME $DEPLOY_BRANCH
+    git push -u $REMOTE_NAME $DEPLOY_BRANCH
     
     echo -e "${GREEN}✅ Deployment completed successfully!${NC}"
     echo -e "${GREEN}🌐 Your site should be available at: https://www.konxc.space${NC}"
