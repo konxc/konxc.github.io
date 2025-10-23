@@ -1,0 +1,77 @@
+---
+import Button from '../ui/Button.astro';
+---
+
+<section class="section bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+  <div class="container">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Content -->
+      <div class="space-y-8">
+        <div class="space-y-4">
+          <h1 class="text-4xl lg:text-5xl font-bold leading-tight">
+            Menyederhanakan Teknologi untuk 
+            <span class="text-gradient">Pertumbuhan Bisnis</span>
+          </h1>
+          <p class="text-xl text-neutral-600 leading-relaxed">
+            Solusi teknologi terintegrasi untuk UMKM hingga Enterprise. 
+            5 divisi dengan 1 komitmen: kesuksesan bisnis Anda.
+          </p>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4">
+          <Button variant="primary" size="lg" href="#contact">
+            Konsultasi Gratis
+          </Button>
+          <Button variant="secondary" size="lg" href="#services">
+            Lihat Layanan
+          </Button>
+        </div>
+        
+        <!-- Trust Indicators -->
+        <div class="flex items-center gap-8 pt-8">
+          <div class="text-center">
+            <div class="text-2xl font-bold text-primary-600">500+</div>
+            <div class="text-sm text-neutral-600">Klien Puas</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-primary-600">10+</div>
+            <div class="text-sm text-neutral-600">Tahun Pengalaman</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-primary-600">24/7</div>
+            <div class="text-sm text-neutral-600">Support</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Visual -->
+      <div class="relative">
+        <div class="bg-white rounded-3xl p-8 shadow-2xl">
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Service Icons -->
+            <div class="text-center p-4 bg-primary-50 rounded-xl">
+              <div class="text-3xl mb-2">🖥️</div>
+              <div class="text-sm font-semibold text-primary-700">IT Support</div>
+            </div>
+            <div class="text-center p-4 bg-secondary-50 rounded-xl">
+              <div class="text-3xl mb-2">💻</div>
+              <div class="text-sm font-semibold text-secondary-700">Software</div>
+            </div>
+            <div class="text-center p-4 bg-accent-50 rounded-xl">
+              <div class="text-3xl mb-2">🎨</div>
+              <div class="text-sm font-semibold text-accent-700">Branding</div>
+            </div>
+            <div class="text-center p-4 bg-neutral-100 rounded-xl">
+              <div class="text-3xl mb-2">☁️</div>
+              <div class="text-sm font-semibold text-neutral-700">Cloud</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute -top-4 -right-4 w-8 h-8 bg-primary-500 rounded-full animate-pulse"></div>
+        <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-secondary-500 rounded-full animate-pulse delay-1000"></div>
+      </div>
+    </div>
+  </div>
+</section>

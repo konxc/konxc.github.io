@@ -1,55 +1,185 @@
 ---
-import Layout from '../components/MainLayout.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import Services from '../components/sections/Services.astro';
 ---
 
-<Layout 
-  title="PT Koneksi Jaringan Indonesia" 
-  description="PT Koneksi - Membangun ekosistem digital Indonesia yang kompetitif dan sehat melalui gotong royong. We Will Shine, TrackMe, 2USE LLM."
+<MainLayout 
+  title="KonXC - Mitra Teknologi Terpercaya | PT Koneksi Jaringan Indonesia"
+  description="Solusi teknologi terintegrasi untuk UMKM hingga Enterprise. IT Support, Software Development, Branding Digital, Retail Teknologi, dan Cloud & SaaS."
 >
-  <main class="relative min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white flex flex-col items-center justify-center overflow-hidden p-4">
-    <!-- Background Gradient Animation -->
-    <div class="absolute inset-0 z-0">
-      <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-20 animate-pulse" style="background-image: url('/images/bg-pattern.svg');"></div>
-      <div class="absolute -top-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-screen filter blur-xl opacity-30 animate-blob"></div>
-      <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-purple-500 rounded-full mix-blend-screen filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
-      <div class="absolute top-1/4 right-1/4 w-72 h-72 bg-indigo-500 rounded-full mix-blend-screen filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
+  <Hero />
+  <Services />
+  
+  <!-- About Section -->
+  <section class="section bg-neutral-50">
+    <div class="container">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl lg:text-4xl font-bold mb-6">
+            Tentang <span class="text-gradient">KonXC</span>
+          </h2>
+          <p class="text-xl text-neutral-600 mb-6">
+            PT Koneksi Jaringan Indonesia (KonXC) adalah mitra teknologi terpercaya 
+            yang berkomitmen menyederhanakan teknologi untuk pertumbuhan bisnis Anda.
+          </p>
+          <p class="text-lg text-neutral-600 mb-8">
+            Dengan 5 divisi yang terintegrasi, kami menyediakan solusi teknologi 
+            lengkap dari infrastruktur hingga branding digital, khususnya untuk 
+            UMKM, sekolah, institusi, dan startup.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#contact" class="btn-primary">
+              Hubungi Kami
+            </a>
+            <a href="/blog" class="btn-secondary">
+              Baca Blog Kami
+            </a>
+          </div>
+        </div>
+        <div class="bg-white rounded-3xl p-8 shadow-xl">
+          <div class="grid grid-cols-2 gap-6">
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary-600 mb-2">500+</div>
+              <div class="text-sm text-neutral-600">Klien Puas</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary-600 mb-2">10+</div>
+              <div class="text-sm text-neutral-600">Tahun Pengalaman</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary-600 mb-2">5</div>
+              <div class="text-sm text-neutral-600">Divisi Layanan</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary-600 mb-2">24/7</div>
+              <div class="text-sm text-neutral-600">Support</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <section class="relative z-10 text-center max-w-4xl mx-auto">
-      <h1 class="text-6xl font-extrabold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text animate-fade-in">
-        PT Koneksi Jaringan Indonesia
-      </h1>
-      <p class="text-2xl font-light mb-8 text-gray-200 animate-fade-in animation-delay-500">
-        Gotong Royong Digital untuk Ekosistem Inovasi Indonesia
-      </p>
-
-      <div class="flex flex-wrap justify-center gap-6 mb-12 animate-fade-in animation-delay-1000">
-        <a href="https://we-will-shine.konxc.space" class="btn-gradient-blue">
-          <span class="icon">🎓</span> We Will Shine
-        </a>
-        <a href="https://konxc.github.io/trackme" class="btn-gradient-gold">
-          <span class="icon">📊</span> TrackMe Ecosystem
-        </a>
-      </div>
-
-      <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-8 shadow-lg animate-fade-in animation-delay-1500">
-        <h2 class="text-3xl font-bold mb-4 text-white">Website Sedang Dalam Pembangunan</h2>
-        <p class="text-lg text-gray-300 mb-4">
-          Kami sedang membangun ulang <strong class="text-blue-300">www.konxc.space</strong> dengan teknologi modern (Astro.js + Tailwind CSS) untuk pengalaman yang lebih cepat dan efisien.
-        </p>
-        <p class="text-lg text-gray-300">
-          Konten WordPress lama akan dipindahkan ke <strong class="text-purple-300">platform.konxc.space</strong> sebagai Headless CMS.
+  </section>
+  
+  <!-- Contact Section -->
+  <section id="contact" class="section bg-white">
+    <div class="container">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+          Siap Memulai Proyek Anda?
+        </h2>
+        <p class="text-xl text-neutral-600 max-w-2xl mx-auto">
+          Konsultasikan kebutuhan teknologi bisnis Anda dengan tim ahli kami. 
+          Kami siap membantu mewujudkan visi digital Anda.
         </p>
       </div>
-
-      <div class="mt-12 flex justify-center gap-6 animate-fade-in animation-delay-2000">
-        <a href="https://github.com/konxc" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">
-          <span class="icon text-3xl">🐙</span>
-        </a>
-        <a href="mailto:info@konxc.space" class="text-gray-400 hover:text-white transition-colors">
-          <span class="icon text-3xl">✉️</span>
-        </a>
+      
+      <div class="grid lg:grid-cols-2 gap-12">
+        <!-- Contact Form -->
+        <div class="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-3xl p-8">
+          <h3 class="text-2xl font-bold mb-6">Konsultasi Gratis</h3>
+          <form class="space-y-6">
+            <div>
+              <label class="form-label">Nama Lengkap</label>
+              <input type="text" class="form-input" placeholder="Masukkan nama lengkap Anda" required>
+            </div>
+            <div>
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" placeholder="contoh@email.com" required>
+            </div>
+            <div>
+              <label class="form-label">Nomor Telepon</label>
+              <input type="tel" class="form-input" placeholder="+62 xxx xxx xxxx" required>
+            </div>
+            <div>
+              <label class="form-label">Perusahaan/Institusi</label>
+              <input type="text" class="form-input" placeholder="Nama perusahaan atau institusi">
+            </div>
+            <div>
+              <label class="form-label">Layanan yang Diperlukan</label>
+              <select class="form-input" required>
+                <option value="">Pilih layanan</option>
+                <option value="it-support">IT Support & Infrastruktur</option>
+                <option value="software">Software Development</option>
+                <option value="branding">Branding & Media Digital</option>
+                <option value="retail">Retail Teknologi</option>
+                <option value="cloud">Cloud & SaaS</option>
+                <option value="consultation">Konsultasi Umum</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Pesan</label>
+              <textarea class="form-textarea" rows="4" placeholder="Ceritakan kebutuhan teknologi bisnis Anda..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full">
+              Kirim Konsultasi
+            </button>
+          </form>
+        </div>
+        
+        <!-- Contact Info -->
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-2xl font-bold mb-6">Informasi Kontak</h3>
+            <div class="space-y-4">
+              <div class="flex items-start gap-4">
+                <div class="text-primary-600 text-xl">📍</div>
+                <div>
+                  <div class="font-semibold">Alamat</div>
+                  <div class="text-neutral-600">Jakarta, Indonesia</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="text-primary-600 text-xl">📞</div>
+                <div>
+                  <div class="font-semibold">Telepon</div>
+                  <div class="text-neutral-600">+62 xxx xxx xxxx</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="text-primary-600 text-xl">✉️</div>
+                <div>
+                  <div class="font-semibold">Email</div>
+                  <div class="text-neutral-600">info@konxc.space</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="text-primary-600 text-xl">🕒</div>
+                <div>
+                  <div class="font-semibold">Jam Kerja</div>
+                  <div class="text-neutral-600">Senin - Jumat: 09:00 - 18:00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-6 shadow-lg">
+            <h4 class="text-lg font-bold mb-4">Mengapa Memilih KonXC?</h4>
+            <ul class="space-y-3 text-neutral-600">
+              <li class="flex items-center gap-3">
+                <span class="text-green-500">✓</span>
+                <span>Solusi teknologi terintegrasi</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-green-500">✓</span>
+                <span>Tim berpengalaman 10+ tahun</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-green-500">✓</span>
+                <span>Support 24/7</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-green-500">✓</span>
+                <span>Harga terjangkau untuk UMKM</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-green-500">✓</span>
+                <span>500+ klien puas</span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </section>
-  </main>
-</Layout>
+    </div>
+  </section>
+</MainLayout>

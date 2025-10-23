@@ -1,46 +1,78 @@
 ---
-const { title = "PT Koneksi Jaringan Indonesia", description = "PT Koneksi - Membangun ekosistem digital Indonesia yang kompetitif dan sehat melalui gotong royong. We Will Shine, TrackMe, 2USE LLM.", ...props } = Astro.props;
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const { title, description = "PT Koneksi Jaringan Indonesia - Mitra Teknologi Terpercaya", image = "/og-image.jpg", canonical } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
-<!-- Basic Meta Tags -->
-<title>{title}</title>
-<meta name="description" content={description} />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta charset="UTF-8" />
-<meta name="generator" content={Astro.generator} />
-
-<!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="apple-touch-icon" href="/favicon.svg" />
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.konxc.space/" />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content="https://www.konxc.space/og-image.png" />
-<meta property="og:image:alt" content="PT Koneksi Jaringan Indonesia - Gotong Royong Digital" />
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content="https://www.konxc.space/" />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content="https://www.konxc.space/og-image.png" />
-
-<!-- Additional Meta Tags -->
-<meta name="robots" content="index, follow" />
-<meta name="author" content="PT Koneksi Jaringan Indonesia" />
-<meta name="keywords" content="PT Koneksi, Gotong Royong Digital, We Will Shine, TrackMe, 2USE LLM, Indonesia, Digital Ecosystem" />
-
-<!-- Canonical URL -->
-<link rel="canonical" href="https://www.konxc.space/" />
-
-<!-- Theme Color -->
-<meta name="theme-color" content="#1e40af" />
-
-<!-- Web analytics -->
-<script
-  data-goatcounter="https://konxc.goatcounter.com/count"
-  async
-  src="//gc.zgo.at/count.js"></script>
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="IT support Jakarta, software development Indonesia, digitalisasi UMKM, teknologi bisnis" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={image} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonical || canonicalURL} />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "PT Koneksi Jaringan Indonesia",
+        "alternateName": "KonXC",
+        "url": "https://www.konxc.space",
+        "logo": "https://www.konxc.space/logo.png",
+        "description": "Mitra teknologi terpercaya yang menyederhanakan teknologi untuk pertumbuhan bisnis",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "ID",
+          "addressLocality": "Jakarta"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+62-xxx-xxx-xxxx",
+          "contactType": "customer service"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/company/konxc",
+          "https://www.instagram.com/konxc.id"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
