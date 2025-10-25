@@ -178,7 +178,7 @@ const socialLinks = [
 ```typescript
 const contactInfo = {
   email: 'hello@konxc.space',
-  phone: '+62 21 1234 5678',
+  phone: '+62 882 00795 2010',
   address: 'Jakarta, Indonesia',
   website: 'https://konxc.space'
 };

@@ -14,6 +14,119 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
   <Hero />
   <Services />
   
+  <!-- Ecosystem Platforms Section -->
+  <section class="section bg-gradient-to-br from-primary-50 to-accent-50">
+    <div class="container">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+          Ekosistem <span class="text-gradient">Koneksi</span>
+        </h2>
+        <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
+          Bergabunglah dengan ekosistem teknologi Indonesia yang terintegrasi. 
+          Dari diskusi komunitas hingga pembelajaran dan kolaborasi bisnis.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Platform Diskusi -->
+        <div class="card-featured text-center group">
+          <div class="mb-6">
+            <div class="text-5xl mb-4">💬</div>
+            <h3 class="text-xl font-bold mb-2">Platform Diskusi</h3>
+            <div class="text-sm text-primary-600 font-semibold mb-4">platform.konxc.space</div>
+          </div>
+          <p class="text-neutral-600 mb-6">
+            Platform diskusi seperti Reddit untuk komunitas teknologi Indonesia. 
+            Berbagi knowledge, bertanya, dan berkolaborasi dengan developer lainnya.
+          </p>
+          <div class="space-y-2 text-sm text-neutral-600 mb-6">
+            <div>✓ Forum diskusi teknologi</div>
+            <div>✓ Q&A developer community</div>
+            <div>✓ Project collaboration</div>
+            <div>✓ Tech news & insights</div>
+          </div>
+          <a 
+            href="https://platform.konxc.space" 
+            target="_blank"
+            class="btn-primary group-hover:bg-primary-600 transition-colors"
+          >
+            Join Diskusi →
+          </a>
+        </div>
+        
+        <!-- Learning Platform (Coming Soon) -->
+        <div class="card text-center group">
+          <div class="mb-6">
+            <div class="text-5xl mb-4">🎓</div>
+            <h3 class="text-xl font-bold mb-2">Learning Hub</h3>
+            <div class="text-sm text-secondary-600 font-semibold mb-4">learn.konxc.space</div>
+          </div>
+          <p class="text-neutral-600 mb-6">
+            Platform pembelajaran teknologi dengan hands-on projects, 
+            certification, dan mentorship dari praktisi industri.
+          </p>
+          <div class="space-y-2 text-sm text-neutral-600 mb-6">
+            <div>✓ Interactive coding tutorials</div>
+            <div>✓ Industry certifications</div>
+            <div>✓ Mentorship programs</div>
+            <div>✓ Career guidance</div>
+          </div>
+          <button class="btn-outline opacity-75 cursor-not-allowed">
+            Coming Soon
+          </button>
+        </div>
+        
+        <!-- Business Insights (Coming Soon) -->
+        <div class="card text-center group">
+          <div class="mb-6">
+            <div class="text-5xl mb-4">📊</div>
+            <h3 class="text-xl font-bold mb-2">Business Insights</h3>
+            <div class="text-sm text-accent-600 font-semibold mb-4">insights.konxc.space</div>
+          </div>
+          <p class="text-neutral-600 mb-6">
+            Research, data, dan insights tentang industri teknologi Indonesia 
+            untuk mendukung keputusan bisnis yang lebih baik.
+          </p>
+          <div class="space-y-2 text-sm text-neutral-600 mb-6">
+            <div>✓ Industry research reports</div>
+            <div>✓ Market analysis</div>
+            <div>✓ Tech trend insights</div>
+            <div>✓ Business intelligence</div>
+          </div>
+          <button class="btn-outline opacity-75 cursor-not-allowed">
+            Coming Soon
+          </button>
+        </div>
+      </div>
+      
+      <!-- Ecosystem Stats -->
+      <div class="mt-16 bg-white rounded-3xl p-8 shadow-xl">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold mb-2">Ekosistem dalam Angka</h3>
+          <p class="text-neutral-600">Membangun komunitas teknologi Indonesia yang kuat</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-primary-600 mb-2">500+</div>
+            <div class="text-sm text-neutral-600">Klien Aktif</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-secondary-600 mb-2">1K+</div>
+            <div class="text-sm text-neutral-600">Community Members</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-accent-600 mb-2">50+</div>
+            <div class="text-sm text-neutral-600">Tech Articles</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-primary-600 mb-2">24/7</div>
+            <div class="text-sm text-neutral-600">Community Support</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
   <!-- About Section -->
   <section class="section bg-neutral-50">
     <div class="container">
@@ -23,13 +136,15 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
             Tentang <span class="text-gradient">Koneksi</span>
           </h2>
           <p class="text-xl text-neutral-600 mb-6">
-            PT Koneksi Jaringan Indonesia - KonXC (dibaca: Koneksi) adalah mitra teknologi terpercaya 
-            yang berkomitmen menyederhanakan teknologi untuk pertumbuhan bisnis Anda.
+            PT Koneksi Jaringan Indonesia - KonXC (dibaca: Koneksi) adalah **rumah milik bersama** 
+            untuk komunitas teknologi Indonesia. Kami membangun ekosistem teknologi terintegrasi 
+            yang menghubungkan developer, bisnis, dan inovator.
           </p>
           <p class="text-lg text-neutral-600 mb-8">
-            Dengan 5 divisi yang terintegrasi, kami menyediakan solusi teknologi 
-            lengkap dari infrastruktur hingga branding digital, khususnya untuk 
-            UMKM, sekolah, institusi, dan startup.
+            Dengan 5 divisi yang terintegrasi dan platform komunitas 
+            <a href="https://platform.konxc.space" class="text-primary-600 hover:text-primary-700 font-semibold" target="_blank">platform.konxc.space</a>, 
+            kami menyediakan solusi teknologi lengkap dari infrastruktur hingga branding digital, 
+            khususnya untuk UMKM, sekolah, institusi, dan startup.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
             <a href="#contact" class="btn-primary">
@@ -37,6 +152,9 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
             </a>
             <a href="/blog" class="btn-secondary">
               Baca Blog Kami
+            </a>
+            <a href="https://platform.konxc.space" target="_blank" class="btn-accent">
+              Join Komunitas
             </a>
           </div>
         </div>
@@ -76,7 +194,7 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
           Kami siap membantu mewujudkan visi digital Anda.
         </p>
       </div>
-      
+
       <div class="grid lg:grid-cols-2 gap-12">
         <!-- Contact Form -->
         <div class="bg-linear-to-br from-primary-50 to-secondary-50 rounded-3xl p-8">
@@ -157,7 +275,7 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
           </div>
           
           <div class="bg-white rounded-2xl p-6 shadow-lg">
-            <h4 class="text-lg font-bold mb-4">Mengapa Memilih KonXC?</h4>
+            <h4 class="text-lg font-bold mb-4">Mengapa Memilih Koneksi?</h4>
             <ul class="space-y-3 text-neutral-600">
               <li class="flex items-center gap-3">
                 <span class="text-green-500">✓</span>
@@ -183,6 +301,6 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
           </div>
         </div>
       </div>
-    </div>
-  </section>
+      </div>
+    </section>
 </UnifiedLayout>
