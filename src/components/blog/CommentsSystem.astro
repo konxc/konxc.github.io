@@ -668,7 +668,10 @@ const mockComments = [
   }
 
   .comment-form-container {
-    @apply mb-8 cream-container;
+    @apply mb-8 p-6 rounded-2xl border-2;
+    background: var(--gradient-cream-elegant);
+    border-color: var(--border-cream-medium);
+    box-shadow: var(--shadow-cream-medium);
   }
 
   .comment-form {
@@ -704,44 +707,12 @@ const mockComments = [
     @apply flex gap-3;
   }
 
-  .btn-primary,
-  .btn-secondary {
-    @apply flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300;
-  }
-
   .btn-primary {
-    @apply text-white transform hover:scale-[1.02] active:scale-[0.98];
-    background: linear-gradient(135deg, 
-      #6b5b73 0%, 
-      #8b7d8b 25%, 
-      #a0969f 50%, 
-      #b8adb6 75%, 
-      #d1c7d0 100%
-    );
-    box-shadow: 
-      0 4px 16px rgba(107, 91, 115, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.08);
-  }
-
-  .btn-primary:hover {
-    background: linear-gradient(135deg, 
-      #5a4a62 0%, 
-      #7a6c7a 25%, 
-      #8f858e 50%, 
-      #a79ca5 75%, 
-      #c0b5bf 100%
-    );
-    box-shadow: 
-      0 6px 22px rgba(107, 91, 115, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+    @apply cream-button;
   }
 
   .btn-secondary {
-    @apply bg-stone-50 text-slate-700 border-2 hover:bg-stone-100;
-    border-color: rgba(148, 163, 184, 0.2);
-    box-shadow: 0 2px 8px rgba(148, 163, 184, 0.1);
+    @apply cream-button-secondary;
   }
 
   .btn-sm {
@@ -757,17 +728,7 @@ const mockComments = [
   }
 
   .comment-item {
-    @apply p-6 rounded-xl border;
-    background: linear-gradient(135deg, 
-      #faf9f7 0%, 
-      #f5f3f0 50%, 
-      #f0ede8 100%
-    );
-    border-color: rgba(148, 163, 184, 0.12);
-    box-shadow: 
-      0 4px 12px rgba(148, 163, 184, 0.04),
-      0 2px 6px rgba(148, 163, 184, 0.03),
-      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    @apply cream-card;
   }
 
   .comment-header {
@@ -779,13 +740,7 @@ const mockComments = [
   }
 
   .author-avatar {
-    @apply w-10 h-10 text-white rounded-full flex items-center justify-center font-bold;
-    background: linear-gradient(135deg, 
-      #6b5b73 0%, 
-      #8b7d8b 50%, 
-      #a0969f 100%
-    );
-    box-shadow: 0 2px 8px rgba(107, 91, 115, 0.2);
+    @apply cream-avatar;
   }
 
   .author-avatar.small {
@@ -793,12 +748,12 @@ const mockComments = [
   }
 
   .author-name {
-    @apply font-semibold text-slate-700;
+    @apply font-semibold cream-text-primary;
   }
 
   .comment-date,
   .reply-date {
-    @apply text-sm text-slate-500 font-medium;
+    @apply text-sm cream-text-muted font-medium;
   }
 
   .comment-actions {
