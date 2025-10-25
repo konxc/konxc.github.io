@@ -1,0 +1,234 @@
+---
+// Structured Data Component for SEO
+// Generates JSON-LD structured data for different content types
+
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  type: 'article' | 'website' | 'organization' | 'person' | 'breadcrumb' | 'faq';
+  data?: any;
+  post?: CollectionEntry<'blog'>;
+  url?: string;
+  siteName?: string;
+}
+
+const { 
+  type, 
+  data = {}, 
+  post, 
+  url = Astro.url.href,
+  siteName = 'KonXC - PT Koneksi Jaringan Indonesia'
+} = Astro.props;
+
+// Base organization data
+const organizationData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "PT Koneksi Jaringan Indonesia",
+  "alternateName": "KonXC",
+  "url": "https://konxc.space",
+  "logo": "https://konxc.space/images/logo/konxc-logo.png",
+  "description": "Solusi teknologi terintegrasi untuk UMKM hingga Enterprise. IT Support, Software Development, Branding Digital, Retail Teknologi, dan Cloud & SaaS.",
+  "foundingDate": "2020",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "ID",
+    "addressRegion": "Jakarta"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+62-21-xxxx-xxxx",
+    "contactType": "customer service",
+    "availableLanguage": ["Indonesian", "English"]
+  },
+  "sameAs": [
+    "https://linkedin.com/company/konxc",
+    "https://twitter.com/konxc_id",
+    "https://instagram.com/konxc.space"
+  ]
+};
+
+// Generate structured data based on type
+let structuredData = {};
+
+switch (type) {
+  case 'article':
+    if (post) {
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": post.data.title,
+        "description": post.data.description,
+        "image": post.data.image ? `https://konxc.space${post.data.image}` : "https://konxc.space/images/og/default-blog.jpg",
+        "author": {
+          "@type": "Person",
+          "name": post.data.author || "KonXC Team",
+          "url": "https://konxc.space/contributors"
+        },
+        "publisher": organizationData,
+        "datePublished": post.data.publishDate.toISOString(),
+        "dateModified": post.data.publishDate.toISOString(),
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": url
+        },
+        "articleSection": post.data.category || "Technology",
+        "keywords": post.data.tags?.join(', ') || "",
+        "wordCount": post.data.wordCount || 0,
+        "timeRequired": `PT${post.data.readingTime || 5}M`,
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "creativeWorkStatus": "Published"
+      };
+    }
+    break;
+
+  case 'website':
+    structuredData = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": siteName,
+      "url": "https://konxc.space",
+      "description": "Solusi teknologi terintegrasi untuk UMKM hingga Enterprise. IT Support, Software Development, Branding Digital, Retail Teknologi, dan Cloud & SaaS.",
+      "publisher": organizationData,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://konxc.space/blog?search={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": "id-ID"
+    };
+    break;
+
+  case 'organization':
+    structuredData = organizationData;
+    break;
+
+  case 'breadcrumb':
+    if (data.items) {
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": data.items.map((item: any, index: number) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "name": item.name,
+          "item": item.url ? `https://konxc.space${item.url}` : undefined
+        }))
+      };
+    }
+    break;
+
+  case 'faq':
+    if (data.questions) {
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": data.questions.map((faq: any) => ({
+          "@type": "Question",
+          "name": faq.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+          }
+        }))
+      };
+    }
+    break;
+
+  case 'person':
+    if (data.person) {
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": data.person.name,
+        "jobTitle": data.person.role,
+        "description": data.person.bio,
+        "image": data.person.avatar ? `https://konxc.space${data.person.avatar}` : undefined,
+        "url": data.person.website,
+        "worksFor": organizationData,
+        "sameAs": data.person.social || []
+      };
+    }
+    break;
+
+  default:
+    structuredData = {};
+}
+---
+
+{Object.keys(structuredData).length > 0 && (
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData, null, 2)} />
+)}
+
+<!-- Additional SEO structured data for blog posts -->
+{type === 'article' && post && (
+  <>
+    <!-- Article structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": post.data.title,
+      "description": post.data.description,
+      "image": post.data.image ? `https://konxc.space${post.data.image}` : "https://konxc.space/images/og/default-blog.jpg",
+      "author": {
+        "@type": "Person",
+        "name": post.data.author || "KonXC Team"
+      },
+      "publisher": organizationData,
+      "datePublished": post.data.publishDate.toISOString(),
+      "dateModified": post.data.publishDate.toISOString(),
+      "mainEntityOfPage": url,
+      "genre": post.data.category || "Technology",
+      "keywords": post.data.tags?.join(', ') || "",
+      "wordCount": post.data.wordCount || 0,
+      "timeRequired": `PT${post.data.readingTime || 5}M`,
+      "inLanguage": "id-ID",
+      "isAccessibleForFree": true,
+      "copyrightHolder": organizationData,
+      "copyrightYear": new Date(post.data.publishDate).getFullYear()
+    }, null, 2)} />
+
+    <!-- Breadcrumb for blog post -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://konxc.space"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://konxc.space/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": post.data.title,
+          "item": url
+        }
+      ]
+    }, null, 2)} />
+  </>
+)}
+
+<!-- Website structured data for all pages -->
+{type !== 'article' && (
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": siteName,
+    "url": "https://konxc.space",
+    "description": "Solusi teknologi terintegrasi untuk UMKM hingga Enterprise.",
+    "publisher": organizationData,
+    "inLanguage": "id-ID"
+  }, null, 2)} />
+)}

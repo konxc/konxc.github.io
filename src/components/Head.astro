@@ -1,13 +1,36 @@
 ---
+import StructuredData from '@components/seo/StructuredData.astro';
+import type { CollectionEntry } from 'astro:content';
+
 export interface Props {
   title: string;
   description?: string;
   image?: string;
   canonical?: string;
+  keywords?: string;
+  author?: string;
+  type?: 'website' | 'article';
+  post?: CollectionEntry<'blog'>;
+  noindex?: boolean;
+  structuredData?: any;
 }
 
-const { title, description = "PT Koneksi Jaringan Indonesia - Mitra Teknologi Terpercaya", image = "/og-image.jpg", canonical } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const { 
+  title, 
+  description = "PT Koneksi Jaringan Indonesia - Mitra Teknologi Terpercaya untuk solusi IT Support, Software Development, Digital Branding, Retail Technology, dan Cloud & SaaS.", 
+  image = "/images/og/default.jpg", 
+  canonical,
+  keywords = "IT support Jakarta, software development Indonesia, digitalisasi UMKM, teknologi bisnis, cloud computing, SaaS, digital transformation",
+  author = "KonXC Team",
+  type = "website",
+  post,
+  noindex = false,
+  structuredData
+} = Astro.props;
+
+const canonicalURL = canonical ? new URL(canonical, Astro.site) : new URL(Astro.url.pathname, Astro.site);
+const fullImageURL = image.startsWith('http') ? image : new URL(image, Astro.site).href;
+const siteName = "KonXC - PT Koneksi Jaringan Indonesia";
 ---
 
 <!DOCTYPE html>
@@ -31,21 +54,44 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- SEO Meta Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="IT support Jakarta, software development Indonesia, digitalisasi UMKM, teknologi bisnis" />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={author} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+    <meta name="googlebot" content={noindex ? "noindex, nofollow" : "index, follow"} />
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
+    <meta property="og:type" content={type === 'article' ? 'article' : 'website'} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:url" content={canonicalURL.href} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={fullImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content="id_ID" />
+    
+    {type === 'article' && post && (
+      <>
+        <meta property="article:author" content={post.data.author || author} />
+        <meta property="article:published_time" content={post.data.publishDate.toISOString()} />
+        <meta property="article:modified_time" content={post.data.publishDate.toISOString()} />
+        <meta property="article:section" content={post.data.category || "Technology"} />
+        {post.data.tags?.map(tag => (
+          <meta property="article:tag" content={tag} />
+        ))}
+      </>
+    )}
     
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@konxc_id" />
+    <meta name="twitter:creator" content="@konxc_id" />
+    <meta name="twitter:url" content={canonicalURL.href} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullImageURL} />
+    <meta name="twitter:image:alt" content={title} />
     
     <!-- Canonical URL -->
     <link rel="canonical" href={canonical || canonicalURL} />
@@ -67,31 +113,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <!-- Structured Data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "PT Koneksi Jaringan Indonesia",
-        "alternateName": "KonXC",
-        "url": "https://www.konxc.space",
-        "logo": "https://www.konxc.space/logo-konxc.jpg",
-        "description": "Mitra teknologi terpercaya yang menyederhanakan teknologi untuk pertumbuhan bisnis",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "ID",
-          "addressLocality": "Jakarta"
-        },
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+62-882-0079-502010",
-          "contactType": "customer service"
-        },
-        "sameAs": [
-          "https://www.linkedin.com/company/konxc",
-          "https://www.instagram.com/konxc.id"
-        ]
-      }
-    </script>
+    <StructuredData 
+      type={type === 'article' ? 'article' : 'website'} 
+      post={post}
+      url={canonicalURL.href}
+      siteName={siteName}
+      data={structuredData}
+    />
+    
+    <!-- Organization structured data for all pages -->
+    <StructuredData type="organization" />
   </head>
   <body>
     <slot />

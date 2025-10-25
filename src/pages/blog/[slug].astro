@@ -102,7 +102,14 @@ const getRelatedArticles = (
 const relatedArticles = getRelatedArticles(post, 4);
 ---
 
-<BlogSlugLayout title={post.data.title} description={post.data.description}>
+<BlogSlugLayout 
+  title={post.data.title} 
+  description={post.data.description}
+  image={post.data.image}
+  post={post}
+  keywords={post.data.tags?.join(', ')}
+  author={post.data.author}
+>
   <!-- Blog Post Header -->
   <section
     class="from-primary-50 to-secondary-50 bg-linear-to-br py-20 md:py-32"
