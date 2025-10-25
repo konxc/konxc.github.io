@@ -17,7 +17,8 @@
     "safe-push": "./scripts/pre-push.sh --with-build --confirm",
     "test:toc:basic": "node scripts/basic-toc-test.js",
     "test:toc:articles": "node scripts/test-toc-articles.js",
-    "analyze:css": "node scripts/analyze-css-classes.js",
+    "analyze": "pnpm run build && echo 'Bundle analysis available at dist/bundle-analysis.html'",
+    "analyze:open": "pnpm run build && open dist/bundle-analysis.html",
     "test:final-phase": "node scripts/test-final-phase-features.js",
     "test:blog:install": "npm install puppeteer",
     "test:playwright": "playwright test",
@@ -54,6 +55,7 @@
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.7.1",
+    "rollup-plugin-visualizer": "^6.0.5",
     "sharp": "^0.34.4"
   },
   "packageManager": "pnpm@10.19.0+sha512.c9fc7236e92adf5c8af42fd5bf1612df99c2ceb62f27047032f4720b33f8eacdde311865e91c411f2774f618d82f320808ecb51718bfa82c060c4ba7c76a32b8"

@@ -10,6 +10,8 @@ import svelte from "@astrojs/svelte";
 
 import astroIcon from "astro-icon";
 
+import { visualizer } from "rollup-plugin-visualizer";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.konxc.space",
@@ -23,7 +25,15 @@ export default defineConfig({
   ],
 
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+      visualizer({
+        filename: "dist/bundle-analysis.html",
+        open: false,
+        gzipSize: true,
+        brotliSize: true,
+      }),
+    ],
   },
 
   adapter: node({
