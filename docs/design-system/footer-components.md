@@ -7,7 +7,9 @@ Sistem footer yang komprehensif untuk website KonXC dengan berbagai variant dan 
 ## Komponen yang Tersedia
 
 ### 1. **Footer.astro** (Extended)
+
 Footer lengkap dengan semua fitur:
+
 - Newsletter subscription
 - Company information
 - Quick links (4 kategori)
@@ -16,7 +18,9 @@ Footer lengkap dengan semua fitur:
 - Legal links
 
 ### 2. **SimpleFooter.astro** (Standard)
+
 Footer standar dengan fitur utama:
+
 - Newsletter subscription
 - Brand information
 - Essential links
@@ -24,7 +28,9 @@ Footer standar dengan fitur utama:
 - Copyright
 
 ### 3. **MinimalFooter.astro** (Minimal)
+
 Footer minimal untuk halaman tertentu:
+
 - Brand information
 - Essential links only
 - Social media links
@@ -33,10 +39,11 @@ Footer minimal untuk halaman tertentu:
 ## Props Interface
 
 ### Footer.astro
+
 ```typescript
 interface Props {
   class?: string;
-  variant?: 'default' | 'minimal' | 'extended';
+  variant?: "default" | "minimal" | "extended";
   showNewsletter?: boolean;
   showSocialLinks?: boolean;
   showQuickLinks?: boolean;
@@ -45,6 +52,7 @@ interface Props {
 ```
 
 ### SimpleFooter.astro
+
 ```typescript
 interface Props {
   class?: string;
@@ -54,6 +62,7 @@ interface Props {
 ```
 
 ### MinimalFooter.astro
+
 ```typescript
 interface Props {
   class?: string;
@@ -64,9 +73,11 @@ interface Props {
 ## Variant Options
 
 ### Extended Footer
+
 ```astro
 <Footer variant="extended" />
 ```
+
 - Newsletter section dengan gradient background
 - Company information lengkap
 - 4 kategori quick links
@@ -75,9 +86,11 @@ interface Props {
 - Legal links
 
 ### Default Footer
+
 ```astro
 <Footer />
 ```
+
 - Newsletter section
 - Company information
 - Quick links
@@ -85,9 +98,11 @@ interface Props {
 - Copyright
 
 ### Minimal Footer
+
 ```astro
 <Footer variant="minimal" />
 ```
+
 - Company information basic
 - Essential links only
 - Social media links
@@ -96,6 +111,7 @@ interface Props {
 ## Customization Options
 
 ### Newsletter Section
+
 ```astro
 <!-- Dengan newsletter -->
 <Footer showNewsletter={true} />
@@ -105,6 +121,7 @@ interface Props {
 ```
 
 ### Social Media Links
+
 ```astro
 <!-- Dengan social links -->
 <Footer showSocialLinks={true} />
@@ -114,6 +131,7 @@ interface Props {
 ```
 
 ### Quick Links
+
 ```astro
 <!-- Dengan quick links -->
 <Footer showQuickLinks={true} />
@@ -123,6 +141,7 @@ interface Props {
 ```
 
 ### Company Information
+
 ```astro
 <!-- Dengan company info -->
 <Footer showCompanyInfo={true} />
@@ -134,59 +153,75 @@ interface Props {
 ## Data Configuration
 
 ### Quick Links Structure
+
 ```typescript
 const quickLinks = {
   company: [
-    { name: 'Tentang Kami', href: '/about' },
-    { name: 'Tim', href: '/team' },
-    { name: 'Karir', href: '/careers' },
-    { name: 'Kontak', href: '/contact' }
+    { name: "Tentang Kami", href: "/about" },
+    { name: "Tim", href: "/team" },
+    { name: "Karir", href: "/careers" },
+    { name: "Kontak", href: "/contact" },
   ],
   services: [
-    { name: 'Web Development', href: '/services/web-development' },
-    { name: 'Mobile Apps', href: '/services/mobile-apps' },
-    { name: 'Cloud Solutions', href: '/services/cloud-solutions' },
-    { name: 'Digital Marketing', href: '/services/digital-marketing' }
+    { name: "Web Development", href: "/services/web-development" },
+    { name: "Mobile Apps", href: "/services/mobile-apps" },
+    { name: "Cloud Solutions", href: "/services/cloud-solutions" },
+    { name: "Digital Marketing", href: "/services/digital-marketing" },
   ],
   resources: [
-    { name: 'Blog', href: '/blog' },
-    { name: 'Dokumentasi', href: '/docs' },
-    { name: 'Tutorial', href: '/tutorials' },
-    { name: 'FAQ', href: '/faq' }
+    { name: "Blog", href: "/blog" },
+    { name: "Dokumentasi", href: "/docs" },
+    { name: "Tutorial", href: "/tutorials" },
+    { name: "FAQ", href: "/faq" },
   ],
   community: [
-    { name: 'Kontributor', href: '/contributors' },
-    { name: 'Writers', href: '/contributors/writers' },
-    { name: 'Open Source', href: '/open-source' },
-    { name: 'Events', href: '/events' }
-  ]
+    { name: "Kontributor", href: "/contributors" },
+    { name: "Writers", href: "/contributors/writers" },
+    { name: "Open Source", href: "/open-source" },
+    { name: "Events", href: "/events" },
+  ],
 };
 ```
 
 ### Social Media Links
+
 ```typescript
 const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com/konxc', icon: 'i-mdi-github' },
-  { name: 'LinkedIn', href: 'https://linkedin.com/company/konxc', icon: 'i-mdi-linkedin' },
-  { name: 'Twitter', href: 'https://twitter.com/konxc', icon: 'i-mdi-twitter' },
-  { name: 'Instagram', href: 'https://instagram.com/konxc', icon: 'i-mdi-instagram' },
-  { name: 'YouTube', href: 'https://youtube.com/@konxc', icon: 'i-mdi-youtube' }
+  { name: "GitHub", href: "https://github.com/konxc", icon: "i-mdi-github" },
+  {
+    name: "LinkedIn",
+    href: "https://linkedin.com/company/konxc",
+    icon: "i-mdi-linkedin",
+  },
+  { name: "Twitter", href: "https://twitter.com/konxc", icon: "i-mdi-twitter" },
+  {
+    name: "Instagram",
+    href: "https://instagram.com/konxc",
+    icon: "i-mdi-instagram",
+  },
+  {
+    name: "YouTube",
+    href: "https://youtube.com/@konxc",
+    icon: "i-mdi-youtube",
+  },
 ];
 ```
 
 ### Contact Information
+
 ```typescript
 const contactInfo = {
-  email: 'hello@konxc.space',
-  phone: '+62 882 00795 2010',
-  address: 'Jakarta, Indonesia',
-  website: 'https://konxc.space'
+  email: "hello@konxc.space",
+  phone: "+62 882 00795 2010",
+  address: "Jakarta, Indonesia",
+  website: "https://konxc.space",
 };
 ```
 
 ## Styling
 
 ### CSS Classes
+
 - `.footer` - Main footer container
 - `.newsletter-section` - Newsletter subscription section
 - `.footer-main` - Main footer content
@@ -197,6 +232,7 @@ const contactInfo = {
 - `.legal-links` - Legal/privacy links
 
 ### Responsive Design
+
 - Mobile-first approach
 - Grid layouts yang responsive
 - Flexible newsletter form
@@ -205,12 +241,13 @@ const contactInfo = {
 ## JavaScript Functionality
 
 ### Newsletter Form
+
 ```javascript
 // Automatic form handling
-document.addEventListener('DOMContentLoaded', function() {
-  const newsletterForm = document.getElementById('newsletter-form');
+document.addEventListener("DOMContentLoaded", function () {
+  const newsletterForm = document.getElementById("newsletter-form");
   if (newsletterForm) {
-    newsletterForm.addEventListener('submit', function(e) {
+    newsletterForm.addEventListener("submit", function (e) {
       e.preventDefault();
       // Handle subscription
     });
@@ -219,6 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
 ```
 
 ### Features
+
 - Form validation
 - Success feedback
 - Auto-reset after submission
@@ -227,21 +265,23 @@ document.addEventListener('DOMContentLoaded', function() {
 ## Usage Examples
 
 ### Basic Usage
+
 ```astro
 ---
-import Footer from '@components/ui/Footer.astro';
+import Footer from "@components/ui/Footer.astro";
 ---
 
 <Footer />
 ```
 
 ### Custom Configuration
+
 ```astro
 ---
-import Footer from '@components/ui/Footer.astro';
+import Footer from "@components/ui/Footer.astro";
 ---
 
-<Footer 
+<Footer
   variant="extended"
   showNewsletter={true}
   showSocialLinks={true}
@@ -252,11 +292,12 @@ import Footer from '@components/ui/Footer.astro';
 ```
 
 ### Different Variants
+
 ```astro
 ---
-import Footer from '@components/ui/Footer.astro';
-import SimpleFooter from '@components/ui/SimpleFooter.astro';
-import MinimalFooter from '@components/ui/MinimalFooter.astro';
+import Footer from "@components/ui/Footer.astro";
+import SimpleFooter from "@components/ui/SimpleFooter.astro";
+import MinimalFooter from "@components/ui/MinimalFooter.astro";
 ---
 
 <!-- Extended footer untuk homepage -->
@@ -272,27 +313,32 @@ import MinimalFooter from '@components/ui/MinimalFooter.astro';
 ## Best Practices
 
 ### 1. **Pilih Variant yang Sesuai**
+
 - **Extended**: Homepage, about page
 - **Default**: Blog, documentation
 - **Simple**: Product pages
 - **Minimal**: Landing pages, forms
 
 ### 2. **Newsletter Integration**
+
 - Gunakan service seperti Mailchimp, ConvertKit
 - Implementasi proper validation
 - GDPR compliance untuk EU users
 
 ### 3. **Social Media**
+
 - Update links sesuai dengan platform yang aktif
 - Gunakan icon yang konsisten
 - Test semua links secara berkala
 
 ### 4. **SEO Considerations**
+
 - Gunakan proper heading hierarchy
 - Include relevant internal links
 - Optimize untuk local SEO (alamat, kontak)
 
 ### 5. **Accessibility**
+
 - Proper ARIA labels untuk social icons
 - Keyboard navigation support
 - Screen reader friendly
@@ -300,9 +346,11 @@ import MinimalFooter from '@components/ui/MinimalFooter.astro';
 ## Testing
 
 ### Demo Page
+
 Akses `/footer-demo` untuk melihat semua variant footer dalam action.
 
 ### Manual Testing
+
 1. Test newsletter form submission
 2. Verify semua links berfungsi
 3. Test responsive design
@@ -311,12 +359,14 @@ Akses `/footer-demo` untuk melihat semua variant footer dalam action.
 ## Maintenance
 
 ### Regular Updates
+
 - Update social media links
 - Review dan update quick links
 - Check newsletter integration
 - Update copyright year (otomatis)
 
 ### Performance
+
 - Optimize images (logo)
 - Minimize CSS
 - Lazy load social icons jika diperlukan
@@ -324,6 +374,7 @@ Akses `/footer-demo` untuk melihat semua variant footer dalam action.
 ## Future Enhancements
 
 ### Planned Features
+
 - Multi-language support
 - Dark mode toggle
 - Cookie consent integration
@@ -331,6 +382,7 @@ Akses `/footer-demo` untuk melihat semua variant footer dalam action.
 - A/B testing untuk newsletter copy
 
 ### Integration Opportunities
+
 - CRM integration
 - Email marketing platform
 - Social media API

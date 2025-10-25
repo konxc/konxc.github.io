@@ -2,68 +2,88 @@
 // Like Button Component for inline content engagement
 export interface Props {
   postSlug?: string;
-  position?: 'left' | 'center' | 'right';
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'minimal' | 'card' | 'floating';
+  position?: "left" | "center" | "right";
+  size?: "sm" | "md" | "lg";
+  variant?: "minimal" | "card" | "floating";
   showCount?: boolean;
   showText?: boolean;
   className?: string;
 }
 
-const { 
-  postSlug = 'default',
-  position = 'center',
-  size = 'md',
-  variant = 'card',
+const {
+  postSlug = "default",
+  position = "center",
+  size = "md",
+  variant = "card",
   showCount = true,
   showText = true,
-  className = ''
+  className = "",
 } = Astro.props;
 
 // Generate unique ID for this like button instance
 const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<div class={`like-button-container ${position} ${variant} ${size} ${className}`}>
+<div
+  class={`like-button-container ${position} ${variant} ${size} ${className}`}
+>
   <div class="like-button-wrapper">
-    {showText && (
-      <div class="like-text">
-        <span class="like-question">Suka artikel ini?</span>
-        <span class="like-subtitle">Berikan apresiasi dengan like</span>
-      </div>
-    )}
-    
-    <button 
+    {
+      showText && (
+        <div class="like-text">
+          <span class="like-question">Suka artikel ini?</span>
+          <span class="like-subtitle">Berikan apresiasi dengan like</span>
+        </div>
+      )
+    }
+
+    <button
       id={buttonId}
       class="like-button group"
       data-post-slug={postSlug}
       aria-label="Suka artikel ini"
     >
       <div class="like-icon">
-        <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path 
+        <svg
+          class="heart-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
             d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
             stroke="currentColor"
             stroke-width="2"
             stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+            stroke-linejoin="round"></path>
         </svg>
       </div>
-      
-      {showText && (
-        <span class="like-label">Like</span>
-      )}
-      
-      {showCount && (
-        <span class="like-count" data-count="0">0</span>
-      )}
+
+      {showText && <span class="like-label">Like</span>}
+
+      {
+        showCount && (
+          <span class="like-count" data-count="0">
+            0
+          </span>
+        )
+      }
     </button>
-    
+
     <div class="like-feedback">
       <div class="like-success">
-        <svg class="success-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg
+          class="success-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9 12l2 2 4-4"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
         </svg>
         <span>Terima kasih!</span>
       </div>
@@ -91,11 +111,11 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
 
   /* Text styling */
   .like-text {
-    @apply text-center mb-4;
+    @apply mb-4 text-center;
   }
 
   .like-question {
-    @apply block text-lg font-semibold text-neutral-800 mb-1;
+    @apply mb-1 block text-lg font-semibold text-neutral-800;
   }
 
   .like-subtitle {
@@ -104,20 +124,20 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
 
   /* Button styling */
   .like-button {
-    @apply relative flex items-center gap-2 px-6 py-3 bg-white border border-neutral-200 rounded-full shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer;
+    @apply relative flex cursor-pointer items-center gap-2 rounded-full border border-neutral-200 bg-white px-6 py-3 shadow-sm transition-all duration-300 hover:shadow-md;
     @apply hover:border-red-300 hover:bg-red-50;
   }
 
   .like-button:focus {
-    @apply outline-none ring-2 ring-red-500 ring-offset-2;
+    @apply ring-2 ring-red-500 ring-offset-2 outline-none;
   }
 
   .like-button.liked {
-    @apply bg-red-500 border-red-500 text-white;
+    @apply border-red-500 bg-red-500 text-white;
   }
 
   .like-button.liked:hover {
-    @apply bg-red-600 border-red-600;
+    @apply border-red-600 bg-red-600;
   }
 
   /* Icon styling */
@@ -126,7 +146,7 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
   }
 
   .heart-icon {
-    @apply w-5 h-5 transition-all duration-300;
+    @apply h-5 w-5 transition-all duration-300;
   }
 
   .like-button:hover .heart-icon {
@@ -139,12 +159,12 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
 
   /* Label styling */
   .like-label {
-    @apply font-medium text-sm;
+    @apply text-sm font-medium;
   }
 
   /* Count styling */
   .like-count {
-    @apply bg-neutral-100 text-neutral-600 text-xs px-2 py-1 rounded-full font-medium;
+    @apply rounded-full bg-neutral-100 px-2 py-1 text-xs font-medium text-neutral-600;
   }
 
   .like-button.liked .like-count {
@@ -153,19 +173,19 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
 
   /* Feedback styling */
   .like-feedback {
-    @apply absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500;
+    @apply pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-500;
   }
 
   .like-feedback.show {
-    @apply opacity-100 pointer-events-auto;
+    @apply pointer-events-auto opacity-100;
   }
 
   .like-success {
-    @apply flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-full shadow-lg;
+    @apply flex items-center gap-2 rounded-full bg-green-500 px-4 py-2 text-white shadow-lg;
   }
 
   .success-icon {
-    @apply w-4 h-4;
+    @apply h-4 w-4;
   }
 
   /* Size variants */
@@ -174,7 +194,7 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
   }
 
   .like-button-container.sm .heart-icon {
-    @apply w-4 h-4;
+    @apply h-4 w-4;
   }
 
   .like-button-container.lg .like-button {
@@ -182,16 +202,16 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
   }
 
   .like-button-container.lg .heart-icon {
-    @apply w-6 h-6;
+    @apply h-6 w-6;
   }
 
   /* Variant styling */
   .like-button-container.minimal .like-button {
-    @apply border-0 shadow-none bg-transparent hover:bg-neutral-50;
+    @apply border-0 bg-transparent shadow-none hover:bg-neutral-50;
   }
 
   .like-button-container.floating {
-    @apply fixed bottom-6 right-6 z-50;
+    @apply fixed right-6 bottom-6 z-50;
   }
 
   .like-button-container.floating .like-button {
@@ -200,7 +220,7 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
 
   /* Card variant */
   .like-button-container.card {
-    @apply bg-gradient-to-r from-red-50 to-pink-50 p-6 rounded-xl border border-red-100;
+    @apply rounded-xl border border-red-100 bg-gradient-to-r from-red-50 to-pink-50 p-6;
   }
 
   .like-button-container.card .like-question {
@@ -213,9 +233,15 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
 
   /* Animations */
   @keyframes heartBeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 
   .like-button.liked .heart-icon {
@@ -223,9 +249,15 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
   }
 
   @keyframes likePulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 
   .like-button:hover {
@@ -242,7 +274,7 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
   }
 
   .dark .like-button {
-    @apply bg-neutral-800 border-neutral-700 text-neutral-100;
+    @apply border-neutral-700 bg-neutral-800 text-neutral-100;
   }
 
   .dark .like-button:hover {
@@ -254,7 +286,7 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
   }
 
   .dark .like-button-container.card {
-    @apply bg-gradient-to-r from-red-900 to-pink-900 border-red-800;
+    @apply border-red-800 bg-gradient-to-r from-red-900 to-pink-900;
   }
 
   /* Mobile responsive */
@@ -276,7 +308,7 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
     }
 
     .like-button-container.floating {
-      @apply bottom-4 right-4;
+      @apply right-4 bottom-4;
     }
   }
 </style>
@@ -284,19 +316,21 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
 <script>
   // Like Button Functionality
   function initializeLikeButton() {
-    const likeButton = document.getElementById('${buttonId}');
+    const likeButton = document.getElementById("${buttonId}");
     if (!likeButton) return;
 
     const postSlug = likeButton.dataset.postSlug;
-    const countElement = likeButton.querySelector('.like-count');
-    const feedbackElement = likeButton.closest('.like-button-wrapper').querySelector('.like-feedback');
+    const countElement = likeButton.querySelector(".like-count");
+    const feedbackElement = likeButton
+      .closest(".like-button-wrapper")
+      .querySelector(".like-feedback");
 
     // Load saved state
     const savedState = localStorage.getItem(`like-${postSlug}`);
     if (savedState) {
       const { liked, count } = JSON.parse(savedState);
       if (liked) {
-        likeButton.classList.add('liked');
+        likeButton.classList.add("liked");
       }
       if (countElement) {
         countElement.textContent = count;
@@ -305,64 +339,67 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
     }
 
     // Handle click
-    likeButton.addEventListener('click', async () => {
-      if (likeButton.classList.contains('liked')) return;
+    likeButton.addEventListener("click", async () => {
+      if (likeButton.classList.contains("liked")) return;
 
       // Add liked class immediately for better UX
-      likeButton.classList.add('liked');
-      
+      likeButton.classList.add("liked");
+
       // Update count
-      const currentCount = parseInt(countElement?.dataset.count || '0');
+      const currentCount = parseInt(countElement?.dataset.count || "0");
       const newCount = currentCount + 1;
-      
+
       if (countElement) {
         countElement.textContent = newCount;
         countElement.dataset.count = newCount;
       }
 
       // Save to localStorage
-      localStorage.setItem(`like-${postSlug}`, JSON.stringify({
-        liked: true,
-        count: newCount
-      }));
+      localStorage.setItem(
+        `like-${postSlug}`,
+        JSON.stringify({
+          liked: true,
+          count: newCount,
+        }),
+      );
 
       // Show feedback
       if (feedbackElement) {
-        feedbackElement.classList.add('show');
+        feedbackElement.classList.add("show");
         setTimeout(() => {
-          feedbackElement.classList.remove('show');
+          feedbackElement.classList.remove("show");
         }, 2000);
       }
 
       // Send analytics event
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'like_article', {
-          'post_slug': postSlug,
-          'like_count': newCount
+      if (typeof gtag !== "undefined") {
+        gtag("event", "like_article", {
+          post_slug: postSlug,
+          like_count: newCount,
         });
       }
 
       // Optional: Send to server
       try {
-        await fetch('/api/like', {
-          method: 'POST',
+        await fetch("/api/like", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             postSlug: postSlug,
-            action: 'like'
-          })
+            action: "like",
+          }),
         });
       } catch (error) {
-        console.log('Like tracking failed:', error);
+        console.log("Like tracking failed:", error);
       }
     });
   }
 
   // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeLikeButton);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeLikeButton);
   } else {
     initializeLikeButton();
   }

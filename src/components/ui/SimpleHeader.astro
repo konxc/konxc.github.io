@@ -1,29 +1,29 @@
 ---
 // Simple Header Component
-import Logo from '@components/ui/Logo.astro';
+import Logo from "@components/ui/Logo.astro";
 
 export interface Props {
   className?: string;
-  variant?: 'default' | 'transparent' | 'minimal';
+  variant?: "default" | "transparent" | "minimal";
   showSearch?: boolean;
   showDarkMode?: boolean;
 }
 
-const { 
-  className = '',
-  variant = 'default',
+const {
+  className = "",
+  variant = "default",
   showSearch = true,
-  showDarkMode = true
+  showDarkMode = true,
 } = Astro.props;
 
 // Navigation links
 const navigationLinks = [
-  { name: 'Beranda', href: '/' },
-  { name: 'Layanan', href: '/services' },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Kontributor', href: '/contributors' },
-  { name: 'Tentang', href: '/about' },
-  { name: 'Kontak', href: '/contact' }
+  { name: "Beranda", href: "/" },
+  { name: "Layanan", href: "/services" },
+  { name: "Blog", href: "/blog" },
+  { name: "Kontributor", href: "/contributors" },
+  { name: "Tentang", href: "/about" },
+  { name: "Kontak", href: "/contact" },
 ];
 ---
 
@@ -41,39 +41,47 @@ const navigationLinks = [
         <!-- Desktop Navigation -->
         <div class="nav-desktop">
           <ul class="nav-links">
-            {navigationLinks.map(link => (
-              <li class="nav-item">
-                <a href={link.href} class="nav-link">
-                  {link.name}
-                </a>
-              </li>
-            ))}
+            {
+              navigationLinks.map((link) => (
+                <li class="nav-item">
+                  <a href={link.href} class="nav-link">
+                    {link.name}
+                  </a>
+                </li>
+              ))
+            }
           </ul>
         </div>
 
         <!-- Right Side Actions -->
         <div class="nav-actions">
           <!-- Search -->
-          {showSearch && (
-            <button class="search-button" aria-label="Search">
-              <i class="i-mdi-magnify"></i>
-            </button>
-          )}
+          {
+            showSearch && (
+              <button class="search-button" aria-label="Search">
+                <i class="i-mdi-magnify" />
+              </button>
+            )
+          }
 
           <!-- Dark Mode Toggle -->
-          {showDarkMode && (
-            <button class="dark-mode-toggle" aria-label="Toggle dark mode">
-              <i class="i-mdi-weather-sunny dark-mode-icon"></i>
-            </button>
-          )}
+          {
+            showDarkMode && (
+              <button class="dark-mode-toggle" aria-label="Toggle dark mode">
+                <i class="i-mdi-weather-sunny dark-mode-icon" />
+              </button>
+            )
+          }
 
           <!-- CTA Button -->
-          <a href="/contact" class="cta-button">
-            Hubungi Kami
-          </a>
+          <a href="/contact" class="cta-button"> Hubungi Kami </a>
 
           <!-- Mobile Menu Toggle -->
-          <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+          <button
+            class="mobile-menu-toggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
@@ -91,22 +99,22 @@ const navigationLinks = [
             <i class="i-mdi-close"></i>
           </button>
         </div>
-        
+
         <div class="mobile-menu-body">
           <ul class="mobile-nav-links">
-            {navigationLinks.map(link => (
-              <li class="mobile-nav-item">
-                <a href={link.href} class="mobile-nav-link">
-                  {link.name}
-                </a>
-              </li>
-            ))}
+            {
+              navigationLinks.map((link) => (
+                <li class="mobile-nav-item">
+                  <a href={link.href} class="mobile-nav-link">
+                    {link.name}
+                  </a>
+                </li>
+              ))
+            }
           </ul>
-          
+
           <div class="mobile-menu-actions">
-            <a href="/contact" class="mobile-cta-button">
-              Hubungi Kami
-            </a>
+            <a href="/contact" class="mobile-cta-button"> Hubungi Kami </a>
           </div>
         </div>
       </div>
@@ -117,15 +125,15 @@ const navigationLinks = [
 <style>
   @reference "@/styles/global.css";
   .simple-header {
-    @apply bg-white border-b border-neutral-200 sticky top-0 z-50;
+    @apply sticky top-0 z-50 border-b border-neutral-200 bg-white;
   }
-  
+
   .simple-header.transparent {
-    @apply bg-transparent border-transparent;
+    @apply border-transparent bg-transparent;
   }
-  
+
   .simple-header.minimal {
-    @apply bg-neutral-50 border-neutral-100;
+    @apply border-neutral-100 bg-neutral-50;
   }
 
   .nav-container {
@@ -133,7 +141,7 @@ const navigationLinks = [
   }
 
   .nav-content {
-    @apply flex items-center justify-between h-16 lg:h-20;
+    @apply flex h-16 items-center justify-between lg:h-20;
   }
 
   .nav-brand {
@@ -145,7 +153,7 @@ const navigationLinks = [
   }
 
   .nav-desktop {
-    @apply hidden lg:flex flex-1 justify-center;
+    @apply hidden flex-1 justify-center lg:flex;
   }
 
   .nav-links {
@@ -157,7 +165,7 @@ const navigationLinks = [
   }
 
   .nav-link {
-    @apply text-neutral-700 hover:text-primary-600 transition-colors font-medium text-sm;
+    @apply hover:text-primary-600 text-sm font-medium text-neutral-700 transition-colors;
   }
 
   .nav-actions {
@@ -165,11 +173,11 @@ const navigationLinks = [
   }
 
   .search-button {
-    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+    @apply hover:text-primary-600 p-2 text-neutral-600 transition-colors;
   }
 
   .dark-mode-toggle {
-    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+    @apply hover:text-primary-600 p-2 text-neutral-600 transition-colors;
   }
 
   .dark-mode-icon {
@@ -177,19 +185,19 @@ const navigationLinks = [
   }
 
   .cta-button {
-    @apply hidden sm:flex items-center bg-primary-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors hover:bg-primary-700;
+    @apply bg-primary-600 hover:bg-primary-700 hidden items-center rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors sm:flex;
   }
 
   .mobile-menu-toggle {
-    @apply lg:hidden p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+    @apply hover:text-primary-600 p-2 text-neutral-600 transition-colors lg:hidden;
   }
 
   .hamburger-line {
-    @apply block w-5 h-0.5 bg-current mb-1 last:mb-0 transition-all duration-200;
+    @apply mb-1 block h-0.5 w-5 bg-current transition-all duration-200 last:mb-0;
   }
 
   .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(1) {
-    @apply rotate-45 translate-y-1.5;
+    @apply translate-y-1.5 rotate-45;
   }
 
   .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(2) {
@@ -197,27 +205,27 @@ const navigationLinks = [
   }
 
   .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(3) {
-    @apply -rotate-45 -translate-y-1.5;
+    @apply -translate-y-1.5 -rotate-45;
   }
 
   .mobile-menu {
-    @apply fixed inset-0 z-50 lg:hidden opacity-0 invisible transition-all duration-300;
+    @apply invisible fixed inset-0 z-50 opacity-0 transition-all duration-300 lg:hidden;
   }
 
   .mobile-menu.active {
-    @apply opacity-100 visible;
+    @apply visible opacity-100;
   }
 
   .mobile-menu-content {
-    @apply bg-white h-full flex flex-col;
+    @apply flex h-full flex-col bg-white;
   }
 
   .mobile-menu-header {
-    @apply flex items-center justify-between p-4 border-b border-neutral-200;
+    @apply flex items-center justify-between border-b border-neutral-200 p-4;
   }
 
   .mobile-menu-close {
-    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+    @apply hover:text-primary-600 p-2 text-neutral-600 transition-colors;
   }
 
   .mobile-menu-body {
@@ -233,7 +241,7 @@ const navigationLinks = [
   }
 
   .mobile-nav-link {
-    @apply block py-4 text-neutral-700 hover:text-primary-600 transition-colors font-medium;
+    @apply hover:text-primary-600 block py-4 font-medium text-neutral-700 transition-colors;
   }
 
   .mobile-menu-actions {
@@ -241,24 +249,24 @@ const navigationLinks = [
   }
 
   .mobile-cta-button {
-    @apply flex items-center justify-center bg-primary-600 text-white px-4 py-3 rounded-lg font-medium transition-colors hover:bg-primary-700;
+    @apply bg-primary-600 hover:bg-primary-700 flex items-center justify-center rounded-lg px-4 py-3 font-medium text-white transition-colors;
   }
 
   /* Dark mode styles */
   .dark .simple-header {
-    @apply bg-neutral-900 border-neutral-700;
+    @apply border-neutral-700 bg-neutral-900;
   }
 
   .dark .simple-header.transparent {
-    @apply bg-transparent border-transparent;
+    @apply border-transparent bg-transparent;
   }
 
   .dark .simple-header.minimal {
-    @apply bg-neutral-800 border-neutral-700;
+    @apply border-neutral-700 bg-neutral-800;
   }
 
   .dark .nav-link {
-    @apply text-neutral-300 hover:text-primary-400;
+    @apply hover:text-primary-400 text-neutral-300;
   }
 
   .dark .mobile-menu-content {
@@ -270,7 +278,7 @@ const navigationLinks = [
   }
 
   .dark .mobile-nav-link {
-    @apply text-neutral-300 hover:text-primary-400;
+    @apply hover:text-primary-400 text-neutral-300;
   }
 
   .dark .mobile-nav-item {
@@ -280,63 +288,65 @@ const navigationLinks = [
 
 <script>
   // Simple header functionality
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener("DOMContentLoaded", function () {
     // Mobile menu toggle
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const mobileMenuClose = document.querySelector('.mobile-menu-close');
+    const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+    const mobileMenu = document.querySelector(".mobile-menu");
+    const mobileMenuClose = document.querySelector(".mobile-menu-close");
 
     if (mobileMenuToggle && mobileMenu) {
-      mobileMenuToggle.addEventListener('click', function() {
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', !isExpanded);
-        mobileMenu.classList.toggle('active');
+      mobileMenuToggle.addEventListener("click", function () {
+        const isExpanded = this.getAttribute("aria-expanded") === "true";
+        this.setAttribute("aria-expanded", !isExpanded);
+        mobileMenu.classList.toggle("active");
       });
     }
 
     if (mobileMenuClose && mobileMenu) {
-      mobileMenuClose.addEventListener('click', function() {
-        mobileMenuToggle?.setAttribute('aria-expanded', 'false');
-        mobileMenu.classList.remove('active');
+      mobileMenuClose.addEventListener("click", function () {
+        mobileMenuToggle?.setAttribute("aria-expanded", "false");
+        mobileMenu.classList.remove("active");
       });
     }
 
     // Dark mode toggle
-    const darkModeToggle = document.querySelector('.dark-mode-toggle');
-    
+    const darkModeToggle = document.querySelector(".dark-mode-toggle");
+
     if (darkModeToggle) {
-      darkModeToggle.addEventListener('click', function() {
-        document.documentElement.classList.toggle('dark');
-        
+      darkModeToggle.addEventListener("click", function () {
+        document.documentElement.classList.toggle("dark");
+
         // Save preference
-        const isDark = document.documentElement.classList.contains('dark');
-        localStorage.setItem('darkMode', isDark);
-        
+        const isDark = document.documentElement.classList.contains("dark");
+        localStorage.setItem("darkMode", isDark);
+
         // Update icon
-        const icon = this.querySelector('.dark-mode-icon');
+        const icon = this.querySelector(".dark-mode-icon");
         if (icon) {
-          icon.className = isDark ? 'i-mdi-weather-night dark-mode-icon' : 'i-mdi-weather-sunny dark-mode-icon';
+          icon.className = isDark
+            ? "i-mdi-weather-night dark-mode-icon"
+            : "i-mdi-weather-sunny dark-mode-icon";
         }
       });
-      
+
       // Load saved preference
-      const savedDarkMode = localStorage.getItem('darkMode');
-      if (savedDarkMode === 'true') {
-        document.documentElement.classList.add('dark');
-        const icon = darkModeToggle.querySelector('.dark-mode-icon');
+      const savedDarkMode = localStorage.getItem("darkMode");
+      if (savedDarkMode === "true") {
+        document.documentElement.classList.add("dark");
+        const icon = darkModeToggle.querySelector(".dark-mode-icon");
         if (icon) {
-          icon.className = 'i-mdi-weather-night dark-mode-icon';
+          icon.className = "i-mdi-weather-night dark-mode-icon";
         }
       }
     }
 
     // Search functionality
-    const searchButton = document.querySelector('.search-button');
-    
+    const searchButton = document.querySelector(".search-button");
+
     if (searchButton) {
-      searchButton.addEventListener('click', function() {
+      searchButton.addEventListener("click", function () {
         // Redirect to search page
-        window.location.href = '/search';
+        window.location.href = "/search";
       });
     }
   });

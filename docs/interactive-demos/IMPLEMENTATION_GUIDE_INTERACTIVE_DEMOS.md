@@ -29,19 +29,27 @@ src/
 
 ```typescript
 // Parse interactive demos dari markdown content
-export function parseInteractiveDemos(content: string, frontmatter: any): InteractiveDemo[]
+export function parseInteractiveDemos(
+  content: string,
+  frontmatter: any,
+): InteractiveDemo[];
 
 // Parse blog post dengan semua fitur
-export function parseBlogPostComplete(post: CollectionEntry<'blog'>): ParsedBlogPost
+export function parseBlogPostComplete(
+  post: CollectionEntry<"blog">,
+): ParsedBlogPost;
 
 // Extract demo content untuk rendering
-export function extractDemoContent(content: string, demoId: string): string
+export function extractDemoContent(content: string, demoId: string): string;
 
 // Generate table of contents dari headings
-export function generateTableOfContents(headings: Array<{ level: number; text: string; id: string }>)
+export function generateTableOfContents(
+  headings: Array<{ level: number; text: string; id: string }>,
+);
 ```
 
 #### **Features:**
+
 - ✅ **Demo parsing** dari markdown blocks
 - ✅ **Metadata extraction** dari frontmatter
 - ✅ **Table of contents** generation
@@ -55,27 +63,35 @@ export function generateTableOfContents(headings: Array<{ level: number; text: s
 
 ```astro
 ---
-import { parseBlogPostComplete } from '@utils/markdownParser';
+import { parseBlogPostComplete } from "@utils/markdownParser";
 
 export async function getStaticPaths() {
-  const posts = await Astro.glob('../content/blog/*.md');
-  
+  const posts = await Astro.glob("../content/blog/*.md");
+
   return posts.map((post) => {
     const parsed = parseBlogPostComplete(post);
-    
+
     return {
       params: { slug: post.frontmatter.slug },
-      props: { post, parsed }
+      props: { post, parsed },
     };
   });
 }
 
 const { post, parsed } = Astro.props;
-const { frontmatter, content, interactiveDemos, headings, tableOfContents, demoSummary } = parsed;
+const {
+  frontmatter,
+  content,
+  interactiveDemos,
+  headings,
+  tableOfContents,
+  demoSummary,
+} = parsed;
 ---
 ```
 
 #### **Features:**
+
 - ✅ **Automatic parsing** dari markdown content
 - ✅ **Interactive demos** integration
 - ✅ **Table of contents** sidebar
@@ -88,13 +104,11 @@ const { frontmatter, content, interactiveDemos, headings, tableOfContents, demoS
 #### **Usage:**
 
 ```astro
-<InteractiveDemos 
-  demos={interactiveDemos}
-  className="mt-8"
-/>
+<InteractiveDemos demos={interactiveDemos} className="mt-8" />
 ```
 
 #### **Features:**
+
 - ✅ **Tabbed interface** untuk multiple demos
 - ✅ **Responsive design** dengan mobile-first approach
 - ✅ **Type-based icons** (code, visual, interactive)
@@ -132,27 +146,31 @@ interactiveDemos:
 
 ### **2. Demo Blocks**
 
-```markdown
+````markdown
 <!-- INTERACTIVE_DEMO:tailwind-config -->
+
 ```javascript
 // Tailwind Config Generator
 module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
         primary: {
-          50: '#eff6ff',
-          500: '#3b82f6',
-          900: '#1e3a8a'
-        }
-      }
-    }
-  }
-}
+          50: "#eff6ff",
+          500: "#3b82f6",
+          900: "#1e3a8a",
+        },
+      },
+    },
+  },
+};
 ```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
-```
+
+````
 
 ### **3. Content Structure**
 
@@ -166,7 +184,8 @@ module.exports = {
 <!-- INTERACTIVE_DEMO:demo-id -->
 ```javascript
 // Demo content
-```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
 
 ### Subsection 1.2
@@ -176,7 +195,8 @@ Regular markdown content here...
 ## Section 2
 
 More content...
-```
+
+````
 
 ## 🎨 **Demo Types**
 
@@ -200,9 +220,11 @@ const config = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: { extend: {} }
 };
-```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
-```
+
+````
 
 ### **2. Visual Demos (`type: "visual"`)**
 
@@ -224,9 +246,11 @@ graph TD
     B --> C[Auth Service]
     B --> D[User Service]
     B --> E[Content Service]
-```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
-```
+
+````
 
 ### **3. Interactive Demos (`type: "interactive"`)**
 
@@ -248,9 +272,11 @@ graph TD
   <input type="color" id="primary-color" value="#3b82f6">
   <div class="color-preview" id="preview"></div>
 </div>
-```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
-```
+
+````
 
 ## 📊 **Analytics & Tracking**
 
@@ -267,7 +293,7 @@ function trackDemoEvent(eventType: string, demoId: string, metadata?: any) {
     });
   }
 }
-```
+````
 
 ### **2. User Behavior Tracking**
 
@@ -292,21 +318,25 @@ function trackDemoEvent(eventType: string, demoId: string, metadata?: any) {
 # Article Structure
 
 ## Introduction
+
 - Overview
 - Prerequisites
 - Learning objectives
 
 ## Core Concepts
+
 - Theory explanation
 - Code examples
 - Interactive demos
 
 ## Advanced Topics
+
 - Complex examples
 - Real-world applications
 - Interactive tools
 
 ## Conclusion
+
 - Summary
 - Next steps
 - Additional resources
@@ -328,8 +358,8 @@ interactiveDemos:
     type: "code"
     title: "Descriptive Title"
     description: "Clear description of what demo does"
-    icon: "🎯"  # Relevant emoji
-    featured: true  # Highlight important demos
+    icon: "🎯" # Relevant emoji
+    featured: true # Highlight important demos
     metadata:
       difficulty: "beginner|intermediate|advanced"
       duration: "5 min"
@@ -363,24 +393,28 @@ interactiveDemos:
 
 ### **2. Dynamic Content**
 
-```markdown
+````markdown
 <!-- INTERACTIVE_DEMO:dynamic-config -->
+
 ```javascript
 // Dynamic Configuration Generator
 const generateConfig = (options) => {
   return {
-    content: options.content || ['./src/**/*.{js,ts,jsx,tsx}'],
+    content: options.content || ["./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
       extend: {
         colors: options.colors || {},
-        spacing: options.spacing || {}
-      }
-    }
+        spacing: options.spacing || {},
+      },
+    },
   };
 };
 ```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
-```
+
+````
 
 ### **3. Multi-language Support**
 
@@ -392,17 +426,19 @@ interface Config {
   content: string[];
   theme: ThemeConfig;
 }
-```
+````
 
 ```javascript
 // JavaScript Example
 const config = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  theme: { extend: {} }
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  theme: { extend: {} },
 };
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
-```
+
+````
 
 ## 📈 **Usage Statistics**
 
@@ -481,30 +517,36 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: { extend: {} }
 }
-```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
 
 ### Color System
 
 <!-- INTERACTIVE_DEMO:color-system -->
+
 ```css
 /* Color System */
 :root {
   --color-primary: #3b82f6;
 }
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
 
 ### Responsive Design
 
 <!-- INTERACTIVE_DEMO:responsive-design -->
+
 ```html
 <!-- Responsive Design Example -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
   <!-- Content -->
 </div>
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
+
 ```
 
 ## 🎉 **Benefits**
@@ -528,3 +570,4 @@ module.exports = {
 - ✅ **Easy testing** dengan parser functions
 
 **Sistem ini memberikan foundation yang solid untuk membuat artikel teknis yang engaging dan interaktif!** 🚀
+```

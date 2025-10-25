@@ -7,6 +7,7 @@ Saya telah memperbaiki styling konten blog untuk memberikan pengalaman membaca y
 ## Masalah yang Ditemukan
 
 ### **Typography Issues:**
+
 - Font size tidak optimal untuk readability
 - Line height terlalu ketat
 - Spacing antar elemen tidak konsisten
@@ -14,12 +15,14 @@ Saya telah memperbaiki styling konten blog untuk memberikan pengalaman membaca y
 - Font family tidak optimal untuk reading experience
 
 ### **Spacing Problems:**
+
 - Margin dan padding tidak konsisten
 - Tidak ada breathing room antar paragraf
 - Headings terlalu dekat dengan content
 - Lists tidak memiliki spacing yang baik
 
 ### **Visual Hierarchy:**
+
 - Tidak ada perbedaan yang jelas antar heading levels
 - First paragraph tidak dibedakan
 - Links tidak memiliki styling yang baik
@@ -30,57 +33,67 @@ Saya telah memperbaiki styling konten blog untuk memberikan pengalaman membaca y
 ### **1. Typography System**
 
 #### **Font Family:**
+
 ```css
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+font-family:
+  "Inter",
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  Roboto,
+  sans-serif;
 ```
 
 #### **Heading Hierarchy:**
+
 ```css
 /* H1 - Main Title */
 .blog-content h1 {
-  @apply text-4xl font-bold text-neutral-900 mb-8 mt-12 leading-tight;
+  @apply mt-12 mb-8 text-4xl leading-tight font-bold text-neutral-900;
 }
 
 /* H2 - Section Headers */
 .blog-content h2 {
-  @apply text-3xl font-semibold text-neutral-900 mb-6 mt-10 leading-tight;
+  @apply mt-10 mb-6 text-3xl leading-tight font-semibold text-neutral-900;
 }
 
 /* H3 - Subsection Headers */
 .blog-content h3 {
-  @apply text-2xl font-semibold text-neutral-900 mb-4 mt-8 leading-tight;
+  @apply mt-8 mb-4 text-2xl leading-tight font-semibold text-neutral-900;
 }
 
 /* H4 - Minor Headers */
 .blog-content h4 {
-  @apply text-xl font-semibold text-neutral-900 mb-3 mt-6 leading-tight;
+  @apply mt-6 mb-3 text-xl leading-tight font-semibold text-neutral-900;
 }
 
 /* H5 - Small Headers */
 .blog-content h5 {
-  @apply text-lg font-semibold text-neutral-900 mb-2 mt-4 leading-tight;
+  @apply mt-4 mb-2 text-lg leading-tight font-semibold text-neutral-900;
 }
 
 /* H6 - Smallest Headers */
 .blog-content h6 {
-  @apply text-base font-semibold text-neutral-900 mb-2 mt-4 leading-tight;
+  @apply mt-4 mb-2 text-base leading-tight font-semibold text-neutral-900;
 }
 ```
 
 ### **2. Paragraph Styling**
 
 #### **Regular Paragraphs:**
+
 ```css
 .blog-content p {
-  @apply text-lg leading-8 mb-6 text-neutral-700;
+  @apply mb-6 text-lg leading-8 text-neutral-700;
   font-weight: 400;
 }
 ```
 
 #### **First Paragraph (Lead):**
+
 ```css
 .blog-content p:first-of-type {
-  @apply text-xl leading-8 mb-8 text-neutral-800 font-medium;
+  @apply mb-8 text-xl leading-8 font-medium text-neutral-800;
 }
 ```
 
@@ -100,6 +113,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 ### **4. List Styling**
 
 #### **Unordered Lists:**
+
 ```css
 .blog-content ul {
   @apply mb-6 space-y-2;
@@ -111,11 +125,12 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 
 .blog-content ul li::before {
   content: "•";
-  @apply absolute left-0 text-primary-500 font-bold;
+  @apply text-primary-500 absolute left-0 font-bold;
 }
 ```
 
 #### **Ordered Lists:**
+
 ```css
 .blog-content ol {
   @apply mb-6 space-y-2;
@@ -130,7 +145,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 
 ```css
 .blog-content blockquote {
-  @apply border-l-4 border-primary-500 pl-6 py-2 mb-6 italic text-neutral-600 bg-neutral-50 rounded-r-lg;
+  @apply border-primary-500 mb-6 rounded-r-lg border-l-4 bg-neutral-50 py-2 pl-6 text-neutral-600 italic;
   font-size: 1.125rem;
   line-height: 1.75;
 }
@@ -143,23 +158,25 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 ### **6. Code Styling**
 
 #### **Inline Code:**
+
 ```css
 .blog-content code {
-  @apply bg-neutral-100 text-neutral-800 px-2 py-1 rounded text-sm font-mono;
+  @apply rounded bg-neutral-100 px-2 py-1 font-mono text-sm text-neutral-800;
 }
 ```
 
 #### **Code Blocks:**
+
 ```css
 .blog-content pre {
-  @apply bg-neutral-900 text-neutral-100 p-6 rounded-lg mb-6 overflow-x-auto;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+  @apply mb-6 overflow-x-auto rounded-lg bg-neutral-900 p-6 text-neutral-100;
+  font-family: "JetBrains Mono", "Fira Code", "Monaco", "Consolas", monospace;
   font-size: 0.875rem;
   line-height: 1.6;
 }
 
 .blog-content pre code {
-  @apply bg-transparent text-neutral-100 p-0;
+  @apply bg-transparent p-0 text-neutral-100;
 }
 ```
 
@@ -167,7 +184,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 
 ```css
 .blog-content img {
-  @apply w-full h-auto rounded-lg mb-8 shadow-lg;
+  @apply mb-8 h-auto w-full rounded-lg shadow-lg;
 }
 
 .blog-content figure {
@@ -175,7 +192,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 }
 
 .blog-content figcaption {
-  @apply text-sm text-neutral-500 mt-2 text-center italic;
+  @apply mt-2 text-center text-sm text-neutral-500 italic;
 }
 ```
 
@@ -183,15 +200,15 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 
 ```css
 .blog-content table {
-  @apply w-full border-collapse mb-6;
+  @apply mb-6 w-full border-collapse;
 }
 
 .blog-content th {
-  @apply bg-neutral-100 text-neutral-900 font-semibold p-4 text-left border-b-2 border-neutral-200;
+  @apply border-b-2 border-neutral-200 bg-neutral-100 p-4 text-left font-semibold text-neutral-900;
 }
 
 .blog-content td {
-  @apply p-4 border-b border-neutral-200 text-neutral-700;
+  @apply border-b border-neutral-200 p-4 text-neutral-700;
 }
 
 .blog-content tr:hover {
@@ -228,7 +245,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 }
 
 .dark .blog-content blockquote {
-  @apply bg-neutral-800 text-neutral-300 border-primary-400;
+  @apply border-primary-400 bg-neutral-800 text-neutral-300;
 }
 
 .dark .blog-content code {
@@ -241,23 +258,23 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 ```css
 @media (max-width: 768px) {
   .blog-content h1 {
-    @apply text-3xl mb-6 mt-8;
+    @apply mt-8 mb-6 text-3xl;
   }
 
   .blog-content h2 {
-    @apply text-2xl mb-4 mt-6;
+    @apply mt-6 mb-4 text-2xl;
   }
 
   .blog-content h3 {
-    @apply text-xl mb-3 mt-4;
+    @apply mt-4 mb-3 text-xl;
   }
 
   .blog-content p {
-    @apply text-base leading-7 mb-4;
+    @apply mb-4 text-base leading-7;
   }
 
   .blog-content p:first-of-type {
-    @apply text-lg leading-7 mb-6;
+    @apply mb-6 text-lg leading-7;
   }
 
   .blog-content li {
@@ -265,11 +282,11 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
   }
 
   .blog-content blockquote {
-    @apply pl-4 py-1 mb-4 text-base;
+    @apply mb-4 py-1 pl-4 text-base;
   }
 
   .blog-content pre {
-    @apply p-4 mb-4 text-xs;
+    @apply mb-4 p-4 text-xs;
   }
 }
 ```
@@ -301,7 +318,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
   }
 
   .blog-content blockquote {
-    @apply bg-white border-neutral-300 text-black;
+    @apply border-neutral-300 bg-white text-black;
   }
 
   .blog-content code {
@@ -313,12 +330,14 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 ## Design Principles
 
 ### **1. Readability First**
+
 - **Font Size**: 18px untuk body text (optimal untuk reading)
 - **Line Height**: 1.75 (32px) untuk comfortable reading
 - **Font Weight**: 400 untuk body, 500-600 untuk headings
 - **Font Family**: Inter untuk modern, clean appearance
 
 ### **2. Visual Hierarchy**
+
 - **H1**: 36px, bold, 48px margin bottom
 - **H2**: 30px, semibold, 40px margin bottom
 - **H3**: 24px, semibold, 32px margin bottom
@@ -327,6 +346,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 - **H6**: 16px, semibold, 16px margin bottom
 
 ### **3. Spacing System**
+
 - **Paragraph Spacing**: 24px bottom margin
 - **First Paragraph**: 32px bottom margin (lead)
 - **List Spacing**: 8px between items
@@ -334,6 +354,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 - **Code Blocks**: 24px bottom margin
 
 ### **4. Color System**
+
 - **Primary Text**: `#374151` (neutral-700)
 - **Headings**: `#111827` (neutral-900)
 - **Links**: `#2563eb` (primary-600)
@@ -341,6 +362,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 - **Code Background**: `#f3f4f6` (neutral-100)
 
 ### **5. Interactive Elements**
+
 - **Links**: Underline dengan offset untuk clarity
 - **Hover States**: Smooth transitions
 - **Focus States**: Accessible focus indicators
@@ -349,6 +371,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 ## Medium/Substack Inspiration
 
 ### **Typography Similarities:**
+
 - ✅ Large, readable font sizes
 - ✅ Generous line height
 - ✅ Clear visual hierarchy
@@ -356,6 +379,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 - ✅ Modern font stack
 
 ### **Layout Similarities:**
+
 - ✅ Generous margins
 - ✅ Comfortable reading width
 - ✅ Proper paragraph spacing
@@ -363,6 +387,7 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 - ✅ Responsive design
 
 ### **Visual Similarities:**
+
 - ✅ Clean, minimal design
 - ✅ Subtle shadows on images
 - ✅ Rounded corners
@@ -372,24 +397,28 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 ## Benefits
 
 ### **1. Improved Readability**
+
 - ✅ Optimal font size dan line height
 - ✅ Clear visual hierarchy
 - ✅ Comfortable spacing
 - ✅ Modern typography
 
 ### **2. Better User Experience**
+
 - ✅ Easy to scan content
 - ✅ Clear section breaks
 - ✅ Accessible design
 - ✅ Mobile-friendly
 
 ### **3. Professional Appearance**
+
 - ✅ Clean, modern design
 - ✅ Consistent styling
 - ✅ High-quality typography
 - ✅ Brand consistency
 
 ### **4. Accessibility**
+
 - ✅ High contrast ratios
 - ✅ Readable font sizes
 - ✅ Clear focus states
@@ -398,18 +427,21 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 ## Testing
 
 ### **Desktop Testing:**
+
 - ✅ Typography scales properly
 - ✅ Spacing looks balanced
 - ✅ Links are clearly visible
 - ✅ Code blocks are readable
 
 ### **Mobile Testing:**
+
 - ✅ Font sizes adjust appropriately
 - ✅ Spacing remains comfortable
 - ✅ Images scale properly
 - ✅ Touch targets are adequate
 
 ### **Dark Mode Testing:**
+
 - ✅ Colors invert properly
 - ✅ Contrast remains high
 - ✅ Readability maintained
@@ -418,9 +450,11 @@ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, san
 ## Implementation Status
 
 ### **Files Updated:**
+
 - ✅ `src/pages/blog/[slug].astro` - Added comprehensive blog content styling
 
 ### **Styling Added:**
+
 - ✅ Typography system
 - ✅ Spacing system
 - ✅ Color system

@@ -1,11 +1,11 @@
 ---
-import UnifiedLayout from '@layouts/UnifiedLayout.astro';
-import Hero from '@components/sections/Hero.astro';
-import Services from '@components/sections/Services.astro';
-import ContactInfo from '@components/ui/ContactInfo.astro';
+import UnifiedLayout from "@layouts/UnifiedLayout.astro";
+import Hero from "@components/sections/Hero.astro";
+import Services from "@components/sections/Services.astro";
+import ContactInfo from "@components/ui/ContactInfo.astro";
 ---
 
-<UnifiedLayout 
+<UnifiedLayout
   title="KonXC - Mitra Teknologi Terpercaya | PT Koneksi Jaringan Indonesia"
   description="Solusi teknologi terintegrasi untuk UMKM hingga Enterprise. IT Support, Software Development, Branding Digital, Retail Teknologi, dan Cloud & SaaS."
   headerVariant="default"
@@ -13,167 +13,181 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
 >
   <Hero />
   <Services />
-  
+
   <!-- Ecosystem Platforms Section -->
-  <section class="section bg-linear-to-br from-primary-50 to-accent-50">
+  <section class="section from-primary-50 to-accent-50 bg-linear-to-br">
     <div class="container">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+      <div class="mb-16 text-center">
+        <h2 class="mb-4 text-3xl font-bold lg:text-4xl">
           Ekosistem <span class="text-gradient">Koneksi</span>
         </h2>
-        <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
-          Bergabunglah dengan ekosistem teknologi Indonesia yang terintegrasi. 
+        <p class="mx-auto max-w-3xl text-xl text-neutral-600">
+          Bergabunglah dengan ekosistem teknologi Indonesia yang terintegrasi.
           Dari diskusi komunitas hingga pembelajaran dan kolaborasi bisnis.
         </p>
       </div>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <!-- Platform Diskusi -->
-        <div class="card-featured text-center group">
+        <div class="card-featured group text-center">
           <div class="mb-6">
-            <div class="text-5xl mb-4">💬</div>
-            <h3 class="text-xl font-bold mb-2">Platform Diskusi</h3>
-            <div class="text-sm text-primary-600 font-semibold mb-4">platform.konxc.space</div>
+            <div class="mb-4 text-5xl">💬</div>
+            <h3 class="mb-2 text-xl font-bold">Platform Diskusi</h3>
+            <div class="text-primary-600 mb-4 text-sm font-semibold">
+              platform.konxc.space
+            </div>
           </div>
-          <p class="text-neutral-600 mb-6">
-            Platform diskusi seperti Reddit untuk komunitas teknologi Indonesia. 
-            Berbagi knowledge, bertanya, dan berkolaborasi dengan developer lainnya.
+          <p class="mb-6 text-neutral-600">
+            Platform diskusi seperti Reddit untuk komunitas teknologi Indonesia.
+            Berbagi knowledge, bertanya, dan berkolaborasi dengan developer
+            lainnya.
           </p>
-          <div class="space-y-2 text-sm text-neutral-600 mb-6">
+          <div class="mb-6 space-y-2 text-sm text-neutral-600">
             <div>✓ Forum diskusi teknologi</div>
             <div>✓ Q&A developer community</div>
             <div>✓ Project collaboration</div>
             <div>✓ Tech news & insights</div>
           </div>
-          <a 
-            href="https://platform.konxc.space" 
+          <a
+            href="https://platform.konxc.space"
             target="_blank"
             class="btn-primary group-hover:bg-primary-600 transition-colors"
           >
             Join Diskusi →
           </a>
         </div>
-        
+
         <!-- Learning Platform (Coming Soon) -->
-        <div class="card text-center group">
+        <div class="card group text-center">
           <div class="mb-6">
-            <div class="text-5xl mb-4">🎓</div>
-            <h3 class="text-xl font-bold mb-2">Learning Hub</h3>
-            <div class="text-sm text-secondary-600 font-semibold mb-4">learn.konxc.space</div>
+            <div class="mb-4 text-5xl">🎓</div>
+            <h3 class="mb-2 text-xl font-bold">Learning Hub</h3>
+            <div class="text-secondary-600 mb-4 text-sm font-semibold">
+              learn.konxc.space
+            </div>
           </div>
-          <p class="text-neutral-600 mb-6">
-            Platform pembelajaran teknologi dengan hands-on projects, 
+          <p class="mb-6 text-neutral-600">
+            Platform pembelajaran teknologi dengan hands-on projects,
             certification, dan mentorship dari praktisi industri.
           </p>
-          <div class="space-y-2 text-sm text-neutral-600 mb-6">
+          <div class="mb-6 space-y-2 text-sm text-neutral-600">
             <div>✓ Interactive coding tutorials</div>
             <div>✓ Industry certifications</div>
             <div>✓ Mentorship programs</div>
             <div>✓ Career guidance</div>
           </div>
-          <button class="btn-outline opacity-75 cursor-not-allowed">
+          <button class="btn-outline cursor-not-allowed opacity-75">
             Coming Soon
           </button>
         </div>
-        
+
         <!-- Business Insights (Coming Soon) -->
-        <div class="card text-center group">
+        <div class="card group text-center">
           <div class="mb-6">
-            <div class="text-5xl mb-4">📊</div>
-            <h3 class="text-xl font-bold mb-2">Business Insights</h3>
-            <div class="text-sm text-accent-600 font-semibold mb-4">insights.konxc.space</div>
+            <div class="mb-4 text-5xl">📊</div>
+            <h3 class="mb-2 text-xl font-bold">Business Insights</h3>
+            <div class="text-accent-600 mb-4 text-sm font-semibold">
+              insights.konxc.space
+            </div>
           </div>
-          <p class="text-neutral-600 mb-6">
-            Research, data, dan insights tentang industri teknologi Indonesia 
+          <p class="mb-6 text-neutral-600">
+            Research, data, dan insights tentang industri teknologi Indonesia
             untuk mendukung keputusan bisnis yang lebih baik.
           </p>
-          <div class="space-y-2 text-sm text-neutral-600 mb-6">
+          <div class="mb-6 space-y-2 text-sm text-neutral-600">
             <div>✓ Industry research reports</div>
             <div>✓ Market analysis</div>
             <div>✓ Tech trend insights</div>
             <div>✓ Business intelligence</div>
           </div>
-          <button class="btn-outline opacity-75 cursor-not-allowed">
+          <button class="btn-outline cursor-not-allowed opacity-75">
             Coming Soon
           </button>
         </div>
       </div>
-      
+
       <!-- Ecosystem Stats -->
-      <div class="mt-16 bg-white rounded-3xl p-8 shadow-xl">
-        <div class="text-center mb-8">
-          <h3 class="text-2xl font-bold mb-2">Ekosistem dalam Angka</h3>
-          <p class="text-neutral-600">Membangun komunitas teknologi Indonesia yang kuat</p>
+      <div class="mt-16 rounded-3xl bg-white p-8 shadow-xl">
+        <div class="mb-8 text-center">
+          <h3 class="mb-2 text-2xl font-bold">Ekosistem dalam Angka</h3>
+          <p class="text-neutral-600">
+            Membangun komunitas teknologi Indonesia yang kuat
+          </p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
           <div class="text-center">
-            <div class="text-3xl font-bold text-primary-600 mb-2">500+</div>
+            <div class="text-primary-600 mb-2 text-3xl font-bold">500+</div>
             <div class="text-sm text-neutral-600">Klien Aktif</div>
           </div>
           <div class="text-center">
-            <div class="text-3xl font-bold text-secondary-600 mb-2">1K+</div>
+            <div class="text-secondary-600 mb-2 text-3xl font-bold">1K+</div>
             <div class="text-sm text-neutral-600">Community Members</div>
           </div>
           <div class="text-center">
-            <div class="text-3xl font-bold text-accent-600 mb-2">50+</div>
+            <div class="text-accent-600 mb-2 text-3xl font-bold">50+</div>
             <div class="text-sm text-neutral-600">Tech Articles</div>
           </div>
           <div class="text-center">
-            <div class="text-3xl font-bold text-primary-600 mb-2">24/7</div>
+            <div class="text-primary-600 mb-2 text-3xl font-bold">24/7</div>
             <div class="text-sm text-neutral-600">Community Support</div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  
+
   <!-- About Section -->
   <section class="section bg-neutral-50">
     <div class="container">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
         <div>
-          <h2 class="text-3xl lg:text-4xl font-bold mb-6">
+          <h2 class="mb-6 text-3xl font-bold lg:text-4xl">
             Tentang <span class="text-gradient">Koneksi</span>
           </h2>
-          <p class="text-xl text-neutral-600 mb-6">
-            PT Koneksi Jaringan Indonesia - KonXC (dibaca: Koneksi) adalah **rumah milik bersama** 
-            untuk komunitas teknologi Indonesia. Kami membangun ekosistem teknologi terintegrasi 
-            yang menghubungkan developer, bisnis, dan inovator.
+          <p class="mb-6 text-xl text-neutral-600">
+            PT Koneksi Jaringan Indonesia - KonXC (dibaca: Koneksi) adalah
+            **rumah milik bersama** untuk komunitas teknologi Indonesia. Kami
+            membangun ekosistem teknologi terintegrasi yang menghubungkan
+            developer, bisnis, dan inovator.
           </p>
-          <p class="text-lg text-neutral-600 mb-8">
-            Dengan 5 divisi yang terintegrasi dan platform komunitas 
-            <a href="https://platform.konxc.space" class="text-primary-600 hover:text-primary-700 font-semibold" target="_blank">platform.konxc.space</a>, 
-            kami menyediakan solusi teknologi lengkap dari infrastruktur hingga branding digital, 
-            khususnya untuk UMKM, sekolah, institusi, dan startup.
+          <p class="mb-8 text-lg text-neutral-600">
+            Dengan 5 divisi yang terintegrasi dan platform komunitas
+            <a
+              href="https://platform.konxc.space"
+              class="text-primary-600 hover:text-primary-700 font-semibold"
+              target="_blank">platform.konxc.space</a
+            >, kami menyediakan solusi teknologi lengkap dari infrastruktur
+            hingga branding digital, khususnya untuk UMKM, sekolah, institusi,
+            dan startup.
           </p>
-          <div class="flex flex-col sm:flex-row gap-4">
-            <a href="#contact" class="btn-primary">
-              Hubungi Kami
-            </a>
-            <a href="/blog" class="btn-secondary">
-              Baca Blog Kami
-            </a>
-            <a href="https://platform.konxc.space" target="_blank" class="btn-accent">
+          <div class="flex flex-col gap-4 sm:flex-row">
+            <a href="#contact" class="btn-primary"> Hubungi Kami </a>
+            <a href="/blog" class="btn-secondary"> Baca Blog Kami </a>
+            <a
+              href="https://platform.konxc.space"
+              target="_blank"
+              class="btn-accent"
+            >
               Join Komunitas
             </a>
           </div>
         </div>
-        <div class="bg-white rounded-3xl p-8 shadow-xl">
+        <div class="rounded-3xl bg-white p-8 shadow-xl">
           <div class="grid grid-cols-2 gap-6">
             <div class="text-center">
-              <div class="text-3xl font-bold text-primary-600 mb-2">500+</div>
+              <div class="text-primary-600 mb-2 text-3xl font-bold">500+</div>
               <div class="text-sm text-neutral-600">Klien Puas</div>
             </div>
             <div class="text-center">
-              <div class="text-3xl font-bold text-primary-600 mb-2">10+</div>
+              <div class="text-primary-600 mb-2 text-3xl font-bold">10+</div>
               <div class="text-sm text-neutral-600">Tahun Pengalaman</div>
             </div>
             <div class="text-center">
-              <div class="text-3xl font-bold text-primary-600 mb-2">5</div>
+              <div class="text-primary-600 mb-2 text-3xl font-bold">5</div>
               <div class="text-sm text-neutral-600">Divisi Layanan</div>
             </div>
             <div class="text-center">
-              <div class="text-3xl font-bold text-primary-600 mb-2">24/7</div>
+              <div class="text-primary-600 mb-2 text-3xl font-bold">24/7</div>
               <div class="text-sm text-neutral-600">Support</div>
             </div>
           </div>
@@ -181,40 +195,61 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
       </div>
     </div>
   </section>
-  
+
   <!-- Contact Section -->
   <section id="contact" class="section bg-white">
     <div class="container">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+      <div class="mb-16 text-center">
+        <h2 class="mb-4 text-3xl font-bold lg:text-4xl">
           Siap Memulai Proyek Anda?
         </h2>
-        <p class="text-xl text-neutral-600 max-w-2xl mx-auto">
-          Konsultasikan kebutuhan teknologi bisnis Anda dengan tim ahli kami. 
+        <p class="mx-auto max-w-2xl text-xl text-neutral-600">
+          Konsultasikan kebutuhan teknologi bisnis Anda dengan tim ahli kami.
           Kami siap membantu mewujudkan visi digital Anda.
         </p>
       </div>
 
-      <div class="grid lg:grid-cols-2 gap-12">
+      <div class="grid gap-12 lg:grid-cols-2">
         <!-- Contact Form -->
-        <div class="bg-linear-to-br from-primary-50 to-secondary-50 rounded-3xl p-8">
-          <h3 class="text-2xl font-bold mb-6">Konsultasi Gratis</h3>
+        <div
+          class="from-primary-50 to-secondary-50 rounded-3xl bg-linear-to-br p-8"
+        >
+          <h3 class="mb-6 text-2xl font-bold">Konsultasi Gratis</h3>
           <form class="space-y-6">
             <div>
               <label class="form-label">Nama Lengkap</label>
-              <input type="text" class="form-input" placeholder="Masukkan nama lengkap Anda" required>
+              <input
+                type="text"
+                class="form-input"
+                placeholder="Masukkan nama lengkap Anda"
+                required
+              />
             </div>
             <div>
               <label class="form-label">Email</label>
-              <input type="email" class="form-input" placeholder="contoh@email.com" required>
+              <input
+                type="email"
+                class="form-input"
+                placeholder="contoh@email.com"
+                required
+              />
             </div>
             <div>
               <label class="form-label">Nomor Telepon</label>
-              <input type="tel" class="form-input" placeholder="+62 xxx xxx xxxx" required>
+              <input
+                type="tel"
+                class="form-input"
+                placeholder="+62 xxx xxx xxxx"
+                required
+              />
             </div>
             <div>
               <label class="form-label">Perusahaan/Institusi</label>
-              <input type="text" class="form-input" placeholder="Nama perusahaan atau institusi">
+              <input
+                type="text"
+                class="form-input"
+                placeholder="Nama perusahaan atau institusi"
+              />
             </div>
             <div>
               <label class="form-label">Layanan yang Diperlukan</label>
@@ -230,18 +265,22 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
             </div>
             <div>
               <label class="form-label">Pesan</label>
-              <textarea class="form-textarea" rows="4" placeholder="Ceritakan kebutuhan teknologi bisnis Anda..."></textarea>
+              <textarea
+                class="form-textarea"
+                rows="4"
+                placeholder="Ceritakan kebutuhan teknologi bisnis Anda..."
+              ></textarea>
             </div>
             <button type="submit" class="btn-primary w-full">
               Kirim Konsultasi
             </button>
           </form>
         </div>
-        
+
         <!-- Contact Info -->
         <div class="space-y-8">
           <div>
-            <h3 class="text-2xl font-bold mb-6">Informasi Kontak</h3>
+            <h3 class="mb-6 text-2xl font-bold">Informasi Kontak</h3>
             <div class="space-y-4">
               <div class="flex items-start gap-4">
                 <div class="text-primary-600 text-xl">📍</div>
@@ -268,14 +307,16 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
                 <div class="text-primary-600 text-xl">🕒</div>
                 <div>
                   <div class="font-semibold">Jam Kerja</div>
-                  <div class="text-neutral-600">Senin - Jumat: 09:00 - 18:00</div>
+                  <div class="text-neutral-600">
+                    Senin - Jumat: 09:00 - 18:00
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          
-          <div class="bg-white rounded-2xl p-6 shadow-lg">
-            <h4 class="text-lg font-bold mb-4">Mengapa Memilih Koneksi?</h4>
+
+          <div class="rounded-2xl bg-white p-6 shadow-lg">
+            <h4 class="mb-4 text-lg font-bold">Mengapa Memilih Koneksi?</h4>
             <ul class="space-y-3 text-neutral-600">
               <li class="flex items-center gap-3">
                 <span class="text-green-500">✓</span>
@@ -301,6 +342,6 @@ import ContactInfo from '@components/ui/ContactInfo.astro';
           </div>
         </div>
       </div>
-      </div>
-    </section>
+    </div>
+  </section>
 </UnifiedLayout>

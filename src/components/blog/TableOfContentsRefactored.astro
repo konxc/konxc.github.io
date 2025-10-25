@@ -10,26 +10,26 @@ const { class: className, content } = Astro.props;
 // Server-side TOC generation
 function generateTOCFromContent(htmlContent: string) {
   if (!htmlContent) return [];
-  
+
   // Parse headings from HTML content
   const headingRegex = /<h([2-6])[^>]*>(.*?)<\/h[2-6]>/gi;
-  const headings: Array<{level: number, text: string, id: string}> = [];
+  const headings: Array<{ level: number; text: string; id: string }> = [];
   let match;
   let index = 0;
-  
+
   while ((match = headingRegex.exec(htmlContent)) !== null) {
     const level = parseInt(match[1]);
-    const text = match[2].replace(/<[^>]*>/g, '').trim(); // Remove HTML tags
+    const text = match[2].replace(/<[^>]*>/g, "").trim(); // Remove HTML tags
     const id = `heading-${index}`;
-    
+
     headings.push({
       level,
       text,
-      id
+      id,
     });
     index++;
   }
-  
+
   return headings;
 }
 
@@ -39,47 +39,60 @@ const tocItems = content ? generateTOCFromContent(content) : [];
 // TOC state management
 const tocState = {
   isExpanded: true,
-  activeId: '',
-  items: tocItems
+  activeId: "",
+  items: tocItems,
 };
 ---
 
-<div class={`table-of-contents ${className || ''}`}>
+<div class={`table-of-contents ${className || ""}`}>
   <div class="toc-header">
-    <h4 class="text-lg font-semibold mb-4 text-neutral-800">Daftar Isi</h4>
-    <button 
-      class="toc-toggle-btn" 
+    <h4 class="mb-4 text-lg font-semibold text-neutral-800">Daftar Isi</h4>
+    <button
+      class="toc-toggle-btn"
       id="toc-toggle-btn"
       aria-label="Toggle table of contents"
       aria-expanded={tocState.isExpanded}
     >
-      <svg class="toc-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      <svg
+        class="toc-icon"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
     </button>
   </div>
-  
+
   <nav class="toc-nav" id="toc-nav">
-    {tocItems.length > 0 ? (
-      <ul class="toc-list">
-        {tocItems.map((item) => (
-          <li class={`toc-item toc-h${item.level}`}>
-            <a 
-              href={`#${item.id}`}
-              class="toc-link"
-              data-level={item.level}
-              data-id={item.id}
-            >
-              {item.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <div class="toc-empty">
-        <p class="text-neutral-500 text-sm">Tidak ada heading yang ditemukan</p>
-      </div>
-    )}
+    {
+      tocItems.length > 0 ? (
+        <ul class="toc-list">
+          {tocItems.map((item) => (
+            <li class={`toc-item toc-h${item.level}`}>
+              <a
+                href={`#${item.id}`}
+                class="toc-link"
+                data-level={item.level}
+                data-id={item.id}
+              >
+                {item.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="toc-empty">
+          <p class="text-sm text-neutral-500">
+            Tidak ada heading yang ditemukan
+          </p>
+        </div>
+      )
+    }
   </nav>
 </div>
 
@@ -212,7 +225,7 @@ const tocState = {
 
   /* Active state enhancements */
   .toc-link.active::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0;
@@ -261,31 +274,33 @@ const tocState = {
 <script>
   // Simplified client-side functionality
   function initTOC() {
-    const tocNav = document.getElementById('toc-nav');
-    const toggleBtn = document.getElementById('toc-toggle-btn');
-    const tocLinks = document.querySelectorAll('.toc-link');
-    
+    const tocNav = document.getElementById("toc-nav");
+    const toggleBtn = document.getElementById("toc-toggle-btn");
+    const tocLinks = document.querySelectorAll(".toc-link");
+
     if (!tocNav || !toggleBtn) return;
 
     // Toggle functionality
-    toggleBtn.addEventListener('click', () => {
-      const isExpanded = tocNav.classList.contains('collapsed');
-      
+    toggleBtn.addEventListener("click", () => {
+      const isExpanded = tocNav.classList.contains("collapsed");
+
       if (isExpanded) {
-        tocNav.classList.remove('collapsed');
-        toggleBtn.classList.add('expanded');
-        toggleBtn.setAttribute('aria-expanded', 'true');
+        tocNav.classList.remove("collapsed");
+        toggleBtn.classList.add("expanded");
+        toggleBtn.setAttribute("aria-expanded", "true");
       } else {
-        tocNav.classList.add('collapsed');
-        toggleBtn.classList.remove('expanded');
-        toggleBtn.setAttribute('aria-expanded', 'false');
+        tocNav.classList.add("collapsed");
+        toggleBtn.classList.remove("expanded");
+        toggleBtn.setAttribute("aria-expanded", "false");
       }
     });
 
     // Active link detection
     function updateActiveLink() {
-      const headings = document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6');
-      let activeId = '';
+      const headings = document.querySelectorAll(
+        ".blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6",
+      );
+      let activeId = "";
 
       headings.forEach((heading) => {
         const rect = heading.getBoundingClientRect();
@@ -296,28 +311,28 @@ const tocState = {
 
       // Update active states
       tocLinks.forEach((link) => {
-        const linkId = link.getAttribute('data-id');
+        const linkId = link.getAttribute("data-id");
         const linkElement = link as HTMLElement;
-        
+
         if (linkId === activeId) {
-          linkElement.classList.add('active');
+          linkElement.classList.add("active");
         } else {
-          linkElement.classList.remove('active');
+          linkElement.classList.remove("active");
         }
       });
     }
 
     // Smooth scroll for TOC links
     tocLinks.forEach((link) => {
-      link.addEventListener('click', (e) => {
+      link.addEventListener("click", (e) => {
         e.preventDefault();
-        const targetId = link.getAttribute('href')?.substring(1);
-        const targetElement = document.getElementById(targetId || '');
-        
+        const targetId = link.getAttribute("href")?.substring(1);
+        const targetElement = document.getElementById(targetId || "");
+
         if (targetElement) {
           targetElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+            behavior: "smooth",
+            block: "start",
           });
         }
       });
@@ -325,7 +340,7 @@ const tocState = {
 
     // Scroll event listener
     let scrollTimeout: ReturnType<typeof setTimeout>;
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(updateActiveLink, 100);
     });
@@ -335,8 +350,8 @@ const tocState = {
   }
 
   // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTOC);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initTOC);
   } else {
     initTOC();
   }

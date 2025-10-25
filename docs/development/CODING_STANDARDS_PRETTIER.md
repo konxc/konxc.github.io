@@ -25,12 +25,14 @@ This project uses **Prettier** with **Astro and Tailwind CSS plugins** to ensure
 ### **🚀 Key Features:**
 
 #### **1. Astro-Specific Formatting**
+
 - ✅ **Native .astro parsing** - Proper component structure formatting
 - ✅ **Frontmatter formatting** - TypeScript code in `---` blocks
 - ✅ **Template formatting** - HTML/JSX with Astro syntax
 - ✅ **Style block formatting** - CSS within `<style>` tags
 
 #### **2. Tailwind CSS Class Sorting**
+
 - ✅ **Automatic class ordering** - Layout → Spacing → Colors → Effects
 - ✅ **Responsive-first sorting** - `sm:` → `md:` → `lg:` → `xl:`
 - ✅ **Consistent class structure** - Reduces git conflicts
@@ -68,18 +70,21 @@ This project uses **Prettier** with **Astro and Tailwind CSS plugins** to ensure
 ### **2. Development Workflow Scripts**
 
 #### **A. Pre-Commit Workflow**
+
 ```bash
 # Format staged files and check all files
 pnpm run pre-commit
 ```
 
 #### **B. Pre-Push Workflow**
+
 ```bash
 # Check formatting and sync with remote
 pnpm run pre-push
 ```
 
 #### **C. Manual Formatting**
+
 ```bash
 # Format all files
 pnpm run format
@@ -116,11 +121,13 @@ git push origin your-branch
 ### **2. Automated Git Hooks (Optional)**
 
 #### **Install Husky + lint-staged**
+
 ```bash
 pnpm add -D husky lint-staged
 ```
 
 #### **Package.json Configuration**
+
 ```json
 {
   "lint-staged": {
@@ -141,6 +148,7 @@ pnpm add -D husky lint-staged
 ### **✅ Correct Formatting**
 
 #### **Astro Component**
+
 ```astro
 ---
 import type { CollectionEntry } from "astro:content";
@@ -159,20 +167,25 @@ const { title, posts } = Astro.props;
     <h1 class="mb-8 text-3xl font-bold text-gray-900 dark:text-white">
       {title}
     </h1>
-    
+
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {posts.map((post) => (
-        <article class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
-          <h2 class="mb-2 text-xl font-semibold">
-            <a href={`/blog/${post.slug}`} class="text-blue-600 hover:text-blue-800 dark:text-blue-400">
-              {post.data.title}
-            </a>
-          </h2>
-          <p class="text-gray-600 dark:text-gray-300">
-            {post.data.description}
-          </p>
-        </article>
-      ))}
+      {
+        posts.map((post) => (
+          <article class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+            <h2 class="mb-2 text-xl font-semibold">
+              <a
+                href={`/blog/${post.slug}`}
+                class="text-blue-600 hover:text-blue-800 dark:text-blue-400"
+              >
+                {post.data.title}
+              </a>
+            </h2>
+            <p class="text-gray-600 dark:text-gray-300">
+              {post.data.description}
+            </p>
+          </article>
+        ))
+      }
     </div>
   </main>
 </Layout>
@@ -185,6 +198,7 @@ const { title, posts } = Astro.props;
 ```
 
 #### **TypeScript**
+
 ```typescript
 // Interfaces and types
 export interface BlogPost {
@@ -214,13 +228,21 @@ const blogConfig = {
 ### **🎯 Tailwind Class Ordering**
 
 #### **Before (Random Order)**
+
 ```astro
-<div class="text-white bg-blue-500 p-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-lg">
+<div
+  class="rounded-lg bg-blue-500 p-4 text-white shadow-lg transition-colors duration-200 hover:bg-blue-600"
+>
+</div>
 ```
 
 #### **After (Auto-Sorted)**
+
 ```astro
-<div class="rounded-lg bg-blue-500 p-4 text-white shadow-lg transition-colors duration-200 hover:bg-blue-600">
+<div
+  class="rounded-lg bg-blue-500 p-4 text-white shadow-lg transition-colors duration-200 hover:bg-blue-600"
+>
+</div>
 ```
 
 ## 🔧 IDE Integration
@@ -242,6 +264,7 @@ const blogConfig = {
 ```
 
 ### **Required Extensions**
+
 - Prettier - Code formatter
 - Astro (for .astro file support)
 - Tailwind CSS IntelliSense
@@ -251,18 +274,21 @@ const blogConfig = {
 ### **Common Issues**
 
 #### **1. Prettier not formatting .astro files**
+
 ```bash
 # Install missing plugin
 pnpm add -D prettier-plugin-astro
 ```
 
 #### **2. Tailwind classes not sorting**
+
 ```bash
 # Install missing plugin
 pnpm add -D prettier-plugin-tailwindcss
 ```
 
 #### **3. Git conflicts on formatting**
+
 ```bash
 # Sync formatting before merge
 git pull origin main
@@ -274,18 +300,21 @@ git commit -m "style: sync formatting"
 ## 📊 Benefits
 
 ### **For Development**
+
 - ✅ **Zero manual formatting** - Automatic on save
 - ✅ **Consistent Tailwind classes** - Always sorted
 - ✅ **Proper Astro formatting** - Native component support
 - ✅ **Reduced cognitive load** - Focus on logic, not style
 
 ### **For Collaboration**
+
 - ✅ **No style debates** - Prettier decides everything
 - ✅ **Clean git diffs** - Only meaningful changes
 - ✅ **Faster code reviews** - Consistent formatting
 - ✅ **Reduced conflicts** - Sorted classes prevent merge issues
 
 ### **For Codebase**
+
 - ✅ **Professional appearance** - Consistent, clean code
 - ✅ **Better maintainability** - Easier to read and modify
 - ✅ **Scalable architecture** - Works with any team size

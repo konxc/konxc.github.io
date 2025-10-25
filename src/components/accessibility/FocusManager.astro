@@ -150,10 +150,10 @@
 
     private handleMenuNavigation(e: KeyboardEvent, target: HTMLElement): void {
       const menu = target.closest(
-        '[role="menu"], [role="menubar"]'
+        '[role="menu"], [role="menubar"]',
       ) as HTMLElement;
       const items = Array.from(
-        menu.querySelectorAll('[role="menuitem"]')
+        menu.querySelectorAll('[role="menuitem"]'),
       ) as HTMLElement[];
       const currentIndex = items.indexOf(target);
 
@@ -183,7 +183,7 @@
     private handleTabNavigation(e: KeyboardEvent, target: HTMLElement): void {
       const tablist = target.closest('[role="tablist"]') as HTMLElement;
       const tabs = Array.from(
-        tablist.querySelectorAll('[role="tab"]')
+        tablist.querySelectorAll('[role="tab"]'),
       ) as HTMLElement[];
       const currentIndex = tabs.indexOf(target);
 
@@ -218,10 +218,10 @@
 
     private handleListNavigation(e: KeyboardEvent, target: HTMLElement): void {
       const list = target.closest(
-        '[role="listbox"], [role="grid"]'
+        '[role="listbox"], [role="grid"]',
       ) as HTMLElement;
       const items = Array.from(
-        list.querySelectorAll('[role="option"], [role="gridcell"]')
+        list.querySelectorAll('[role="option"], [role="gridcell"]'),
       ) as HTMLElement[];
       const currentIndex = items.indexOf(target);
 
@@ -265,7 +265,7 @@
 
     private getFocusableElements(container: HTMLElement): HTMLElement[] {
       return Array.from(
-        container.querySelectorAll(this.focusableElements)
+        container.querySelectorAll(this.focusableElements),
       ).filter((el) => {
         const element = el as HTMLElement;
         return (
@@ -313,7 +313,7 @@
 
     public announceToScreenReader(
       message: string,
-      priority: "polite" | "assertive" = "polite"
+      priority: "polite" | "assertive" = "polite",
     ): void {
       const announcer = document.createElement("div");
       announcer.setAttribute("aria-live", priority);

@@ -7,32 +7,49 @@ export interface Props {
 const { class: className } = Astro.props;
 ---
 
-<div class={`blog-search ${className || ''}`}>
+<div class={`blog-search ${className || ""}`}>
   <div class="search-container">
     <div class="search-input-wrapper">
-      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      <svg
+        class="search-icon"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
       </svg>
-      <input 
-        type="text" 
-        placeholder="Cari artikel..." 
+      <input
+        type="text"
+        placeholder="Cari artikel..."
         class="search-input"
         id="blog-search-input"
         autocomplete="off"
       />
       <button class="search-clear" id="search-clear-btn" style="display: none;">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>
-    
+
     <div class="search-results" id="search-results" style="display: none;">
       <div class="search-results-header">
         <span class="results-count" id="results-count">0 hasil ditemukan</span>
         <button class="close-results" id="close-results-btn">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
       </div>
@@ -60,17 +77,23 @@ const { class: className } = Astro.props;
     }
 
     private initializeElements(): void {
-      this.searchInput = document.getElementById('blog-search-input') as HTMLInputElement;
-      this.searchResults = document.getElementById('search-results');
-      this.resultsList = document.getElementById('results-list');
-      this.resultsCount = document.getElementById('results-count');
-      this.clearBtn = document.getElementById('search-clear-btn') as HTMLButtonElement;
-      this.closeBtn = document.getElementById('close-results-btn') as HTMLButtonElement;
+      this.searchInput = document.getElementById(
+        "blog-search-input",
+      ) as HTMLInputElement;
+      this.searchResults = document.getElementById("search-results");
+      this.resultsList = document.getElementById("results-list");
+      this.resultsCount = document.getElementById("results-count");
+      this.clearBtn = document.getElementById(
+        "search-clear-btn",
+      ) as HTMLButtonElement;
+      this.closeBtn = document.getElementById(
+        "close-results-btn",
+      ) as HTMLButtonElement;
     }
 
     private async loadPosts(): Promise<void> {
       try {
-        const response = await fetch('/api/posts');
+        const response = await fetch("/api/posts");
         if (response.ok) {
           this.posts = await response.json();
         } else {
@@ -78,16 +101,16 @@ const { class: className } = Astro.props;
           this.loadPostsFromPage();
         }
       } catch (error) {
-        console.log('API not available, loading from page data');
+        console.log("API not available, loading from page data");
         this.loadPostsFromPage();
       }
     }
 
     private loadPostsFromPage(): void {
       // This will be populated by the page that includes this component
-      const postsData = document.getElementById('posts-data');
+      const postsData = document.getElementById("posts-data");
       if (postsData) {
-        this.posts = JSON.parse(postsData.textContent || '[]');
+        this.posts = JSON.parse(postsData.textContent || "[]");
       }
     }
 
@@ -95,37 +118,37 @@ const { class: className } = Astro.props;
       if (!this.searchInput) return;
 
       // Search input events
-      this.searchInput.addEventListener('input', (e) => {
+      this.searchInput.addEventListener("input", (e) => {
         const query = (e.target as HTMLInputElement).value.trim();
         this.handleSearch(query);
       });
 
-      this.searchInput.addEventListener('focus', () => {
+      this.searchInput.addEventListener("focus", () => {
         if (this.searchInput?.value.trim()) {
           this.showResults();
         }
       });
 
-      this.searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
+      this.searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
           this.hideResults();
         }
       });
 
       // Clear button
-      this.clearBtn?.addEventListener('click', () => {
+      this.clearBtn?.addEventListener("click", () => {
         this.clearSearch();
       });
 
       // Close button
-      this.closeBtn?.addEventListener('click', () => {
+      this.closeBtn?.addEventListener("click", () => {
         this.hideResults();
       });
 
       // Click outside to close
-      document.addEventListener('click', (e) => {
+      document.addEventListener("click", (e) => {
         const target = e.target as HTMLElement;
-        if (!target.closest('.blog-search')) {
+        if (!target.closest(".blog-search")) {
           this.hideResults();
         }
       });
@@ -139,7 +162,7 @@ const { class: className } = Astro.props;
 
       // Show/hide clear button
       if (this.clearBtn) {
-        this.clearBtn.style.display = query ? 'block' : 'none';
+        this.clearBtn.style.display = query ? "block" : "none";
       }
 
       if (!query) {
@@ -160,13 +183,13 @@ const { class: className } = Astro.props;
 
     private searchPosts(query: string): any[] {
       const searchTerm = query.toLowerCase();
-      
-      return this.posts.filter(post => {
-        const title = post.title?.toLowerCase() || '';
-        const description = post.description?.toLowerCase() || '';
+
+      return this.posts.filter((post) => {
+        const title = post.title?.toLowerCase() || "";
+        const description = post.description?.toLowerCase() || "";
         const tags = post.tags?.map((tag: string) => tag.toLowerCase()) || [];
-        const category = post.category?.toLowerCase() || '';
-        const content = post.content?.toLowerCase() || '';
+        const category = post.category?.toLowerCase() || "";
+        const content = post.content?.toLowerCase() || "";
 
         return (
           title.includes(searchTerm) ||
@@ -185,7 +208,7 @@ const { class: className } = Astro.props;
       this.resultsCount.textContent = `${results.length} hasil ditemukan untuk "${query}"`;
 
       // Clear previous results
-      this.resultsList.innerHTML = '';
+      this.resultsList.innerHTML = "";
 
       if (results.length === 0) {
         this.resultsList.innerHTML = `
@@ -198,7 +221,7 @@ const { class: className } = Astro.props;
           </div>
         `;
       } else {
-        results.forEach(post => {
+        results.forEach((post) => {
           const resultItem = this.createResultItem(post);
           this.resultsList?.appendChild(resultItem);
         });
@@ -208,28 +231,31 @@ const { class: className } = Astro.props;
     }
 
     private createResultItem(post: any): HTMLElement {
-      const item = document.createElement('div');
-      item.className = 'search-result-item';
-      
-      const publishDate = new Date(post.publishDate).toLocaleDateString('id-ID', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
+      const item = document.createElement("div");
+      item.className = "search-result-item";
+
+      const publishDate = new Date(post.publishDate).toLocaleDateString(
+        "id-ID",
+        {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        },
+      );
 
       item.innerHTML = `
         <div class="result-content">
           <div class="result-meta">
             <span class="result-category">${post.category}</span>
             <span class="result-date">${publishDate}</span>
-            ${post.readingTime ? `<span class="result-reading-time">${post.readingTime} min read</span>` : ''}
+            ${post.readingTime ? `<span class="result-reading-time">${post.readingTime} min read</span>` : ""}
           </div>
           <h3 class="result-title">
             <a href="/blog/${post.slug}">${post.title}</a>
           </h3>
           <p class="result-description">${post.description}</p>
           <div class="result-tags">
-            ${post.tags?.map((tag: string) => `<span class="result-tag">${tag}</span>`).join('') || ''}
+            ${post.tags?.map((tag: string) => `<span class="result-tag">${tag}</span>`).join("") || ""}
           </div>
         </div>
       `;
@@ -239,24 +265,24 @@ const { class: className } = Astro.props;
 
     private showResults(): void {
       if (this.searchResults) {
-        this.searchResults.style.display = 'block';
+        this.searchResults.style.display = "block";
       }
     }
 
     private hideResults(): void {
       if (this.searchResults) {
-        this.searchResults.style.display = 'none';
+        this.searchResults.style.display = "none";
       }
     }
 
     private clearSearch(): void {
       if (this.searchInput) {
-        this.searchInput.value = '';
+        this.searchInput.value = "";
         this.searchInput.focus();
       }
       this.hideResults();
       if (this.clearBtn) {
-        this.clearBtn.style.display = 'none';
+        this.clearBtn.style.display = "none";
       }
     }
   }
@@ -266,8 +292,8 @@ const { class: className } = Astro.props;
     new BlogSearch();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSearch);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSearch);
   } else {
     initSearch();
   }
@@ -276,7 +302,7 @@ const { class: className } = Astro.props;
 <style>
   @reference "@/styles/global.css";
   .blog-search {
-    @apply relative w-full max-w-2xl mx-auto;
+    @apply relative mx-auto w-full max-w-2xl;
   }
 
   .search-container {
@@ -288,23 +314,23 @@ const { class: className } = Astro.props;
   }
 
   .search-icon {
-    @apply absolute left-4 w-5 h-5 text-neutral-400 pointer-events-none;
+    @apply pointer-events-none absolute left-4 h-5 w-5 text-neutral-400;
   }
 
   .search-input {
-    @apply w-full pl-12 pr-12 py-3 bg-white border border-neutral-200 rounded-xl text-neutral-800 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+    @apply focus:ring-primary-500 w-full rounded-xl border border-neutral-200 bg-white py-3 pr-12 pl-12 text-neutral-800 placeholder-neutral-400 transition-all duration-200 focus:border-transparent focus:ring-2 focus:outline-none;
   }
 
   .search-clear {
-    @apply absolute right-4 w-5 h-5 text-neutral-400 hover:text-neutral-600 transition-colors;
+    @apply absolute right-4 h-5 w-5 text-neutral-400 transition-colors hover:text-neutral-600;
   }
 
   .search-results {
-    @apply absolute top-full left-0 right-0 mt-2 bg-white border border-neutral-200 rounded-xl shadow-lg z-50 max-h-96 overflow-hidden;
+    @apply absolute top-full right-0 left-0 z-50 mt-2 max-h-96 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-lg;
   }
 
   .search-results-header {
-    @apply flex items-center justify-between p-4 border-b border-neutral-100;
+    @apply flex items-center justify-between border-b border-neutral-100 p-4;
   }
 
   .results-count {
@@ -312,7 +338,7 @@ const { class: className } = Astro.props;
   }
 
   .close-results {
-    @apply w-5 h-5 text-neutral-400 hover:text-neutral-600 transition-colors;
+    @apply h-5 w-5 text-neutral-400 transition-colors hover:text-neutral-600;
   }
 
   .results-list {
@@ -320,7 +346,7 @@ const { class: className } = Astro.props;
   }
 
   .search-result-item {
-    @apply p-4 border-b border-neutral-100 hover:bg-neutral-50 transition-colors;
+    @apply border-b border-neutral-100 p-4 transition-colors hover:bg-neutral-50;
   }
 
   .search-result-item:last-child {
@@ -328,23 +354,23 @@ const { class: className } = Astro.props;
   }
 
   .result-meta {
-    @apply flex items-center gap-3 mb-2 text-xs text-neutral-500;
+    @apply mb-2 flex items-center gap-3 text-xs text-neutral-500;
   }
 
   .result-category {
-    @apply px-2 py-1 bg-primary-100 text-primary-700 rounded-full font-medium;
+    @apply bg-primary-100 text-primary-700 rounded-full px-2 py-1 font-medium;
   }
 
   .result-title {
-    @apply text-lg font-semibold mb-2;
+    @apply mb-2 text-lg font-semibold;
   }
 
   .result-title a {
-    @apply text-neutral-800 hover:text-primary-600 transition-colors;
+    @apply hover:text-primary-600 text-neutral-800 transition-colors;
   }
 
   .result-description {
-    @apply text-sm text-neutral-600 mb-3 line-clamp-2;
+    @apply mb-3 line-clamp-2 text-sm text-neutral-600;
   }
 
   .result-tags {
@@ -352,7 +378,7 @@ const { class: className } = Astro.props;
   }
 
   .result-tag {
-    @apply px-2 py-1 bg-neutral-100 text-neutral-600 rounded text-xs;
+    @apply rounded bg-neutral-100 px-2 py-1 text-xs text-neutral-600;
   }
 
   .no-results {
@@ -360,20 +386,20 @@ const { class: className } = Astro.props;
   }
 
   .no-results svg {
-    @apply w-12 h-12 mx-auto mb-4 text-neutral-300;
+    @apply mx-auto mb-4 h-12 w-12 text-neutral-300;
   }
 
   .search-suggestion {
-    @apply text-xs text-neutral-400 mt-2;
+    @apply mt-2 text-xs text-neutral-400;
   }
 
   /* Dark mode styles */
   .dark .search-input {
-    @apply bg-neutral-800 border-neutral-700 text-neutral-100 placeholder-neutral-500;
+    @apply border-neutral-700 bg-neutral-800 text-neutral-100 placeholder-neutral-500;
   }
 
   .dark .search-results {
-    @apply bg-neutral-800 border-neutral-700;
+    @apply border-neutral-700 bg-neutral-800;
   }
 
   .dark .search-result-item {
@@ -381,7 +407,7 @@ const { class: className } = Astro.props;
   }
 
   .dark .result-title a {
-    @apply text-neutral-100 hover:text-primary-400;
+    @apply hover:text-primary-400 text-neutral-100;
   }
 
   .dark .result-description {
@@ -393,11 +419,11 @@ const { class: className } = Astro.props;
     .search-input {
       @apply py-2 text-sm;
     }
-    
+
     .search-results {
       @apply max-h-80;
     }
-    
+
     .search-result-item {
       @apply p-3;
     }

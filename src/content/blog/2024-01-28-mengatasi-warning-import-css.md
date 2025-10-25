@@ -12,7 +12,7 @@ image: "/blog/css-import-warning-fix.jpg"
 
 # Mengatasi Warning @import CSS: Panduan Lengkap dengan Referensi MDN
 
-*Bagaimana mengatasi warning "@import rules must precede all other statements" dengan mengikuti spesifikasi CSS resmi*
+_Bagaimana mengatasi warning "@import rules must precede all other statements" dengan mengikuti spesifikasi CSS resmi_
 
 Saat bekerja dengan CSS, terutama dalam proyek modern yang menggunakan bundler seperti Vite, Webpack, atau PostCSS, Anda mungkin pernah menemukan warning yang mengatakan `@import rules must precede all other statements (besides @charset and @layer statements)`. Warning ini sering muncul ketika kita mengimpor font dari Google Fonts atau stylesheet eksternal lainnya.
 
@@ -59,11 +59,11 @@ Menurut [Mozilla Developer Network (MDN)](https://developer.mozilla.org/en-US/do
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 /* ❌ INVALID - akan diabaikan */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 ```
 
 ### ✅ BENAR:
@@ -71,7 +71,7 @@ body {
 ```css
 /* styles.css */
 /* ✅ BENAR - @import di bagian atas */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 * {
   margin: 0;
@@ -79,7 +79,7 @@ body {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 ```
 
@@ -90,7 +90,7 @@ body {
 ```css
 /* src/styles/global.css */
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 @theme {
   --font-heading: "Inter", "sans-serif";
@@ -107,12 +107,12 @@ body {
 
 ```css
 /* src/styles/global.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
 /* Component styles */
 .btn-primary {
-  @apply bg-blue-500 text-white px-4 py-2 rounded;
+  @apply rounded bg-blue-500 px-4 py-2 text-white;
 }
 ```
 
@@ -120,13 +120,13 @@ body {
 
 ```css
 /* styles/globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 ```
 
@@ -136,7 +136,7 @@ body {
 
 ```css
 /* 1. External fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 /* 2. Framework CSS */
 @import "tailwindcss";
@@ -157,13 +157,13 @@ body {
 ### 2. **Menggunakan CSS Custom Properties**
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 :root {
   /* Font families */
-  --font-primary: 'Inter', sans-serif;
-  --font-secondary: 'Source Sans Pro', sans-serif;
-  
+  --font-primary: "Inter", sans-serif;
+  --font-secondary: "Source Sans Pro", sans-serif;
+
   /* Colors */
   --color-primary: #6366f1;
   --color-secondary: #14b8a6;
@@ -186,8 +186,8 @@ src/styles/
 
 ```css
 /* fonts.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap");
 ```
 
 ## 🔧 Troubleshooting
@@ -197,6 +197,7 @@ src/styles/
 **Penyebab**: Path import tidak valid
 
 **Solusi**:
+
 ```css
 /* ❌ SALAH */
 @import "./fonts.css";
@@ -210,9 +211,10 @@ src/styles/
 **Penyebab**: Import diabaikan karena posisi salah
 
 **Solusi**:
+
 ```css
 /* Pindahkan ke bagian atas */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 ```
 
 ### Error 3: "Build warning persists"
@@ -220,9 +222,10 @@ src/styles/
 **Penyebab**: Masih ada CSS rules sebelum @import
 
 **Solusi**:
+
 ```css
 /* Pastikan tidak ada CSS rules sebelum @import */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 /* Baru kemudian CSS rules lainnya */
 * {
@@ -233,12 +236,12 @@ src/styles/
 
 ## 📊 Perbandingan Metode Import
 
-| Metode | Keuntungan | Kerugian | Rekomendasi |
-|--------|------------|----------|-------------|
+| Metode           | Keuntungan             | Kerugian             | Rekomendasi             |
+| ---------------- | ---------------------- | -------------------- | ----------------------- |
 | `@import` di CSS | Mudah, langsung di CSS | Harus di bagian atas | ✅ Untuk font eksternal |
-| `<link>` di HTML | Lebih cepat loading | Tidak bisa di CSS | ✅ Untuk font utama |
-| Font files lokal | Kontrol penuh | File size besar | ✅ Untuk font khusus |
-| CSS-in-JS | Dinamis | Runtime overhead | ❌ Untuk font statis |
+| `<link>` di HTML | Lebih cepat loading    | Tidak bisa di CSS    | ✅ Untuk font utama     |
+| Font files lokal | Kontrol penuh          | File size besar      | ✅ Untuk font khusus    |
+| CSS-in-JS        | Dinamis                | Runtime overhead     | ❌ Untuk font statis    |
 
 ## 🚀 Optimasi Performa
 
@@ -246,16 +249,21 @@ src/styles/
 
 ```html
 <!-- Di <head> -->
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'"
+/>
 ```
 
 ### 2. **Font Display Optimization**
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-display: swap; /* Fallback font sementara */
 }
 ```
@@ -264,10 +272,10 @@ body {
 
 ```css
 /* Critical CSS - inline di <head> */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 
 /* Non-critical CSS - load async */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap");
 ```
 
 ## 🎯 Kesimpulan
@@ -302,4 +310,4 @@ Jika Anda menemukan masalah atau memiliki saran untuk artikel ini, silakan buat 
 
 ---
 
-*Artikel ini ditulis berdasarkan pengalaman mengatasi warning @import CSS dalam proyek KonXC dengan referensi spesifikasi CSS resmi dari Mozilla Developer Network.*
+_Artikel ini ditulis berdasarkan pengalaman mengatasi warning @import CSS dalam proyek KonXC dengan referensi spesifikasi CSS resmi dari Mozilla Developer Network._

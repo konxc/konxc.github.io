@@ -5,7 +5,8 @@ publishDate: 2024-01-26
 lastModified: 2024-01-26
 author: "Konxc"
 category: "tutorial"
-tags: ["Tailwind CSS", "CSS", "Frontend", "Web Development", "Spacing", "Layout"]
+tags:
+  ["Tailwind CSS", "CSS", "Frontend", "Web Development", "Spacing", "Layout"]
 featured: false
 readingTime: 8
 wordCount: 2100
@@ -46,6 +47,7 @@ Ketika bekerja dengan Tailwind CSS, kita sering dihadapkan pada pilihan antara m
 ### 1. CSS Property yang Digunakan
 
 **Gap:**
+
 ```css
 .gap-4 {
   gap: 1rem;
@@ -53,6 +55,7 @@ Ketika bekerja dengan Tailwind CSS, kita sering dihadapkan pada pilihan antara m
 ```
 
 **Space:**
+
 ```css
 .space-x-4 > * + * {
   margin-left: 1rem;
@@ -62,11 +65,13 @@ Ketika bekerja dengan Tailwind CSS, kita sering dihadapkan pada pilihan antara m
 ### 2. Context Penggunaan
 
 **Gap:**
+
 - Hanya bekerja dengan Flexbox dan CSS Grid
 - Diterapkan pada parent container
 - Memberikan spacing yang konsisten antar semua child elements
 
 **Space:**
+
 - Bekerja dengan semua jenis layout (block, inline, flex, grid)
 - Menggunakan adjacent sibling selector (`* + *`)
 - Memberikan margin pada child elements
@@ -74,11 +79,13 @@ Ketika bekerja dengan Tailwind CSS, kita sering dihadapkan pada pilihan antara m
 ### 3. Browser Support
 
 **Gap:**
+
 - Modern browsers (IE tidak support)
 - Flexbox gap: Chrome 84+, Firefox 63+, Safari 14.1+
 - Grid gap: Support lebih luas
 
 **Space:**
+
 - Support universal (semua browser)
 - Menggunakan margin yang sudah ada sejak CSS 1
 
@@ -118,7 +125,7 @@ Ketika bekerja dengan Tailwind CSS, kita sering dihadapkan pada pilihan antara m
 ### ✅ Responsive Spacing
 
 ```html
-<div class="flex flex-col sm:flex-row gap-2 sm:gap-4 lg:gap-6">
+<div class="flex flex-col gap-2 sm:flex-row sm:gap-4 lg:gap-6">
   <div>Responsive</div>
   <div>Spacing</div>
 </div>
@@ -142,7 +149,7 @@ Ketika bekerja dengan Tailwind CSS, kita sering dihadapkan pada pilihan antara m
 <article class="space-y-6">
   <h1>Article Title</h1>
   <p>Introduction paragraph...</p>
-  <img src="image.jpg" alt="Article image">
+  <img src="image.jpg" alt="Article image" />
   <p>Content continues...</p>
   <blockquote>Important quote...</blockquote>
 </article>
@@ -157,6 +164,7 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
 ### Contoh 1: Navigation Menu
 
 **Menggunakan Gap:**
+
 ```html
 <nav class="flex items-center gap-6">
   <a href="/">Home</a>
@@ -166,6 +174,7 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
 ```
 
 **Menggunakan Space:**
+
 ```html
 <nav class="flex items-center space-x-6">
   <a href="/">Home</a>
@@ -179,8 +188,9 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
 ### Contoh 2: Card Grid
 
 **Menggunakan Gap:**
+
 ```html
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
   <div class="card">Card 1</div>
   <div class="card">Card 2</div>
   <div class="card">Card 3</div>
@@ -188,6 +198,7 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
 ```
 
 **Menggunakan Space:**
+
 ```html
 <!-- Space tidak ideal untuk grid layouts -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -219,7 +230,7 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
     <h1>Title</h1>
     <p>Subtitle</p>
   </header>
-  
+
   <main class="space-y-6">
     <section class="space-y-4">
       <h2>Section Title</h2>
@@ -259,12 +270,14 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
 ### ✅ Do's
 
 1. **Gunakan `gap` untuk Flexbox dan Grid layouts**
+
    ```html
    <div class="flex gap-4">...</div>
    <div class="grid gap-6">...</div>
    ```
 
 2. **Gunakan `space` untuk block elements**
+
    ```html
    <div class="space-y-4">
      <p>...</p>
@@ -285,6 +298,7 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
 ### ❌ Don'ts
 
 1. **Jangan gunakan `gap` di non-flex/grid containers**
+
    ```html
    <!-- ❌ Tidak akan bekerja -->
    <div class="gap-4">
@@ -310,7 +324,7 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
     <CopyPageMenu />
     <DarkModeToggle />
   </div>
-  
+
   <!-- Widgets dengan space -->
   <TableOfContents />
   <ArticleStats />
@@ -325,12 +339,12 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
     <label>Name</label>
     <input type="text" />
   </div>
-  
+
   <div class="space-y-2">
     <label>Email</label>
     <input type="email" />
   </div>
-  
+
   <div class="flex gap-3">
     <button type="submit">Submit</button>
     <button type="button">Cancel</button>
@@ -343,6 +357,7 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
 ### Dari Space ke Gap
 
 **Before:**
+
 ```html
 <div class="flex space-x-4">
   <div>Item 1</div>
@@ -351,6 +366,7 @@ Jika Anda perlu mendukung browser lama, `space` utilities adalah pilihan yang le
 ```
 
 **After:**
+
 ```html
 <div class="flex gap-4">
   <div>Item 1</div>
@@ -373,18 +389,21 @@ Jika Anda menggunakan `space` untuk block elements, tidak perlu migrate:
 ## Kesimpulan
 
 ### Gunakan `gap` ketika:
+
 - ✅ Bekerja dengan Flexbox atau CSS Grid
 - ✅ Ingin spacing yang konsisten dan predictable
 - ✅ Membangun layout modern
 - ✅ Tidak perlu support browser lama
 
 ### Gunakan `space` ketika:
+
 - ✅ Bekerja dengan block elements
 - ✅ Perlu support browser lama
 - ✅ Layout yang lebih complex dengan nested spacing
 - ✅ Mixed content types
 
 ### Key Takeaways:
+
 1. **`gap` adalah future** - gunakan untuk layout modern
 2. **`space` masih relevan** - perfect untuk content spacing
 3. **Keduanya bisa dikombinasikan** - gunakan sesuai context

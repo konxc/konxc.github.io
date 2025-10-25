@@ -3,7 +3,16 @@ name: "Ahmad Rizki"
 bio: "Frontend Developer dengan passion untuk modern web technologies dan open source. Aktif berkontribusi di berbagai project Indonesia dan internasional. Spesialisasi dalam React, Vue.js, dan Astro framework."
 avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ahmad-rizki&backgroundColor=0D8ABC&textColor=FFFFFF"
 role: "writer"
-expertise: ["Frontend Development", "React", "Vue.js", "Astro", "TypeScript", "Web Performance", "UI/UX Design"]
+expertise:
+  [
+    "Frontend Development",
+    "React",
+    "Vue.js",
+    "Astro",
+    "TypeScript",
+    "Web Performance",
+    "UI/UX Design",
+  ]
 location: "Jakarta, Indonesia"
 website: "https://ahmadrizki.dev"
 github: "https://github.com/ahmadrizki"
@@ -69,8 +78,20 @@ achievements:
     category: "leadership"
     verified: true
 skills:
-  technical: ["JavaScript", "TypeScript", "React", "Vue.js", "Astro", "Node.js", "CSS", "HTML", "Git"]
-  soft: ["Leadership", "Communication", "Mentoring", "Problem Solving", "Teamwork"]
+  technical:
+    [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Vue.js",
+      "Astro",
+      "Node.js",
+      "CSS",
+      "HTML",
+      "Git",
+    ]
+  soft:
+    ["Leadership", "Communication", "Mentoring", "Problem Solving", "Teamwork"]
   languages: ["Bahasa Indonesia", "English"]
 availability:
   forMentoring: true

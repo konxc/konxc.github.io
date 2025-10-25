@@ -49,7 +49,7 @@ const allPosts = await getCollection("blog");
 // Filter related articles based on tags and category (exclude current post)
 const getRelatedArticles = (
   currentPost: CollectionEntry<"blog">,
-  maxArticles = 4
+  maxArticles = 4,
 ) => {
   const currentTags = currentPost.data.tags || [];
   const currentCategory = currentPost.data.category;
@@ -67,7 +67,7 @@ const getRelatedArticles = (
 
       // Shared tags get points
       const sharedTags = (p.data.tags || []).filter((tag: string) =>
-        currentTags.includes(tag)
+        currentTags.includes(tag),
       );
       score += sharedTags.length * 5;
 
@@ -1040,10 +1040,10 @@ const relatedArticles = getRelatedArticles(post, 4);
     const newsletterForm = document.querySelector(".sidebar-widget:last-child");
     if (newsletterForm) {
       const emailInput = newsletterForm.querySelector(
-        'input[type="email"]'
+        'input[type="email"]',
       ) as HTMLInputElement;
       const submitButton = newsletterForm.querySelector(
-        "button"
+        "button",
       ) as HTMLButtonElement;
 
       if (submitButton && emailInput) {

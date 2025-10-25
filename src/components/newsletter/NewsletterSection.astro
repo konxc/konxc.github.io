@@ -775,16 +775,16 @@ const config = variantConfig[variant];
     constructor(formElement: HTMLFormElement) {
       this.form = formElement;
       this.emailInput = this.form.querySelector(
-        ".newsletter-input"
+        ".newsletter-input",
       ) as HTMLInputElement;
       this.submitButton = this.form.querySelector(
-        ".newsletter-button"
+        ".newsletter-button",
       ) as HTMLButtonElement;
       this.statusContainer = this.form.querySelector(
-        ".newsletter-status"
+        ".newsletter-status",
       ) as HTMLElement;
       this.validationContainer = this.form.querySelector(
-        ".input-validation"
+        ".input-validation",
       ) as HTMLElement;
 
       // Get configuration from data attributes
@@ -812,14 +812,14 @@ const config = variantConfig[variant];
       // Real-time email validation
       this.emailInput.addEventListener(
         "input",
-        this.handleEmailInput.bind(this)
+        this.handleEmailInput.bind(this),
       );
       this.emailInput.addEventListener("blur", this.validateEmail.bind(this));
 
       // Accessibility improvements
       this.emailInput.addEventListener(
         "focus",
-        this.clearValidation.bind(this)
+        this.clearValidation.bind(this),
       );
     }
 
@@ -827,7 +827,7 @@ const config = variantConfig[variant];
       // Add ARIA attributes for better accessibility
       this.emailInput.setAttribute(
         "aria-describedby",
-        "email-validation newsletter-status"
+        "email-validation newsletter-status",
       );
     }
 
@@ -1002,7 +1002,7 @@ const config = variantConfig[variant];
         "Berhasil!";
 
       const successElement = this.statusContainer.querySelector(
-        ".status-success"
+        ".status-success",
       ) as HTMLElement;
       const message =
         successElement.dataset.message || "Terima kasih! Check email Anda.";
@@ -1011,14 +1011,14 @@ const config = variantConfig[variant];
 
       // Hide error if visible
       const errorElement = this.statusContainer.querySelector(
-        ".status-error"
+        ".status-error",
       ) as HTMLElement;
       errorElement.classList.add("hidden");
     }
 
     private showError(): void {
       const errorElement = this.statusContainer.querySelector(
-        ".status-error"
+        ".status-error",
       ) as HTMLElement;
       const message =
         errorElement.dataset.message || "Terjadi kesalahan. Silakan coba lagi.";
@@ -1027,7 +1027,7 @@ const config = variantConfig[variant];
 
       // Hide success if visible
       const successElement = this.statusContainer.querySelector(
-        ".status-success"
+        ".status-success",
       ) as HTMLElement;
       successElement.classList.add("hidden");
     }
@@ -1069,7 +1069,7 @@ const config = variantConfig[variant];
   // Initialize newsletter forms when DOM is ready
   document.addEventListener("DOMContentLoaded", () => {
     const newsletterForms = document.querySelectorAll(
-      ".newsletter-form"
+      ".newsletter-form",
     ) as NodeListOf<HTMLFormElement>;
 
     newsletterForms.forEach((form) => {

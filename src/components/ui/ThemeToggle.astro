@@ -110,7 +110,7 @@ const iconSizes = {
 
       // Check system preference
       const systemPrefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
+        "(prefers-color-scheme: dark)",
       ).matches;
 
       // Determine theme to apply
@@ -135,7 +135,7 @@ const iconSizes = {
       window.dispatchEvent(
         new CustomEvent("themeChange", {
           detail: { theme },
-        })
+        }),
       );
     }
 

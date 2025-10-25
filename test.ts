@@ -1,0 +1,621 @@
+
+> konxc.github.io@0.0.1 lint /home/dev/web/koneksi/konxc.github.io
+> eslint . --ext .ts,.tsx,.astro
+
+
+/home/dev/web/koneksi/konxc.github.io/scripts/analyze-css-classes.js
+  213:13  warning  'analysis' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  214:13  warning  'report' is assigned a value but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/scripts/basic-toc-test.js
+   29:14  warning  'error' is defined but never used                 @typescript-eslint/no-unused-vars
+   54:14  warning  'error' is defined but never used                 @typescript-eslint/no-unused-vars
+  101:11  warning  'total' is never reassigned. Use 'const' instead  prefer-const
+  169:11  warning  'total' is never reassigned. Use 'const' instead  prefer-const
+  232:11  warning  'total' is never reassigned. Use 'const' instead  prefer-const
+
+/home/dev/web/koneksi/konxc.github.io/scripts/optimize-images.js
+  38:10  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  56:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/scripts/run-toc-tests.js
+  3:1  warning  There should be at least one empty line between import groups     import/order
+  4:1  warning  `child_process` import should occur before import of `puppeteer`  import/order
+
+/home/dev/web/koneksi/konxc.github.io/scripts/simple-toc-test.js
+  188:11  warning  'total' is never reassigned. Use 'const' instead  prefer-const
+  230:16  warning  'screenshotError' is defined but never used       @typescript-eslint/no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/scripts/test-blog-features.js
+   8:19  error    A `require()` style import is forbidden                        @typescript-eslint/no-require-imports
+   8:19  warning  There should be at least one empty line between import groups  import/order
+   8:19  warning  `puppeteer` import should occur after import of `path`         import/order
+   9:12  error    A `require()` style import is forbidden                        @typescript-eslint/no-require-imports
+  10:14  error    A `require()` style import is forbidden                        @typescript-eslint/no-require-imports
+  74:20  warning  'link' is never reassigned. Use 'const' instead                prefer-const
+
+/home/dev/web/koneksi/konxc.github.io/scripts/test-final-phase-features.js
+   8:1   warning  There should be at least one empty line between import groups           import/order
+   8:1   warning  `puppeteer` import should occur after import of `path`                  import/order
+  10:19  warning  'join' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  16:12  warning  Parsing error: Unexpected token                                         prettier/prettier
+  16:20  warning  Unexpected any. Specify a different type                                @typescript-eslint/no-explicit-any
+  17:17  warning  Unexpected any. Specify a different type                                @typescript-eslint/no-explicit-any
+  19:24  warning  Unexpected any. Specify a different type                                @typescript-eslint/no-explicit-any
+
+/home/dev/web/koneksi/konxc.github.io/scripts/test-smart-header-html.js
+  123:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/scripts/test-smart-header-playwright.js
+  10:1  warning  There should be at least one empty line between import groups  import/order
+  10:1  warning  `playwright` import should occur after import of `path`        import/order
+
+/home/dev/web/koneksi/konxc.github.io/scripts/test-table-of-contents.js
+  1:1  warning  There should be at least one empty line between import groups           import/order
+  2:1  warning  `path` import should occur before import of `puppeteer`                 import/order
+  2:8  warning  'path' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/scripts/test-toc-articles.js
+  8:1  warning  There should be at least one empty line between import groups     import/order
+  9:1  warning  `child_process` import should occur before import of `puppeteer`  import/order
+
+/home/dev/web/koneksi/konxc.github.io/src/components/Head.astro
+  32:9  error  'URL' is not defined  no-undef
+  33:9  error  'URL' is not defined  no-undef
+  36:9  error  'URL' is not defined  no-undef
+
+/home/dev/web/koneksi/konxc.github.io/src/components/MainLayout.astro
+  49:3  warning  Unused CSS selector `.animate-blob`          astro/no-unused-css-selector
+  53:3  warning  Unused CSS selector `.animation-delay-2000`  astro/no-unused-css-selector
+  57:3  warning  Unused CSS selector `.animation-delay-4000`  astro/no-unused-css-selector
+  61:3  warning  Unused CSS selector `.animate-fade-in`       astro/no-unused-css-selector
+  65:3  warning  Unused CSS selector `.animation-delay-500`   astro/no-unused-css-selector
+  69:3  warning  Unused CSS selector `.animation-delay-1000`  astro/no-unused-css-selector
+  73:3  warning  Unused CSS selector `.animation-delay-1500`  astro/no-unused-css-selector
+  77:3  warning  Unused CSS selector `.animation-delay-2000`  astro/no-unused-css-selector
+  81:3  warning  Unused CSS selector `.btn-gradient-blue`     astro/no-unused-css-selector
+  85:3  warning  Unused CSS selector `.btn-gradient-gold`     astro/no-unused-css-selector
+  89:3  warning  Unused CSS selector `.icon`                  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/accessibility/FocusManager.astro
+  353:3   warning  Unused CSS selector `.sr-only`                                         astro/no-unused-css-selector
+  372:3   warning  Unused CSS selector `.dark *:focus`                                    astro/no-unused-css-selector
+  377:3   warning  Unused CSS selector `button:focus`                                     astro/no-unused-css-selector
+  377:16  warning  Unused CSS selector `a:focus`                                          astro/no-unused-css-selector
+  378:11  warning  Unused CSS selector `input:focus`                                      astro/no-unused-css-selector
+  379:15  warning  Unused CSS selector `textarea:focus`                                   astro/no-unused-css-selector
+  380:18  warning  Unused CSS selector `select:focus`                                     astro/no-unused-css-selector
+  385:3   warning  Unused CSS selector `.dark button:focus`                               astro/no-unused-css-selector
+  385:22  warning  Unused CSS selector `.dark a:focus`                                    astro/no-unused-css-selector
+  386:17  warning  Unused CSS selector `.dark input:focus`                                astro/no-unused-css-selector
+  387:21  warning  Unused CSS selector `.dark textarea:focus`                             astro/no-unused-css-selector
+  388:24  warning  Unused CSS selector `.dark select:focus`                               astro/no-unused-css-selector
+  394:3   warning  Unused CSS selector `.nav-dropdown:focus-within .dropdown-menu`        astro/no-unused-css-selector
+  394:45  warning  Unused CSS selector `.search-container:focus-within .search-dropdown`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/AdvancedSearch.astro
+    5:17  warning  Parsing error: Unexpected token                                                          prettier/prettier
+  613:3   warning  Unused CSS selector `.dark .advanced-search input`                                       astro/no-unused-css-selector
+  617:3   warning  Unused CSS selector `.dark .advanced-search input::placeholder`                          astro/no-unused-css-selector
+  621:3   warning  Unused CSS selector `.dark .advanced-search select`                                      astro/no-unused-css-selector
+  633:3   warning  Unused CSS selector `.dark .search-results .group`                                       astro/no-unused-css-selector
+  637:3   warning  Unused CSS selector `.dark .search-results .group h3`                                    astro/no-unused-css-selector
+  641:3   warning  Unused CSS selector `.dark .search-results .group p`                                     astro/no-unused-css-selector
+  645:3   warning  Unused CSS selector `.dark .search-results .group span`                                  astro/no-unused-css-selector
+  649:3   warning  Unused CSS selector `.dark .search-results .group .text-primary-600`                     astro/no-unused-css-selector
+  653:3   warning  Unused CSS selector `.dark .search-results .group .group-hover\:text-primary-600:hover`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/AnalyticsDashboard.astro
+  263:3   warning  Unused CSS selector `.dark .analytics-dashboard h3`                   astro/no-unused-css-selector
+  263:33  warning  Unused CSS selector `.dark .analytics-dashboard h4`                   astro/no-unused-css-selector
+  268:3   warning  Unused CSS selector `.dark .analytics-dashboard p`                    astro/no-unused-css-selector
+  272:3   warning  Unused CSS selector `.dark .analytics-dashboard .bg-white`            astro/no-unused-css-selector
+  276:3   warning  Unused CSS selector `.dark .analytics-dashboard .text-neutral-800`    astro/no-unused-css-selector
+  276:48  warning  Unused CSS selector `.dark .analytics-dashboard .text-neutral-900`    astro/no-unused-css-selector
+  281:3   warning  Unused CSS selector `.dark .analytics-dashboard .text-neutral-600`    astro/no-unused-css-selector
+  281:48  warning  Unused CSS selector `.dark .analytics-dashboard .text-neutral-700`    astro/no-unused-css-selector
+  286:3   warning  Unused CSS selector `.dark .analytics-dashboard .border-neutral-200`  astro/no-unused-css-selector
+  286:50  warning  Unused CSS selector `.dark .analytics-dashboard .border-neutral-100`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/ArticleLikeSection.astro
+   14:3  error    'postTitle' is assigned a value but never used          no-unused-vars
+   17:3  error    'showReadingTime' is assigned a value but never used    no-unused-vars
+  433:3  warning  Unused CSS selector `.dark .article-like-section.card`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/ArticleStatsWidget.astro
+  273:3  warning  Unused CSS selector `.dark .article-stats-widget`        astro/no-unused-css-selector
+  277:3  warning  Unused CSS selector `.dark .article-stats-widget:hover`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/AuthorProfiles.astro
+  586:3  warning  Unused CSS selector `.dark .author-profiles`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/AutoInlineLikeButton.astro
+  36:3  warning  Unused CSS selector `.auto-like-container .inline-like-container`             astro/no-unused-css-selector
+  40:3  warning  Unused CSS selector `.auto-like-container .inline-like-container.card`        astro/no-unused-css-selector
+  44:3  warning  Unused CSS selector `.auto-like-container .inline-like-container.minimal`     astro/no-unused-css-selector
+  49:3  warning  Unused CSS selector `.dark .auto-like-container .inline-like-container.card`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/BlogHero.astro
+  81:3  warning  Unused CSS selector `.dark .blog-hero`       astro/no-unused-css-selector
+  85:3  warning  Unused CSS selector `.dark .blog-hero h1`    astro/no-unused-css-selector
+  89:3  warning  Unused CSS selector `.dark .blog-hero p`     astro/no-unused-css-selector
+  93:3  warning  Unused CSS selector `.dark .blog-hero span`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/BlogSearch.astro
+  368:3  warning  Unused CSS selector `.result-title a`            astro/no-unused-css-selector
+  405:3  warning  Unused CSS selector `.dark .search-result-item`  astro/no-unused-css-selector
+  409:3  warning  Unused CSS selector `.dark .result-title a`      astro/no-unused-css-selector
+  413:3  warning  Unused CSS selector `.dark .result-description`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/CodeBlockEnhancer.astro
+  196:3   warning  Unused CSS selector `.enhanced-code-block`                              astro/no-unused-css-selector
+  202:3   warning  Unused CSS selector `.code-container`                                   astro/no-unused-css-selector
+  207:3   warning  Unused CSS selector `.line-numbers`                                     astro/no-unused-css-selector
+  214:3   warning  Unused CSS selector `.line-number`                                      astro/no-unused-css-selector
+  220:3   warning  Unused CSS selector `.code-content`                                     astro/no-unused-css-selector
+  228:3   warning  Unused CSS selector `.code-content code`                                astro/no-unused-css-selector
+  236:3   warning  Unused CSS selector `.copy-button-floating`                             astro/no-unused-css-selector
+  240:3   warning  Unused CSS selector `.enhanced-code-block:hover .copy-button-floating`  astro/no-unused-css-selector
+  244:3   warning  Unused CSS selector `.copy-icon`                                        astro/no-unused-css-selector
+  249:3   warning  Unused CSS selector `.code-footer`                                      astro/no-unused-css-selector
+  253:3   warning  Unused CSS selector `.language-label`                                   astro/no-unused-css-selector
+  257:3   warning  Unused CSS selector `.line-count`                                       astro/no-unused-css-selector
+  262:3   warning  Unused CSS selector `.copy-button-floating.copied`                      astro/no-unused-css-selector
+  267:3   warning  Unused CSS selector `.language-typescript .token.keyword`               astro/no-unused-css-selector
+  267:39  warning  Unused CSS selector `.language-javascript .token.keyword`               astro/no-unused-css-selector
+  272:3   warning  Unused CSS selector `.language-typescript .token.string`                astro/no-unused-css-selector
+  272:38  warning  Unused CSS selector `.language-javascript .token.string`                astro/no-unused-css-selector
+  277:3   warning  Unused CSS selector `.language-typescript .token.comment`               astro/no-unused-css-selector
+  277:39  warning  Unused CSS selector `.language-javascript .token.comment`               astro/no-unused-css-selector
+  282:3   warning  Unused CSS selector `.language-typescript .token.function`              astro/no-unused-css-selector
+  282:40  warning  Unused CSS selector `.language-javascript .token.function`              astro/no-unused-css-selector
+  287:3   warning  Unused CSS selector `.language-typescript .token.number`                astro/no-unused-css-selector
+  287:38  warning  Unused CSS selector `.language-javascript .token.number`                astro/no-unused-css-selector
+  292:3   warning  Unused CSS selector `.language-html .token.tag`                         astro/no-unused-css-selector
+  296:3   warning  Unused CSS selector `.language-html .token.attr-name`                   astro/no-unused-css-selector
+  300:3   warning  Unused CSS selector `.language-html .token.attr-value`                  astro/no-unused-css-selector
+  304:3   warning  Unused CSS selector `.language-css .token.selector`                     astro/no-unused-css-selector
+  308:3   warning  Unused CSS selector `.language-css .token.property`                     astro/no-unused-css-selector
+  312:3   warning  Unused CSS selector `.language-css .token.value`                        astro/no-unused-css-selector
+  317:3   warning  Unused CSS selector `.dark .enhanced-code-block`                        astro/no-unused-css-selector
+  321:3   warning  Unused CSS selector `.dark .line-numbers`                               astro/no-unused-css-selector
+  325:3   warning  Unused CSS selector `.dark .code-content`                               astro/no-unused-css-selector
+  329:3   warning  Unused CSS selector `.dark .copy-button-floating`                       astro/no-unused-css-selector
+  333:3   warning  Unused CSS selector `.dark .code-footer`                                astro/no-unused-css-selector
+  338:3   warning  Unused CSS selector `.dark .language-typescript .token.keyword`         astro/no-unused-css-selector
+  338:45  warning  Unused CSS selector `.dark .language-javascript .token.keyword`         astro/no-unused-css-selector
+  343:3   warning  Unused CSS selector `.dark .language-typescript .token.string`          astro/no-unused-css-selector
+  343:44  warning  Unused CSS selector `.dark .language-javascript .token.string`          astro/no-unused-css-selector
+  348:3   warning  Unused CSS selector `.dark .language-typescript .token.comment`         astro/no-unused-css-selector
+  348:45  warning  Unused CSS selector `.dark .language-javascript .token.comment`         astro/no-unused-css-selector
+  353:3   warning  Unused CSS selector `.dark .language-typescript .token.function`        astro/no-unused-css-selector
+  353:46  warning  Unused CSS selector `.dark .language-javascript .token.function`        astro/no-unused-css-selector
+  358:3   warning  Unused CSS selector `.dark .language-typescript .token.number`          astro/no-unused-css-selector
+  358:44  warning  Unused CSS selector `.dark .language-javascript .token.number`          astro/no-unused-css-selector
+  363:3   warning  Unused CSS selector `.dark .language-html .token.tag`                   astro/no-unused-css-selector
+  367:3   warning  Unused CSS selector `.dark .language-html .token.attr-name`             astro/no-unused-css-selector
+  371:3   warning  Unused CSS selector `.dark .language-html .token.attr-value`            astro/no-unused-css-selector
+  375:3   warning  Unused CSS selector `.dark .language-css .token.selector`               astro/no-unused-css-selector
+  379:3   warning  Unused CSS selector `.dark .language-css .token.property`               astro/no-unused-css-selector
+  383:3   warning  Unused CSS selector `.dark .language-css .token.value`                  astro/no-unused-css-selector
+  389:5   warning  Unused CSS selector `.copy-button-floating`                             astro/no-unused-css-selector
+  393:5   warning  Unused CSS selector `.line-numbers`                                     astro/no-unused-css-selector
+  398:5   warning  Unused CSS selector `.line-number`                                      astro/no-unused-css-selector
+  402:5   warning  Unused CSS selector `.code-content`                                     astro/no-unused-css-selector
+  406:5   warning  Unused CSS selector `.code-footer`                                      astro/no-unused-css-selector
+  413:5   warning  Unused CSS selector `.enhanced-code-block`                              astro/no-unused-css-selector
+  417:5   warning  Unused CSS selector `.copy-button-floating`                             astro/no-unused-css-selector
+  421:5   warning  Unused CSS selector `.line-numbers`                                     astro/no-unused-css-selector
+  425:5   warning  Unused CSS selector `.code-content`                                     astro/no-unused-css-selector
+  429:5   warning  Unused CSS selector `.code-footer`                                      astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/CommentsSystem.astro
+   15:3   error    'moderationRequired' is assigned a value but never used  no-unused-vars
+   45:11  warning  Parsing error: Unexpected token                          prettier/prettier
+  721:3   warning  Unused CSS selector `.char-counter .over-limit`          astro/no-unused-css-selector
+  902:3   warning  Unused CSS selector `.dark .comments-system`             astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/CopyPageMenu.astro
+   13:3  error    'postTitle' is assigned a value but never used     no-unused-vars
+   14:3  error    'postContent' is assigned a value but never used   no-unused-vars
+   15:3  error    'postUrl' is assigned a value but never used       no-unused-vars
+  540:3  warning  Unused CSS selector `.dark .copy-page-btn.active`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/DarkModeToggle.astro
+  129:3   warning  Unused CSS selector `.dark-mode-toggle.dark-active .sun-icon`   astro/no-unused-css-selector
+  133:3   warning  Unused CSS selector `.dark-mode-toggle.dark-active .moon-icon`  astro/no-unused-css-selector
+  146:3   warning  Unused CSS selector `.dark`                                     astro/no-unused-css-selector
+  155:3   warning  Unused CSS selector `.dark .prose`                              astro/no-unused-css-selector
+  159:3   warning  Unused CSS selector `.dark .prose h1`                           astro/no-unused-css-selector
+  159:19  warning  Unused CSS selector `.dark .prose h2`                           astro/no-unused-css-selector
+  160:19  warning  Unused CSS selector `.dark .prose h3`                           astro/no-unused-css-selector
+  161:19  warning  Unused CSS selector `.dark .prose h4`                           astro/no-unused-css-selector
+  162:19  warning  Unused CSS selector `.dark .prose h5`                           astro/no-unused-css-selector
+  163:19  warning  Unused CSS selector `.dark .prose h6`                           astro/no-unused-css-selector
+  168:3   warning  Unused CSS selector `.dark .prose p`                            astro/no-unused-css-selector
+  172:3   warning  Unused CSS selector `.dark .prose code`                         astro/no-unused-css-selector
+  176:3   warning  Unused CSS selector `.dark .prose pre`                          astro/no-unused-css-selector
+  180:3   warning  Unused CSS selector `.dark .card`                               astro/no-unused-css-selector
+  184:3   warning  Unused CSS selector `.dark .btn-primary`                        astro/no-unused-css-selector
+  188:3   warning  Unused CSS selector `.dark .btn-secondary`                      astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/DevelopmentControls.astro
+  274:3   warning  Unused CSS selector `.control-btn.active`                                                           astro/no-unused-css-selector
+  287:3   warning  Unused CSS selector `.dark .development-controls`                                                   astro/no-unused-css-selector
+  291:3   warning  Unused CSS selector `.dark .dev-badge`                                                              astro/no-unused-css-selector
+  295:3   warning  Unused CSS selector `.dark .control-btn`                                                            astro/no-unused-css-selector
+  299:3   warning  Unused CSS selector `.dark .control-btn.active`                                                     astro/no-unused-css-selector
+  330:3   warning  Unused CSS selector `.development-controls:not([style*="display: none"]) ~ * .testing-toggle`       astro/no-unused-css-selector
+  330:75  warning  Unused CSS selector `.development-controls:not([style*="display: none"]) ~ * .reading-mode-toggle`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/FeaturedPost.astro
+   98:3  warning  Unused CSS selector `.dark .featured-post h2`                 astro/no-unused-css-selector
+  102:3  warning  Unused CSS selector `.dark .featured-post h3`                 astro/no-unused-css-selector
+  106:3  warning  Unused CSS selector `.dark .featured-post p`                  astro/no-unused-css-selector
+  110:3  warning  Unused CSS selector `.dark .featured-post .text-neutral-500`  astro/no-unused-css-selector
+  115:3  warning  Unused CSS selector `.featured-post .group:hover`             astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/InlineLikeButton.astro
+  236:3  warning  Unused CSS selector `.dark .inline-like-container.card`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/InteractiveDemos.astro
+   80:7  error    'activeTabId' is assigned a value but never used  no-unused-vars
+  885:3  warning  Unused CSS selector `.demo-success ul`            astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/LikeButton.astro
+  288:3  warning  Unused CSS selector `.dark .like-button-container.card`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/NewsletterSection.astro
+  535:3  warning  Unused CSS selector `.dark .newsletter-section.card .newsletter-section-form-container`     astro/no-unused-css-selector
+  539:3  warning  Unused CSS selector `.dark .newsletter-section.minimal`                                     astro/no-unused-css-selector
+  543:3  warning  Unused CSS selector `.dark .newsletter-section.minimal .newsletter-section-form-container`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/NewsletterSignup.astro
+  287:3  warning  Unused CSS selector `.dark .newsletter-signup h2`                  astro/no-unused-css-selector
+  291:3  warning  Unused CSS selector `.dark .newsletter-signup p`                   astro/no-unused-css-selector
+  299:3  warning  Unused CSS selector `.dark .newsletter-signup .bg-gradient-to-br`  astro/no-unused-css-selector
+  303:3  warning  Unused CSS selector `.dark .newsletter-signup .bg-white`           astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/PerformanceOptimizer.astro
+   14:3  error    'enableImageOptimization' is assigned a value but never used  no-unused-vars
+   15:3  error    'enableLazyLoading' is assigned a value but never used        no-unused-vars
+   16:3  error    'enablePreloading' is assigned a value but never used         no-unused-vars
+   17:3  error    'enableCaching' is assigned a value but never used            no-unused-vars
+   18:3  error    'enableCompression' is assigned a value but never used        no-unused-vars
+  566:3  warning  Unused CSS selector `img[data-src]`                           astro/no-unused-css-selector
+  570:3  warning  Unused CSS selector `img[data-src].loaded`                    astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/PostsGrid.astro
+    3:11  warning  Parsing error: Unexpected token                            prettier/prettier
+  150:3   warning  Unused CSS selector `.dark .posts-grid h2`                 astro/no-unused-css-selector
+  154:3   warning  Unused CSS selector `.dark .posts-grid h3`                 astro/no-unused-css-selector
+  158:3   warning  Unused CSS selector `.dark .posts-grid p`                  astro/no-unused-css-selector
+  162:3   warning  Unused CSS selector `.dark .posts-grid .text-neutral-500`  astro/no-unused-css-selector
+  166:3   warning  Unused CSS selector `.dark .posts-grid .text-neutral-600`  astro/no-unused-css-selector
+  170:3   warning  Unused CSS selector `.dark .posts-grid .bg-neutral-100`    astro/no-unused-css-selector
+  174:3   warning  Unused CSS selector `.dark .posts-grid .text-neutral-600`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/ReadingAnalytics.astro
+  14:3  error  'trackProgress' is assigned a value but never used  no-unused-vars
+  15:3  error  'trackTime' is assigned a value but never used      no-unused-vars
+  16:3  error  'trackScroll' is assigned a value but never used    no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/ReadingMode.astro
+   13:3  error    'enableFocusMode' is assigned a value but never used         no-unused-vars
+   14:3  error    'enableNightMode' is assigned a value but never used         no-unused-vars
+   15:3  error    'enableTypography' is assigned a value but never used        no-unused-vars
+   16:3  error    'enableProgressTracking' is assigned a value but never used  no-unused-vars
+  959:3  warning  Unused CSS selector `.focus-mode .reading-content *`         astro/no-unused-css-selector
+  972:3  warning  Unused CSS selector `.night-mode .reading-content *`         astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/ReadingProgress.astro
+  108:3  warning  Unused CSS selector `.progress-bar.completed`         astro/no-unused-css-selector
+  119:3  warning  Unused CSS selector `.progress-bar.completed::after`  astro/no-unused-css-selector
+  147:3  warning  Unused CSS selector `.dark .reading-progress`         astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/RelatedArticles.astro
+  116:6  error  Parsing error: JSX expressions must have one parent element
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/SmartBlogTestingSuite.astro
+  707:3  warning  Unused CSS selector `.testing-toggle-btn.active`  astro/no-unused-css-selector
+  744:3  warning  Unused CSS selector `.test-item`                  astro/no-unused-css-selector
+  748:3  warning  Unused CSS selector `.test-item.passed`           astro/no-unused-css-selector
+  752:3  warning  Unused CSS selector `.test-item.failed`           astro/no-unused-css-selector
+  789:3  warning  Unused CSS selector `.dark .testing-suite`        astro/no-unused-css-selector
+  793:3  warning  Unused CSS selector `.dark .test-card`            astro/no-unused-css-selector
+  797:3  warning  Unused CSS selector `.dark .test-card-full`       astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/SmartHeader.astro
+  28:3  warning  Unused CSS selector `.smart-header.hidden`                                astro/no-unused-css-selector
+  32:3  warning  Unused CSS selector `.smart-header.scrolled`                              astro/no-unused-css-selector
+  37:3  warning  Unused CSS selector `.smart-header .smart-header-content`                 astro/no-unused-css-selector
+  46:3  warning  Unused CSS selector `.smart-header.scrolled .smart-header-content`        astro/no-unused-css-selector
+  55:3  warning  Unused CSS selector `.dark .smart-header .smart-header-content`           astro/no-unused-css-selector
+  63:3  warning  Unused CSS selector `.dark .smart-header.scrolled .smart-header-content`  astro/no-unused-css-selector
+  72:3  warning  Unused CSS selector `.section.approaching-threshold`                      astro/no-unused-css-selector
+  76:3  warning  Unused CSS selector `.section.approaching-threshold::after`               astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/SmartHeaderFixed.astro
+   29:3  warning  Unused CSS selector `.smart-header.hidden`                                          astro/no-unused-css-selector
+   35:3  warning  Unused CSS selector `.smart-header.scrolled`                                        astro/no-unused-css-selector
+   40:3  warning  Unused CSS selector `.smart-header.showing`                                         astro/no-unused-css-selector
+   46:3  warning  Unused CSS selector `.smart-header.hiding`                                          astro/no-unused-css-selector
+   52:3  warning  Unused CSS selector `.smart-header .smart-header-content`                           astro/no-unused-css-selector
+   62:3  warning  Unused CSS selector `.smart-header.scrolled .smart-header-content`                  astro/no-unused-css-selector
+   72:3  warning  Unused CSS selector `.smart-header.showing .smart-header-content`                   astro/no-unused-css-selector
+   78:3  warning  Unused CSS selector `.smart-header.hiding .smart-header-content`                    astro/no-unused-css-selector
+  120:3  warning  Unused CSS selector `.smart-header:not(.hidden):hover .smart-header-content`        astro/no-unused-css-selector
+  128:3  warning  Unused CSS selector `.smart-header.scrolled:hover .smart-header-content`            astro/no-unused-css-selector
+  133:3  warning  Unused CSS selector `.smart-header .smart-header-content *`                         astro/no-unused-css-selector
+  138:3  warning  Unused CSS selector `.smart-header.showing .smart-header-content`                   astro/no-unused-css-selector
+  155:3  warning  Unused CSS selector `.dark .smart-header .smart-header-content`                     astro/no-unused-css-selector
+  163:3  warning  Unused CSS selector `.dark .smart-header.scrolled .smart-header-content`            astro/no-unused-css-selector
+  171:3  warning  Unused CSS selector `.dark .smart-header:not(.hidden):hover .smart-header-content`  astro/no-unused-css-selector
+  179:3  warning  Unused CSS selector `.section.approaching-threshold`                                astro/no-unused-css-selector
+  183:3  warning  Unused CSS selector `.section.approaching-threshold::after`                         astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/SocialShare.astro
+   11:7  error    'encodedDescription' is assigned a value but never used  no-unused-vars
+  194:3  warning  Unused CSS selector `.social-share-btn.copied`           astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/blog/TagCloud.astro
+  238:3  warning  Unused CSS selector `.dark .tag-cloud`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/contributors/ContributorCard.astro
+  30:7  error  'joinDate' is assigned a value but never used  no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/src/components/contributors/ContributorStats.astro
+  62:4  error  Parsing error: JSX expressions must have one parent element
+
+/home/dev/web/koneksi/konxc.github.io/src/components/contributors/WriterCard.astro
+  3:17  warning  Parsing error: Unexpected token  prettier/prettier
+
+/home/dev/web/koneksi/konxc.github.io/src/components/contributors/WritersGrid.astro
+  65:3  warning  Unused CSS selector `.line-clamp-3`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/newsletter/NewsletterStates.astro
+  185:3   warning  Unused CSS selector `.variant-default .state-success .status-text`  astro/no-unused-css-selector
+  185:48  warning  Unused CSS selector `.variant-compact .state-success .status-text`  astro/no-unused-css-selector
+  190:3   warning  Unused CSS selector `.variant-default .state-error .status-text`    astro/no-unused-css-selector
+  190:46  warning  Unused CSS selector `.variant-compact .state-error .status-text`    astro/no-unused-css-selector
+  195:3   warning  Unused CSS selector `.variant-sidebar .state-success .status-text`  astro/no-unused-css-selector
+  199:3   warning  Unused CSS selector `.variant-sidebar .state-error .status-text`    astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/seo/StructuredData.astro
+  3:7  warning  Parsing error: Unexpected token  prettier/prettier
+
+/home/dev/web/koneksi/konxc.github.io/src/components/ui/Avatar.astro
+  61:7  error  Unexpected lexical declaration in case block  no-case-declarations
+
+/home/dev/web/koneksi/konxc.github.io/src/components/ui/Footer.astro
+  97:4  error  Parsing error: JSX expressions must have one parent element
+
+/home/dev/web/koneksi/konxc.github.io/src/components/ui/Header.astro
+  347:3  warning  Unused CSS selector `.dropdown-trigger[aria-expanded="true"] .dropdown-icon`                  astro/no-unused-css-selector
+  355:3  warning  Unused CSS selector `.dropdown-trigger[aria-expanded="true"] + .dropdown-menu`                astro/no-unused-css-selector
+  395:3  warning  Unused CSS selector `.search-toggle[aria-expanded="true"] + .search-dropdown`                 astro/no-unused-css-selector
+  435:3  warning  Unused CSS selector `.mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(1)`  astro/no-unused-css-selector
+  439:3  warning  Unused CSS selector `.mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(2)`  astro/no-unused-css-selector
+  443:3  warning  Unused CSS selector `.mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(3)`  astro/no-unused-css-selector
+  520:3  warning  Unused CSS selector `.dark .header`                                                           astro/no-unused-css-selector
+  524:3  warning  Unused CSS selector `.dark .header.transparent`                                               astro/no-unused-css-selector
+  528:3  warning  Unused CSS selector `.dark .header.minimal`                                                   astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/ui/MinimalHeader.astro
+  167:3  warning  Unused CSS selector `.mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(1)`  astro/no-unused-css-selector
+  171:3  warning  Unused CSS selector `.mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(2)`  astro/no-unused-css-selector
+  175:3  warning  Unused CSS selector `.mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(3)`  astro/no-unused-css-selector
+  216:3  warning  Unused CSS selector `.dark .minimal-header`                                                   astro/no-unused-css-selector
+  220:3  warning  Unused CSS selector `.dark .minimal-header.transparent`                                       astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/ui/OptimizedLogo.astro
+  6:13  warning  Parsing error: Unexpected token  prettier/prettier
+
+/home/dev/web/koneksi/konxc.github.io/src/components/ui/SimpleFooter.astro
+  50:4  error  Parsing error: JSX expressions must have one parent element
+
+/home/dev/web/koneksi/konxc.github.io/src/components/ui/SimpleHeader.astro
+  199:3  warning  Unused CSS selector `.mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(1)`  astro/no-unused-css-selector
+  203:3  warning  Unused CSS selector `.mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(2)`  astro/no-unused-css-selector
+  207:3  warning  Unused CSS selector `.mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(3)`  astro/no-unused-css-selector
+  256:3  warning  Unused CSS selector `.dark .simple-header`                                                    astro/no-unused-css-selector
+  260:3  warning  Unused CSS selector `.dark .simple-header.transparent`                                        astro/no-unused-css-selector
+  264:3  warning  Unused CSS selector `.dark .simple-header.minimal`                                            astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/components/ui/ThemeToggle.astro
+   14:3  error    'position' is assigned a value but never used               no-unused-vars
+  296:3  warning  Unused CSS selector `.theme-toggle[data-position="fixed"]`  astro/no-unused-css-selector
+  310:3  warning  Unused CSS selector `html:not(.dark) .dark-only`            astro/no-unused-css-selector
+  314:3  warning  Unused CSS selector `html.dark .light-only`                 astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/env.d.ts
+  1:1   error    Do not use a triple slash reference for ../.astro/types.d.ts, use `import` style instead                                                                                                                                                                                                                                                                                                  @typescript-eslint/triple-slash-reference
+  4:19  warning  'App' is defined but never used. Allowed unused vars must match /^_/u                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  5:13  error    An empty interface declaration allows any non-nullish value, including literals like `0` and `""`.
+- If that's what you want, disable this lint rule with an inline comment or configure the 'allowInterfaces' rule option.
+- If you want a type meaning "any object", you probably want `object` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead  @typescript-eslint/no-empty-object-type
+
+/home/dev/web/koneksi/konxc.github.io/src/layouts/BlogSlugLayout.astro
+   4:8  error  'Header' is defined but never used                  no-unused-vars
+  27:3  error  'headerVariant' is assigned a value but never used  no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/src/pages/about/index.astro
+  779:3  warning  Unused CSS selector `html`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/pages/blog/[slug].astro
+    4:8   error    'Card' is defined but never used                               no-unused-vars
+   10:8   error    'PopularPosts' is defined but never used                       no-unused-vars
+   18:8   error    'ContentRecommendations' is defined but never used             no-unused-vars
+   19:8   error    'ArticleLikeSection' is defined but never used                 no-unused-vars
+   20:8   error    'NewsletterSignup' is defined but never used                   no-unused-vars
+   21:8   error    'NewsletterSection' is defined but never used                  no-unused-vars
+   22:8   error    'CodeBlockEnhancer' is defined but never used                  no-unused-vars
+   44:21  error    'URL' is not defined                                           no-undef
+  404:3   warning  Unused CSS selector `.sidebar-widget`                          astro/no-unused-css-selector
+  414:3   warning  Unused CSS selector `.sidebar-widget:first-child`              astro/no-unused-css-selector
+  418:3   warning  Unused CSS selector `.sidebar-widget h3`                       astro/no-unused-css-selector
+  428:3   warning  Unused CSS selector `.sidebar-widget > div:not(:first-child)`  astro/no-unused-css-selector
+  435:3   warning  Unused CSS selector `.dark .sidebar-widget`                    astro/no-unused-css-selector
+  440:3   warning  Unused CSS selector `.dark .sidebar-widget h3`                 astro/no-unused-css-selector
+  444:3   warning  Unused CSS selector `.dark .sidebar-widget .text-neutral-600`  astro/no-unused-css-selector
+  448:3   warning  Unused CSS selector `.dark .sidebar-widget .text-neutral-900`  astro/no-unused-css-selector
+  459:3   warning  Unused CSS selector `.blog-content h1`                         astro/no-unused-css-selector
+  475:3   warning  Unused CSS selector `.blog-content h2`                         astro/no-unused-css-selector
+  491:3   warning  Unused CSS selector `.blog-content h3`                         astro/no-unused-css-selector
+  507:3   warning  Unused CSS selector `.blog-content h4`                         astro/no-unused-css-selector
+  523:3   warning  Unused CSS selector `.blog-content h5`                         astro/no-unused-css-selector
+  539:3   warning  Unused CSS selector `.blog-content h6`                         astro/no-unused-css-selector
+  556:3   warning  Unused CSS selector `.blog-content p`                          astro/no-unused-css-selector
+  572:3   warning  Unused CSS selector `.blog-content p:first-of-type`            astro/no-unused-css-selector
+  581:3   warning  Unused CSS selector `.blog-content a`                          astro/no-unused-css-selector
+  590:3   warning  Unused CSS selector `.blog-content a:hover`                    astro/no-unused-css-selector
+  596:3   warning  Unused CSS selector `.blog-content ul`                         astro/no-unused-css-selector
+  600:3   warning  Unused CSS selector `.blog-content ul > li + li`               astro/no-unused-css-selector
+  604:3   warning  Unused CSS selector `.blog-content ol`                         astro/no-unused-css-selector
+  608:3   warning  Unused CSS selector `.blog-content ol > li + li`               astro/no-unused-css-selector
+  612:3   warning  Unused CSS selector `.blog-content li`                         astro/no-unused-css-selector
+  625:3   warning  Unused CSS selector `.blog-content ul li`                      astro/no-unused-css-selector
+  630:3   warning  Unused CSS selector `.blog-content ul li::before`              astro/no-unused-css-selector
+  638:3   warning  Unused CSS selector `.blog-content ol li`                      astro/no-unused-css-selector
+  643:3   warning  Unused CSS selector `.blog-content blockquote`                 astro/no-unused-css-selector
+  665:3   warning  Unused CSS selector `.blog-content blockquote p`               astro/no-unused-css-selector
+  670:3   warning  Unused CSS selector `.blog-content code`                       astro/no-unused-css-selector
+  679:3   warning  Unused CSS selector `.blog-content pre`                        astro/no-unused-css-selector
+  691:3   warning  Unused CSS selector `.blog-content pre code`                   astro/no-unused-css-selector
+  698:3   warning  Unused CSS selector `.blog-content img`                        astro/no-unused-css-selector
+  708:3   warning  Unused CSS selector `.blog-content figure`                     astro/no-unused-css-selector
+  712:3   warning  Unused CSS selector `.blog-content figcaption`                 astro/no-unused-css-selector
+  721:3   warning  Unused CSS selector `.blog-content table`                      astro/no-unused-css-selector
+  727:3   warning  Unused CSS selector `.blog-content th`                         astro/no-unused-css-selector
+  736:3   warning  Unused CSS selector `.blog-content td`                         astro/no-unused-css-selector
+  742:3   warning  Unused CSS selector `.blog-content tr:hover`                   astro/no-unused-css-selector
+  747:3   warning  Unused CSS selector `.blog-content hr`                         astro/no-unused-css-selector
+  754:3   warning  Unused CSS selector `.blog-content strong`                     astro/no-unused-css-selector
+  760:3   warning  Unused CSS selector `.blog-content em`                         astro/no-unused-css-selector
+  766:3   warning  Unused CSS selector `.blog-content small`                      astro/no-unused-css-selector
+  772:3   warning  Unused CSS selector `.dark .blog-content`                      astro/no-unused-css-selector
+  776:3   warning  Unused CSS selector `.dark .blog-content h1`                   astro/no-unused-css-selector
+  776:26  warning  Unused CSS selector `.dark .blog-content h2`                   astro/no-unused-css-selector
+  777:26  warning  Unused CSS selector `.dark .blog-content h3`                   astro/no-unused-css-selector
+  778:26  warning  Unused CSS selector `.dark .blog-content h4`                   astro/no-unused-css-selector
+  779:26  warning  Unused CSS selector `.dark .blog-content h5`                   astro/no-unused-css-selector
+  780:26  warning  Unused CSS selector `.dark .blog-content h6`                   astro/no-unused-css-selector
+  785:3   warning  Unused CSS selector `.dark .blog-content p`                    astro/no-unused-css-selector
+  789:3   warning  Unused CSS selector `.dark .blog-content p:first-of-type`      astro/no-unused-css-selector
+  793:3   warning  Unused CSS selector `.dark .blog-content li`                   astro/no-unused-css-selector
+  797:3   warning  Unused CSS selector `.dark .blog-content blockquote`           astro/no-unused-css-selector
+  803:3   warning  Unused CSS selector `.dark .blog-content code`                 astro/no-unused-css-selector
+  808:3   warning  Unused CSS selector `.dark .blog-content th`                   astro/no-unused-css-selector
+  814:3   warning  Unused CSS selector `.dark .blog-content td`                   astro/no-unused-css-selector
+  819:3   warning  Unused CSS selector `.dark .blog-content tr:hover`             astro/no-unused-css-selector
+  823:3   warning  Unused CSS selector `.dark .blog-content hr`                   astro/no-unused-css-selector
+  827:3   warning  Unused CSS selector `.dark .blog-content strong`               astro/no-unused-css-selector
+  831:3   warning  Unused CSS selector `.dark .blog-content em`                   astro/no-unused-css-selector
+  835:3   warning  Unused CSS selector `.dark .blog-content small`                astro/no-unused-css-selector
+  841:5   warning  Unused CSS selector `.blog-content h1`                         astro/no-unused-css-selector
+  847:5   warning  Unused CSS selector `.blog-content h2`                         astro/no-unused-css-selector
+  853:5   warning  Unused CSS selector `.blog-content h3`                         astro/no-unused-css-selector
+  859:5   warning  Unused CSS selector `.blog-content p`                          astro/no-unused-css-selector
+  865:5   warning  Unused CSS selector `.blog-content p:first-of-type`            astro/no-unused-css-selector
+  871:5   warning  Unused CSS selector `.blog-content li`                         astro/no-unused-css-selector
+  876:5   warning  Unused CSS selector `.blog-content blockquote`                 astro/no-unused-css-selector
+  884:5   warning  Unused CSS selector `.blog-content pre`                        astro/no-unused-css-selector
+  897:5   warning  Unused CSS selector `.blog-content h1`                         astro/no-unused-css-selector
+  897:22  warning  Unused CSS selector `.blog-content h2`                         astro/no-unused-css-selector
+  898:22  warning  Unused CSS selector `.blog-content h3`                         astro/no-unused-css-selector
+  899:22  warning  Unused CSS selector `.blog-content h4`                         astro/no-unused-css-selector
+  900:22  warning  Unused CSS selector `.blog-content h5`                         astro/no-unused-css-selector
+  901:22  warning  Unused CSS selector `.blog-content h6`                         astro/no-unused-css-selector
+  906:5   warning  Unused CSS selector `.blog-content p`                          astro/no-unused-css-selector
+  906:21  warning  Unused CSS selector `.blog-content li`                         astro/no-unused-css-selector
+  911:5   warning  Unused CSS selector `.blog-content a`                          astro/no-unused-css-selector
+  916:5   warning  Unused CSS selector `.blog-content blockquote`                 astro/no-unused-css-selector
+  922:5   warning  Unused CSS selector `.blog-content code`                       astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/pages/blog/index.astro
+  2:9  warning  Parsing error: Unexpected token, expected ","       prettier/prettier
+  5:8  error    'FeaturedPost' is defined but never used            no-unused-vars
+  7:8  error    'NewsletterSignup' is defined but never used        no-unused-vars
+  8:8  error    'ContentRecommendations' is defined but never used  no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/src/pages/contributors/[slug].astro
+    4:8   error    'ContributorCard' is defined but never used          no-unused-vars
+    5:8   error    'ContributorStats' is defined but never used         no-unused-vars
+  914:3   warning  Unused CSS selector `.dark .contributor-hero`        astro/no-unused-css-selector
+  918:3   warning  Unused CSS selector `.dark .contributor-name-large`  astro/no-unused-css-selector
+  922:3   warning  Unused CSS selector `.dark .contributor-bio-large`   astro/no-unused-css-selector
+  926:3   warning  Unused CSS selector `.dark .meta-item`               astro/no-unused-css-selector
+  930:3   warning  Unused CSS selector `.dark .social-link-large`       astro/no-unused-css-selector
+  934:3   warning  Unused CSS selector `.dark .section-title`           astro/no-unused-css-selector
+  938:3   warning  Unused CSS selector `.dark .project-card`            astro/no-unused-css-selector
+  942:3   warning  Unused CSS selector `.dark .project-title`           astro/no-unused-css-selector
+  946:3   warning  Unused CSS selector `.dark .timeline-title`          astro/no-unused-css-selector
+  950:3   warning  Unused CSS selector `.dark .achievement-card`        astro/no-unused-css-selector
+  954:3   warning  Unused CSS selector `.dark .achievement-title`       astro/no-unused-css-selector
+  958:3   warning  Unused CSS selector `.dark .availability-card`       astro/no-unused-css-selector
+  958:28  warning  Unused CSS selector `.dark .skills-card`             astro/no-unused-css-selector
+  959:22  warning  Unused CSS selector `.dark .social-proof-card`       astro/no-unused-css-selector
+  964:3   warning  Unused CSS selector `.dark .card-title`              astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/pages/contributors/index.astro
+  438:3  warning  Unused CSS selector `.dark .hero-section`         astro/no-unused-css-selector
+  442:3  warning  Unused CSS selector `.dark .hero-section h1`      astro/no-unused-css-selector
+  446:3  warning  Unused CSS selector `.dark .hero-section p`       astro/no-unused-css-selector
+  450:3  warning  Unused CSS selector `.dark .stat-card`            astro/no-unused-css-selector
+  454:3  warning  Unused CSS selector `.dark .project-card`         astro/no-unused-css-selector
+  458:3  warning  Unused CSS selector `.dark .project-title`        astro/no-unused-css-selector
+  462:3  warning  Unused CSS selector `.dark .project-description`  astro/no-unused-css-selector
+
+/home/dev/web/koneksi/konxc.github.io/src/pages/contributors/writers.astro
+  3:30  error  'CollectionEntry' is defined but never used  no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/src/pages/cookie-policy.astro
+  255:74  warning  Insert `⏎······················`  prettier/prettier
+  281:74  warning  Insert `⏎······················`  prettier/prettier
+  567:80  warning  Insert `⏎··················`      prettier/prettier
+
+/home/dev/web/koneksi/konxc.github.io/src/pages/events.astro
+  5:19  warning  Parsing error: Unexpected token  prettier/prettier
+
+/home/dev/web/koneksi/konxc.github.io/src/pages/index.astro
+  5:8  error  'ContactInfo' is defined but never used  no-unused-vars
+
+/home/dev/web/koneksi/konxc.github.io/src/utils/analytics/newsletter.ts
+  131:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  150:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  170:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  209:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  226:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  372:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  391:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  398:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  442:14  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/dev/web/koneksi/konxc.github.io/src/utils/markdownParser.ts
+   13:29  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+   17:16  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+   29:16  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+   43:11  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+   75:11  warning  'body' is assigned a value but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars
+   81:13  warning  'Content' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  128:16  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+  131:55  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+  225:13  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+  231:15  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+  233:16  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+  268:17  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+  335:19  warning  Unexpected any. Specify a different type                                            @typescript-eslint/no-explicit-any
+
+/home/dev/web/koneksi/konxc.github.io/test.ts
+  2:0  error  Parsing error: Expression expected
+
+/home/dev/web/koneksi/konxc.github.io/tests/markdownParser.test.ts
+    2:1   warning  There should be at least one empty line between import groups  import/order
+  204:53  warning  Unexpected any. Specify a different type                       @typescript-eslint/no-explicit-any
+  408:10  warning  Unexpected any. Specify a different type                       @typescript-eslint/no-explicit-any
+
+✖ 463 problems (53 errors, 410 warnings)
+  0 errors and 21 warnings potentially fixable with the `--fix` option.
+
+ ELIFECYCLE  Command failed with exit code 1.

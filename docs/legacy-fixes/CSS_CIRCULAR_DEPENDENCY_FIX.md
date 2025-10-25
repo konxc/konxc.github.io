@@ -9,7 +9,9 @@
 ## ✅ **Files Fixed:**
 
 ### **1. ContentRecommendations.astro**
+
 **Before (Error)**:
+
 ```css
 .dark .recommendation-card .text-neutral-500 {
   @apply text-neutral-500; /* Circular dependency! */
@@ -17,6 +19,7 @@
 ```
 
 **After (Fixed)**:
+
 ```css
 .dark .recommendation-card .text-neutral-500 {
   @apply text-neutral-400; /* Fixed! */
@@ -24,7 +27,9 @@
 ```
 
 ### **2. AdvancedSearch.astro**
+
 **Before (Error)**:
+
 ```css
 .dark .advanced-search input::placeholder {
   @apply text-neutral-500; /* Circular dependency! */
@@ -36,6 +41,7 @@
 ```
 
 **After (Fixed)**:
+
 ```css
 .dark .advanced-search input::placeholder {
   @apply text-neutral-400; /* Fixed! */
@@ -49,6 +55,7 @@
 ## 🎯 **Root Cause:**
 
 **Circular Dependency** terjadi ketika:
+
 - Class `text-neutral-500` diapply ke dirinya sendiri
 - Tailwind CSS tidak bisa resolve dependency ini
 - Error terjadi saat build/compile
@@ -77,4 +84,4 @@ grep -r "bg-neutral-500.*@apply.*bg-neutral-500" src/components/blog/
 ---
 
 **CSS Circular Dependency Fixed!** 🎯  
-*Semua komponen blog sekarang bisa di-build tanpa error CSS!*
+_Semua komponen blog sekarang bisa di-build tanpa error CSS!_

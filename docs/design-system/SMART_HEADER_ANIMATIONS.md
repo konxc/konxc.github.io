@@ -3,6 +3,7 @@
 ## 🚀 **Animation Features Added**
 
 ### **✅ Multi-Layer Animations:**
+
 1. **Slide animations** - Smooth up/down movement
 2. **Scale effects** - Subtle size changes
 3. **Opacity transitions** - Fade in/out effects
@@ -13,6 +14,7 @@
 ## 🎯 **Animation Breakdown**
 
 ### **1. ✅ Show Animation (`slideDownWithScale`)**
+
 ```css
 @keyframes slideDownWithScale {
   0% {
@@ -38,6 +40,7 @@
 **Effects**: Slide down + scale up + fade in + blur in
 
 ### **2. ✅ Hide Animation (`slideUpWithScale`)**
+
 ```css
 @keyframes slideUpWithScale {
   0% {
@@ -63,9 +66,11 @@
 **Effects**: Slide up + scale down + fade out + blur out
 
 ### **3. ✅ Pulse Effect**
+
 ```css
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -82,14 +87,15 @@
 
 ### **Animation Classes:**
 
-| Class | Purpose | Animation |
-|-------|---------|-----------|
-| `.showing` | Header appearing | `slideDownWithScale` + `pulse` |
-| `.hiding` | Header disappearing | `slideUpWithScale` |
-| `.scrolled` | Enhanced styling | Scale + enhanced blur |
-| `.hidden` | Hidden state | `translateY(-100%)` + opacity 0 |
+| Class       | Purpose             | Animation                       |
+| ----------- | ------------------- | ------------------------------- |
+| `.showing`  | Header appearing    | `slideDownWithScale` + `pulse`  |
+| `.hiding`   | Header disappearing | `slideUpWithScale`              |
+| `.scrolled` | Enhanced styling    | Scale + enhanced blur           |
+| `.hidden`   | Hidden state        | `translateY(-100%)` + opacity 0 |
 
 ### **Hover Effects:**
+
 ```css
 .smart-header:not(.hidden):hover .smart-header-content {
   background: rgba(255, 255, 255, 1) !important;
@@ -102,39 +108,41 @@
 ## 🔧 **JavaScript Animation Control**
 
 ### **Smooth Show Function:**
+
 ```javascript
 function showHeader(addScrolledClass = true) {
-  if (header.classList.contains('hidden')) {
+  if (header.classList.contains("hidden")) {
     // Remove hidden class and add showing class for animation
-    header.classList.remove('hidden', 'hiding');
-    header.classList.add('showing');
-    
+    header.classList.remove("hidden", "hiding");
+    header.classList.add("showing");
+
     // Add scrolled class if needed
     if (addScrolledClass) {
-      header.classList.add('scrolled');
+      header.classList.add("scrolled");
     } else {
-      header.classList.remove('scrolled');
+      header.classList.remove("scrolled");
     }
-    
+
     // Remove showing class after animation completes
     setTimeout(() => {
-      header.classList.remove('showing');
+      header.classList.remove("showing");
     }, 500);
   }
 }
 ```
 
 ### **Smooth Hide Function:**
+
 ```javascript
 function hideHeader() {
-  if (!header.classList.contains('hidden')) {
+  if (!header.classList.contains("hidden")) {
     // Add hiding class for animation
-    header.classList.add('hiding');
-    
+    header.classList.add("hiding");
+
     // Add hidden class after a short delay
     setTimeout(() => {
-      header.classList.add('hidden');
-      header.classList.remove('hiding', 'scrolled');
+      header.classList.add("hidden");
+      header.classList.remove("hiding", "scrolled");
     }, 50);
   }
 }
@@ -145,6 +153,7 @@ function hideHeader() {
 ### **✅ Optimizations Applied:**
 
 #### **1. Hardware Acceleration:**
+
 ```css
 .smart-header {
   will-change: transform;
@@ -153,6 +162,7 @@ function hideHeader() {
 ```
 
 #### **2. Efficient Transitions:**
+
 ```css
 .smart-header .smart-header-content {
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -160,6 +170,7 @@ function hideHeader() {
 ```
 
 #### **3. Throttled Scroll Events:**
+
 ```javascript
 function onScroll() {
   if (!ticking) {
@@ -172,12 +183,14 @@ function onScroll() {
 ## 🎯 **Animation Timing**
 
 ### **Show Animation Sequence:**
+
 1. **0ms**: Start `slideDownWithScale` animation
 2. **200ms**: Start `pulse` animation (overlay)
 3. **500ms**: Remove `showing` class
 4. **Total**: 0.7s complete animation
 
 ### **Hide Animation Sequence:**
+
 1. **0ms**: Start `slideUpWithScale` animation
 2. **50ms**: Add `hidden` class
 3. **300ms**: Animation complete
@@ -186,6 +199,7 @@ function onScroll() {
 ## 🌙 **Dark Mode Animations**
 
 ### **Dark Mode Styles:**
+
 ```css
 .dark .smart-header .smart-header-content {
   background: rgba(17, 24, 39, 0.95) !important;
@@ -203,6 +217,7 @@ function onScroll() {
 ## 🎨 **Visual Effects Breakdown**
 
 ### **Backdrop Blur Progression:**
+
 - **Hidden**: `blur(0px)` - No blur
 - **Showing**: `blur(8px)` → `blur(12px)` - Progressive blur
 - **Visible**: `blur(12px)` - Normal blur
@@ -210,6 +225,7 @@ function onScroll() {
 - **Hover**: `blur(20px)` - Maximum blur
 
 ### **Scale Effects:**
+
 - **Hidden**: `scale(0.95)` - Slightly smaller
 - **Showing**: `scale(0.95)` → `scale(1.01)` → `scale(1)` - Growth
 - **Visible**: `scale(1)` - Normal size
@@ -217,6 +233,7 @@ function onScroll() {
 - **Hover**: `scale(1.01)` → `scale(1.03)` - Interactive growth
 
 ### **Opacity Transitions:**
+
 - **Hidden**: `opacity: 0` - Invisible
 - **Showing**: `opacity: 0` → `opacity: 0.8` → `opacity: 1` - Fade in
 - **Visible**: `opacity: 1` - Fully visible
@@ -225,6 +242,7 @@ function onScroll() {
 ## 🧪 **Testing Animations**
 
 ### **Manual Testing Steps:**
+
 1. **Open blog post**: `http://localhost:4321/blog/2024-01-26-path-aliases-astro`
 2. **Scroll slowly**: Watch smooth transitions
 3. **Scroll past header**: Watch hide animation
@@ -233,6 +251,7 @@ function onScroll() {
 6. **Test dark mode**: Verify dark mode animations
 
 ### **Animation Checklist:**
+
 - [ ] Show animation smooth dan natural
 - [ ] Hide animation quick dan clean
 - [ ] Pulse effect noticeable but subtle
@@ -244,18 +263,21 @@ function onScroll() {
 ## 🎊 **User Experience Benefits**
 
 ### **✅ Enhanced Visual Appeal:**
+
 - **Professional feel** dengan smooth animations
 - **Modern UI** dengan backdrop blur effects
 - **Interactive feedback** dengan hover effects
 - **Attention-grabbing** dengan pulse animation
 
 ### **✅ Better Performance:**
+
 - **Hardware accelerated** animations
 - **Efficient transitions** dengan proper easing
 - **Throttled events** untuk smooth scrolling
 - **Optimized timing** untuk natural feel
 
 ### **✅ Improved Usability:**
+
 - **Clear visual feedback** untuk state changes
 - **Smooth interactions** tanpa jarring movements
 - **Consistent behavior** across different states
@@ -264,6 +286,7 @@ function onScroll() {
 ## 🔧 **Customization Options**
 
 ### **Animation Duration:**
+
 ```css
 /* Show animation */
 .smart-header.showing .smart-header-content {
@@ -277,6 +300,7 @@ function onScroll() {
 ```
 
 ### **Easing Functions:**
+
 ```css
 /* Show easing */
 animation: slideDownWithScale 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -286,6 +310,7 @@ animation: slideUpWithScale 0.3s cubic-bezier(0.55, 0.06, 0.68, 0.19);
 ```
 
 ### **Scale Effects:**
+
 ```css
 /* Adjust scale values */
 transform: scale(0.95); /* Hidden scale */

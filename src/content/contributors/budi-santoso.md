@@ -3,7 +3,15 @@ name: "Budi Santoso"
 bio: "Blogger teknologi dan startup enthusiast dengan fokus pada digital transformation dan business insights. Menulis artikel tentang teknologi, startup, dan strategi bisnis digital untuk membantu UMKM berkembang."
 avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=budi-santoso&backgroundColor=4CAF50&textColor=FFFFFF"
 role: "writer"
-expertise: ["Business Writing", "Digital Marketing", "Startup Analysis", "Technology Trends", "Content Strategy", "SEO Writing"]
+expertise:
+  [
+    "Business Writing",
+    "Digital Marketing",
+    "Startup Analysis",
+    "Technology Trends",
+    "Content Strategy",
+    "SEO Writing",
+  ]
 location: "Surabaya, Indonesia"
 website: "https://budisantoso.blog"
 github: "https://github.com/budisantoso"
@@ -48,8 +56,23 @@ achievements:
     category: "leadership"
     verified: true
 skills:
-  technical: ["Content Management", "SEO", "Analytics", "Social Media", "WordPress", "Google Analytics"]
-  soft: ["Strategic Thinking", "Market Analysis", "Communication", "Networking", "Leadership"]
+  technical:
+    [
+      "Content Management",
+      "SEO",
+      "Analytics",
+      "Social Media",
+      "WordPress",
+      "Google Analytics",
+    ]
+  soft:
+    [
+      "Strategic Thinking",
+      "Market Analysis",
+      "Communication",
+      "Networking",
+      "Leadership",
+    ]
   languages: ["Bahasa Indonesia", "English"]
 availability:
   forMentoring: true

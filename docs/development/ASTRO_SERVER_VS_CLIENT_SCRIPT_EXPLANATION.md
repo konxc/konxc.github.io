@@ -9,6 +9,7 @@
 ### **1. Server-Side vs Client-Side Rendering**
 
 #### **Server-Side Script (Frontmatter `---`)**
+
 ```astro
 ---
 // ✅ Ini dijalankan di SERVER saat build time
@@ -23,6 +24,7 @@ const processedData = processData(posts);
 ```
 
 **Karakteristik:**
+
 - ✅ Dijalankan di server saat build time
 - ✅ Tidak memiliki akses ke DOM browser
 - ✅ Tidak bisa menggunakan browser APIs (`window`, `document`, dll)
@@ -30,18 +32,20 @@ const processedData = processData(posts);
 - ✅ Perfect untuk data fetching dan processing
 
 #### **Client-Side Script (`<script>` tag)**
+
 ```astro
 <script>
-// ✅ Ini dijalankan di BROWSER saat runtime
-document.addEventListener('DOMContentLoaded', () => {
-  // Interaksi dengan DOM
-  // Event listeners
-  // Dynamic behavior
-});
+  // ✅ Ini dijalankan di BROWSER saat runtime
+  document.addEventListener("DOMContentLoaded", () => {
+    // Interaksi dengan DOM
+    // Event listeners
+    // Dynamic behavior
+  });
 </script>
 ```
 
 **Karakteristik:**
+
 - ✅ Dijalankan di browser saat runtime
 - ✅ Memiliki akses penuh ke DOM
 - ✅ Bisa menggunakan browser APIs
@@ -51,15 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
 ## 🎯 **Mengapa TableOfContents Perlu Client-Side Script?**
 
 ### **1. Dynamic DOM Manipulation**
+
 ```javascript
 function generateTOC() {
   // ❌ Ini TIDAK BISA dilakukan di server-side (frontmatter)
-  const headings = document.querySelectorAll('.blog-content h2, h3, h4, h5, h6');
-  const tocNav = document.getElementById('toc-nav');
-  
+  const headings = document.querySelectorAll(
+    ".blog-content h2, h3, h4, h5, h6",
+  );
+  const tocNav = document.getElementById("toc-nav");
+
   // Manipulasi DOM secara real-time
   headings.forEach((heading, index) => {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = `#${id}`;
     link.textContent = heading.textContent;
     tocNav.appendChild(link);
@@ -68,36 +75,42 @@ function generateTOC() {
 ```
 
 **Mengapa tidak bisa di server-side?**
+
 - Server tidak memiliki akses ke DOM browser
 - `document.querySelectorAll()` tidak tersedia di server
 - `document.createElement()` tidak tersedia di server
 
 ### **2. Event Listeners & User Interactions**
+
 ```javascript
 // ❌ Ini TIDAK BISA dilakukan di server-side
-link.addEventListener('click', (e) => {
+link.addEventListener("click", (e) => {
   e.preventDefault();
-  target.scrollIntoView({ behavior: 'smooth' });
+  target.scrollIntoView({ behavior: "smooth" });
 });
 
-window.addEventListener('scroll', () => {
+window.addEventListener("scroll", () => {
   updateActiveTOCOnScroll();
 });
 ```
 
 **Mengapa tidak bisa di server-side?**
+
 - Server tidak memiliki user interactions
 - `addEventListener()` tidak tersedia di server
 - `scrollIntoView()` adalah browser API
 
 ### **3. Real-time Scroll Detection**
+
 ```javascript
 function updateActiveTOCOnScroll() {
   // ❌ Ini memerlukan browser APIs yang hanya tersedia di client
   const scrollPosition = window.scrollY + 150;
-  const headings = document.querySelectorAll('.blog-content h2, h3, h4, h5, h6');
-  
-  headings.forEach(heading => {
+  const headings = document.querySelectorAll(
+    ".blog-content h2, h3, h4, h5, h6",
+  );
+
+  headings.forEach((heading) => {
     const rect = heading.getBoundingClientRect();
     const headingTop = rect.top + window.scrollY;
     // Logic untuk menentukan heading yang aktif
@@ -106,6 +119,7 @@ function updateActiveTOCOnScroll() {
 ```
 
 **Mengapa tidak bisa di server-side?**
+
 - `window.scrollY` tidak tersedia di server
 - `getBoundingClientRect()` adalah browser API
 - Scroll events hanya terjadi di browser
@@ -113,6 +127,7 @@ function updateActiveTOCOnScroll() {
 ## 🔧 **Race Condition dengan Tailwind CSS**
 
 ### **Masalah yang Ditemukan:**
+
 ```css
 .toc-nav {
   background-color: blue; /* ❌ Debug color yang tidak seharusnya ada */
@@ -127,20 +142,22 @@ function updateActiveTOCOnScroll() {
 ```
 
 ### **Root Cause:**
+
 - **CSS Loading Race Condition**: JavaScript TOC initialization berjalan sebelum Tailwind CSS selesai memproses
 - **Timing Issue**: `generateTOC()` dipanggil sebelum CSS classes tersedia
 - **Debug Colors**: Ada debug colors yang tertinggal dari testing
 
 ### **Solusi yang Diterapkan:**
+
 ```javascript
 function initTOC() {
   // Wait for CSS to be fully loaded to avoid race condition
   const waitForCSS = () => {
     return new Promise((resolve) => {
-      if (document.readyState === 'complete') {
+      if (document.readyState === "complete") {
         resolve(true);
       } else {
-        window.addEventListener('load', () => resolve(true));
+        window.addEventListener("load", () => resolve(true));
       }
     });
   };
@@ -150,7 +167,7 @@ function initTOC() {
     // Additional delay to ensure Tailwind CSS is fully processed
     setTimeout(() => {
       generateTOC();
-      console.log('TOC initialized after CSS load');
+      console.log("TOC initialized after CSS load");
     }, 200);
   });
 }
@@ -159,6 +176,7 @@ function initTOC() {
 ## 🎯 **Kapan Menggunakan Server-Side vs Client-Side?**
 
 ### **Server-Side Script (`---`) - Gunakan untuk:**
+
 ```astro
 ---
 // ✅ Data fetching
@@ -171,63 +189,74 @@ const processedData = processData(posts);
 const totalPosts = posts.length;
 
 // ✅ File system operations
-const fileContent = await fs.readFile('data.json');
+const fileContent = await fs.readFile("data.json");
 ---
 ```
 
 ### **Client-Side Script (`<script>`) - Gunakan untuk:**
+
 ```astro
 <script>
-// ✅ DOM manipulation
-document.querySelector('.button').addEventListener('click', handler);
+  // ✅ DOM manipulation
+  document.querySelector(".button").addEventListener("click", handler);
 
-// ✅ User interactions
-function handleClick() { /* ... */ }
+  // ✅ User interactions
+  function handleClick() {
+    /* ... */
+  }
 
-// ✅ Browser APIs
-window.scrollTo({ top: 0, behavior: 'smooth' });
+  // ✅ Browser APIs
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
-// ✅ Real-time updates
-setInterval(() => { /* ... */ }, 1000);
+  // ✅ Real-time updates
+  setInterval(() => {
+    /* ... */
+  }, 1000);
 
-// ✅ Dynamic content generation
-function generateTOC() { /* ... */ }
+  // ✅ Dynamic content generation
+  function generateTOC() {
+    /* ... */
+  }
 </script>
 ```
 
 ## 🚀 **Best Practices untuk Astro Components**
 
 ### **1. Hybrid Approach**
+
 ```astro
 ---
 // Server-side: Data fetching dan processing
 const posts = await getCollection("blog");
-const processedPosts = posts.map(post => ({
+const processedPosts = posts.map((post) => ({
   ...post,
-  readingTime: calculateReadingTime(post.body)
+  readingTime: calculateReadingTime(post.body),
 }));
 ---
 
 <div>
-  {processedPosts.map(post => (
-    <article>
-      <h2>{post.data.title}</h2>
-      <p>Reading time: {post.readingTime} minutes</p>
-    </article>
-  ))}
+  {
+    processedPosts.map((post) => (
+      <article>
+        <h2>{post.data.title}</h2>
+        <p>Reading time: {post.readingTime} minutes</p>
+      </article>
+    ))
+  }
 </div>
 
 <script>
-// Client-side: Interactive features
-document.addEventListener('DOMContentLoaded', () => {
-  // Add smooth scrolling
-  // Add reading progress
-  // Add interactive elements
-});
+  // Client-side: Interactive features
+  document.addEventListener("DOMContentLoaded", () => {
+    // Add smooth scrolling
+    // Add reading progress
+    // Add interactive elements
+  });
 </script>
 ```
 
 ### **2. Progressive Enhancement**
+
 ```astro
 ---
 // Server-side: Basic functionality
@@ -235,30 +264,31 @@ const tocData = generateTOCData(posts);
 ---
 
 <nav>
-  {tocData.map(item => (
-    <a href={`#${item.id}`}>{item.title}</a>
-  ))}
+  {tocData.map((item) => <a href={`#${item.id}`}>{item.title}</a>)}
 </nav>
 
 <script>
-// Client-side: Enhanced functionality
-// Smooth scrolling, active state tracking, etc.
+  // Client-side: Enhanced functionality
+  // Smooth scrolling, active state tracking, etc.
 </script>
 ```
 
 ## 📊 **Performance Considerations**
 
 ### **Server-Side Benefits:**
+
 - ✅ **Faster Initial Load**: Content sudah tersedia saat page load
 - ✅ **SEO Friendly**: Content ter-render di server
 - ✅ **No JavaScript Required**: Bekerja tanpa JavaScript
 
 ### **Client-Side Benefits:**
+
 - ✅ **Interactive**: Bisa menangani user interactions
 - ✅ **Dynamic**: Bisa update content secara real-time
 - ✅ **Rich UX**: Smooth scrolling, animations, dll
 
 ### **Hybrid Benefits:**
+
 - ✅ **Best of Both Worlds**: Fast initial load + rich interactions
 - ✅ **Progressive Enhancement**: Basic functionality tanpa JS, enhanced dengan JS
 - ✅ **Optimal Performance**: Server-side untuk content, client-side untuk interactions
@@ -273,6 +303,7 @@ const tocData = generateTOCData(posts);
 4. **Real-time Updates**: Perlu update active state berdasarkan scroll position
 
 **Race condition dengan Tailwind CSS diperbaiki dengan:**
+
 1. **CSS Load Detection**: Menunggu CSS selesai dimuat
 2. **Delayed Initialization**: Menambahkan delay untuk memastikan Tailwind CSS selesai diproses
 3. **Debug Cleanup**: Menghapus debug colors yang tertinggal

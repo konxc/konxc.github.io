@@ -5,7 +5,7 @@ import ContributorCard from "@components/contributors/ContributorCard.astro";
 
 const contributors = await getCollection("contributors");
 const activeContributors = contributors.filter(
-  (contributor) => contributor.data.isActive
+  (contributor) => contributor.data.isActive,
 );
 const sortedContributors = activeContributors.sort(
   (a: CollectionEntry<"contributors">, b: CollectionEntry<"contributors">) => {
@@ -14,7 +14,7 @@ const sortedContributors = activeContributors.sort(
     const bScore =
       b.data.socialProof.githubStars + b.data.socialProof.communityReputation;
     return bScore - aScore;
-  }
+  },
 );
 
 // Group contributors by role
@@ -27,7 +27,7 @@ const contributorsByRole = sortedContributors.reduce(
     acc[role].push(contributor);
     return acc;
   },
-  {} as Record<string, typeof sortedContributors>
+  {} as Record<string, typeof sortedContributors>,
 );
 
 // Calculate community stats
@@ -39,27 +39,27 @@ const totalContributions = contributors.reduce(
       contributor.data.contributions.openSourceProjects.reduce(
         (projectSum: any, project: { contributions: any }) =>
           projectSum + (project.contributions || 0),
-        0
+        0,
       ) +
       contributor.data.contributions.koneksiProjects.length +
       contributor.data.contributions.communityContributions.length
     );
   },
-  0
+  0,
 );
 
 const totalOpenSourceProjects = contributors.reduce(
   (sum, contributor: CollectionEntry<"contributors">) => {
     return sum + contributor.data.contributions.openSourceProjects.length;
   },
-  0
+  0,
 );
 
 const totalKoneksiProjects = contributors.reduce(
   (sum, contributor: CollectionEntry<"contributors">) => {
     return sum + contributor.data.contributions.koneksiProjects.length;
   },
-  0
+  0,
 );
 ---
 

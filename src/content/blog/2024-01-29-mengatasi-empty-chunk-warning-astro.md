@@ -4,7 +4,17 @@ description: "Kisah developer OCD yang tidak tahan melihat warning build, dan so
 publishDate: 2024-01-29
 author: "Sandikodev"
 category: "tutorial"
-tags: ["astro", "javascript", "warning", "frontend", "web-development", "optimization", "svg", "build"]
+tags:
+  [
+    "astro",
+    "javascript",
+    "warning",
+    "frontend",
+    "web-development",
+    "optimization",
+    "svg",
+    "build",
+  ]
 featured: true
 readingTime: 7
 image: "/blog/astro-warnings-fix.jpg"
@@ -16,7 +26,7 @@ image: "/blog/astro-warnings-fix.jpg"
 
 Sebagai developer yang sedikit OCD, saya tidak tahan melihat warning-warning kecil di console build. Meskipun aplikasi tetap berjalan normal, warning-warning ini seperti "batu kecil di sepatu" - tidak sakit tapi mengganggu!
 
-**Pemikiran saya:** *"Warning ini mungkin terlihat remeh sekarang, tapi jika terbiasa mengabaikan hal-hal kecil, kita bisa kehilangan detail penting yang berpotensi menjadi masalah besar di masa depan."*
+**Pemikiran saya:** _"Warning ini mungkin terlihat remeh sekarang, tapi jika terbiasa mengabaikan hal-hal kecil, kita bisa kehilangan detail penting yang berpotensi menjadi masalah besar di masa depan."_
 
 Dan ternyata benar! Setelah digali lebih dalam, beberapa warning yang terlihat "remeh" ternyata menyimpan masalah yang lebih kompleks. Mari kita bahas dua warning yang sering muncul di Astro:
 
@@ -39,6 +49,7 @@ Kedua warning ini sering diabaikan karena aplikasi tetap berjalan normal. Tapi m
 ### **Penyebab Empty Chunk Warning**
 
 #### 1. **Script Client-Side Only**
+
 Komponen dengan script yang hanya berjalan di browser:
 
 ```astro
@@ -52,19 +63,23 @@ Komponen dengan script yang hanya berjalan di browser:
 ```
 
 #### 2. **Conditional Usage**
+
 Komponen yang tidak digunakan di semua halaman:
 
 ```astro
-<!-- Hanya digunakan di halaman blog tertentu -->
-{showSocialShare && <SocialShare />}
+<!-- Hanya digunakan di halaman blog tertentu -->{
+  showSocialShare && <SocialShare />
+}
 ```
 
 #### 3. **Static Generation**
+
 Astro melakukan static generation, script tidak diperlukan di semua route.
 
 ### **💡 Mengapa Ini Penting?**
 
 Meskipun terlihat "remeh", empty chunk warning bisa mengindikasikan:
+
 - **Bundle bloat** - File JavaScript yang tidak terpakai
 - **Performance issues** - Loading script yang tidak perlu
 - **Code organization** - Struktur komponen yang kurang optimal
@@ -74,6 +89,7 @@ Meskipun terlihat "remeh", empty chunk warning bisa mengindikasikan:
 ### **Penyebab SVG Warning**
 
 #### 1. **URL Encoding Issue**
+
 SVG dengan referensi internal yang salah encoding:
 
 ```css
@@ -82,6 +98,7 @@ background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" view
 ```
 
 #### 2. **Build Time Resolution**
+
 Vite tidak bisa resolve referensi SVG saat build time:
 
 ```
@@ -91,6 +108,7 @@ Vite tidak bisa resolve referensi SVG saat build time:
 ### **💡 Mengapa Ini Penting?**
 
 SVG warning bisa menyebabkan:
+
 - **Visual glitches** - Pattern tidak muncul dengan benar
 - **Performance impact** - Browser harus resolve di runtime
 - **Debugging confusion** - Sulit trace masalah visual
@@ -103,7 +121,7 @@ SVG warning bisa menyebabkan:
 <script is:inline>
   function copyToClipboard() {
     const url = window.location.href;
-    
+
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(url).then(() => {
         showCopyFeedback();
@@ -112,18 +130,19 @@ SVG warning bisa menyebabkan:
       fallbackCopyToClipboard(url);
     }
   }
-  
+
   function showCopyFeedback() {
-    const button = document.querySelector('.copy-link');
+    const button = document.querySelector(".copy-link");
     if (button) {
-      button.classList.add('copied');
-      setTimeout(() => button.classList.remove('copied'), 2000);
+      button.classList.add("copied");
+      setTimeout(() => button.classList.remove("copied"), 2000);
     }
   }
 </script>
 ```
 
 **Keuntungan `is:inline`:**
+
 - ✅ Tidak menghasilkan chunk terpisah
 - ✅ Script langsung di-embed di HTML
 - ✅ Cocok untuk script sederhana
@@ -166,7 +185,7 @@ background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" view
 
 ```css
 /* Gunakan file SVG terpisah */
-background: url('/images/grain-pattern.svg');
+background: url("/images/grain-pattern.svg");
 ```
 
 ### **Solusi 3: CSS Custom Properties**
@@ -183,15 +202,16 @@ background: url('/images/grain-pattern.svg');
 
 ## 🎯 Kapan Menggunakan Setiap Opsi?
 
-| Directive | Kapan Digunakan | Keuntungan |
-|-----------|----------------|------------|
-| `is:inline` | Script sederhana, tidak perlu bundling | Tidak ada chunk, langsung di HTML |
-| `client:load` | Script kompleks, perlu bundling | Optimized, cached, tree-shaking |
-| External file | Script besar, digunakan di banyak tempat | Reusable, cacheable |
+| Directive     | Kapan Digunakan                          | Keuntungan                        |
+| ------------- | ---------------------------------------- | --------------------------------- |
+| `is:inline`   | Script sederhana, tidak perlu bundling   | Tidak ada chunk, langsung di HTML |
+| `client:load` | Script kompleks, perlu bundling          | Optimized, cached, tree-shaking   |
+| External file | Script besar, digunakan di banyak tempat | Reusable, cacheable               |
 
 ## 🚀 Best Practices
 
 ### 1. **Gunakan `is:inline` untuk Script Sederhana**
+
 ```astro
 <script is:inline>
   // DOM manipulation sederhana
@@ -201,6 +221,7 @@ background: url('/images/grain-pattern.svg');
 ```
 
 ### 2. **Gunakan `client:load` untuk Script Kompleks**
+
 ```astro
 <script client:load>
   // Library integration
@@ -210,6 +231,7 @@ background: url('/images/grain-pattern.svg');
 ```
 
 ### 3. **External File untuk Reusability**
+
 ```astro
 <!-- Untuk script yang digunakan di banyak komponen -->
 <script src="/js/shared-utils.js"></script>
@@ -218,12 +240,14 @@ background: url('/images/grain-pattern.svg');
 ## 📊 **Hasil Setelah Perbaikan**
 
 **Sebelum (dengan warning):**
+
 ```
 [WARN] [vite] Generated an empty chunk: "SocialShare.astro_astro_type_script_index_0_lang"
 [WARN] [vite] %23grain referenced in %23grain didn't resolve at build time
 ```
 
 **Sesudah (clean build):**
+
 ```
 [vite] ✓ 30 modules transformed.
 [vite] ✓ built in 127ms
@@ -235,19 +259,25 @@ background: url('/images/grain-pattern.svg');
 Sebagai developer yang sedikit OCD, saya belajar bahwa:
 
 ### **1. Warning = Opportunity**
+
 Setiap warning adalah kesempatan untuk:
+
 - **Meningkatkan code quality**
-- **Optimasi performance** 
+- **Optimasi performance**
 - **Mencegah technical debt**
 
 ### **2. Detail Kecil = Masalah Besar**
+
 Masalah yang terlihat "remeh" seringkali:
+
 - **Indikator masalah arsitektur** yang lebih besar
 - **Performance bottleneck** di masa depan
 - **Debugging nightmare** saat aplikasi kompleks
 
 ### **3. Clean Build = Professional Standard**
+
 Build tanpa warning menunjukkan:
+
 - **Attention to detail** yang tinggi
 - **Code discipline** yang konsisten
 - **Production readiness** yang optimal
@@ -257,11 +287,13 @@ Build tanpa warning menunjukkan:
 Empty chunk dan SVG warning di Astro adalah masalah umum yang mudah diatasi dengan:
 
 **Untuk Empty Chunk:**
+
 1. **`is:inline`** - Solusi terbaik untuk script sederhana
-2. **External file** - Untuk script yang digunakan di banyak tempat  
+2. **External file** - Untuk script yang digunakan di banyak tempat
 3. **`client:load`** - Untuk script kompleks yang perlu bundling
 
 **Untuk SVG Warning:**
+
 1. **Fix URL encoding** - `%23grain` → `#grain`
 2. **External SVG file** - Untuk pattern yang kompleks
 3. **CSS custom properties** - Untuk reusability
@@ -269,10 +301,11 @@ Empty chunk dan SVG warning di Astro adalah masalah umum yang mudah diatasi deng
 **💡 Pro Tip:** Jangan abaikan warning kecil! Mereka seringkali menyimpan pelajaran berharga tentang best practices dan optimization.
 
 **🔗 Referensi:**
+
 - [Astro Script Directives](https://docs.astro.build/en/guides/client-side-scripts/)
 - [Vite Build Optimization](https://vitejs.dev/guide/build.html)
 - [SVG Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)
 
 ---
 
-*Artikel ini ditulis berdasarkan pengalaman real-world developer OCD yang tidak tahan melihat warning build. Jika Anda memiliki pertanyaan atau tips tambahan, silakan bagikan di komentar!*
+_Artikel ini ditulis berdasarkan pengalaman real-world developer OCD yang tidak tahan melihat warning build. Jika Anda memiliki pertanyaan atau tips tambahan, silakan bagikan di komentar!_

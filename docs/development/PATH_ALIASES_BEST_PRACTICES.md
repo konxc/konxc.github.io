@@ -65,13 +65,14 @@ export {};
 
 ```typescript
 // ❌ DON'T DO THIS
-declare module '@components/*' {
+declare module "@components/*" {
   const component: any;
   export default component;
 }
 ```
 
 **Masalah:**
+
 - Menggunakan `any` type menghilangkan type safety
 - Bypassing TypeScript's built-in module resolution
 - Tidak mengikuti Astro's recommended approach
@@ -80,7 +81,7 @@ declare module '@components/*' {
 
 ```typescript
 // ❌ DON'T DO THIS
-declare module 'astro:content' {
+declare module "astro:content" {
   // Custom implementations
 }
 ```
@@ -101,17 +102,17 @@ export interface Props {
 }
 
 // ✅ DO THIS - Proper import with type safety
-import type { CollectionEntry } from 'astro:content';
-import MainLayout from '@layouts/MainLayout.astro';
+import type { CollectionEntry } from "astro:content";
+import MainLayout from "@layouts/MainLayout.astro";
 ```
 
 ### **3. Leverage Astro's Built-in Types**
 
 ```typescript
 // ✅ DO THIS - Use Astro's built-in types
-import type { HTMLAttributes } from 'astro/types';
+import type { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<'div'> {
+interface Props extends HTMLAttributes<"div"> {
   customProp?: string;
 }
 ```
@@ -121,6 +122,7 @@ interface Props extends HTMLAttributes<'div'> {
 ### **1. IDE Not Recognizing Aliases**
 
 **Solution:**
+
 ```bash
 # Restart TypeScript server in VS Code
 Ctrl+Shift+P -> "TypeScript: Restart TS Server"
@@ -132,6 +134,7 @@ pnpm dev
 ### **2. Build Errors with Aliases**
 
 **Solution:**
+
 ```bash
 # Clear cache and rebuild
 rm -rf .astro dist
@@ -141,6 +144,7 @@ pnpm build
 ### **3. Type Checking Issues**
 
 **Solution:**
+
 ```bash
 # Run type checking
 pnpm astro check
@@ -166,16 +170,19 @@ src/
 ## 🎯 **Benefits of Correct Implementation:**
 
 ### **1. Type Safety**
+
 - Full TypeScript support tanpa `any` types
 - IntelliSense dan auto-completion yang akurat
 - Compile-time error checking
 
 ### **2. Maintainability**
+
 - Mengikuti Astro's recommended patterns
 - Mudah di-maintain dan di-update
 - Konsisten dengan ecosystem Astro
 
 ### **3. Performance**
+
 - Tidak ada overhead dari manual type declarations
 - Leveraging TypeScript's built-in optimizations
 - Better tree-shaking dan bundling
@@ -188,4 +195,4 @@ src/
 
 ---
 
-*Dokumentasi ini dibuat berdasarkan Astro's official documentation dan TypeScript best practices untuk memastikan implementasi yang benar dan maintainable.*
+_Dokumentasi ini dibuat berdasarkan Astro's official documentation dan TypeScript best practices untuk memastikan implementasi yang benar dan maintainable._

@@ -29,84 +29,93 @@ Path aliases dikonfigurasi di `tsconfig.json`:
 
 ## 📁 **Alias yang Tersedia**
 
-| Alias | Path | Deskripsi |
-|-------|------|-----------|
-| `@/*` | `./src/*` | Root src directory |
-| `@components/*` | `./src/components/*` | Komponen UI |
-| `@layouts/*` | `./src/layouts/*` | Layout templates |
-| `@pages/*` | `./src/pages/*` | Halaman website |
-| `@styles/*` | `./src/styles/*` | File CSS/Styling |
-| `@utils/*` | `./src/utils/*` | Utility functions |
-| `@assets/*` | `./src/assets/*` | Static assets |
-| `@content/*` | `./src/content/*` | Content collections |
-| `@types/*` | `./src/types/*` | TypeScript type definitions |
+| Alias           | Path                 | Deskripsi                   |
+| --------------- | -------------------- | --------------------------- |
+| `@/*`           | `./src/*`            | Root src directory          |
+| `@components/*` | `./src/components/*` | Komponen UI                 |
+| `@layouts/*`    | `./src/layouts/*`    | Layout templates            |
+| `@pages/*`      | `./src/pages/*`      | Halaman website             |
+| `@styles/*`     | `./src/styles/*`     | File CSS/Styling            |
+| `@utils/*`      | `./src/utils/*`      | Utility functions           |
+| `@assets/*`     | `./src/assets/*`     | Static assets               |
+| `@content/*`    | `./src/content/*`    | Content collections         |
+| `@types/*`      | `./src/types/*`      | TypeScript type definitions |
 
 ## 💡 **Contoh Penggunaan**
 
 ### ❌ **Sebelum (Relative Imports):**
+
 ```typescript
 // Dari src/pages/blog/[slug].astro
-import MainLayout from '../../layouts/MainLayout.astro';
-import Card from '../../components/ui/Card.astro';
-import { getCollection } from 'astro:content';
+import MainLayout from "../../layouts/MainLayout.astro";
+import Card from "../../components/ui/Card.astro";
+import { getCollection } from "astro:content";
 ```
 
 ### ✅ **Sesudah (Path Aliases):**
+
 ```typescript
 // Dari src/pages/blog/[slug].astro
-import MainLayout from '@layouts/MainLayout.astro';
-import Card from '@components/ui/Card.astro';
-import { getCollection } from 'astro:content';
+import MainLayout from "@layouts/MainLayout.astro";
+import Card from "@components/ui/Card.astro";
+import { getCollection } from "astro:content";
 ```
 
 ## 🎯 **Keuntungan**
 
 ### 1. **Cleaner Code**
+
 - Tidak perlu menghitung `../` untuk relative paths
 - Import statements lebih pendek dan readable
 
 ### 2. **Better Refactoring**
+
 - Jika file dipindah, import tidak perlu diupdate
 - IDE bisa refactor dengan lebih akurat
 
 ### 3. **Consistent Structure**
+
 - Semua developer menggunakan pattern yang sama
 - Mudah untuk onboarding developer baru
 
 ### 4. **IntelliSense Support**
+
 - Auto-completion yang lebih baik
 - Type checking yang lebih akurat
 
 ## 📝 **Best Practices**
 
 ### 1. **Gunakan Alias yang Spesifik**
+
 ```typescript
 // ✅ Good - Specific alias
-import Button from '@components/ui/Button.astro';
-import MainLayout from '@layouts/MainLayout.astro';
+import Button from "@components/ui/Button.astro";
+import MainLayout from "@layouts/MainLayout.astro";
 
 // ❌ Avoid - Generic alias
-import Button from '@/components/ui/Button.astro';
+import Button from "@/components/ui/Button.astro";
 ```
 
 ### 2. **Konsisten dengan Naming**
+
 ```typescript
 // ✅ Good - Consistent naming
-import Hero from '@components/sections/Hero.astro';
-import Services from '@components/sections/Services.astro';
+import Hero from "@components/sections/Hero.astro";
+import Services from "@components/sections/Services.astro";
 
 // ❌ Avoid - Mixed naming
-import Hero from '@components/sections/Hero.astro';
-import Services from '@/components/sections/Services.astro';
+import Hero from "@components/sections/Hero.astro";
+import Services from "@/components/sections/Services.astro";
 ```
 
 ### 3. **Group Related Imports**
+
 ```typescript
 // ✅ Good - Grouped imports
-import { getCollection } from 'astro:content';
-import MainLayout from '@layouts/MainLayout.astro';
-import Card from '@components/ui/Card.astro';
-import Button from '@components/ui/Button.astro';
+import { getCollection } from "astro:content";
+import MainLayout from "@layouts/MainLayout.astro";
+import Card from "@components/ui/Card.astro";
+import Button from "@components/ui/Button.astro";
 ```
 
 ## 🔄 **Migration Guide**
@@ -114,21 +123,24 @@ import Button from '@components/ui/Button.astro';
 ### Langkah-langkah untuk file yang belum diupdate:
 
 1. **Identifikasi relative imports:**
+
 ```bash
 # Cari semua relative imports
 grep -r "from '\.\./" src/
 ```
 
 2. **Update satu per satu:**
+
 ```typescript
 // Before
-import Component from '../../components/Component.astro';
+import Component from "../../components/Component.astro";
 
-// After  
-import Component from '@components/Component.astro';
+// After
+import Component from "@components/Component.astro";
 ```
 
 3. **Test setelah update:**
+
 ```bash
 pnpm dev
 ```
@@ -136,11 +148,13 @@ pnpm dev
 ## 🛠 **IDE Support**
 
 ### VS Code
+
 - Otomatis mendukung path aliases dari `tsconfig.json`
 - IntelliSense dan auto-completion bekerja dengan baik
 - Go to definition berfungsi normal
 
 ### WebStorm/IntelliJ
+
 - Mendukung TypeScript path mapping
 - Auto-import menggunakan aliases
 - Refactoring tools bekerja dengan aliases
@@ -160,4 +174,4 @@ pnpm dev
 
 ---
 
-*Dokumentasi ini dibuat untuk memastikan konsistensi dalam penggunaan path aliases di project KonXC.*
+_Dokumentasi ini dibuat untuk memastikan konsistensi dalam penggunaan path aliases di project KonXC._

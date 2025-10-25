@@ -9,32 +9,38 @@ export interface Props {
 const { totalWriters, totalBlogPosts, totalContributions } = Astro.props;
 ---
 
-<section class="section bg-linear-to-br from-primary-50 to-secondary-50">
+<section class="section from-primary-50 to-secondary-50 bg-linear-to-br">
   <div class="container">
     <div class="mx-auto max-w-4xl text-center">
-      <div class="mb-4 text-sm font-semibold uppercase tracking-wide text-primary-600">
+      <div
+        class="text-primary-600 mb-4 text-sm font-semibold tracking-wide uppercase"
+      >
         Writers & Bloggers
       </div>
       <h1 class="mb-6 text-4xl font-bold lg:text-5xl">
         Penulis & Blogger Koneksi
       </h1>
       <p class="mb-8 text-xl text-neutral-600">
-        Temukan kontributor yang berdedikasi untuk berbagi pengetahuan melalui artikel berkualitas, 
-        tutorial mendalam, dan insights teknologi terbaru.
+        Temukan kontributor yang berdedikasi untuk berbagi pengetahuan melalui
+        artikel berkualitas, tutorial mendalam, dan insights teknologi terbaru.
       </p>
-      
+
       <!-- Stats -->
       <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
         <div class="rounded-lg bg-white p-6 shadow-sm">
-          <div class="text-3xl font-bold text-primary-600">{totalWriters}</div>
+          <div class="text-primary-600 text-3xl font-bold">{totalWriters}</div>
           <div class="text-sm text-neutral-600">Penulis Aktif</div>
         </div>
         <div class="rounded-lg bg-white p-6 shadow-sm">
-          <div class="text-3xl font-bold text-primary-600">{totalBlogPosts}</div>
+          <div class="text-primary-600 text-3xl font-bold">
+            {totalBlogPosts}
+          </div>
           <div class="text-sm text-neutral-600">Artikel Diterbitkan</div>
         </div>
         <div class="rounded-lg bg-white p-6 shadow-sm">
-          <div class="text-3xl font-bold text-primary-600">{totalContributions}</div>
+          <div class="text-primary-600 text-3xl font-bold">
+            {totalContributions}
+          </div>
           <div class="text-sm text-neutral-600">Total Kontribusi</div>
         </div>
       </div>

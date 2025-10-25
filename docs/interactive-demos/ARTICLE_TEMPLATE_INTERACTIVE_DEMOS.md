@@ -4,7 +4,7 @@
 
 Gunakan template ini sebagai starting point untuk artikel dengan interactive demos:
 
-```markdown
+````markdown
 ---
 title: "Judul Artikel yang Menarik"
 description: "Deskripsi singkat yang menjelaskan apa yang akan dipelajari pembaca"
@@ -77,15 +77,18 @@ Jelaskan konsep dasar sebelum memberikan demo.
 ### Demo Pertama
 
 <!-- INTERACTIVE_DEMO:demo-1 -->
+
 ```javascript
 // Contoh kode yang menjelaskan konsep dasar
 const example = {
-  property: 'value',
+  property: "value",
   method: () => {
-    console.log('Hello World');
-  }
+    console.log("Hello World");
+  },
 };
 ```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
 
 **Penjelasan:** Demo ini menunjukkan...
@@ -93,6 +96,7 @@ const example = {
 ### Demo Visual
 
 <!-- INTERACTIVE_DEMO:demo-2 -->
+
 ```mermaid
 graph TD
     A[Start] --> B[Process]
@@ -102,6 +106,7 @@ graph TD
     D --> F[End]
     E --> F
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
 
 **Penjelasan:** Diagram ini menunjukkan...
@@ -115,22 +120,24 @@ Jelaskan konsep yang lebih advanced.
 ### Demo Interaktif
 
 <!-- INTERACTIVE_DEMO:demo-3 -->
+
 ```html
 <!-- Interactive Demo -->
 <div class="demo-container">
-  <input type="text" id="input" placeholder="Enter text">
+  <input type="text" id="input" placeholder="Enter text" />
   <button id="button">Process</button>
   <div id="output"></div>
 </div>
 
 <script>
-document.getElementById('button').addEventListener('click', () => {
-  const input = document.getElementById('input').value;
-  const output = document.getElementById('output');
-  output.textContent = `Processed: ${input}`;
-});
+  document.getElementById("button").addEventListener("click", () => {
+    const input = document.getElementById("input").value;
+    const output = document.getElementById("output");
+    output.textContent = `Processed: ${input}`;
+  });
 </script>
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
 
 **Penjelasan:** Demo ini memungkinkan...
@@ -165,8 +172,9 @@ document.getElementById('button').addEventListener('click', () => {
 
 ---
 
-*Artikel ini dibuat dengan menggunakan struktur markdown yang mendukung interactive demos untuk memberikan pengalaman belajar yang lebih engaging.*
-```
+_Artikel ini dibuat dengan menggunakan struktur markdown yang mendukung interactive demos untuk memberikan pengalaman belajar yang lebih engaging._
+
+````
 
 ## 🎯 **Template untuk Berbagai Jenis Artikel**
 
@@ -210,7 +218,8 @@ npm install [package1] [package2]
 
 # Initialize project
 npm init -y
-```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
 
 ## Step 2: Basic Structure
@@ -218,14 +227,16 @@ npm init -y
 ### Demo Structure
 
 <!-- INTERACTIVE_DEMO:basic-structure -->
+
 ```javascript
 // Basic project structure
 const project = {
-  name: 'My Project',
-  version: '1.0.0',
-  dependencies: ['package1', 'package2']
+  name: "My Project",
+  version: "1.0.0",
+  dependencies: ["package1", "package2"],
 };
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
 
 ## Step 3: Implementation
@@ -233,14 +244,17 @@ const project = {
 ### Demo Implementation
 
 <!-- INTERACTIVE_DEMO:implementation -->
+
 ```javascript
 // Interactive implementation
 function createApp() {
   // Implementation code
 }
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
-```
+
+````
 
 ### **2. Comparison Article**
 
@@ -285,7 +299,8 @@ Penjelasan singkat tentang kedua tool dan mengapa perbandingan ini penting.
 const toolA = new ToolA({
   config: 'value'
 });
-```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
 
 ## Tool B
@@ -293,12 +308,14 @@ const toolA = new ToolA({
 ### Demo Tool B
 
 <!-- INTERACTIVE_DEMO:tool-b-demo -->
+
 ```javascript
 // Tool B implementation
 const toolB = new ToolB({
-  config: 'value'
+  config: "value",
 });
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
 
 ## Comparison
@@ -306,15 +323,18 @@ const toolB = new ToolB({
 ### Comparison Table
 
 <!-- INTERACTIVE_DEMO:comparison-table -->
+
 ```markdown
-| Feature | Tool A | Tool B |
-|---------|--------|--------|
-| Feature 1 | ✅ | ❌ |
-| Feature 2 | ❌ | ✅ |
-| Feature 3 | ✅ | ✅ |
+| Feature   | Tool A | Tool B |
+| --------- | ------ | ------ |
+| Feature 1 | ✅     | ❌     |
+| Feature 2 | ❌     | ✅     |
+| Feature 3 | ✅     | ✅     |
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
-```
+
+````
 
 ### **3. Technical Deep Dive**
 
@@ -357,7 +377,8 @@ graph TB
     B --> D[Service 2]
     C --> E[Database 1]
     D --> F[Database 2]
-```
+````
+
 <!-- END_INTERACTIVE_DEMO -->
 
 ## Implementation
@@ -365,6 +386,7 @@ graph TB
 ### Demo Implementation
 
 <!-- INTERACTIVE_DEMO:implementation -->
+
 ```javascript
 // Implementation code
 class System {
@@ -373,6 +395,7 @@ class System {
   }
 }
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
 
 ## Performance
@@ -380,14 +403,17 @@ class System {
 ### Performance Test
 
 <!-- INTERACTIVE_DEMO:performance-test -->
+
 ```javascript
 // Performance testing code
 function performanceTest() {
   // Test implementation
 }
 ```
+
 <!-- END_INTERACTIVE_DEMO -->
-```
+
+````
 
 ## 🎨 **Tips untuk Penulis**
 
@@ -423,7 +449,7 @@ interactiveDemos:
       prerequisites: ["prerequisite1", "prerequisite2"]
       tags: ["tag1", "tag2"]
       relatedDemos: ["other-demo-id"]
-```
+````
 
 ### **4. Content Quality**
 
@@ -448,11 +474,11 @@ interactiveDemos:
 ```javascript
 // Track demo engagement
 function trackDemoEvent(eventType, demoId, metadata) {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', eventType, {
-      event_category: 'interactive_demo',
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", eventType, {
+      event_category: "interactive_demo",
       event_label: demoId,
-      custom_parameters: metadata
+      custom_parameters: metadata,
     });
   }
 }

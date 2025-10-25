@@ -3,6 +3,7 @@
 ## 📋 **30-Day Sprint Plan**
 
 ### **Week 1: Foundation Setup**
+
 ```
 Day 1-2: Project Setup
 ├── Finalize design system
@@ -24,6 +25,7 @@ Day 5-7: Core Development
 ```
 
 ### **Week 2: Content & Features**
+
 ```
 Day 8-10: Content Creation
 ├── Write hero section content
@@ -45,6 +47,7 @@ Day 13-14: Testing & Optimization
 ```
 
 ### **Week 3: Launch Preparation**
+
 ```
 Day 15-17: Content Completion
 ├── Write remaining 5 articles
@@ -66,6 +69,7 @@ Day 20-21: Launch Preparation
 ```
 
 ### **Week 4: Launch & Monitor**
+
 ```
 Day 22-24: Soft Launch
 ├── Internal testing
@@ -89,6 +93,7 @@ Day 27-30: Post-Launch
 ## 🛠️ **Technical Implementation Checklist**
 
 ### **Development Environment**
+
 - [ ] Node.js 20+ installed
 - [ ] pnpm package manager
 - [ ] Git repository setup
@@ -96,6 +101,7 @@ Day 27-30: Post-Launch
 - [ ] Browser dev tools
 
 ### **Project Structure**
+
 ```
 konxc.github.io/
 ├── src/
@@ -130,6 +136,7 @@ konxc.github.io/
 ```
 
 ### **Design System Implementation**
+
 ```css
 /* Color Palette */
 :root {
@@ -137,28 +144,28 @@ konxc.github.io/
   --primary-500: #3b82f6;
   --primary-600: #2563eb;
   --primary-900: #1e3a8a;
-  
+
   --secondary-50: #f0fdf4;
   --secondary-500: #22c55e;
   --secondary-600: #16a34a;
-  
+
   --neutral-50: #f9fafb;
   --neutral-500: #6b7280;
   --neutral-900: #111827;
-  
+
   --accent-50: #fff7ed;
   --accent-500: #f97316;
 }
 
 /* Typography */
 .font-heading {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
   line-height: 1.2;
 }
 
 .font-body {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-weight: 400;
   line-height: 1.6;
 }
@@ -178,6 +185,7 @@ konxc.github.io/
 ## 📝 **Content Strategy Implementation**
 
 ### **Blog Content Calendar (First Month)**
+
 ```
 Week 1:
 ├── "5 Langkah Digitalisasi UMKM di Era Post-Pandemic"
@@ -203,6 +211,7 @@ Week 4:
 ### **Content Templates**
 
 #### **Business Article Template**
+
 ```markdown
 ---
 title: "Title yang SEO-Friendly"
@@ -216,22 +225,26 @@ readingTime: 5
 ---
 
 # Introduction
+
 - Hook yang menarik
 - Problem yang dihadapi
 - Solusi yang ditawarkan
 
 # Main Content
+
 - Poin-poin utama
 - Data dan statistik
 - Contoh kasus
 
 # Conclusion
+
 - Ringkasan
 - Call-to-action
 - Link ke layanan terkait
 ```
 
 #### **Technical Article Template**
+
 ```markdown
 ---
 title: "Technical Title"
@@ -245,16 +258,19 @@ readingTime: 10
 ---
 
 # Problem Statement
+
 - Technical challenge
 - Current limitations
 - Why it matters
 
 # Solution Approach
+
 - Technical solution
 - Implementation details
 - Code examples
 
 # Results & Lessons
+
 - What we learned
 - Best practices
 - Future improvements
@@ -263,24 +279,28 @@ readingTime: 10
 ## 🎯 **Success Metrics & Tracking**
 
 ### **Week 1 Metrics**
+
 - [ ] Website load time < 3s
 - [ ] Mobile responsiveness 100%
 - [ ] Basic SEO score 80+
 - [ ] Design system consistency
 
 ### **Week 2 Metrics**
+
 - [ ] 5 blog articles published
 - [ ] Contact form functional
 - [ ] Newsletter signup working
 - [ ] Analytics tracking active
 
 ### **Week 3 Metrics**
+
 - [ ] 10 blog articles published
 - [ ] All pages content complete
 - [ ] SEO score 90+
 - [ ] Performance score 90+
 
 ### **Week 4 Metrics**
+
 - [ ] Website launched
 - [ ] First 100 visitors
 - [ ] First 10 newsletter subscribers
@@ -289,18 +309,21 @@ readingTime: 10
 ## 🚀 **Launch Strategy**
 
 ### **Pre-Launch (Week 3)**
+
 - [ ] Internal testing dengan tim
 - [ ] Stakeholder review
 - [ ] Final content review
 - [ ] Performance optimization
 
 ### **Launch Day**
+
 - [ ] Website go-live
 - [ ] Social media announcement
 - [ ] Email ke existing contacts
 - [ ] Press release (optional)
 
 ### **Post-Launch (Week 4)**
+
 - [ ] Monitor website performance
 - [ ] Collect user feedback
 - [ ] Fix any critical issues
@@ -309,18 +332,21 @@ readingTime: 10
 ## 📞 **Team Communication**
 
 ### **Daily Standups**
+
 - Progress update
 - Blockers identification
 - Next day priorities
 - Resource needs
 
 ### **Weekly Reviews**
+
 - Milestone achievement
 - Quality assessment
 - Timeline adjustment
 - Stakeholder feedback
 
 ### **Monthly Planning**
+
 - Next month goals
 - Resource allocation
 - Risk assessment

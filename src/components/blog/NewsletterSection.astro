@@ -1,8 +1,8 @@
 ---
 // Newsletter Section Component - Specialized for blog post pages
 export interface Props {
-  variant?: 'default' | 'card' | 'gradient' | 'minimal';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "default" | "card" | "gradient" | "minimal";
+  size?: "sm" | "md" | "lg";
   showIcon?: boolean;
   showDescription?: boolean;
   title?: string;
@@ -14,18 +14,18 @@ export interface Props {
   className?: string;
 }
 
-const { 
-  variant = 'card',
-  size = 'md',
+const {
+  variant = "card",
+  size = "md",
   showIcon = true,
   showDescription = true,
-  title = 'Suka Artikel Ini?',
-  description = 'Dapatkan artikel serupa langsung di inbox Anda. Subscribe newsletter KonXC untuk tips teknologi terbaru.',
-  placeholder = 'Email Anda',
-  buttonText = 'Subscribe',
-  successMessage = 'Terima kasih! Anda telah berhasil subscribe ke newsletter kami.',
-  privacyText = 'Kami menghargai privasi Anda. Tidak ada spam, unsubscribe kapan saja.',
-  className = ''
+  title = "Suka Artikel Ini?",
+  description = "Dapatkan artikel serupa langsung di inbox Anda. Subscribe newsletter KonXC untuk tips teknologi terbaru.",
+  placeholder = "Email Anda",
+  buttonText = "Subscribe",
+  successMessage = "Terima kasih! Anda telah berhasil subscribe ke newsletter kami.",
+  privacyText = "Kami menghargai privasi Anda. Tidak ada spam, unsubscribe kapan saja.",
+  className = "",
 } = Astro.props;
 
 const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 9)}`;
@@ -36,69 +36,80 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
     <div class="newsletter-section-content">
       {/* Header */}
       <div class="newsletter-section-header">
-        {showIcon && (
-          <div class="newsletter-section-icon">
-            <svg class="newsletter-section-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path 
-                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <polyline 
-                points="22,6 12,13 2,6"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-        )}
-        
+        {
+          showIcon && (
+            <div class="newsletter-section-icon">
+              <svg
+                class="newsletter-section-icon-svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <polyline
+                  points="22,6 12,13 2,6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          )
+        }
+
         <h2 class="newsletter-section-title">{title}</h2>
-        
-        {showDescription && (
-          <p class="newsletter-section-description">
-            {description}
-          </p>
-        )}
+
+        {
+          showDescription && (
+            <p class="newsletter-section-description">{description}</p>
+          )
+        }
       </div>
 
       {/* Form Container */}
       <div class="newsletter-section-form-container">
         <form class="newsletter-section-form" id={newsletterId}>
           <div class="newsletter-section-input-group">
-            <input 
-              type="email" 
+            <input
+              type="email"
               class="newsletter-section-input"
               placeholder={placeholder}
               required
               aria-label="Email address"
             />
-            
-            <button 
-              type="submit" 
+
+            <button
+              type="submit"
               class="newsletter-section-button group"
               aria-label="Subscribe to newsletter"
             >
               <span class="newsletter-section-button-text">{buttonText}</span>
-              
+
               <div class="newsletter-section-button-icon">
-                <svg class="newsletter-section-arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path 
+                <svg
+                  class="newsletter-section-arrow-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
                     d="M5 12h14M12 5l7 7-7 7"
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
+                    stroke-linejoin="round"></path>
                 </svg>
               </div>
             </button>
           </div>
-          
+
           <div class="newsletter-section-privacy">
             <p class="newsletter-section-privacy-text">
               {privacyText}
@@ -110,17 +121,21 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
         <div class="newsletter-section-success">
           <div class="newsletter-section-success-content">
             <div class="newsletter-section-success-icon">
-              <svg class="newsletter-section-check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path 
+              <svg
+                class="newsletter-section-check-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
                   d="M9 12l2 2 4-4"
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
+                  stroke-linejoin="round"></path>
               </svg>
             </div>
-            
+
             <div class="newsletter-section-success-text">
               <h3 class="newsletter-section-success-title">Berhasil!</h3>
               <p class="newsletter-section-success-message">{successMessage}</p>
@@ -132,16 +147,40 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
         <div class="newsletter-section-error">
           <div class="newsletter-section-error-content">
             <div class="newsletter-section-error-icon">
-              <svg class="newsletter-section-error-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
-                <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
+              <svg
+                class="newsletter-section-error-svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="2"></circle>
+                <line
+                  x1="15"
+                  y1="9"
+                  x2="9"
+                  y2="15"
+                  stroke="currentColor"
+                  stroke-width="2"></line>
+                <line
+                  x1="9"
+                  y1="9"
+                  x2="15"
+                  y2="15"
+                  stroke="currentColor"
+                  stroke-width="2"></line>
               </svg>
             </div>
-            
+
             <div class="newsletter-section-error-text">
               <h3 class="newsletter-section-error-title">Oops!</h3>
-              <p class="newsletter-section-error-message">Terjadi kesalahan. Silakan coba lagi.</p>
+              <p class="newsletter-section-error-message">
+                Terjadi kesalahan. Silakan coba lagi.
+              </p>
             </div>
           </div>
         </div>
@@ -157,7 +196,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-container {
-    @apply max-w-2xl mx-auto px-4;
+    @apply mx-auto max-w-2xl px-4;
   }
 
   .newsletter-section-content {
@@ -170,15 +209,15 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-icon {
-    @apply inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4;
+    @apply bg-primary-100 mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full;
   }
 
   .newsletter-section-icon-svg {
-    @apply w-8 h-8 text-primary-600;
+    @apply text-primary-600 h-8 w-8;
   }
 
   .newsletter-section-title {
-    @apply text-3xl font-bold text-neutral-800 mb-4;
+    @apply mb-4 text-3xl font-bold text-neutral-800;
   }
 
   .newsletter-section-description {
@@ -199,7 +238,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-input {
-    @apply flex-1 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300;
+    @apply focus:ring-primary-500 flex-1 rounded-lg border border-neutral-300 px-4 py-3 transition-all duration-300 focus:border-transparent focus:ring-2 focus:outline-none;
     @apply placeholder-neutral-400;
   }
 
@@ -208,16 +247,16 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-button {
-    @apply relative inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all duration-300 cursor-pointer whitespace-nowrap;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    @apply bg-primary-600 hover:bg-primary-700 relative inline-flex cursor-pointer items-center gap-2 rounded-lg px-6 py-3 whitespace-nowrap text-white transition-all duration-300;
+    @apply focus:ring-primary-500 focus:ring-2 focus:ring-offset-2 focus:outline-none;
   }
 
   .newsletter-section-button:hover {
-    @apply shadow-lg transform -translate-y-0.5;
+    @apply -translate-y-0.5 transform shadow-lg;
   }
 
   .newsletter-section-button:active {
-    @apply transform translate-y-0;
+    @apply translate-y-0 transform;
   }
 
   .newsletter-section-button-text {
@@ -229,11 +268,11 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-arrow-icon {
-    @apply w-4 h-4 transition-transform duration-300;
+    @apply h-4 w-4 transition-transform duration-300;
   }
 
   .newsletter-section-button:hover .newsletter-section-arrow-icon {
-    @apply transform translate-x-1;
+    @apply translate-x-1 transform;
   }
 
   /* Privacy */
@@ -255,7 +294,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-success-content {
-    @apply flex items-center gap-4 p-6 bg-green-50 border border-green-200 rounded-lg;
+    @apply flex items-center gap-4 rounded-lg border border-green-200 bg-green-50 p-6;
   }
 
   .newsletter-section-success-icon {
@@ -263,7 +302,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-check-icon {
-    @apply w-6 h-6 text-green-600;
+    @apply h-6 w-6 text-green-600;
   }
 
   .newsletter-section-success-text {
@@ -271,7 +310,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-success-title {
-    @apply text-lg font-semibold text-green-800 mb-1;
+    @apply mb-1 text-lg font-semibold text-green-800;
   }
 
   .newsletter-section-success-message {
@@ -288,7 +327,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-error-content {
-    @apply flex items-center gap-4 p-6 bg-red-50 border border-red-200 rounded-lg;
+    @apply flex items-center gap-4 rounded-lg border border-red-200 bg-red-50 p-6;
   }
 
   .newsletter-section-error-icon {
@@ -296,7 +335,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-error-svg {
-    @apply w-6 h-6 text-red-600;
+    @apply h-6 w-6 text-red-600;
   }
 
   .newsletter-section-error-text {
@@ -304,7 +343,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section-error-title {
-    @apply text-lg font-semibold text-red-800 mb-1;
+    @apply mb-1 text-lg font-semibold text-red-800;
   }
 
   .newsletter-section-error-message {
@@ -317,11 +356,11 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section.card .newsletter-section-form-container {
-    @apply rounded-2xl bg-linear-to-br from-primary-50 to-secondary-50 p-8;
+    @apply from-primary-50 to-secondary-50 rounded-2xl bg-linear-to-br p-8;
   }
 
   .newsletter-section.gradient {
-    @apply bg-linear-to-br from-primary-500 via-secondary-500 to-accent-500 text-white;
+    @apply from-primary-500 via-secondary-500 to-accent-500 bg-linear-to-br text-white;
   }
 
   .newsletter-section.gradient .newsletter-section-title {
@@ -341,19 +380,19 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section.gradient .newsletter-section-form-container {
-    @apply bg-white/10 backdrop-blur-sm rounded-2xl p-8;
+    @apply rounded-2xl bg-white/10 p-8 backdrop-blur-sm;
   }
 
   .newsletter-section.gradient .newsletter-section-input {
-    @apply bg-white/20 border-white/30 text-white placeholder-white/70;
+    @apply border-white/30 bg-white/20 text-white placeholder-white/70;
   }
 
   .newsletter-section.gradient .newsletter-section-input:focus {
-    @apply bg-white/30 border-white;
+    @apply border-white bg-white/30;
   }
 
   .newsletter-section.gradient .newsletter-section-button {
-    @apply bg-white text-primary-600 hover:bg-primary-50;
+    @apply text-primary-600 hover:bg-primary-50 bg-white;
   }
 
   .newsletter-section.gradient .newsletter-section-privacy-text {
@@ -365,7 +404,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section.minimal .newsletter-section-form-container {
-    @apply bg-white border border-neutral-200 rounded-lg p-6;
+    @apply rounded-lg border border-neutral-200 bg-white p-6;
   }
 
   /* Sizes */
@@ -382,11 +421,11 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section.sm .newsletter-section-icon {
-    @apply w-12 h-12;
+    @apply h-12 w-12;
   }
 
   .newsletter-section.sm .newsletter-section-icon-svg {
-    @apply w-6 h-6;
+    @apply h-6 w-6;
   }
 
   .newsletter-section.lg {
@@ -402,11 +441,11 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .newsletter-section.lg .newsletter-section-icon {
-    @apply w-20 h-20;
+    @apply h-20 w-20;
   }
 
   .newsletter-section.lg .newsletter-section-icon-svg {
-    @apply w-10 h-10;
+    @apply h-10 w-10;
   }
 
   .newsletter-section.lg .newsletter-section-input {
@@ -419,9 +458,15 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
 
   /* Animations */
   @keyframes newsletterSectionPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 
   .newsletter-section-button:hover {
@@ -429,8 +474,14 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   @keyframes newsletterSectionSuccess {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .newsletter-section-success.show {
@@ -438,8 +489,14 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   @keyframes newsletterSectionError {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .newsletter-section-error.show {
@@ -464,7 +521,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .dark .newsletter-section-input {
-    @apply bg-neutral-800 border-neutral-600 text-neutral-100 placeholder-neutral-400;
+    @apply border-neutral-600 bg-neutral-800 text-neutral-100 placeholder-neutral-400;
   }
 
   .dark .newsletter-section-input:focus {
@@ -484,7 +541,7 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
   }
 
   .dark .newsletter-section.minimal .newsletter-section-form-container {
-    @apply bg-neutral-700 border-neutral-600;
+    @apply border-neutral-600 bg-neutral-700;
   }
 
   /* Mobile responsive */
@@ -510,11 +567,11 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
     }
 
     .newsletter-section-icon {
-      @apply w-12 h-12;
+      @apply h-12 w-12;
     }
 
     .newsletter-section-icon-svg {
-      @apply w-6 h-6;
+      @apply h-6 w-6;
     }
 
     .newsletter-section.card .newsletter-section-form-container,
@@ -528,21 +585,29 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
 <script>
   // Newsletter Section Functionality
   function initializeNewsletterSection() {
-    const form = document.getElementById('${newsletterId}');
+    const form = document.getElementById("${newsletterId}");
     if (!form) return;
 
-    const input = form.querySelector('.newsletter-section-input') as HTMLInputElement;
-    const button = form.querySelector('.newsletter-section-button') as HTMLButtonElement;
-    const formContainer = form.closest('.newsletter-section-form-container');
-    const successDiv = formContainer?.querySelector('.newsletter-section-success') as HTMLElement;
-    const errorDiv = formContainer?.querySelector('.newsletter-section-error') as HTMLElement;
+    const input = form.querySelector(
+      ".newsletter-section-input",
+    ) as HTMLInputElement;
+    const button = form.querySelector(
+      ".newsletter-section-button",
+    ) as HTMLButtonElement;
+    const formContainer = form.closest(".newsletter-section-form-container");
+    const successDiv = formContainer?.querySelector(
+      ".newsletter-section-success",
+    ) as HTMLElement;
+    const errorDiv = formContainer?.querySelector(
+      ".newsletter-section-error",
+    ) as HTMLElement;
 
     if (!input || !button || !successDiv || !errorDiv) return;
 
     // Handle form submission
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      
+
       const email = input.value.trim();
       if (!email) return;
 
@@ -560,44 +625,47 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
 
       try {
         // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
 
         // Success
-        form.style.display = 'none';
-        successDiv.classList.add('show');
+        form.style.display = "none";
+        successDiv.classList.add("show");
 
         // Send analytics event
-        if (typeof (window as any).gtag !== 'undefined') {
-          (window as any).gtag('event', 'newsletter_section_signup', {
-            'email_domain': email.split('@')[1],
-            'signup_method': 'newsletter_section',
-            'variant': '${variant}'
+        if (typeof (window as any).gtag !== "undefined") {
+          (window as any).gtag("event", "newsletter_section_signup", {
+            email_domain: email.split("@")[1],
+            signup_method: "newsletter_section",
+            variant: "${variant}",
           });
         }
 
         // Optional: Send to server
         try {
-          await fetch('/api/newsletter/subscribe', {
-            method: 'POST',
+          await fetch("/api/newsletter/subscribe", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               email: email,
-              source: 'newsletter_section',
-              variant: '${variant}',
-              timestamp: new Date().toISOString()
-            })
+              source: "newsletter_section",
+              variant: "${variant}",
+              timestamp: new Date().toISOString(),
+            }),
           });
         } catch (error) {
-          console.log('Newsletter section subscription tracking failed:', error);
+          console.log(
+            "Newsletter section subscription tracking failed:",
+            error,
+          );
         }
 
         // Reset form after 5 seconds
         setTimeout(() => {
-          form.style.display = 'block';
-          successDiv.classList.remove('show');
-          input.value = '';
+          form.style.display = "block";
+          successDiv.classList.remove("show");
+          input.value = "";
           button.disabled = false;
           button.innerHTML = `
             <span class="newsletter-section-button-text">Subscribe</span>
@@ -608,16 +676,15 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
             </div>
           `;
         }, 5000);
-
       } catch (error) {
         // Error
-        form.style.display = 'none';
-        errorDiv.classList.add('show');
+        form.style.display = "none";
+        errorDiv.classList.add("show");
 
         // Reset after 3 seconds
         setTimeout(() => {
-          form.style.display = 'block';
-          errorDiv.classList.remove('show');
+          form.style.display = "block";
+          errorDiv.classList.remove("show");
           button.disabled = false;
           button.innerHTML = `
             <span class="newsletter-section-button-text">Subscribe</span>
@@ -632,28 +699,28 @@ const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 
     });
 
     // Handle input validation
-    input.addEventListener('input', (e) => {
+    input.addEventListener("input", (e) => {
       const target = e.target as HTMLInputElement;
       if (!target) return;
-      
+
       const email = target.value.trim();
       const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      
+
       if (isValid) {
-        input.classList.remove('border-red-300');
-        input.classList.add('border-green-300');
+        input.classList.remove("border-red-300");
+        input.classList.add("border-green-300");
       } else if (email.length > 0) {
-        input.classList.remove('border-green-300');
-        input.classList.add('border-red-300');
+        input.classList.remove("border-green-300");
+        input.classList.add("border-red-300");
       } else {
-        input.classList.remove('border-red-300', 'border-green-300');
+        input.classList.remove("border-red-300", "border-green-300");
       }
     });
   }
 
   // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeNewsletterSection);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeNewsletterSection);
   } else {
     initializeNewsletterSection();
   }

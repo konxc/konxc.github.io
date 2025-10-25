@@ -22,11 +22,13 @@
 ## 🔄 Detailed Process
 
 ### 1. Development Phase
+
 - Developer membuat perubahan di branch `main`
 - Test lokal menggunakan `pnpm dev`
 - Commit dan push perubahan ke repository
 
 ### 2. Deployment Phase
+
 - Jalankan script deploy manual: `bash ./scripts/deploy-manual.sh`
 - Script akan:
   - Pull latest changes dari main
@@ -40,6 +42,7 @@
   - Kembali ke branch main
 
 ### 3. GitHub Pages Deployment
+
 - GitHub Pages otomatis detect perubahan di branch gh-pages
 - Website di-deploy ke https://www.konxc.space
 - Proses ini membutuhkan waktu 2-5 menit

@@ -4,7 +4,16 @@ description: "Artikel khusus untuk testing indentasi dan visual hierarchy pada T
 publishDate: 2024-01-30
 author: "Sandikodev"
 category: "testing"
-tags: ["testing", "indentation", "hierarchy", "toc", "visual-design", "frontend", "quality-assurance"]
+tags:
+  [
+    "testing",
+    "indentation",
+    "hierarchy",
+    "toc",
+    "visual-design",
+    "frontend",
+    "quality-assurance",
+  ]
 featured: false
 readingTime: 8
 image: "/blog/deep-hierarchy-testing.jpg"
@@ -303,21 +312,25 @@ Testing yang berkelanjutan dan automated.
 ## 🧪 **Testing Results**
 
 ### **✅ Indentation Testing**
+
 - Level 1-3: Perfect spacing (24px increments)
 - Level 4-6: Subtle spacing (16px increments)
 - All levels: Consistent visual hierarchy
 
 ### **✅ Visual Consistency**
+
 - Color scheme: Consistent across all levels
 - Typography: Proper font weights and sizes
 - Spacing: Logical and professional
 
 ### **✅ Performance**
+
 - Smooth animations on all levels
 - Efficient CSS rendering
 - Optimized JavaScript interactions
 
 ### **✅ Accessibility**
+
 - Screen reader compatible
 - Keyboard navigation working
 - High contrast support

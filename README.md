@@ -7,6 +7,7 @@ Website resmi KonXC yang dibangun menggunakan Astro dan di-deploy ke GitHub Page
 ## 📋 Overview
 
 Repository ini berisi source code untuk website resmi KonXC. Website ini dibangun menggunakan:
+
 - **Astro** - Static site generator
 - **Tailwind CSS** - CSS framework
 - **pnpm** - Package manager
@@ -15,11 +16,13 @@ Repository ini berisi source code untuk website resmi KonXC. Website ini dibangu
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js (versi 20 atau lebih baru)
 - pnpm: `npm install -g pnpm`
 - Git
 
 ### Development
+
 ```bash
 # Clone repository
 git clone https://github.com/konxc/konxc.github.io.git
@@ -36,13 +39,13 @@ Website akan tersedia di `http://localhost:4321`
 
 ## 🧞 Available Commands
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| Command          | Action                                           |
+| :--------------- | :----------------------------------------------- |
+| `pnpm install`   | Installs dependencies                            |
+| `pnpm dev`       | Starts local dev server at `localhost:4321`      |
+| `pnpm build`     | Build your production site to `./dist/`          |
+| `pnpm preview`   | Preview your build locally, before deploying     |
+| `pnpm astro ...` | Run CLI commands like `astro add`, `astro check` |
 
 ## 🚀 Deployment
 
@@ -60,12 +63,14 @@ bash ./scripts/deploy-manual.sh
 ```
 
 Script akan otomatis:
+
 1. Pull latest changes dari main
 2. Build project
 3. **Deploy hanya hasil build** ke branch gh-pages
 4. Push ke GitHub Pages
 
 ### 📚 Dokumentasi Lengkap
+
 Lihat [docs/DEPLOY_MANUAL.md](./docs/DEPLOY_MANUAL.md) untuk dokumentasi deploy yang lebih detail.
 
 ## 🏗️ Project Structure
@@ -85,6 +90,7 @@ Lihat [docs/DEPLOY_MANUAL.md](./docs/DEPLOY_MANUAL.md) untuk dokumentasi deploy 
 ```
 
 ### Branch Structure
+
 - **main**: Development branch (source code)
 - **gh-pages**: Deployment branch (build files only)
 
@@ -123,6 +129,7 @@ Lihat [docs/DEPLOY_MANUAL.md](./docs/DEPLOY_MANUAL.md) untuk dokumentasi deploy 
 ## 📞 Support
 
 Untuk pertanyaan atau masalah:
+
 - Periksa dokumentasi di folder `docs/`
 - Buat issue di repository ini
 - Hubungi tim development

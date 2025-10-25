@@ -1,25 +1,25 @@
 ---
 // Article Series Component
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-const posts = await getCollection('blog');
+const posts = await getCollection("blog");
 
 // Group posts by series
 const seriesMap: { [key: string]: any[] } = {};
-posts.forEach(post => {
+posts.forEach((post) => {
   if (post.data.series) {
     if (!seriesMap[post.data.series]) {
       seriesMap[post.data.series] = [];
     }
     seriesMap[post.data.series].push({
       ...post.data,
-      slug: post.slug
+      slug: post.slug,
     });
   }
 });
 
 // Sort posts within each series by seriesOrder
-Object.keys(seriesMap).forEach(seriesName => {
+Object.keys(seriesMap).forEach((seriesName) => {
   seriesMap[seriesName].sort((a, b) => {
     const orderA = a.seriesOrder || 0;
     const orderB = b.seriesOrder || 0;
@@ -34,117 +34,147 @@ export interface Props {
   showProgress?: boolean;
 }
 
-const { 
-  class: className, 
-  currentPostSlug = '',
+const {
+  class: className,
+  currentPostSlug = "",
   showNavigation = true,
-  showProgress = true
+  showProgress = true,
 } = Astro.props;
 
 // Find current post's series
 let currentSeries: any[] = [];
 let currentPostIndex = -1;
-let currentSeriesName = '';
+let currentSeriesName = "";
 
 if (currentPostSlug) {
-  const currentPost = posts.find(post => post.slug === currentPostSlug);
+  const currentPost = posts.find((post) => post.slug === currentPostSlug);
   if (currentPost?.data.series) {
     currentSeriesName = currentPost.data.series;
     currentSeries = seriesMap[currentSeriesName] || [];
-    currentPostIndex = currentSeries.findIndex(post => post.slug === currentPostSlug);
+    currentPostIndex = currentSeries.findIndex(
+      (post) => post.slug === currentPostSlug,
+    );
   }
 }
 
 const hasSeries = currentSeries.length > 0;
 ---
 
-{hasSeries && (
-  <div class={`article-series ${className || ''}`}>
-    <div class="series-header">
-      <div class="series-info">
-        <h3 class="series-title">📚 {currentSeriesName}</h3>
-        <p class="series-description">Seri artikel: {currentSeries.length} bagian</p>
-      </div>
-      
-      {showProgress && (
-        <div class="series-progress">
-          <div class="progress-bar">
-            <div 
-              class="progress-fill" 
-              style={`width: ${((currentPostIndex + 1) / currentSeries.length) * 100}%`}
-            ></div>
+{
+  hasSeries && (
+    <div class={`article-series ${className || ""}`}>
+      <div class="series-header">
+        <div class="series-info">
+          <h3 class="series-title">📚 {currentSeriesName}</h3>
+          <p class="series-description">
+            Seri artikel: {currentSeries.length} bagian
+          </p>
+        </div>
+
+        {showProgress && (
+          <div class="series-progress">
+            <div class="progress-bar">
+              <div
+                class="progress-fill"
+                style={`width: ${((currentPostIndex + 1) / currentSeries.length) * 100}%`}
+              />
+            </div>
+            <span class="progress-text">
+              {currentPostIndex + 1} dari {currentSeries.length}
+            </span>
           </div>
-          <span class="progress-text">
-            {currentPostIndex + 1} dari {currentSeries.length}
-          </span>
+        )}
+      </div>
+
+      {showNavigation && (
+        <div class="series-navigation">
+          <div class="series-posts">
+            {currentSeries.map((post, index) => (
+              <div
+                class={`series-post ${index === currentPostIndex ? "current" : ""} ${index < currentPostIndex ? "completed" : ""}`}
+              >
+                <div class="post-number">
+                  {index < currentPostIndex ? (
+                    <svg
+                      class="completed-icon"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  ) : (
+                    <span class="number">{index + 1}</span>
+                  )}
+                </div>
+
+                <div class="post-content">
+                  <h4 class="post-title">
+                    {index === currentPostIndex ? (
+                      <span class="current-post">{post.title}</span>
+                    ) : (
+                      <a href={`/blog/${post.slug}`} class="post-link">
+                        {post.title}
+                      </a>
+                    )}
+                  </h4>
+
+                  <div class="post-meta">
+                    <span class="post-category">{post.category}</span>
+                    {post.readingTime && (
+                      <span class="post-reading-time">
+                        {post.readingTime} min
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="series-controls">
+            {currentPostIndex > 0 && (
+              <a
+                href={`/blog/${currentSeries[currentPostIndex - 1].slug}`}
+                class="series-nav-btn prev"
+              >
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+                Sebelumnya
+              </a>
+            )}
+
+            {currentPostIndex < currentSeries.length - 1 && (
+              <a
+                href={`/blog/${currentSeries[currentPostIndex + 1].slug}`}
+                class="series-nav-btn next"
+              >
+                Selanjutnya
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </a>
+            )}
+          </div>
         </div>
       )}
     </div>
-
-    {showNavigation && (
-      <div class="series-navigation">
-        <div class="series-posts">
-          {currentSeries.map((post, index) => (
-            <div class={`series-post ${index === currentPostIndex ? 'current' : ''} ${index < currentPostIndex ? 'completed' : ''}`}>
-              <div class="post-number">
-                {index < currentPostIndex ? (
-                  <svg class="completed-icon" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                  </svg>
-                ) : (
-                  <span class="number">{index + 1}</span>
-                )}
-              </div>
-              
-              <div class="post-content">
-                <h4 class="post-title">
-                  {index === currentPostIndex ? (
-                    <span class="current-post">{post.title}</span>
-                  ) : (
-                    <a href={`/blog/${post.slug}`} class="post-link">{post.title}</a>
-                  )}
-                </h4>
-                
-                <div class="post-meta">
-                  <span class="post-category">{post.category}</span>
-                  {post.readingTime && (
-                    <span class="post-reading-time">{post.readingTime} min</span>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        <div class="series-controls">
-          {currentPostIndex > 0 && (
-            <a 
-              href={`/blog/${currentSeries[currentPostIndex - 1].slug}`}
-              class="series-nav-btn prev"
-            >
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-              </svg>
-              Sebelumnya
-            </a>
-          )}
-          
-          {currentPostIndex < currentSeries.length - 1 && (
-            <a 
-              href={`/blog/${currentSeries[currentPostIndex + 1].slug}`}
-              class="series-nav-btn next"
-            >
-              Selanjutnya
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-            </a>
-          )}
-        </div>
-      </div>
-    )}
-  </div>
-)}
+  )
+}
 
 <script>
   class ArticleSeries {
@@ -160,22 +190,24 @@ const hasSeries = currentSeries.length > 0;
     }
 
     private initializeElements(): void {
-      this.seriesElement = document.querySelector('.article-series');
-      this.progressBar = document.querySelector('.progress-fill');
-      
+      this.seriesElement = document.querySelector(".article-series");
+      this.progressBar = document.querySelector(".progress-fill");
+
       // Get current post index from data attributes
-      const currentPost = document.querySelector('.series-post.current');
+      const currentPost = document.querySelector(".series-post.current");
       if (currentPost) {
-        this.currentPostIndex = Array.from(document.querySelectorAll('.series-post')).indexOf(currentPost);
+        this.currentPostIndex = Array.from(
+          document.querySelectorAll(".series-post"),
+        ).indexOf(currentPost);
       }
-      
-      this.totalPosts = document.querySelectorAll('.series-post').length;
+
+      this.totalPosts = document.querySelectorAll(".series-post").length;
     }
 
     private setupEventListeners(): void {
       // Track clicks on series posts
-      document.querySelectorAll('.series-post a').forEach(link => {
-        link.addEventListener('click', (e) => {
+      document.querySelectorAll(".series-post a").forEach((link) => {
+        link.addEventListener("click", (e) => {
           this.trackSeriesNavigation(e.target as HTMLAnchorElement);
         });
       });
@@ -187,52 +219,52 @@ const hasSeries = currentSeries.length > 0;
     private trackSeriesProgress(): void {
       if (this.currentPostIndex >= 0 && this.totalPosts > 0) {
         const progress = ((this.currentPostIndex + 1) / this.totalPosts) * 100;
-        
+
         // Track progress milestone
-        this.trackEvent('series_progress', {
+        this.trackEvent("series_progress", {
           series_name: this.getSeriesName(),
           current_post: this.currentPostIndex + 1,
           total_posts: this.totalPosts,
-          progress_percentage: Math.round(progress)
+          progress_percentage: Math.round(progress),
         });
       }
     }
 
     private trackSeriesNavigation(link: HTMLAnchorElement): void {
-      const postTitle = link.textContent?.trim() || '';
+      const postTitle = link.textContent?.trim() || "";
       const postUrl = link.href;
-      
-      this.trackEvent('series_navigation', {
+
+      this.trackEvent("series_navigation", {
         series_name: this.getSeriesName(),
         from_post: this.currentPostIndex + 1,
         to_post: postTitle,
-        navigation_type: 'click'
+        navigation_type: "click",
       });
     }
 
     private trackSeriesCompletion(): void {
       // Check if this is the last post in series
       if (this.currentPostIndex === this.totalPosts - 1) {
-        this.trackEvent('series_completion', {
+        this.trackEvent("series_completion", {
           series_name: this.getSeriesName(),
           total_posts: this.totalPosts,
-          completion_time: Date.now()
+          completion_time: Date.now(),
         });
       }
     }
 
     private getSeriesName(): string {
-      const seriesTitle = document.querySelector('.series-title');
-      return seriesTitle?.textContent?.replace('📚 ', '') || '';
+      const seriesTitle = document.querySelector(".series-title");
+      return seriesTitle?.textContent?.replace("📚 ", "") || "";
     }
 
     private trackEvent(eventName: string, data: any): void {
       // Send to Google Analytics if available
-      if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', eventName, {
-          event_category: 'article_series',
+      if (typeof window !== "undefined" && window.gtag) {
+        window.gtag("event", eventName, {
+          event_category: "article_series",
           event_label: this.getSeriesName(),
-          ...data
+          ...data,
         });
       }
 
@@ -242,32 +274,32 @@ const hasSeries = currentSeries.length > 0;
 
     private async sendToAnalytics(eventName: string, data: any): Promise<void> {
       try {
-        await fetch('/api/analytics', {
-          method: 'POST',
+        await fetch("/api/analytics", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             event: eventName,
             timestamp: new Date().toISOString(),
-            data: data
-          })
+            data: data,
+          }),
         });
       } catch (error) {
-        console.log('Analytics endpoint not available:', error);
+        console.log("Analytics endpoint not available:", error);
       }
     }
   }
 
   // Initialize article series when DOM is ready
   function initArticleSeries(): void {
-    if (document.querySelector('.article-series')) {
+    if (document.querySelector(".article-series")) {
       new ArticleSeries();
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initArticleSeries);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initArticleSeries);
   } else {
     initArticleSeries();
   }
@@ -276,7 +308,7 @@ const hasSeries = currentSeries.length > 0;
 <style>
   @reference "@/styles/global.css";
   .article-series {
-    @apply bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-6 shadow-lg border border-primary-200 mb-8;
+    @apply from-primary-50 to-secondary-50 border-primary-200 mb-8 rounded-2xl border bg-gradient-to-br p-6 shadow-lg;
   }
 
   .series-header {
@@ -288,11 +320,11 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .series-title {
-    @apply text-xl font-bold text-primary-800 mb-2;
+    @apply text-primary-800 mb-2 text-xl font-bold;
   }
 
   .series-description {
-    @apply text-sm text-primary-600;
+    @apply text-primary-600 text-sm;
   }
 
   .series-progress {
@@ -300,15 +332,15 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .progress-bar {
-    @apply w-full bg-primary-200 rounded-full h-2 overflow-hidden;
+    @apply bg-primary-200 h-2 w-full overflow-hidden rounded-full;
   }
 
   .progress-fill {
-    @apply bg-gradient-to-r from-primary-500 to-secondary-500 h-full transition-all duration-500 ease-out;
+    @apply from-primary-500 to-secondary-500 h-full bg-gradient-to-r transition-all duration-500 ease-out;
   }
 
   .progress-text {
-    @apply text-sm font-medium text-primary-700;
+    @apply text-primary-700 text-sm font-medium;
   }
 
   .series-navigation {
@@ -320,7 +352,7 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .series-post {
-    @apply flex items-center gap-4 p-4 bg-white rounded-xl border border-primary-100 transition-all duration-200;
+    @apply border-primary-100 flex items-center gap-4 rounded-xl border bg-white p-4 transition-all duration-200;
   }
 
   .series-post.current {
@@ -332,7 +364,7 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .post-number {
-    @apply flex-shrink-0 w-8 h-8 bg-primary-500 text-white rounded-full flex items-center justify-center font-bold text-sm;
+    @apply bg-primary-500 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold text-white;
   }
 
   .series-post.completed .post-number {
@@ -340,19 +372,19 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .series-post.current .post-number {
-    @apply bg-gradient-to-r from-primary-500 to-secondary-500;
+    @apply from-primary-500 to-secondary-500 bg-gradient-to-r;
   }
 
   .completed-icon {
-    @apply w-4 h-4;
+    @apply h-4 w-4;
   }
 
   .post-content {
-    @apply flex-1 min-w-0;
+    @apply min-w-0 flex-1;
   }
 
   .post-title {
-    @apply text-lg font-semibold mb-1;
+    @apply mb-1 text-lg font-semibold;
   }
 
   .post-link {
@@ -368,15 +400,15 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .post-category {
-    @apply px-2 py-1 bg-primary-100 text-primary-700 rounded-full font-medium;
+    @apply bg-primary-100 text-primary-700 rounded-full px-2 py-1 font-medium;
   }
 
   .series-controls {
-    @apply flex justify-between pt-4 border-t border-primary-200;
+    @apply border-primary-200 flex justify-between border-t pt-4;
   }
 
   .series-nav-btn {
-    @apply flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-colors;
+    @apply bg-primary-500 hover:bg-primary-600 flex items-center gap-2 rounded-lg px-4 py-2 font-medium text-white transition-colors;
   }
 
   .series-nav-btn.prev {
@@ -384,7 +416,7 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .series-nav-btn svg {
-    @apply w-4 h-4;
+    @apply h-4 w-4;
   }
 
   /* Dark mode styles */
@@ -401,7 +433,7 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .dark .series-post {
-    @apply bg-neutral-800 border-neutral-700;
+    @apply border-neutral-700 bg-neutral-800;
   }
 
   .dark .series-post.current {
@@ -425,19 +457,19 @@ const hasSeries = currentSeries.length > 0;
     .article-series {
       @apply p-4;
     }
-    
+
     .series-post {
       @apply flex-col gap-3 p-3;
     }
-    
+
     .post-number {
-      @apply w-6 h-6 text-xs;
+      @apply h-6 w-6 text-xs;
     }
-    
+
     .series-controls {
       @apply flex-col gap-2;
     }
-    
+
     .series-nav-btn {
       @apply justify-center;
     }
@@ -450,10 +482,10 @@ const hasSeries = currentSeries.length > 0;
 
   /* Hover effects */
   .series-post:hover {
-    @apply transform -translate-y-0.5 shadow-sm;
+    @apply -translate-y-0.5 transform shadow-sm;
   }
 
   .series-nav-btn:hover {
-    @apply transform -translate-y-0.5 shadow-sm;
+    @apply -translate-y-0.5 transform shadow-sm;
   }
 </style>

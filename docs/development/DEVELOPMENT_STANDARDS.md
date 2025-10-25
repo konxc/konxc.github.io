@@ -3,18 +3,21 @@
 ## 🎯 **Core Principles**
 
 ### **1. Tailwind CSS 4 First**
+
 - ✅ **Utility-first approach** untuk semua styling
 - ✅ **@theme directive** untuk custom design tokens
 - ✅ **@apply directive** hanya untuk complex component patterns
 - ❌ **Avoid hardcoded vanilla CSS** kecuali absolutely necessary
 
 ### **2. Astro Best Practices**
+
 - ✅ **Frontmatter JavaScript** untuk logic dan data processing
 - ✅ **Component-based architecture** dengan proper props
 - ✅ **Static generation** untuk optimal performance
 - ❌ **Avoid script tags** kecuali untuk client-side interactivity
 
 ### **3. Clean Code Standards**
+
 - ✅ **Semantic HTML** structure
 - ✅ **Accessible components** (ARIA, keyboard navigation)
 - ✅ **Mobile-first responsive design**
@@ -25,15 +28,19 @@
 ### **Tailwind CSS 4 Implementation**
 
 #### **✅ DO: Use Tailwind Utilities**
+
 ```astro
 <!-- Good: Tailwind utilities -->
-<div class="bg-primary-50 p-6 rounded-xl shadow-lg hover:-translate-y-1 transition-all duration-300">
-  <h3 class="text-xl font-semibold text-primary-700 mb-4">Card Title</h3>
-  <p class="text-neutral-600 leading-relaxed">Card content...</p>
+<div
+  class="bg-primary-50 rounded-xl p-6 shadow-lg transition-all duration-300 hover:-translate-y-1"
+>
+  <h3 class="text-primary-700 mb-4 text-xl font-semibold">Card Title</h3>
+  <p class="leading-relaxed text-neutral-600">Card content...</p>
 </div>
 ```
 
 #### **❌ DON'T: Hardcoded CSS**
+
 ```astro
 <!-- Bad: Inline styles -->
 <div style="background: #f0f4ff; padding: 1.5rem; border-radius: 0.75rem;">
@@ -42,16 +49,16 @@
 ```
 
 #### **✅ DO: Component Classes with @apply**
+
 ```css
 /* Good: Component pattern with @apply */
 .btn-primary {
-  @apply bg-primary-500 text-white px-6 py-3 rounded-xl font-semibold 
-         transition-all duration-300 hover:bg-primary-600 hover:-translate-y-1 
-         hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary-100;
+  @apply bg-primary-500 hover:bg-primary-600 focus:ring-primary-100 rounded-xl px-6 py-3 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:ring-4 focus:outline-none;
 }
 ```
 
 #### **❌ DON'T: Custom CSS Properties**
+
 ```css
 /* Bad: Custom CSS instead of Tailwind */
 .btn-primary {
@@ -67,17 +74,18 @@
 ### **Design Token System**
 
 #### **Color Palette**
+
 ```css
 @theme {
   /* Primary - Soft Blue */
   --color-primary-50: #f0f4ff;
   --color-primary-500: #6366f1;
   --color-primary-600: #4f46e5;
-  
+
   /* Secondary - Soft Teal */
   --color-secondary-50: #f0fdfa;
   --color-secondary-500: #14b8a6;
-  
+
   /* Accent - Soft Purple */
   --color-accent-50: #faf5ff;
   --color-accent-500: #a855f7;
@@ -85,6 +93,7 @@
 ```
 
 #### **Typography**
+
 ```css
 @theme {
   --font-heading: "Inter", system-ui, sans-serif;
@@ -94,6 +103,7 @@
 ```
 
 #### **Spacing & Shadows**
+
 ```css
 @theme {
   --spacing-section: 5rem;
@@ -108,33 +118,36 @@
 ### **Astro Component Structure**
 
 #### **✅ DO: Frontmatter Logic**
+
 ```astro
 ---
 // Component logic in frontmatter
 interface Props {
   title: string;
   description?: string;
-  variant?: 'primary' | 'secondary';
+  variant?: "primary" | "secondary";
 }
 
-const { title, description, variant = 'primary' } = Astro.props;
+const { title, description, variant = "primary" } = Astro.props;
 
 // Data processing
-const cardClasses = variant === 'primary' 
-  ? 'bg-primary-50 border-primary-200' 
-  : 'bg-secondary-50 border-secondary-200';
+const cardClasses =
+  variant === "primary"
+    ? "bg-primary-50 border-primary-200"
+    : "bg-secondary-50 border-secondary-200";
 
 // API calls or data fetching
-const data = await fetch('/api/data').then(r => r.json());
+const data = await fetch("/api/data").then((r) => r.json());
 ---
 
 <div class={`card ${cardClasses}`}>
-  <h3 class="text-xl font-semibold mb-4">{title}</h3>
+  <h3 class="mb-4 text-xl font-semibold">{title}</h3>
   {description && <p class="text-neutral-600">{description}</p>}
 </div>
 ```
 
 #### **❌ DON'T: Script Tags for Logic**
+
 ```astro
 <!-- Bad: Logic in script tags -->
 <div id="card" class="card">
@@ -144,12 +157,13 @@ const data = await fetch('/api/data').then(r => r.json());
 
 <script>
   // Don't do this for static content
-  document.getElementById('title').textContent = 'Card Title';
-  document.getElementById('description').textContent = 'Description';
+  document.getElementById("title").textContent = "Card Title";
+  document.getElementById("description").textContent = "Description";
 </script>
 ```
 
 #### **✅ DO: Client-side Interactivity Only When Needed**
+
 ```astro
 ---
 // Static data processing in frontmatter
@@ -157,23 +171,30 @@ const items = await getMenuItems();
 ---
 
 <nav class="navigation">
-  {items.map(item => (
-    <a href={item.href} class="nav-link">{item.label}</a>
-  ))}
+  {
+    items.map((item) => (
+      <a href={item.href} class="nav-link">
+        {item.label}
+      </a>
+    ))
+  }
 </nav>
 
 <!-- Client-side script only for interactivity -->
 <script>
   // Only for dynamic behavior that can't be done with CSS
-  document.querySelector('.mobile-menu-toggle')?.addEventListener('click', () => {
-    document.querySelector('.mobile-menu')?.classList.toggle('open');
-  });
+  document
+    .querySelector(".mobile-menu-toggle")
+    ?.addEventListener("click", () => {
+      document.querySelector(".mobile-menu")?.classList.toggle("open");
+    });
 </script>
 ```
 
 ### **Component Props & TypeScript**
 
 #### **✅ DO: Proper TypeScript Interfaces**
+
 ```astro
 ---
 interface Props {
@@ -185,21 +206,22 @@ interface Props {
     name: string;
     avatar?: string;
   };
-  variant?: 'default' | 'featured' | 'minimal';
+  variant?: "default" | "featured" | "minimal";
 }
 
-const { 
-  title, 
-  description, 
-  tags = [], 
+const {
+  title,
+  description,
+  tags = [],
   publishDate,
   author,
-  variant = 'default' 
+  variant = "default",
 } = Astro.props;
 ---
 ```
 
 #### **❌ DON'T: Untyped Props**
+
 ```astro
 ---
 // Bad: No type safety
@@ -212,25 +234,19 @@ const { title, description, tags, date, author, type } = Astro.props;
 ### **Mobile-First Approach**
 
 #### **✅ DO: Mobile-First Classes**
+
 ```astro
-<div class="
-  grid grid-cols-1 gap-4
-  md:grid-cols-2 md:gap-6
-  lg:grid-cols-3 lg:gap-8
-  xl:grid-cols-4
-">
+<div
+  class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8 xl:grid-cols-4"
+>
   <!-- Content -->
 </div>
 ```
 
 #### **✅ DO: Responsive Typography**
+
 ```astro
-<h1 class="
-  text-2xl font-bold
-  md:text-3xl
-  lg:text-4xl
-  xl:text-5xl
-">
+<h1 class="text-2xl font-bold md:text-3xl lg:text-4xl xl:text-5xl">
   Responsive Heading
 </h1>
 ```
@@ -238,51 +254,55 @@ const { title, description, tags, date, author, type } = Astro.props;
 ## 🚀 **Performance Optimization**
 
 ### **Image Optimization**
+
 ```astro
 ---
-import { Image } from 'astro:assets';
-import heroImage from '../assets/hero.jpg';
+import { Image } from "astro:assets";
+import heroImage from "../assets/hero.jpg";
 ---
 
 <!-- Optimized images -->
-<Image 
-  src={heroImage} 
+<Image
+  src={heroImage}
   alt="Hero image"
   width={1200}
   height={600}
-  class="w-full h-auto rounded-xl"
+  class="h-auto w-full rounded-xl"
   loading="lazy"
 />
 ```
 
 ### **CSS Optimization**
+
 ```astro
 ---
 // Conditional CSS loading
-const isHomePage = Astro.url.pathname === '/';
+const isHomePage = Astro.url.pathname === "/";
 ---
 
-<!-- Load specific styles only when needed -->
-{isHomePage && <link rel="stylesheet" href="/styles/home.css">}
+<!-- Load specific styles only when needed -->{
+  isHomePage && <link rel="stylesheet" href="/styles/home.css" />
+}
 ```
 
 ## 🧪 **Testing Standards**
 
 ### **Component Testing**
+
 ```astro
 ---
 // Test data in frontmatter
 const testProps = {
-  title: 'Test Title',
-  description: 'Test description',
-  variant: 'primary' as const
+  title: "Test Title",
+  description: "Test description",
+  variant: "primary" as const,
 };
 
 // Conditional rendering for tests
-const isTest = import.meta.env.NODE_ENV === 'test';
+const isTest = import.meta.env.NODE_ENV === "test";
 ---
 
-<div class="component" data-testid={isTest ? 'test-component' : undefined}>
+<div class="component" data-testid={isTest ? "test-component" : undefined}>
   <!-- Component content -->
 </div>
 ```
@@ -290,6 +310,7 @@ const isTest = import.meta.env.NODE_ENV === 'test';
 ## 📝 **Code Organization**
 
 ### **File Structure**
+
 ```
 src/
 ├── components/
@@ -304,6 +325,7 @@ src/
 ```
 
 ### **Component Naming**
+
 - **PascalCase** for component files: `BlogCard.astro`
 - **kebab-case** for CSS classes: `blog-card`
 - **camelCase** for JavaScript variables: `blogPost`
@@ -311,6 +333,7 @@ src/
 ## 🔧 **Development Tools**
 
 ### **Recommended VS Code Extensions**
+
 - Astro
 - Tailwind CSS IntelliSense
 - TypeScript Importer
@@ -318,6 +341,7 @@ src/
 - ESLint
 
 ### **Build Commands**
+
 ```bash
 # Development
 pnpm dev
@@ -338,6 +362,7 @@ pnpm lint
 ## 🎯 **Quality Checklist**
 
 ### **Before Committing**
+
 - [ ] ✅ **Tailwind utilities** used instead of custom CSS
 - [ ] ✅ **Frontmatter logic** instead of script tags
 - [ ] ✅ **TypeScript interfaces** for component props
@@ -347,6 +372,7 @@ pnpm lint
 - [ ] ✅ **SEO** (meta tags, semantic HTML)
 
 ### **Code Review Standards**
+
 - [ ] ✅ **Clean, readable code** with proper comments
 - [ ] ✅ **Consistent naming** conventions
 - [ ] ✅ **No hardcoded values** (use design tokens)
@@ -356,6 +382,7 @@ pnpm lint
 ## 🌟 **Best Practices Summary**
 
 ### **DO's**
+
 1. **Use Tailwind CSS 4** with @theme and @apply
 2. **Frontmatter JavaScript** for component logic
 3. **TypeScript interfaces** for type safety
@@ -365,6 +392,7 @@ pnpm lint
 7. **Accessibility standards** (ARIA, semantic HTML)
 
 ### **DON'Ts**
+
 1. **Hardcoded vanilla CSS** instead of Tailwind
 2. **Script tags for static logic** (use frontmatter)
 3. **Untyped component props**

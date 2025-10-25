@@ -1,6 +1,7 @@
 # Table of Contents Header Alignment & Default Collapsed State
 
 ## Overview
+
 Fixed the alignment of the expand/collapse button with the "Daftar Isi" title and made collapsed the default state for better UX.
 
 ## Changes Made
@@ -8,12 +9,22 @@ Fixed the alignment of the expand/collapse button with the "Daftar Isi" title an
 ### 1. ✅ HTML Structure Updates
 
 **Updated Header Layout:**
+
 ```html
 <div class="toc-header">
   <h4 class="text-lg font-semibold text-neutral-800">Daftar Isi</h4>
-  <button class="toc-toggle-btn" id="toc-toggle-btn" aria-label="Toggle table of contents">
+  <button
+    class="toc-toggle-btn"
+    id="toc-toggle-btn"
+    aria-label="Toggle table of contents"
+  >
     <svg class="toc-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 9l-7 7-7-7"
+      />
     </svg>
   </button>
 </div>
@@ -24,6 +35,7 @@ Fixed the alignment of the expand/collapse button with the "Daftar Isi" title an
 ```
 
 **Key Changes:**
+
 - Changed SVG icon from hamburger menu to chevron down (`M19 9l-7 7-7-7`)
 - Added `collapsed` class to `toc-nav` by default
 - Removed `mb-4` from h4 title
@@ -31,6 +43,7 @@ Fixed the alignment of the expand/collapse button with the "Daftar Isi" title an
 ### 2. ✅ CSS Improvements
 
 **Header Alignment:**
+
 ```css
 .toc-header {
   display: flex;
@@ -45,6 +58,7 @@ Fixed the alignment of the expand/collapse button with the "Daftar Isi" title an
 ```
 
 **Button Styling:**
+
 ```css
 .toc-toggle-btn {
   padding: 0.25rem;
@@ -68,6 +82,7 @@ Fixed the alignment of the expand/collapse button with the "Daftar Isi" title an
 ```
 
 **Navigation States:**
+
 ```css
 .toc-nav {
   overflow-y: auto;
@@ -91,22 +106,23 @@ Fixed the alignment of the expand/collapse button with the "Daftar Isi" title an
 ### 3. ✅ JavaScript Logic Updates
 
 **Simplified Toggle Function:**
+
 ```javascript
 function toggleTOC() {
-  const tocNav = document.getElementById('toc-nav');
-  const toggleBtn = document.querySelector('.toc-toggle-btn');
-  
+  const tocNav = document.getElementById("toc-nav");
+  const toggleBtn = document.querySelector(".toc-toggle-btn");
+
   if (tocNav && toggleBtn) {
-    const isCollapsed = tocNav.classList.contains('collapsed');
-    
+    const isCollapsed = tocNav.classList.contains("collapsed");
+
     if (isCollapsed) {
       // Expand
-      tocNav.classList.remove('collapsed');
-      toggleBtn.classList.add('expanded');
+      tocNav.classList.remove("collapsed");
+      toggleBtn.classList.add("expanded");
     } else {
       // Collapse
-      tocNav.classList.add('collapsed');
-      toggleBtn.classList.remove('expanded');
+      tocNav.classList.add("collapsed");
+      toggleBtn.classList.remove("expanded");
     }
   }
 }
@@ -117,12 +133,14 @@ function toggleTOC() {
 ### ✅ Before vs After
 
 **Before:**
+
 - Button not aligned with title
 - TOC expanded by default (taking up space)
 - Hamburger menu icon (confusing)
 - Inconsistent spacing
 
 **After:**
+
 - ✅ Button perfectly aligned with "Daftar Isi" title
 - ✅ TOC collapsed by default (cleaner sidebar)
 - ✅ Chevron down/up icon (intuitive)
@@ -200,7 +218,8 @@ The alignment and collapsed state work consistently across all screen sizes:
 
 **Impact**: Improved UX with better alignment and space utilization
 
-**Files Modified**: 
+**Files Modified**:
+
 - `src/components/blog/TableOfContents.astro`
 
 **Testing**: ✅ Manual testing completed - all functionality working correctly

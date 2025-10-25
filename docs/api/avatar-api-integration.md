@@ -3,6 +3,7 @@
 ## Masalah yang Diselesaikan
 
 Sebelumnya, aplikasi mengalami error 404 untuk avatar yang tidak ada:
+
 ```
 23:17:55 [404] /avatars/sarah-wijaya.jpg 0ms
 23:17:55 [404] /avatars/ahmad-rizki.jpg 0ms
@@ -12,20 +13,23 @@ Sebelumnya, aplikasi mengalami error 404 untuk avatar yang tidak ada:
 ## Solusi yang Diimplementasikan
 
 ### 1. **Komponen Avatar Baru**
+
 Dibuat komponen `@components/ui/Avatar.astro` yang menggunakan API avatar sebagai fallback.
 
 ### 2. **API Avatar yang Didukung**
 
 #### **UI Avatars** (Default)
+
 - **URL**: `https://ui-avatars.com/api/`
 - **Format**: `https://ui-avatars.com/api/?name=John+Doe&size=200&background=random&color=fff&format=png`
-- **Keunggulan**: 
+- **Keunggulan**:
   - Mudah digunakan
   - Mendukung custom background dan text color
   - Format PNG dan SVG
   - Gratis tanpa limit
 
 #### **DiceBear Avatars**
+
 - **URL**: `https://api.dicebear.com/7.x/avataaars/svg`
 - **Format**: `https://api.dicebear.com/7.x/avataaars/svg?seed=JohnDoe&size=200`
 - **Keunggulan**:
@@ -34,6 +38,7 @@ Dibuat komponen `@components/ui/Avatar.astro` yang menggunakan API avatar sebaga
   - Konsisten untuk nama yang sama
 
 #### **Robohash**
+
 - **URL**: `https://robohash.org/`
 - **Format**: `https://robohash.org/JohnDoe?set=set1&size=200x200`
 - **Keunggulan**:
@@ -42,6 +47,7 @@ Dibuat komponen `@components/ui/Avatar.astro` yang menggunakan API avatar sebaga
   - Konsisten untuk nama yang sama
 
 #### **Gravatar**
+
 - **URL**: `https://www.gravatar.com/avatar/`
 - **Format**: `https://www.gravatar.com/avatar/{hash}?d=identicon&s=200`
 - **Keunggulan**:
@@ -51,10 +57,13 @@ Dibuat komponen `@components/ui/Avatar.astro` yang menggunakan API avatar sebaga
 ### 3. **Implementasi di Komponen**
 
 #### **WriterCard.astro**
+
 ```astro
-<Avatar 
+<Avatar
   name={data.name}
-  email={data.github ? `${data.name.toLowerCase().replace(/\s+/g, '.')}@github.com` : undefined}
+  email={data.github
+    ? `${data.name.toLowerCase().replace(/\s+/g, ".")}@github.com`
+    : undefined}
   size={64}
   src={data.avatar}
   fallbackType="ui-avatars"
@@ -64,10 +73,13 @@ Dibuat komponen `@components/ui/Avatar.astro` yang menggunakan API avatar sebaga
 ```
 
 #### **ContributorCard.astro**
+
 ```astro
-<Avatar 
+<Avatar
   name={data.name}
-  email={data.github ? `${data.name.toLowerCase().replace(/\s+/g, '.')}@github.com` : undefined}
+  email={data.github
+    ? `${data.name.toLowerCase().replace(/\s+/g, ".")}@github.com`
+    : undefined}
   size={64}
   src={data.avatar}
   fallbackType="ui-avatars"
@@ -80,14 +92,14 @@ Dibuat komponen `@components/ui/Avatar.astro` yang menggunakan API avatar sebaga
 
 ```typescript
 interface Props {
-  name: string;                    // Nama untuk generate avatar
-  email?: string;                   // Email untuk Gravatar
-  size?: number;                    // Ukuran avatar (default: 200)
-  class?: string;                   // CSS class tambahan
-  src?: string;                     // URL avatar custom
-  fallbackType?: 'ui-avatars' | 'dicebear' | 'robohash' | 'gravatar';
-  backgroundColor?: string;          // Background color untuk UI Avatars
-  textColor?: string;               // Text color untuk UI Avatars
+  name: string; // Nama untuk generate avatar
+  email?: string; // Email untuk Gravatar
+  size?: number; // Ukuran avatar (default: 200)
+  class?: string; // CSS class tambahan
+  src?: string; // URL avatar custom
+  fallbackType?: "ui-avatars" | "dicebear" | "robohash" | "gravatar";
+  backgroundColor?: string; // Background color untuk UI Avatars
+  textColor?: string; // Text color untuk UI Avatars
 }
 ```
 
@@ -101,36 +113,44 @@ interface Props {
 ### 6. **Contoh URL yang Dihasilkan**
 
 #### **UI Avatars**
+
 - `https://ui-avatars.com/api/?name=Ahmad+Rizki&size=64&background=random&color=fff&format=png`
 - `https://ui-avatars.com/api/?name=Sarah+Wijaya&size=64&background=0D8ABC&color=fff&format=png`
 
 #### **DiceBear**
+
 - `https://api.dicebear.com/7.x/avataaars/svg?seed=AhmadRizki&size=64`
 - `https://api.dicebear.com/7.x/personas/svg?seed=SarahWijaya&size=64`
 
 #### **Robohash**
+
 - `https://robohash.org/AhmadRizki?set=set1&size=64x64`
 - `https://robohash.org/SarahWijaya?set=set2&size=64x64`
 
 ## Keuntungan Implementasi
 
 ### 1. **Tidak Ada Lagi 404 Error**
+
 - Semua avatar akan memiliki fallback
 - Tidak ada gambar yang gagal load
 
 ### 2. **Konsistensi Visual**
+
 - Avatar yang konsisten untuk nama yang sama
 - Tampilan yang profesional
 
 ### 3. **Fleksibilitas**
+
 - Bisa menggunakan berbagai API avatar
 - Mudah untuk di-customize
 
 ### 4. **Performance**
+
 - Avatar di-generate secara real-time
 - Tidak perlu menyimpan file avatar
 
 ### 5. **Scalability**
+
 - Tidak perlu mengelola file avatar
 - Mudah untuk menambah user baru
 
@@ -140,10 +160,10 @@ Untuk menggunakan Avatar component di komponen lain:
 
 ```astro
 ---
-import Avatar from '@components/ui/Avatar.astro';
+import Avatar from "@components/ui/Avatar.astro";
 ---
 
-<Avatar 
+<Avatar
   name="John Doe"
   size={100}
   fallbackType="dicebear"

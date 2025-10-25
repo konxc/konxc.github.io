@@ -7,6 +7,7 @@
 **Error**: `Permission denied` atau `command not found`
 
 **Solusi**:
+
 ```bash
 # Linux/macOS
 chmod +x scripts/deploy-manual.sh
@@ -21,6 +22,7 @@ chmod +x scripts/deploy-manual.sh
 **Error**: `Build failed` atau error saat `pnpm run build`
 
 **Solusi**:
+
 ```bash
 # Clear cache dan reinstall
 rm -rf node_modules
@@ -40,6 +42,7 @@ pnpm --version
 **Gejala**: Website masih menampilkan konten lama
 
 **Solusi**:
+
 1. Tunggu 5-10 menit (GitHub Pages butuh waktu)
 2. Clear browser cache (Ctrl+F5 atau Cmd+Shift+R)
 3. Check branch gh-pages di GitHub
@@ -50,6 +53,7 @@ pnpm --version
 **Error**: `fatal: not a git repository` atau branch errors
 
 **Solusi**:
+
 ```bash
 # Pastikan di direktori yang benar
 pwd
@@ -69,6 +73,7 @@ git pull origin main
 **Error**: Package tidak ditemukan atau version conflict
 
 **Solusi**:
+
 ```bash
 # Update pnpm
 npm install -g pnpm@latest
@@ -85,6 +90,7 @@ pnpm install
 **Error**: Astro build error atau config issues
 
 **Solusi**:
+
 1. Check `astro.config.mjs` untuk syntax error
 2. Verify site URL di config
 3. Check Tailwind config di `tailwind.config.js`
@@ -94,6 +100,7 @@ pnpm install
 **Gejala**: Website tidak accessible atau 404
 
 **Solusi**:
+
 1. Check GitHub Pages settings di repository
 2. Verify branch `gh-pages` exists dan updated
 3. Check jika ada custom domain di `public/CNAME`
@@ -104,6 +111,7 @@ pnpm install
 **Error**: `pnpm dev` tidak berjalan
 
 **Solusi**:
+
 ```bash
 # Check port availability
 lsof -i :4321
@@ -118,6 +126,7 @@ pnpm dev
 ## 🔍 Debugging Steps
 
 ### 1. Check Environment
+
 ```bash
 # Check versions
 node --version
@@ -131,6 +140,7 @@ which git
 ```
 
 ### 2. Check Repository Status
+
 ```bash
 # Git status
 git status
@@ -142,6 +152,7 @@ git remote -v
 ```
 
 ### 3. Check Build Process
+
 ```bash
 # Clean build
 rm -rf dist
@@ -152,6 +163,7 @@ ls -la dist/
 ```
 
 ### 4. Check Deployment
+
 ```bash
 # Check gh-pages branch
 git checkout gh-pages

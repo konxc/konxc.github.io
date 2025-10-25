@@ -7,20 +7,25 @@ Berdasarkan [dokumentasi Astro tentang dynamic content](https://docs.astro.build
 ## 🔍 **Masalah dengan Pendekatan Sebelumnya**
 
 ### **❌ Client-Side Heavy Approach:**
+
 ```typescript
 // ❌ Kompleks client-side JavaScript
 function generateTOC() {
-  const headings = document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6');
+  const headings = document.querySelectorAll(
+    ".blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6",
+  );
   // ... 200+ lines of complex JavaScript
 }
 ```
 
 ### **❌ Race Conditions:**
+
 - JavaScript tidak bisa membaca CSS dengan benar
 - Timing issues antara CSS load dan TOC initialization
 - Complex fallback mechanisms
 
 ### **❌ Maintenance Issues:**
+
 - Sulit di-debug
 - Banyak inline styles sebagai fallback
 - TypeScript errors yang kompleks
@@ -30,13 +35,14 @@ function generateTOC() {
 ### **1. Server-Side TOC Generation**
 
 #### **Konsep dari Dokumentasi Astro:**
+
 ```astro
 ---
 // ✅ Server-side variable definition (seperti dokumentasi Astro)
 const pageTitle = "About Me";
 const identity = {
   firstName: "Sarah",
-  country: "Canada"
+  country: "Canada",
 };
 ---
 
@@ -46,6 +52,7 @@ const identity = {
 ```
 
 #### **Aplikasi ke TOC:**
+
 ```astro
 ---
 // ✅ Server-side TOC generation
@@ -54,78 +61,90 @@ function generateTOCFromContent(htmlContent: string) {
   const headings = [];
   let match;
   let index = 0;
-  
+
   while ((match = headingRegex.exec(htmlContent)) !== null) {
     const level = parseInt(match[1]);
-    const text = match[2].replace(/<[^>]*>/g, '').trim();
+    const text = match[2].replace(/<[^>]*>/g, "").trim();
     const id = `heading-${index}`;
-    
+
     headings.push({ level, text, id });
     index++;
   }
-  
+
   return headings;
 }
 
 const tocItems = content ? generateTOCFromContent(content) : [];
 ---
 
-<!-- ✅ Dynamic TOC rendering -->
-{tocItems.length > 0 ? (
-  <ul class="toc-list">
-    {tocItems.map((item) => (
-      <li class={`toc-item toc-h${item.level}`}>
-        <a href={`#${item.id}`} class="toc-link">
-          {item.text}
-        </a>
-      </li>
-    ))}
-  </ul>
-) : (
-  <div class="toc-empty">
-    <p>Tidak ada heading yang ditemukan</p>
-  </div>
-)}
+<!-- ✅ Dynamic TOC rendering -->{
+  tocItems.length > 0 ? (
+    <ul class="toc-list">
+      {tocItems.map((item) => (
+        <li class={`toc-item toc-h${item.level}`}>
+          <a href={`#${item.id}`} class="toc-link">
+            {item.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div class="toc-empty">
+      <p>Tidak ada heading yang ditemukan</p>
+    </div>
+  )
+}
 ```
 
 ### **2. Conditional Rendering**
 
 #### **Konsep dari Dokumentasi Astro:**
+
 ```astro
 ---
 const happy = true;
 const finished = false;
 ---
 
-<!-- ✅ Conditional rendering -->
-{happy && <p>I am happy to be learning Astro!</p>}
+<!-- ✅ Conditional rendering -->{
+  happy && <p>I am happy to be learning Astro!</p>
+}
 {finished && <p>I finished this tutorial!</p>}
-{goal === 3 ? <p>My goal is to finish in 3 days.</p> : <p>My goal is not 3 days.</p>}
+{
+  goal === 3 ? (
+    <p>My goal is to finish in 3 days.</p>
+  ) : (
+    <p>My goal is not 3 days.</p>
+  )
+}
 ```
 
 #### **Aplikasi ke TOC:**
+
 ```astro
-<!-- ✅ Conditional TOC rendering -->
-{tocItems.length > 0 ? (
-  <ul class="toc-list">
-    {tocItems.map((item) => (
-      <li class={`toc-item toc-h${item.level}`}>
-        <a href={`#${item.id}`} class="toc-link">
-          {item.text}
-        </a>
-      </li>
-    ))}
-  </ul>
-) : (
-  <div class="toc-empty">
-    <p class="text-neutral-500 text-sm">Tidak ada heading yang ditemukan</p>
-  </div>
-)}
+<!-- ✅ Conditional TOC rendering -->{
+  tocItems.length > 0 ? (
+    <ul class="toc-list">
+      {tocItems.map((item) => (
+        <li class={`toc-item toc-h${item.level}`}>
+          <a href={`#${item.id}`} class="toc-link">
+            {item.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div class="toc-empty">
+      <p class="text-sm text-neutral-500">Tidak ada heading yang ditemukan</p>
+    </div>
+  )
+}
 ```
 
 ### **3. Simplified Client-Side JavaScript**
 
 #### **Before (Complex):**
+
 ```typescript
 // ❌ 200+ lines of complex JavaScript
 function generateTOC() {
@@ -137,16 +156,17 @@ function generateTOC() {
 ```
 
 #### **After (Simplified):**
+
 ```typescript
 // ✅ Simple, focused functionality
 function initTOC() {
-  const tocNav = document.getElementById('toc-nav');
-  const toggleBtn = document.getElementById('toc-toggle-btn');
-  const tocLinks = document.querySelectorAll('.toc-link');
-  
+  const tocNav = document.getElementById("toc-nav");
+  const toggleBtn = document.getElementById("toc-toggle-btn");
+  const tocLinks = document.querySelectorAll(".toc-link");
+
   // Simple toggle functionality
-  toggleBtn.addEventListener('click', () => {
-    const isExpanded = tocNav.classList.contains('collapsed');
+  toggleBtn.addEventListener("click", () => {
+    const isExpanded = tocNav.classList.contains("collapsed");
     // Toggle logic
   });
 
@@ -160,26 +180,31 @@ function initTOC() {
 ## 🎯 **Keunggulan Pendekatan Astro Native**
 
 ### **1. ✅ Server-Side Rendering**
+
 - TOC di-generate di server, bukan di client
 - Tidak ada race conditions
 - Lebih cepat dan reliable
 
 ### **2. ✅ Type Safety**
+
 - TypeScript support penuh di frontmatter
 - Tidak ada implicit `any` types
 - Better IDE support
 
 ### **3. ✅ Performance**
+
 - Reduced client-side JavaScript
 - Faster initial page load
 - Better Core Web Vitals
 
 ### **4. ✅ Maintainability**
+
 - Code lebih clean dan readable
 - Easier debugging
 - Better separation of concerns
 
 ### **5. ✅ SEO Friendly**
+
 - TOC tersedia di server-side
 - Better for search engine crawling
 - Improved accessibility
@@ -187,27 +212,30 @@ function initTOC() {
 ## 📊 **Perbandingan Before vs After**
 
 ### **Before (Client-Side Heavy):**
+
 ```typescript
 // ❌ Complex client-side approach
 function generateTOC() {
-  const headings = document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6');
-  const tocNav = document.getElementById('toc-nav');
-  
+  const headings = document.querySelectorAll(
+    ".blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6",
+  );
+  const tocNav = document.getElementById("toc-nav");
+
   if (!headings.length || !tocNav) {
-    console.log('No headings found or TOC nav not found');
+    console.log("No headings found or TOC nav not found");
     return;
   }
-  
+
   // Clear existing TOC
-  tocNav.innerHTML = '';
-  
+  tocNav.innerHTML = "";
+
   headings.forEach((heading, index) => {
     const id = `heading-${index}`;
     heading.id = id;
-    
-    const link = document.createElement('a');
+
+    const link = document.createElement("a");
     link.href = `#${id}`;
-    
+
     // Complex inline styling
     link.style.cssText = `
       display: block;
@@ -223,19 +251,20 @@ function generateTOC() {
       white-space: nowrap;
       margin-left: ${marginLeft}rem;
     `;
-    
+
     // Complex event handling
-    link.addEventListener('click', (e) => {
+    link.addEventListener("click", (e) => {
       e.preventDefault();
       // Complex smooth scroll logic
     });
-    
+
     tocNav.appendChild(link);
   });
 }
 ```
 
 ### **After (Astro Native):**
+
 ```astro
 ---
 // ✅ Server-side generation
@@ -244,49 +273,52 @@ function generateTOCFromContent(htmlContent: string) {
   const headings = [];
   let match;
   let index = 0;
-  
+
   while ((match = headingRegex.exec(htmlContent)) !== null) {
     const level = parseInt(match[1]);
-    const text = match[2].replace(/<[^>]*>/g, '').trim();
+    const text = match[2].replace(/<[^>]*>/g, "").trim();
     const id = `heading-${index}`;
-    
+
     headings.push({ level, text, id });
     index++;
   }
-  
+
   return headings;
 }
 
 const tocItems = content ? generateTOCFromContent(content) : [];
 ---
 
-<!-- ✅ Clean template rendering -->
-{tocItems.length > 0 ? (
-  <ul class="toc-list">
-    {tocItems.map((item) => (
-      <li class={`toc-item toc-h${item.level}`}>
-        <a href={`#${item.id}`} class="toc-link">
-          {item.text}
-        </a>
-      </li>
-    ))}
-  </ul>
-) : (
-  <div class="toc-empty">
-    <p>Tidak ada heading yang ditemukan</p>
-  </div>
-)}
+<!-- ✅ Clean template rendering -->{
+  tocItems.length > 0 ? (
+    <ul class="toc-list">
+      {tocItems.map((item) => (
+        <li class={`toc-item toc-h${item.level}`}>
+          <a href={`#${item.id}`} class="toc-link">
+            {item.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div class="toc-empty">
+      <p>Tidak ada heading yang ditemukan</p>
+    </div>
+  )
+}
 ```
 
 ## 🚀 **Implementation Steps**
 
 ### **Step 1: Create Refactored Component**
+
 ```bash
 # Create new refactored TOC component
 touch src/components/blog/TableOfContentsRefactored.astro
 ```
 
 ### **Step 2: Server-Side TOC Generation**
+
 ```astro
 ---
 // Server-side TOC generation function
@@ -300,26 +332,29 @@ const tocItems = content ? generateTOCFromContent(content) : [];
 ```
 
 ### **Step 3: Dynamic Template Rendering**
+
 ```astro
-<!-- Dynamic TOC rendering with conditional logic -->
-{tocItems.length > 0 ? (
-  <ul class="toc-list">
-    {tocItems.map((item) => (
-      <li class={`toc-item toc-h${item.level}`}>
-        <a href={`#${item.id}`} class="toc-link">
-          {item.text}
-        </a>
-      </li>
-    ))}
-  </ul>
-) : (
-  <div class="toc-empty">
-    <p>Tidak ada heading yang ditemukan</p>
-  </div>
-)}
+<!-- Dynamic TOC rendering with conditional logic -->{
+  tocItems.length > 0 ? (
+    <ul class="toc-list">
+      {tocItems.map((item) => (
+        <li class={`toc-item toc-h${item.level}`}>
+          <a href={`#${item.id}`} class="toc-link">
+            {item.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div class="toc-empty">
+      <p>Tidak ada heading yang ditemukan</p>
+    </div>
+  )
+}
 ```
 
 ### **Step 4: Simplified Client-Side JavaScript**
+
 ```typescript
 // Simple, focused functionality
 function initTOC() {
@@ -332,18 +367,21 @@ function initTOC() {
 ## 🧪 **Testing Results**
 
 ### **Performance Improvements:**
+
 - ✅ **Faster Initial Load**: Server-side generation eliminates client-side parsing
 - ✅ **Reduced JavaScript**: 200+ lines reduced to ~50 lines
 - ✅ **Better Core Web Vitals**: Improved LCP and CLS scores
 - ✅ **SEO Friendly**: TOC available in initial HTML
 
 ### **Developer Experience:**
+
 - ✅ **Type Safety**: Full TypeScript support in frontmatter
 - ✅ **Easier Debugging**: Clear separation between server and client logic
 - ✅ **Better Maintainability**: Cleaner, more readable code
 - ✅ **No Race Conditions**: Server-side generation eliminates timing issues
 
 ### **Functionality:**
+
 - ✅ **Toggle**: TOC expand/collapse works perfectly
 - ✅ **Active States**: Active link detection works smoothly
 - ✅ **Smooth Scroll**: Smooth scrolling to headings
@@ -354,18 +392,21 @@ function initTOC() {
 **Refaktor TOC menggunakan konsep Astro Native memberikan:**
 
 ### **✅ Keunggulan Teknis:**
+
 1. **Server-Side Rendering**: TOC di-generate di server, bukan client
 2. **Type Safety**: Full TypeScript support dengan proper typing
 3. **Performance**: Reduced client-side JavaScript dan faster loading
 4. **Maintainability**: Cleaner code dengan better separation of concerns
 
 ### **✅ Keunggulan Developer Experience:**
+
 1. **Easier Debugging**: Clear server vs client logic separation
 2. **Better IDE Support**: Full IntelliSense dan autocomplete
 3. **No Race Conditions**: Server-side generation eliminates timing issues
 4. **Simplified JavaScript**: Focused, minimal client-side code
 
 ### **✅ Keunggulan User Experience:**
+
 1. **Faster Loading**: Server-side generation improves initial page load
 2. **Better SEO**: TOC available in initial HTML for search engines
 3. **Improved Accessibility**: Better screen reader support

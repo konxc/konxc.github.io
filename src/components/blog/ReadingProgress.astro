@@ -9,39 +9,39 @@
 <script>
   function updateReadingProgress() {
     // Only target the specific blog content card, not the entire page
-    const article = document.querySelector('.blog-content');
-    const progressBar = document.getElementById('reading-progress-bar');
-    
+    const article = document.querySelector(".blog-content");
+    const progressBar = document.getElementById("reading-progress-bar");
+
     if (!article || !progressBar) return;
-    
+
     const articleRect = article.getBoundingClientRect();
     const articleTop = articleRect.top + window.pageYOffset;
     const articleHeight = articleRect.height;
     const windowHeight = window.innerHeight;
     const scrollTop = window.pageYOffset;
-    
+
     // Calculate how much of the article is visible
     const articleBottom = articleTop + articleHeight;
     const viewportTop = scrollTop;
     const viewportBottom = scrollTop + windowHeight;
-    
+
     // Calculate progress based on how much content has been scrolled through
     let progress = 0;
-    
+
     if (viewportTop >= articleTop) {
       // Article is in view, calculate progress
       const scrolledThrough = Math.min(viewportTop - articleTop, articleHeight);
       progress = Math.min(scrolledThrough / articleHeight, 1);
     }
-    
+
     // Update progress bar width
     progressBar.style.width = `${progress * 100}%`;
-    
+
     // Add completion class when fully read
     if (progress >= 0.95) {
-      progressBar.classList.add('completed');
+      progressBar.classList.add("completed");
     } else {
-      progressBar.classList.remove('completed');
+      progressBar.classList.remove("completed");
     }
   }
 
@@ -51,38 +51,38 @@
     if (!ticking) {
       requestAnimationFrame(updateReadingProgress);
       ticking = true;
-      setTimeout(() => ticking = false, 16); // ~60fps
+      setTimeout(() => (ticking = false), 16); // ~60fps
     }
   }
 
   // Initialize progress bar
   function initReadingProgress() {
-    const progressBar = document.getElementById('reading-progress-bar');
+    const progressBar = document.getElementById("reading-progress-bar");
     if (!progressBar) return;
-    
+
     // Check if blog content exists
-    const blogContent = document.querySelector('.blog-content');
+    const blogContent = document.querySelector(".blog-content");
     if (!blogContent) {
-      console.log('Blog content not found, reading progress disabled');
+      console.log("Blog content not found, reading progress disabled");
       return;
     }
-    
+
     // Ensure initial width is 0%
-    progressBar.style.width = '0%';
-    
+    progressBar.style.width = "0%";
+
     // Add scroll listener
-    window.addEventListener('scroll', requestTick, { passive: true });
-    
+    window.addEventListener("scroll", requestTick, { passive: true });
+
     // Recalculate on resize
-    window.addEventListener('resize', requestTick, { passive: true });
-    
+    window.addEventListener("resize", requestTick, { passive: true });
+
     // Initial calculation
     updateReadingProgress();
   }
 
   // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initReadingProgress);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initReadingProgress);
   } else {
     initReadingProgress();
   }
@@ -91,7 +91,7 @@
 <style>
   @reference "@/styles/global.css";
   .reading-progress {
-    @apply sticky top-0 left-0 w-full h-2 bg-neutral-200 z-40 mb-8 overflow-hidden;
+    @apply sticky top-0 left-0 z-40 mb-8 h-2 w-full overflow-hidden bg-neutral-200;
     margin-left: -1.5rem;
     margin-right: -1.5rem;
     margin-top: -2.5rem;
@@ -99,7 +99,7 @@
   }
 
   .progress-bar {
-    @apply h-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all duration-300 ease-out;
+    @apply from-primary-500 to-secondary-500 h-full bg-gradient-to-r transition-all duration-300 ease-out;
     width: 0%;
     position: relative;
     border-radius: inherit;
@@ -110,8 +110,8 @@
   }
 
   .progress-bar::after {
-    content: '';
-    @apply absolute right-0 top-0 w-2 h-2 bg-current rounded-full transform translate-x-1 -translate-y-0.5;
+    content: "";
+    @apply absolute top-0 right-0 h-2 w-2 translate-x-1 -translate-y-0.5 transform rounded-full bg-current;
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -123,7 +123,7 @@
   /* Mobile responsive adjustments */
   @media (max-width: 768px) {
     .reading-progress {
-      @apply h-0.5 mb-6;
+      @apply mb-6 h-0.5;
       margin-left: -1rem;
       margin-right: -1rem;
       width: calc(100% + 2rem);

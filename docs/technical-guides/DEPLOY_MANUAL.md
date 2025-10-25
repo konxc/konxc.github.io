@@ -22,12 +22,14 @@ Sebelum melakukan deploy, pastikan Anda telah menginstall:
 ### Metode 1: Menggunakan Script (Recommended)
 
 #### Untuk Linux/macOS:
+
 ```bash
 # Jalankan script deploy
 bash ./scripts/deploy-manual.sh
 ```
 
 #### Untuk Windows (Git Bash/WSL):
+
 ```bash
 # Jalankan script deploy
 ./scripts/deploy-manual.bat
@@ -36,6 +38,7 @@ bash ./scripts/deploy-manual.sh
 ### Apa yang Dilakukan Script?
 
 Script akan secara otomatis:
+
 1. ✅ Checkout ke branch `main` dan pull latest changes
 2. ✅ Install dependencies dengan `pnpm install`
 3. ✅ Build project dengan `pnpm run build`
@@ -94,24 +97,29 @@ rm -rf /tmp/konxc-deploy
 ## 🔧 Troubleshooting
 
 ### Error: "pnpm is not installed"
+
 ```bash
 npm install -g pnpm
 ```
 
 ### Error: "Not in a git repository"
+
 Pastikan Anda berada di direktori root proyek (yang berisi file package.json).
 
 ### Error: "Build failed"
+
 1. Periksa apakah ada error saat menjalankan `pnpm run build`
 2. Pastikan semua dependencies terinstall dengan benar
 3. Periksa konfigurasi Astro di `astro.config.mjs`
 
 ### Error: "Permission denied" pada script
+
 ```bash
 chmod +x scripts/deploy-manual.sh
 ```
 
 ### Error: "Your local changes would be overwritten"
+
 ```bash
 # Commit perubahan di main terlebih dahulu
 git add .
@@ -119,6 +127,7 @@ git commit -m "Your commit message"
 ```
 
 ### Website tidak update setelah deploy
+
 - GitHub Pages membutuhkan waktu 2-5 menit untuk update
 - Pastikan branch `gh-pages` sudah di-push dengan benar
 - Clear browser cache (Ctrl+F5 atau Cmd+Shift+R)
@@ -130,6 +139,7 @@ git commit -m "Your commit message"
 - **gh-pages**: Branch untuk deployment (hanya berisi hasil build dari `dist/`)
 
 ### Contoh isi branch gh-pages:
+
 ```
 gh-pages/
 ├── _astro/           # CSS dan assets yang di-bundle
@@ -164,6 +174,7 @@ gh-pages/
 ## 🆘 Support
 
 Jika mengalami masalah:
+
 1. Periksa troubleshooting di atas
 2. Pastikan semua prerequisites terinstall
 3. Periksa log error yang muncul

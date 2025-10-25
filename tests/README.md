@@ -29,16 +29,19 @@ npm run test:playwright:debug
 ## Test yang Dilakukan
 
 ### 1. **Struktur Komponen**
+
 - ✅ TOC container ter-render dengan benar
 - ✅ Header dan title "Daftar Isi" ada
 - ✅ Toggle button berfungsi
 
 ### 2. **Generasi TOC**
+
 - ✅ Link TOC dibuat dari heading yang ada
 - ✅ Setiap link memiliki href yang benar (#heading-X)
 - ✅ Mendukung semua level heading (H2-H6)
 
 ### 3. **Visual Hierarchy**
+
 - ✅ H2: font-semibold, text-base, pl-3, border 3px
 - ✅ H3: font-medium, text-sm, pl-6, ml-2, dot indicator
 - ✅ H4: font-normal, text-xs, pl-9, ml-4, dot indicator
@@ -46,19 +49,23 @@ npm run test:playwright:debug
 - ✅ H6: font-normal, text-xs, pl-16, ml-8, dot indicator
 
 ### 4. **Interaksi**
+
 - ✅ Toggle button mengubah visibility TOC
 - ✅ Scroll mengupdate active link
 - ✅ Hover effects bekerja dengan benar
 
 ### 5. **Responsive**
+
 - ✅ Mobile viewport styling benar
 - ✅ Border dan padding disesuaikan untuk mobile
 
 ### 6. **Accessibility**
+
 - ✅ Aria-label pada toggle button
 - ✅ Role navigation pada TOC nav
 
 ### 7. **Visual Regression**
+
 - ✅ Screenshot comparison untuk desktop
 - ✅ Screenshot comparison untuk mobile
 - ✅ Screenshot hierarchy dengan berbagai level
@@ -66,6 +73,7 @@ npm run test:playwright:debug
 ## Hasil Test
 
 Test akan menghasilkan:
+
 - HTML report di `playwright-report/`
 - Screenshot di `test-results/`
 - Video recording untuk test yang gagal
@@ -73,19 +81,19 @@ Test akan menghasilkan:
 
 ## Perbedaan Playwright vs Puppeteer
 
-| Aspek | Playwright | Puppeteer |
-|-------|------------|-----------|
-| **Multi-browser** | ✅ Chrome, Firefox, Safari | ❌ Hanya Chrome/Chromium |
-| **API Design** | Modern, async/await | Callback-based |
-| **Auto-wait** | ✅ Built-in smart waiting | ❌ Manual waiting |
-| **Screenshots** | ✅ Built-in visual testing | ❌ Manual implementation |
-| **Video Recording** | ✅ Built-in | ❌ Manual setup |
-| **Trace Viewer** | ✅ Built-in debugging | ❌ Limited debugging |
-| **Parallel Execution** | ✅ Built-in | ❌ Manual setup |
-| **Mobile Testing** | ✅ Built-in device emulation | ❌ Manual setup |
-| **Performance** | Faster execution | Slower |
-| **Maintenance** | Microsoft maintained | Google maintained |
-| **Learning Curve** | Easier | Steeper |
+| Aspek                  | Playwright                   | Puppeteer                |
+| ---------------------- | ---------------------------- | ------------------------ |
+| **Multi-browser**      | ✅ Chrome, Firefox, Safari   | ❌ Hanya Chrome/Chromium |
+| **API Design**         | Modern, async/await          | Callback-based           |
+| **Auto-wait**          | ✅ Built-in smart waiting    | ❌ Manual waiting        |
+| **Screenshots**        | ✅ Built-in visual testing   | ❌ Manual implementation |
+| **Video Recording**    | ✅ Built-in                  | ❌ Manual setup          |
+| **Trace Viewer**       | ✅ Built-in debugging        | ❌ Limited debugging     |
+| **Parallel Execution** | ✅ Built-in                  | ❌ Manual setup          |
+| **Mobile Testing**     | ✅ Built-in device emulation | ❌ Manual setup          |
+| **Performance**        | Faster execution             | Slower                   |
+| **Maintenance**        | Microsoft maintained         | Google maintained        |
+| **Learning Curve**     | Easier                       | Steeper                  |
 
 ## Keunggulan Playwright untuk Testing TOC
 
@@ -122,6 +130,7 @@ Running 15 tests using 5 workers
 ## Troubleshooting
 
 ### Test Gagal karena Elemen Tidak Ditemukan
+
 ```bash
 # Pastikan dev server berjalan
 npm run dev
@@ -131,12 +140,14 @@ npx playwright test --timeout=30000
 ```
 
 ### Screenshot Tidak Match
+
 ```bash
 # Update screenshot baseline
 npx playwright test --update-snapshots
 ```
 
 ### Debug Test yang Gagal
+
 ```bash
 # Debug mode dengan browser terlihat
 npx playwright test --debug --headed

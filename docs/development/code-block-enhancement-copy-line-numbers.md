@@ -7,6 +7,7 @@ Saya telah membuat fitur enhancement untuk code blocks di dalam artikel blog yan
 ## Masalah yang Ditemukan
 
 ### **Code Block Issues:**
+
 - Tidak ada tombol copy untuk kode
 - Tidak ada line numbers untuk referensi
 - Sulit untuk copy kode yang panjang
@@ -14,6 +15,7 @@ Saya telah membuat fitur enhancement untuk code blocks di dalam artikel blog yan
 - Tidak ada informasi jumlah baris kode
 
 ### **User Experience Problems:**
+
 - User harus manual select dan copy kode
 - Sulit untuk referensi baris tertentu
 - Tidak ada feedback saat copy berhasil
@@ -24,6 +26,7 @@ Saya telah membuat fitur enhancement untuk code blocks di dalam artikel blog yan
 ### **1. CodeBlock Component**
 
 #### **Fitur Utama:**
+
 - ✅ **Copy Button** - Tombol untuk copy kode ke clipboard
 - ✅ **Line Numbers** - Nomor baris untuk referensi
 - ✅ **Language Detection** - Deteksi bahasa pemrograman
@@ -33,6 +36,7 @@ Saya telah membuat fitur enhancement untuk code blocks di dalam artikel blog yan
 - ✅ **Print Styles** - Optimized untuk print
 
 #### **Props Interface:**
+
 ```typescript
 export interface Props {
   code: string;
@@ -47,6 +51,7 @@ export interface Props {
 ### **2. Enhanced Code Block Structure**
 
 #### **HTML Structure:**
+
 ```html
 <div class="enhanced-code-block">
   <!-- Header (optional) -->
@@ -60,7 +65,7 @@ export interface Props {
       <span class="copy-text">Copy</span>
     </button>
   </div>
-  
+
   <!-- Code Container -->
   <div class="code-container">
     <!-- Line Numbers -->
@@ -69,20 +74,20 @@ export interface Props {
       <div class="line-number">2</div>
       <!-- ... -->
     </div>
-    
+
     <!-- Code Content -->
     <pre class="code-content">
       <code class="language-javascript">
         // Your code here
       </code>
     </pre>
-    
+
     <!-- Floating Copy Button -->
     <button class="copy-button-floating">
       <svg class="copy-icon">...</svg>
     </button>
   </div>
-  
+
   <!-- Footer -->
   <div class="code-footer">
     <span class="language-label">JavaScript</span>
@@ -94,6 +99,7 @@ export interface Props {
 ### **3. CodeBlockEnhancer Component**
 
 #### **Automatic Enhancement:**
+
 - ✅ **Auto Detection** - Otomatis detect code blocks di blog content
 - ✅ **Dynamic Enhancement** - Enhance existing code blocks
 - ✅ **Language Detection** - Detect language dari class name
@@ -101,19 +107,20 @@ export interface Props {
 - ✅ **Copy Functionality** - Add copy functionality ke semua code blocks
 
 #### **Enhancement Process:**
+
 ```javascript
 // 1. Find all code blocks
-const codeBlocks = document.querySelectorAll('.blog-content pre code');
+const codeBlocks = document.querySelectorAll(".blog-content pre code");
 
 // 2. Enhance each code block
 codeBlocks.forEach((codeElement, index) => {
   // Get code content and language
-  const code = codeElement.textContent || '';
-  const language = codeElement.className.match(/language-(\w+)/)?.[1] || 'text';
-  
+  const code = codeElement.textContent || "";
+  const language = codeElement.className.match(/language-(\w+)/)?.[1] || "text";
+
   // Create enhanced structure
   const enhancedBlock = createEnhancedCodeBlock(code, language, index);
-  
+
   // Replace original code block
   preElement.parentNode.replaceChild(enhancedBlock, preElement);
 });
@@ -122,6 +129,7 @@ codeBlocks.forEach((codeElement, index) => {
 ### **4. Copy Functionality**
 
 #### **Modern Clipboard API:**
+
 ```javascript
 async function copyToClipboard(text) {
   try {
@@ -135,57 +143,62 @@ async function copyToClipboard(text) {
 ```
 
 #### **Fallback Support:**
+
 ```javascript
 function fallbackCopyToClipboard(text) {
-  const textArea = document.createElement('textarea');
+  const textArea = document.createElement("textarea");
   textArea.value = text;
   document.body.appendChild(textArea);
   textArea.select();
-  document.execCommand('copy');
+  document.execCommand("copy");
   document.body.removeChild(textArea);
 }
 ```
 
 #### **Success Feedback:**
+
 ```javascript
 // Show success state
-button.classList.add('copied');
-button.querySelector('.copy-text').textContent = 'Copied!';
+button.classList.add("copied");
+button.querySelector(".copy-text").textContent = "Copied!";
 
 // Reset after 2 seconds
 setTimeout(() => {
-  button.classList.remove('copied');
-  button.querySelector('.copy-text').textContent = 'Copy';
+  button.classList.remove("copied");
+  button.querySelector(".copy-text").textContent = "Copy";
 }, 2000);
 ```
 
 ### **5. Styling System**
 
 #### **Base Styling:**
+
 ```css
 .enhanced-code-block {
-  @apply relative bg-neutral-900 rounded-lg overflow-hidden shadow-lg mb-6;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+  @apply relative mb-6 overflow-hidden rounded-lg bg-neutral-900 shadow-lg;
+  font-family: "JetBrains Mono", "Fira Code", "Monaco", "Consolas", monospace;
 }
 ```
 
 #### **Line Numbers:**
+
 ```css
 .line-numbers {
-  @apply bg-neutral-800 text-neutral-500 text-sm select-none pr-4 py-4 border-r border-neutral-700;
+  @apply border-r border-neutral-700 bg-neutral-800 py-4 pr-4 text-sm text-neutral-500 select-none;
   min-width: 3rem;
 }
 
 .line-number {
-  @apply leading-6 text-right;
+  @apply text-right leading-6;
   height: 1.5rem;
 }
 ```
 
 #### **Copy Button:**
+
 ```css
 .copy-button-floating {
-  @apply absolute top-4 right-4 p-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white rounded-md transition-colors opacity-0;
+  @apply absolute top-4 right-4 rounded-md bg-neutral-800 p-2 text-neutral-400 opacity-0 transition-colors hover:bg-neutral-700 hover:text-white;
 }
 
 .enhanced-code-block:hover .copy-button-floating {
@@ -194,6 +207,7 @@ setTimeout(() => {
 ```
 
 #### **Success Animation:**
+
 ```css
 .copy-button-floating.copied {
   @apply bg-green-600 text-white;
@@ -203,40 +217,42 @@ setTimeout(() => {
 ### **6. Language Support**
 
 #### **Supported Languages:**
+
 ```javascript
 const languageNames = {
-  'javascript': 'JavaScript',
-  'typescript': 'TypeScript',
-  'python': 'Python',
-  'java': 'Java',
-  'cpp': 'C++',
-  'c': 'C',
-  'css': 'CSS',
-  'html': 'HTML',
-  'json': 'JSON',
-  'yaml': 'YAML',
-  'bash': 'Bash',
-  'shell': 'Shell',
-  'sql': 'SQL',
-  'php': 'PHP',
-  'ruby': 'Ruby',
-  'go': 'Go',
-  'rust': 'Rust',
-  'swift': 'Swift',
-  'kotlin': 'Kotlin',
-  'dart': 'Dart',
-  'vue': 'Vue',
-  'react': 'React',
-  'astro': 'Astro',
-  'markdown': 'Markdown',
-  'xml': 'XML',
-  'text': 'Text'
+  javascript: "JavaScript",
+  typescript: "TypeScript",
+  python: "Python",
+  java: "Java",
+  cpp: "C++",
+  c: "C",
+  css: "CSS",
+  html: "HTML",
+  json: "JSON",
+  yaml: "YAML",
+  bash: "Bash",
+  shell: "Shell",
+  sql: "SQL",
+  php: "PHP",
+  ruby: "Ruby",
+  go: "Go",
+  rust: "Rust",
+  swift: "Swift",
+  kotlin: "Kotlin",
+  dart: "Dart",
+  vue: "Vue",
+  react: "React",
+  astro: "Astro",
+  markdown: "Markdown",
+  xml: "XML",
+  text: "Text",
 };
 ```
 
 ### **7. Responsive Design**
 
 #### **Mobile Adjustments:**
+
 ```css
 @media (max-width: 768px) {
   .copy-button-floating {
@@ -244,7 +260,7 @@ const languageNames = {
   }
 
   .line-numbers {
-    @apply pr-2 py-3;
+    @apply py-3 pr-2;
     min-width: 2.5rem;
   }
 
@@ -270,7 +286,7 @@ const languageNames = {
 }
 
 .dark .line-numbers {
-  @apply bg-neutral-800 text-neutral-500 border-neutral-700;
+  @apply border-neutral-700 bg-neutral-800 text-neutral-500;
 }
 
 .dark .code-content {
@@ -278,11 +294,11 @@ const languageNames = {
 }
 
 .dark .copy-button-floating {
-  @apply bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white;
+  @apply bg-neutral-800 text-neutral-400 hover:bg-neutral-700 hover:text-white;
 }
 
 .dark .code-footer {
-  @apply bg-neutral-800 text-neutral-400 border-neutral-700;
+  @apply border-neutral-700 bg-neutral-800 text-neutral-400;
 }
 ```
 
@@ -291,7 +307,7 @@ const languageNames = {
 ```css
 @media print {
   .enhanced-code-block {
-    @apply bg-white border border-neutral-300;
+    @apply border border-neutral-300 bg-white;
   }
 
   .copy-button-floating {
@@ -299,7 +315,7 @@ const languageNames = {
   }
 
   .line-numbers {
-    @apply bg-neutral-100 text-neutral-600 border-neutral-300;
+    @apply border-neutral-300 bg-neutral-100 text-neutral-600;
   }
 
   .code-content {
@@ -307,7 +323,7 @@ const languageNames = {
   }
 
   .code-footer {
-    @apply bg-neutral-100 text-neutral-600 border-neutral-300;
+    @apply border-neutral-300 bg-neutral-100 text-neutral-600;
   }
 }
 ```
@@ -318,7 +334,7 @@ const languageNames = {
 
 ```astro
 ---
-import CodeBlock from '@components/blog/CodeBlock.astro';
+import CodeBlock from "@components/blog/CodeBlock.astro";
 
 const code = `
 function greet(name) {
@@ -329,7 +345,7 @@ greet('World');
 `;
 ---
 
-<CodeBlock 
+<CodeBlock
   code={code}
   language="javascript"
   filename="greet.js"
@@ -342,7 +358,7 @@ greet('World');
 
 ```astro
 ---
-import CodeBlockEnhancer from '@components/blog/CodeBlockEnhancer.astro';
+import CodeBlockEnhancer from "@components/blog/CodeBlockEnhancer.astro";
 ---
 
 <!-- Add to blog layout -->
@@ -351,7 +367,7 @@ import CodeBlockEnhancer from '@components/blog/CodeBlockEnhancer.astro';
 
 ### **3. Markdown Code Blocks**
 
-```markdown
+````markdown
 ```javascript
 function calculateSum(a, b) {
   return a + b;
@@ -359,6 +375,8 @@ function calculateSum(a, b) {
 
 console.log(calculateSum(5, 3)); // Output: 8
 ```
+````
+
 ```
 
 **Will be automatically enhanced to:**
@@ -482,3 +500,4 @@ console.log(calculateSum(5, 3)); // Output: 8
 ✅ **PERFORMANT** - Lightweight dan fast
 
 Code blocks di artikel blog sekarang memiliki fitur copy button dan line numbers untuk pengalaman developer yang lebih baik! 🎉
+```

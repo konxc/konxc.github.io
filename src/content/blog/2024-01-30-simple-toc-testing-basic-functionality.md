@@ -4,7 +4,15 @@ description: "Artikel sederhana untuk testing basic functionality Table of Conte
 publishDate: 2024-01-30
 author: "Sandikodev"
 category: "testing"
-tags: ["testing", "basic-functionality", "toc", "simple-testing", "frontend", "validation"]
+tags:
+  [
+    "testing",
+    "basic-functionality",
+    "toc",
+    "simple-testing",
+    "frontend",
+    "validation",
+  ]
 featured: false
 readingTime: 5
 image: "/blog/simple-toc-testing.jpg"

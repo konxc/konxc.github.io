@@ -3,7 +3,16 @@ name: "Tim KonXC"
 bio: "Tim teknologi KonXC yang berdedikasi untuk menyederhanakan teknologi bagi pertumbuhan bisnis. Berpengalaman dalam IT Support, Software Development, dan Digital Transformation. Komitmen untuk membangun ekosistem teknologi Indonesia yang kompetitif dan kolaboratif."
 avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=konxc-team&backgroundColor=FF9800&textColor=FFFFFF"
 role: "community-leader"
-expertise: ["IT Support", "Software Development", "Digital Transformation", "Cloud Solutions", "DevOps", "Project Management", "Business Analysis"]
+expertise:
+  [
+    "IT Support",
+    "Software Development",
+    "Digital Transformation",
+    "Cloud Solutions",
+    "DevOps",
+    "Project Management",
+    "Business Analysis",
+  ]
 location: "Jakarta, Indonesia"
 website: "https://konxc.space"
 github: "https://github.com/konxc"
@@ -73,8 +82,26 @@ achievements:
     category: "community"
     verified: true
 skills:
-  technical: ["Python", "JavaScript", "Docker", "Kubernetes", "AWS", "Azure", "Linux", "Networking", "Database Management"]
-  soft: ["Leadership", "Strategic Planning", "Client Relations", "Team Management", "Problem Solving"]
+  technical:
+    [
+      "Python",
+      "JavaScript",
+      "Docker",
+      "Kubernetes",
+      "AWS",
+      "Azure",
+      "Linux",
+      "Networking",
+      "Database Management",
+    ]
+  soft:
+    [
+      "Leadership",
+      "Strategic Planning",
+      "Client Relations",
+      "Team Management",
+      "Problem Solving",
+    ]
   languages: ["Bahasa Indonesia", "English"]
 availability:
   forMentoring: true

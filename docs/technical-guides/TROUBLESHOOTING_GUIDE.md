@@ -3,6 +3,7 @@
 ## 🚨 **Quick Fix Commands**
 
 ### **Emergency Reset**
+
 ```bash
 # Complete project reset
 rm -rf node_modules dist .astro
@@ -14,6 +15,7 @@ node --version  # Should be >= 18.0.0
 ```
 
 ### **Common Build Fixes**
+
 ```bash
 # Clear all caches
 rm -rf node_modules/.cache
@@ -30,8 +32,10 @@ pnpm build
 ### **1. Build Failures**
 
 #### **Error**: `Cannot resolve module '@astrojs/...'`
+
 **Cause**: Missing or corrupted dependencies
 **Solution**:
+
 ```bash
 # Check package.json dependencies
 cat package.json | grep astro
@@ -45,8 +49,10 @@ pnpm install
 ```
 
 #### **Error**: `Tailwind CSS classes not found`
+
 **Cause**: Tailwind not properly configured
 **Solution**:
+
 ```bash
 # Check Tailwind config exists
 ls -la tailwind.config.*
@@ -60,8 +66,10 @@ pnpm build --verbose
 ```
 
 #### **Error**: `Content collection schema error`
+
 **Cause**: Invalid frontmatter in markdown files
 **Solution**:
+
 ```bash
 # Check content schema
 cat src/content/config.ts
@@ -76,7 +84,9 @@ vim src/content/blog/problematic-file.md
 ### **2. Development Server Issues**
 
 #### **Error**: `Port 4321 already in use`
+
 **Solution**:
+
 ```bash
 # Kill existing process
 pkill -f "astro dev"
@@ -86,7 +96,9 @@ pnpm dev --port 3000
 ```
 
 #### **Error**: `Hot reload not working`
+
 **Solution**:
+
 ```bash
 # Restart dev server
 pkill -f "astro dev"
@@ -97,7 +109,9 @@ pnpm dev
 ```
 
 #### **Error**: `TypeScript errors in IDE`
+
 **Solution**:
+
 ```bash
 # Generate TypeScript definitions
 pnpm astro sync
@@ -112,8 +126,10 @@ cat tsconfig.json
 ### **3. Deployment Issues**
 
 #### **Error**: `GitHub Pages not updating`
+
 **Cause**: Build artifacts not properly pushed to gh-pages
 **Solution**:
+
 ```bash
 # Check gh-pages branch
 git checkout gh-pages
@@ -129,8 +145,10 @@ git push origin gh-pages --force
 ```
 
 #### **Error**: `404 on deployed site`
+
 **Cause**: Incorrect base path or routing
 **Solution**:
+
 ```bash
 # Check astro.config.mjs
 cat astro.config.mjs | grep base
@@ -144,8 +162,10 @@ ls -la public/.nojekyll
 ```
 
 #### **Error**: `CSS/JS files not loading`
+
 **Cause**: Incorrect asset paths
 **Solution**:
+
 ```bash
 # Check build output
 ls -la dist/
@@ -161,8 +181,10 @@ ls -la public/
 ### **4. Content Issues**
 
 #### **Error**: `Blog post not appearing`
+
 **Cause**: Invalid frontmatter or file location
 **Solution**:
+
 ```bash
 # Check file location
 ls -la src/content/blog/
@@ -178,8 +200,10 @@ grep -A 20 "blog.*defineCollection" src/content/config.ts
 ```
 
 #### **Error**: `Images not loading`
+
 **Cause**: Incorrect image paths or missing files
 **Solution**:
+
 ```bash
 # Check image exists
 ls -la public/images/your-image.jpg
@@ -193,8 +217,10 @@ file public/images/your-image.jpg
 ```
 
 #### **Error**: `Markdown not rendering properly`
+
 **Cause**: Invalid markdown syntax
 **Solution**:
+
 ```bash
 # Test markdown syntax
 # Use online markdown validator
@@ -211,8 +237,10 @@ pnpm astro check
 ### **5. Performance Issues**
 
 #### **Error**: `Slow build times`
+
 **Cause**: Large images or inefficient processing
 **Solution**:
+
 ```bash
 # Check image sizes
 find public/images -name "*.jpg" -exec ls -lh {} \;
@@ -228,8 +256,10 @@ pnpm build --verbose
 ```
 
 #### **Error**: `Large bundle size`
+
 **Cause**: Unused dependencies or large assets
 **Solution**:
+
 ```bash
 # Analyze bundle
 pnpm build
@@ -245,8 +275,10 @@ pnpm remove unused-package
 ### **6. SEO Issues**
 
 #### **Error**: `Missing meta tags`
+
 **Cause**: Incomplete Head component
 **Solution**:
+
 ```bash
 # Check Head component
 cat src/components/Head.astro
@@ -259,8 +291,10 @@ grep -r "Head" src/layouts/
 ```
 
 #### **Error**: `Sitemap not generating`
+
 **Cause**: Missing sitemap integration
 **Solution**:
+
 ```bash
 # Check astro.config.mjs
 grep -A 5 "sitemap" astro.config.mjs
@@ -275,6 +309,7 @@ ls -la dist/sitemap*
 ## 🔍 **Debugging Tools**
 
 ### **Development Debugging**
+
 ```bash
 # Verbose build output
 pnpm build --verbose
@@ -290,9 +325,10 @@ pnpm build && ls -lah dist/
 ```
 
 ### **Browser Debugging**
+
 ```javascript
 // Add to component for debugging
-console.log('Debug info:', data);
+console.log("Debug info:", data);
 
 // Check network requests
 // F12 > Network tab
@@ -305,6 +341,7 @@ console.log('Debug info:', data);
 ```
 
 ### **Content Debugging**
+
 ```bash
 # Validate all content
 pnpm astro check
@@ -319,6 +356,7 @@ find src/content/blog -name "*.md" -exec pnpm astro check {} \;
 ## 📊 **Health Check Commands**
 
 ### **Daily Health Check**
+
 ```bash
 #!/bin/bash
 # Save as scripts/health-check.sh
@@ -356,6 +394,7 @@ echo "Health check complete"
 ```
 
 ### **Weekly Maintenance**
+
 ```bash
 #!/bin/bash
 # Save as scripts/weekly-maintenance.sh
@@ -391,19 +430,23 @@ echo "Maintenance complete"
 ## 🚨 **Emergency Procedures**
 
 ### **Site Completely Down**
+
 1. **Check GitHub Pages Status**
+
    ```bash
    curl -I https://konxc.space
    # Check response code
    ```
 
 2. **Verify DNS**
+
    ```bash
    nslookup konxc.space
    dig konxc.space
    ```
 
 3. **Check Recent Deployments**
+
    ```bash
    git log --oneline -10
    git checkout gh-pages
@@ -418,19 +461,23 @@ echo "Maintenance complete"
    ```
 
 ### **Critical Bug in Production**
+
 1. **Create Hotfix Branch**
+
    ```bash
    git checkout main
    git checkout -b hotfix/critical-bug
    ```
 
 2. **Make Minimal Fix**
+
    ```bash
    # Edit only necessary files
    vim src/components/problematic-component.astro
    ```
 
 3. **Test Locally**
+
    ```bash
    pnpm build
    pnpm preview
@@ -447,13 +494,16 @@ echo "Maintenance complete"
    ```
 
 ### **Content Emergency**
+
 1. **Remove Problematic Content**
+
    ```bash
    # Remove or rename problematic file
    mv src/content/blog/problematic-post.md src/content/blog/problematic-post.md.bak
    ```
 
 2. **Quick Deploy**
+
    ```bash
    pnpm build
    ./scripts/deploy-manual.sh
@@ -469,18 +519,21 @@ echo "Maintenance complete"
 ## 📞 **When to Ask for Help**
 
 ### **Contact Technical Team When:**
+
 - Build fails after trying all solutions
 - Security vulnerabilities detected
 - Performance degrades significantly
 - Database or API integration issues
 
 ### **Contact Content Team When:**
+
 - Content strategy questions
 - Editorial guidelines needed
 - SEO optimization required
 - Content calendar planning
 
 ### **Contact DevOps Team When:**
+
 - Deployment pipeline issues
 - Domain/DNS problems
 - CDN configuration needed
@@ -489,16 +542,19 @@ echo "Maintenance complete"
 ## 📚 **Reference Links**
 
 ### **Documentation**
+
 - [Astro Troubleshooting](https://docs.astro.build/en/guides/troubleshooting/)
 - [Tailwind CSS Issues](https://tailwindcss.com/docs/installation#troubleshooting)
 - [GitHub Pages Troubleshooting](https://docs.github.com/en/pages/getting-started-with-github-pages/troubleshooting-404-errors-for-github-pages-sites)
 
 ### **Community Support**
+
 - [Astro Discord](https://astro.build/chat)
 - [Tailwind Discord](https://discord.gg/7NF8GNe)
 - [GitHub Community](https://github.community/)
 
 ### **Tools**
+
 - [Astro DevTools](https://github.com/withastro/astro-devtools)
 - [Lighthouse](https://developers.google.com/web/tools/lighthouse)
 - [PageSpeed Insights](https://pagespeed.web.dev/)

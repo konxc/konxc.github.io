@@ -3,7 +3,16 @@ name: "Sarah Wijaya"
 bio: "Technical Writer dan Content Creator dengan pengalaman 5+ tahun dalam menulis dokumentasi teknis dan tutorial programming. Spesialisasi dalam membuat konten yang mudah dipahami untuk developer pemula hingga advanced."
 avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=sarah-wijaya&backgroundColor=E91E63&textColor=FFFFFF"
 role: "writer"
-expertise: ["Technical Writing", "Content Creation", "Documentation", "Tutorial Writing", "JavaScript", "Python", "Web Development"]
+expertise:
+  [
+    "Technical Writing",
+    "Content Creation",
+    "Documentation",
+    "Tutorial Writing",
+    "JavaScript",
+    "Python",
+    "Web Development",
+  ]
 location: "Bandung, Indonesia"
 website: "https://sarahwijaya.dev"
 github: "https://github.com/sarahwijaya"
@@ -53,8 +62,23 @@ achievements:
     category: "community"
     verified: true
 skills:
-  technical: ["JavaScript", "Python", "Markdown", "Git", "API Documentation", "Technical Writing"]
-  soft: ["Communication", "Teaching", "Problem Solving", "Attention to Detail", "Research"]
+  technical:
+    [
+      "JavaScript",
+      "Python",
+      "Markdown",
+      "Git",
+      "API Documentation",
+      "Technical Writing",
+    ]
+  soft:
+    [
+      "Communication",
+      "Teaching",
+      "Problem Solving",
+      "Attention to Detail",
+      "Research",
+    ]
   languages: ["Bahasa Indonesia", "English"]
 availability:
   forMentoring: true

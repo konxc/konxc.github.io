@@ -5,9 +5,10 @@
  * Tests all implemented blog features including advanced search and recommendations
  */
 
-import puppeteer from 'puppeteer';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+
+import puppeteer from 'puppeteer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

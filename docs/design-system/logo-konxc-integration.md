@@ -11,17 +11,20 @@ Logo KonXC diambil dari [Instagram KonXC](https://instagram.fsoc1-1.fna.fbcdn.ne
 ## File Logo yang Tersedia
 
 ### 1. **logo-konxc.jpg** (Primary)
+
 - **Path**: `/logo-konxc.jpg`
 - **Format**: JPEG
 - **Size**: 320x320px
 - **Usage**: Logo utama untuk semua komponen
 
 ### 2. **logo.png** (Alternative)
+
 - **Path**: `/logo.png`
 - **Format**: PNG
 - **Usage**: Backup format untuk kompatibilitas
 
 ### 3. **favicon.ico** (Favicon)
+
 - **Path**: `/favicon.ico`
 - **Format**: ICO
 - **Usage**: Favicon browser dan bookmark
@@ -29,11 +32,12 @@ Logo KonXC diambil dari [Instagram KonXC](https://instagram.fsoc1-1.fna.fbcdn.ne
 ## Logo Component
 
 ### Props Interface
+
 ```typescript
 interface Props {
   class?: string;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  variant?: 'default' | 'white' | 'dark';
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  variant?: "default" | "white" | "dark";
   showText?: boolean;
   textClass?: string;
   href?: string;
@@ -41,6 +45,7 @@ interface Props {
 ```
 
 ### Size Options
+
 - **xs**: 16x16px (w-4 h-4) + text-xs
 - **sm**: 24x24px (w-6 h-6) + text-sm
 - **md**: 32x32px (w-8 h-8) + text-lg
@@ -48,6 +53,7 @@ interface Props {
 - **xl**: 64x64px (w-16 h-16) + text-2xl
 
 ### Variant Options
+
 - **default**: Text color sesuai theme (neutral-900/white)
 - **white**: Text putih untuk background gelap
 - **dark**: Text gelap untuk background terang
@@ -55,9 +61,10 @@ interface Props {
 ## Usage Examples
 
 ### Basic Usage
+
 ```astro
 ---
-import Logo from '@components/ui/Logo.astro';
+import Logo from "@components/ui/Logo.astro";
 ---
 
 <!-- Logo standar -->
@@ -79,9 +86,10 @@ import Logo from '@components/ui/Logo.astro';
 ### Integration Examples
 
 #### Header Website
+
 ```astro
-<header class="bg-white shadow-sm py-4">
-  <div class="container mx-auto px-4 flex items-center justify-between">
+<header class="bg-white py-4 shadow-sm">
+  <div class="container mx-auto flex items-center justify-between px-4">
     <Logo size="md" />
     <nav class="flex gap-4">
       <!-- Navigation items -->
@@ -91,21 +99,23 @@ import Logo from '@components/ui/Logo.astro';
 ```
 
 #### Footer Website
+
 ```astro
-<footer class="bg-neutral-900 text-white py-8">
+<footer class="bg-neutral-900 py-8 text-white">
   <div class="container mx-auto px-4">
     <Logo size="sm" variant="white" />
-    <p class="text-neutral-300 mt-2">© 2024 KonXC. All rights reserved.</p>
+    <p class="mt-2 text-neutral-300">© 2024 KonXC. All rights reserved.</p>
   </div>
 </footer>
 ```
 
 #### Card Component
+
 ```astro
-<div class="bg-white border rounded-lg p-6">
+<div class="rounded-lg border bg-white p-6">
   <Logo size="sm" />
-  <h3 class="font-semibold mt-2">Card Title</h3>
-  <p class="text-neutral-600 text-sm">Card description</p>
+  <h3 class="mt-2 font-semibold">Card Title</h3>
+  <p class="text-sm text-neutral-600">Card description</p>
 </div>
 ```
 
@@ -114,11 +124,13 @@ import Logo from '@components/ui/Logo.astro';
 ### ✅ **Komponen yang Sudah Diupdate**
 
 #### **Footer Components**
+
 - **Footer.astro**: Menggunakan `<Logo size="md" variant="white" />`
 - **SimpleFooter.astro**: Menggunakan `<Logo size="sm" variant="white" />`
 - **MinimalFooter.astro**: Menggunakan `<Logo size="sm" variant="white" />`
 
 #### **Head Component**
+
 - **Favicon**: Updated ke `/logo-konxc.jpg`
 - **Apple Touch Icon**: Updated ke `/logo-konxc.jpg`
 - **Structured Data**: Logo URL updated ke `/logo-konxc.jpg`
@@ -126,11 +138,13 @@ import Logo from '@components/ui/Logo.astro';
 ### ✅ **Halaman yang Sudah Diupdate**
 
 #### **Layout Integration**
+
 - **MainLayout.astro**: Menggunakan SimpleFooter dengan logo baru
 - **ExtendedLayout.astro**: Menggunakan Footer dengan logo baru
 - **MinimalLayout.astro**: Menggunakan MinimalFooter dengan logo baru
 
 #### **Pages**
+
 - **Homepage** (`/`): ExtendedLayout dengan logo di footer
 - **Contributors** (`/contributors`): ExtendedLayout dengan logo di footer
 - **Blog pages**: MainLayout dengan logo di footer
@@ -138,7 +152,9 @@ import Logo from '@components/ui/Logo.astro';
 ## Demo Pages
 
 ### 1. **Logo Demo** (`/logo-demo`)
+
 Halaman demo yang menampilkan:
+
 - Semua ukuran logo (xs, sm, md, lg, xl)
 - Semua variant warna (default, white, dark)
 - Opsi dengan/tanpa teks
@@ -147,6 +163,7 @@ Halaman demo yang menampilkan:
 - File logo mentah dalam berbagai format
 
 ### 2. **Footer Demo** (`/footer-demo`)
+
 Halaman demo yang menampilkan semua variant footer dengan logo KonXC.
 
 ## Brand Guidelines
@@ -154,18 +171,21 @@ Halaman demo yang menampilkan semua variant footer dengan logo KonXC.
 ### Logo Usage Rules
 
 #### ✅ **Do's**
+
 - Gunakan logo dengan proporsi yang benar
 - Pilih ukuran yang sesuai dengan konteks
 - Gunakan variant yang kontras dengan background
 - Maintain spacing yang cukup di sekitar logo
 
 #### ❌ **Don'ts**
+
 - Jangan distort atau stretch logo
 - Jangan ubah warna logo secara manual
 - Jangan gunakan logo terlalu kecil (minimal xs)
 - Jangan letakkan logo di background yang tidak kontras
 
 ### Color Accessibility
+
 - **Default variant**: Kontras tinggi di background terang
 - **White variant**: Kontras tinggi di background gelap
 - **Dark variant**: Kontras tinggi di background terang
@@ -173,6 +193,7 @@ Halaman demo yang menampilkan semua variant footer dengan logo KonXC.
 ## Technical Implementation
 
 ### CSS Classes
+
 ```css
 .logo-container {
   @apply inline-flex items-center;
@@ -192,6 +213,7 @@ Halaman demo yang menampilkan semua variant footer dengan logo KonXC.
 ```
 
 ### Responsive Design
+
 - Logo menyesuaikan ukuran sesuai breakpoint
 - Gap antara logo dan teks menyesuaikan ukuran layar
 - Mobile-first approach untuk optimalisasi
@@ -199,11 +221,13 @@ Halaman demo yang menampilkan semua variant footer dengan logo KonXC.
 ## Performance Considerations
 
 ### Image Optimization
+
 - Logo dalam format JPEG untuk ukuran file optimal
 - Rounded corners untuk tampilan modern
 - Object-cover untuk konsistensi proporsi
 
 ### Loading Strategy
+
 - Logo dimuat sebagai bagian dari layout utama
 - Tidak ada lazy loading untuk logo (critical content)
 - Preload untuk logo di header
@@ -211,12 +235,14 @@ Halaman demo yang menampilkan semua variant footer dengan logo KonXC.
 ## Future Enhancements
 
 ### Planned Features
+
 - SVG version untuk scalability
 - Dark mode specific variants
 - Animation variants (hover effects)
 - Logo dengan tagline options
 
 ### Integration Opportunities
+
 - Brand color palette integration
 - Logo animation library
 - Multi-language text support
@@ -225,12 +251,14 @@ Halaman demo yang menampilkan semua variant footer dengan logo KonXC.
 ## Maintenance
 
 ### Regular Updates
+
 - Monitor logo visibility di berbagai background
 - Test accessibility dengan screen readers
 - Update structured data jika logo berubah
 - Optimize file size secara berkala
 
 ### Quality Assurance
+
 - Test di berbagai browser dan device
 - Verify logo clarity di semua ukuran
 - Check contrast ratios untuk accessibility
