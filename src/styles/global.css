@@ -7,6 +7,30 @@
   --font-heading: "Inter", system-ui, sans-serif;
   --font-body: "Source Sans Pro", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", Consolas, monospace;
+
+  /* Section Spacing Scale - Tailwind v4 Compatible */
+  --spacing-section-xs: 2rem;
+  --spacing-section-sm: 3rem;
+  --spacing-section-md: 4rem;
+  --spacing-section-lg: 5rem;
+  --spacing-section-xl: 6rem;
+  --spacing-section-2xl: 8rem;
+
+  /* Mobile Section Spacing */
+  --spacing-section-xs-mobile: 1.5rem;
+  --spacing-section-sm-mobile: 2rem;
+  --spacing-section-md-mobile: 2.5rem;
+  --spacing-section-lg-mobile: 3rem;
+  --spacing-section-xl-mobile: 4rem;
+  --spacing-section-2xl-mobile: 5rem;
+
+  /* Section Spacing Utilities - Tailwind v4 */
+  --section-xs: var(--spacing-section-xs) 0;
+  --section-sm: var(--spacing-section-sm) 0;
+  --section-md: var(--spacing-section-md) 0;
+  --section-lg: var(--spacing-section-lg) 0;
+  --section-xl: var(--spacing-section-xl) 0;
+  --section-2xl: var(--spacing-section-2xl) 0;
   
   /* Spacing */
   --spacing-section: 5rem;
@@ -168,6 +192,28 @@
   --spacing-component-padding: 1.5rem;
   --spacing-component-margin: 2rem;
 
+  /* Section Spacing Tokens - Blog Layout */
+  --spacing-section-xs: 2rem;      /* 32px - tight sections */
+  --spacing-section-sm: 3rem;      /* 48px - small sections */
+  --spacing-section-md: 4rem;      /* 64px - medium sections */
+  --spacing-section-lg: 5rem;      /* 80px - large sections */
+  --spacing-section-xl: 6rem;      /* 96px - extra large sections */
+  --spacing-section-2xl: 8rem;     /* 128px - hero sections */
+
+  /* Mobile Section Spacing */
+  --spacing-section-xs-mobile: 1.5rem;  /* 24px */
+  --spacing-section-sm-mobile: 2rem;    /* 32px */
+  --spacing-section-md-mobile: 2.5rem;  /* 40px */
+  --spacing-section-lg-mobile: 3rem;    /* 48px */
+  --spacing-section-xl-mobile: 4rem;    /* 64px */
+  --spacing-section-2xl-mobile: 5rem;   /* 80px */
+
+  /* Content Spacing Tokens */
+  --spacing-content-gap: 1.5rem;        /* 24px - between content blocks */
+  --spacing-content-gap-mobile: 1rem;   /* 16px - mobile content blocks */
+  --spacing-paragraph: 1rem;            /* 16px - paragraph spacing */
+  --spacing-heading: 2rem;              /* 32px - heading margins */
+
   /* Animation Tokens */
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -265,6 +311,78 @@ body {
 
 .form-success {
   @apply text-success-600 text-sm mt-1;
+}
+
+/* Section Spacing Utility Classes */
+.section-spacing-xs {
+  padding-top: var(--spacing-section-xs);
+  padding-bottom: var(--spacing-section-xs);
+}
+
+.section-spacing-sm {
+  padding-top: var(--spacing-section-sm);
+  padding-bottom: var(--spacing-section-sm);
+}
+
+.section-spacing-md {
+  padding-top: var(--spacing-section-md);
+  padding-bottom: var(--spacing-section-md);
+}
+
+.section-spacing-lg {
+  padding-top: var(--spacing-section-lg);
+  padding-bottom: var(--spacing-section-lg);
+}
+
+.section-spacing-xl {
+  padding-top: var(--spacing-section-xl);
+  padding-bottom: var(--spacing-section-xl);
+}
+
+.section-spacing-2xl {
+  padding-top: var(--spacing-section-2xl);
+  padding-bottom: var(--spacing-section-2xl);
+}
+
+/* Mobile responsive section spacing */
+@media (max-width: 768px) {
+  .section-spacing-xs {
+    padding-top: var(--spacing-section-xs-mobile);
+    padding-bottom: var(--spacing-section-xs-mobile);
+  }
+  
+  .section-spacing-sm {
+    padding-top: var(--spacing-section-sm-mobile);
+    padding-bottom: var(--spacing-section-sm-mobile);
+  }
+  
+  .section-spacing-md {
+    padding-top: var(--spacing-section-md-mobile);
+    padding-bottom: var(--spacing-section-md-mobile);
+  }
+  
+  .section-spacing-lg {
+    padding-top: var(--spacing-section-lg-mobile);
+    padding-bottom: var(--spacing-section-lg-mobile);
+  }
+  
+  .section-spacing-xl {
+    padding-top: var(--spacing-section-xl-mobile);
+    padding-bottom: var(--spacing-section-xl-mobile);
+  }
+  
+  .section-spacing-2xl {
+    padding-top: var(--spacing-section-2xl-mobile);
+    padding-bottom: var(--spacing-section-2xl-mobile);
+  }
+}
+
+.content-gap {
+  margin-bottom: var(--spacing-content-gap);
+}
+
+.content-gap-mobile {
+  margin-bottom: var(--spacing-content-gap-mobile);
 }
 
 /* Cream/Latte Component Classes - Using Design Tokens */

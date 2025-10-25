@@ -1,6 +1,6 @@
 ---
 import UnifiedLayout from '@layouts/UnifiedLayout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BlogHero from '@components/blog/BlogHero.astro';
 import FeaturedPost from '@components/blog/FeaturedPost.astro';
 import PostsGrid from '@components/blog/PostsGrid.astro';
@@ -8,9 +8,11 @@ import NewsletterSignup from '@components/blog/NewsletterSignup.astro';
 import ContentRecommendations from '@components/contributors/ContentRecommendations.astro';
 
 const posts = await getCollection('blog');
-const sortedPosts = posts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
-const featuredPost = sortedPosts.find(post => post.data.featured) || sortedPosts[0];
-const otherPosts = sortedPosts.filter(post => post.slug !== featuredPost?.slug);
+const sortedPosts = posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
+  b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+const featuredPost = sortedPosts.find((post: CollectionEntry<'blog'>) => post.data.featured) || sortedPosts[0];
+const otherPosts = sortedPosts.filter((post: CollectionEntry<'blog'>) => post.slug !== featuredPost?.slug);
 ---
 
 <UnifiedLayout 
@@ -22,27 +24,13 @@ const otherPosts = sortedPosts.filter(post => post.slug !== featuredPost?.slug);
   <!-- Blog Hero -->
   <BlogHero totalPosts={sortedPosts.length} />
 
-  <!-- Featured Post -->
-  {featuredPost && (
-    <FeaturedPost post={featuredPost} />
-  )}
-
   <!-- All Posts -->
   <PostsGrid posts={otherPosts} />
 
-  <!-- Newsletter Signup -->
-  <NewsletterSignup />
-
-  <!-- Content Recommendations -->
-  <ContentRecommendations 
-    context="blog"
-    algorithm="hybrid"
-    maxRecommendations={6}
-    title="Artikel Terkait"
-    subtitle="Temukan konten menarik lainnya"
-    variant="default"
-    showHeader={true}
-  />
+    <!-- Featured Post -->
+    <!-- {featuredPost && (
+      <FeaturedPost post={featuredPost} />
+    )} -->
 </UnifiedLayout>
 
 <!-- Posts data for search fallback -->

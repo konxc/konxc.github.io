@@ -1,61 +1,89 @@
 ---
-import ExtendedLayout from '@layouts/ExtendedLayout.astro';
-import { getCollection } from 'astro:content';
-import ContributorCard from '@components/contributors/ContributorCard.astro';
+import ExtendedLayout from "@layouts/ExtendedLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import ContributorCard from "@components/contributors/ContributorCard.astro";
 
-const contributors = await getCollection('contributors');
-const activeContributors = contributors.filter(contributor => contributor.data.isActive);
-const sortedContributors = activeContributors.sort((a, b) => {
-  const aScore = a.data.socialProof.githubStars + a.data.socialProof.communityReputation;
-  const bScore = b.data.socialProof.githubStars + b.data.socialProof.communityReputation;
-  return bScore - aScore;
-});
+const contributors = await getCollection("contributors");
+const activeContributors = contributors.filter(
+  (contributor) => contributor.data.isActive
+);
+const sortedContributors = activeContributors.sort(
+  (a: CollectionEntry<"contributors">, b: CollectionEntry<"contributors">) => {
+    const aScore =
+      a.data.socialProof.githubStars + a.data.socialProof.communityReputation;
+    const bScore =
+      b.data.socialProof.githubStars + b.data.socialProof.communityReputation;
+    return bScore - aScore;
+  }
+);
 
 // Group contributors by role
-const contributorsByRole = sortedContributors.reduce((acc, contributor) => {
-  const role = contributor.data.role;
-  if (!acc[role]) {
-    acc[role] = [];
-  }
-  acc[role].push(contributor);
-  return acc;
-}, {} as Record<string, typeof sortedContributors>);
+const contributorsByRole = sortedContributors.reduce(
+  (acc, contributor: CollectionEntry<"contributors">) => {
+    const role = contributor.data.role;
+    if (!acc[role]) {
+      acc[role] = [];
+    }
+    acc[role].push(contributor);
+    return acc;
+  },
+  {} as Record<string, typeof sortedContributors>
+);
 
 // Calculate community stats
-const totalContributions = contributors.reduce((sum, contributor) => {
-  return sum + contributor.data.contributions.blogPosts + 
-    contributor.data.contributions.openSourceProjects.reduce((projectSum, project) => projectSum + (project.contributions || 0), 0) +
-    contributor.data.contributions.koneksiProjects.length +
-    contributor.data.contributions.communityContributions.length;
-}, 0);
+const totalContributions = contributors.reduce(
+  (sum, contributor: CollectionEntry<"contributors">) => {
+    return (
+      sum +
+      contributor.data.contributions.blogPosts +
+      contributor.data.contributions.openSourceProjects.reduce(
+        (projectSum: any, project: { contributions: any }) =>
+          projectSum + (project.contributions || 0),
+        0
+      ) +
+      contributor.data.contributions.koneksiProjects.length +
+      contributor.data.contributions.communityContributions.length
+    );
+  },
+  0
+);
 
-const totalOpenSourceProjects = contributors.reduce((sum, contributor) => {
-  return sum + contributor.data.contributions.openSourceProjects.length;
-}, 0);
+const totalOpenSourceProjects = contributors.reduce(
+  (sum, contributor: CollectionEntry<"contributors">) => {
+    return sum + contributor.data.contributions.openSourceProjects.length;
+  },
+  0
+);
 
-const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
-  return sum + contributor.data.contributions.koneksiProjects.length;
-}, 0);
+const totalKoneksiProjects = contributors.reduce(
+  (sum, contributor: CollectionEntry<"contributors">) => {
+    return sum + contributor.data.contributions.koneksiProjects.length;
+  },
+  0
+);
 ---
 
-<ExtendedLayout 
+<ExtendedLayout
   title="Kontributor Koneksi - Komunitas Pengembang Indonesia"
   description="Temukan kontributor-kontributor terbaik di ekosistem teknologi Indonesia. Dari open source hingga project Koneksi, mari bersama membangun komunitas yang kompetitif dan kolaboratif."
 >
   <!-- Hero Section -->
-  <section class="hero-section bg-linear-to-br from-primary-50 to-secondary-50">
+  <section
+    class="hero-section from-primary-50 to-secondary-50 bg-linear-to-br py-20 md:py-32"
+  >
     <div class="container">
-      <div class="text-center max-w-4xl mx-auto">
-        <h1 class="text-4xl lg:text-6xl font-bold mb-6">
+      <div class="mx-auto max-w-4xl text-center">
+        <h1 class="mb-6 text-4xl font-bold lg:text-6xl">
           <span class="text-gradient">Kontributor</span> Koneksi
         </h1>
-        <p class="text-xl text-neutral-600 mb-8">
-          Komunitas pengembang Indonesia yang kompetitif, kolaboratif, dan sehat. 
-          Dari open source hingga project Koneksi, mari bersama membangun ekosistem teknologi yang lebih baik.
+        <p class="mb-8 text-xl text-neutral-600">
+          Komunitas pengembang Indonesia yang kompetitif, kolaboratif, dan
+          sehat. Dari open source hingga project Koneksi, mari bersama membangun
+          ekosistem teknologi yang lebih baik.
         </p>
-        
+
         <!-- Community Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
           <div class="stat-card">
             <div class="stat-number">{contributors.length}</div>
             <div class="stat-label">Kontributor Aktif</div>
@@ -73,12 +101,10 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
             <div class="stat-label">Project Koneksi</div>
           </div>
         </div>
-        
+
         <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="#contributors" class="btn-primary">
-            Lihat Kontributor
-          </a>
+        <div class="flex flex-col justify-center gap-4 sm:flex-row">
+          <a href="#contributors" class="btn-primary"> Lihat Kontributor </a>
           <a href="/contributors/join" class="btn-secondary">
             Bergabung sebagai Kontributor
           </a>
@@ -88,35 +114,44 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
   </section>
 
   <!-- Featured Contributors -->
-  <section class="section bg-white">
+  <section class="bg-white py-16 md:py-24">
     <div class="container">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold mb-4">Kontributor Unggulan</h2>
-        <p class="text-neutral-600">Kontributor dengan dampak terbesar di komunitas</p>
+      <div class="mb-12 text-center">
+        <h2 class="mb-4 text-3xl font-bold">Kontributor Unggulan</h2>
+        <p class="text-neutral-600">
+          Kontributor dengan dampak terbesar di komunitas
+        </p>
       </div>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {sortedContributors.slice(0, 6).map((contributor, index) => (
-          <ContributorCard 
-            contributor={contributor} 
-            variant={index < 3 ? 'featured' : 'default'}
-            showDetails={true}
-          />
-        ))}
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {
+          sortedContributors
+            .slice(0, 6)
+            .map((contributor, index) => (
+              <ContributorCard
+                contributor={contributor}
+                variant={index < 3 ? "featured" : "default"}
+                showDetails={true}
+              />
+            ))
+        }
       </div>
     </div>
   </section>
   <!-- Join Community CTA -->
-  <section class="section bg-linear-to-br from-primary-500 to-secondary-500 text-white">
+  <section
+    class="from-primary-500 to-secondary-500 bg-linear-to-br py-16 text-white md:py-20"
+  >
     <div class="container">
-      <div class="text-center max-w-3xl mx-auto">
-        <h2 class="text-3xl font-bold mb-4">Bergabung dengan Komunitas</h2>
-        <p class="text-xl mb-8 opacity-90">
-          Apakah Anda ingin berkontribusi pada project open source Indonesia atau project Koneksi? 
-          Mari bergabung dan bersama-sama membangun ekosistem teknologi yang lebih baik.
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 class="mb-4 text-3xl font-bold">Bergabung dengan Komunitas</h2>
+        <p class="mb-8 text-xl opacity-90">
+          Apakah Anda ingin berkontribusi pada project open source Indonesia
+          atau project Koneksi? Mari bergabung dan bersama-sama membangun
+          ekosistem teknologi yang lebih baik.
         </p>
-        
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+
+        <div class="flex flex-col justify-center gap-4 sm:flex-row">
           <a href="/contributors/join" class="btn-white">
             Daftar sebagai Kontributor
           </a>
@@ -128,67 +163,76 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
     </div>
   </section>
   <!-- Contributors by Role -->
-  <section id="contributors" class="section bg-neutral-50">
+  <section id="contributors" class="bg-neutral-50 py-16 md:py-24">
     <div class="container">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold mb-4">Kontributor Berdasarkan Peran</h2>
-        <p class="text-neutral-600">Temukan kontributor berdasarkan keahlian dan peran mereka</p>
+      <div class="mb-12 text-center">
+        <h2 class="mb-4 text-3xl font-bold">Kontributor Berdasarkan Peran</h2>
+        <p class="text-neutral-600">
+          Temukan kontributor berdasarkan keahlian dan peran mereka
+        </p>
       </div>
-      
-      {Object.entries(contributorsByRole).map(([role, roleContributors]) => (
-        <div class="mb-12">
-          <div class="flex items-center gap-3 mb-6">
-            <h3 class="text-2xl font-bold text-neutral-800">
-              {role === 'developer' && '👨‍💻 Developer'}
-              {role === 'designer' && '🎨 Designer'}
-              {role === 'writer' && '✍️ Writer'}
-              {role === 'researcher' && '🔬 Researcher'}
-              {role === 'mentor' && '🎓 Mentor'}
-              {role === 'community-leader' && '👑 Community Leader'}
-              {role === 'open-source-contributor' && '🌐 Open Source Contributor'}
-            </h3>
-            <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium">
-              {roleContributors.length} kontributor
-            </span>
-            {role === 'writer' && (
-              <a 
-                href="/contributors/writers"
-                class="px-3 py-1 bg-primary-600 text-white rounded-full text-sm font-medium hover:bg-primary-700 transition-colors"
-              >
-                Lihat Semua Writers
-              </a>
-            )}
+
+      {
+        Object.entries(contributorsByRole).map(([role, roleContributors]) => (
+          <div class="mb-12">
+            <div class="mb-6 flex items-center gap-3">
+              <h3 class="text-2xl font-bold text-neutral-800">
+                {role === "developer" && "👨‍💻 Developer"}
+                {role === "designer" && "🎨 Designer"}
+                {role === "writer" && "✍️ Writer"}
+                {role === "researcher" && "🔬 Researcher"}
+                {role === "mentor" && "🎓 Mentor"}
+                {role === "community-leader" && "👑 Community Leader"}
+                {role === "open-source-contributor" &&
+                  "🌐 Open Source Contributor"}
+              </h3>
+              <span class="bg-primary-100 text-primary-700 rounded-full px-3 py-1 text-sm font-medium">
+                {roleContributors.length} kontributor
+              </span>
+              {role === "writer" && (
+                <a
+                  href="/contributors/writers"
+                  class="bg-primary-600 hover:bg-primary-700 rounded-full px-3 py-1 text-sm font-medium text-white transition-colors"
+                >
+                  Lihat Semua Writers
+                </a>
+              )}
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {roleContributors.map((contributor) => (
+                <ContributorCard
+                  contributor={contributor}
+                  variant="compact"
+                  showDetails={false}
+                />
+              ))}
+            </div>
           </div>
-          
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {roleContributors.map((contributor) => (
-              <ContributorCard 
-                contributor={contributor} 
-                variant="compact"
-                showDetails={false}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </section>
 
   <!-- Open Source Projects Showcase -->
-  <section class="section bg-white">
+  <section class="bg-white py-16 md:py-20">
     <div class="container">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold mb-4">Project Open Source Indonesia</h2>
-        <p class="text-neutral-600">Project-project yang dikontribusi oleh komunitas Koneksi</p>
+      <div class="mb-12 text-center">
+        <h2 class="mb-4 text-3xl font-bold">Project Open Source Indonesia</h2>
+        <p class="text-neutral-600">
+          Project-project yang dikontribusi oleh komunitas Koneksi
+        </p>
       </div>
-      
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <!-- SLiMS -->
         <div class="project-card">
           <div class="project-header">
             <div class="project-icon">📚</div>
             <h3 class="project-title">SLiMS</h3>
-            <p class="project-description">Sistem Informasi Perpustakaan Berbasis Web</p>
+            <p class="project-description">
+              Sistem Informasi Perpustakaan Berbasis Web
+            </p>
           </div>
           <div class="project-stats">
             <div class="stat">
@@ -201,7 +245,11 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
             </div>
           </div>
           <div class="project-links">
-            <a href="https://github.com/slims/slims9_bulian" target="_blank" class="project-link">
+            <a
+              href="https://github.com/slims/slims9_bulian"
+              target="_blank"
+              class="project-link"
+            >
               GitHub
             </a>
             <a href="https://slims.web.id" target="_blank" class="project-link">
@@ -215,7 +263,9 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
           <div class="project-header">
             <div class="project-icon">🐉</div>
             <h3 class="project-title">DracOS</h3>
-            <p class="project-description">Linux Distribution untuk Security Testing</p>
+            <p class="project-description">
+              Linux Distribution untuk Security Testing
+            </p>
           </div>
           <div class="project-stats">
             <div class="stat">
@@ -228,10 +278,18 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
             </div>
           </div>
           <div class="project-links">
-            <a href="https://github.com/dracos-linux" target="_blank" class="project-link">
+            <a
+              href="https://github.com/dracos-linux"
+              target="_blank"
+              class="project-link"
+            >
               GitHub
             </a>
-            <a href="https://dracos-linux.org" target="_blank" class="project-link">
+            <a
+              href="https://dracos-linux.org"
+              target="_blank"
+              class="project-link"
+            >
               Website
             </a>
           </div>
@@ -255,10 +313,18 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
             </div>
           </div>
           <div class="project-links">
-            <a href="https://github.com/OpenSID/OpenSID" target="_blank" class="project-link">
+            <a
+              href="https://github.com/OpenSID/OpenSID"
+              target="_blank"
+              class="project-link"
+            >
               GitHub
             </a>
-            <a href="https://opensid.my.id" target="_blank" class="project-link">
+            <a
+              href="https://opensid.my.id"
+              target="_blank"
+              class="project-link"
+            >
               Website
             </a>
           </div>
@@ -270,7 +336,7 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
 
 <style>
   @reference "@/styles/global.css";
-  
+
   .text-gradient {
     background: linear-gradient(135deg, #3b82f6, #14b8a6);
     -webkit-background-clip: text;
@@ -283,7 +349,7 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
   }
 
   .hero-section::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -297,11 +363,11 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
   }
 
   .stat-card {
-    @apply bg-white rounded-xl p-4 shadow-sm border border-neutral-100 text-center;
+    @apply rounded-xl border border-neutral-100 bg-white p-4 text-center shadow-sm;
   }
 
   .stat-number {
-    @apply text-2xl font-bold text-primary-600;
+    @apply text-primary-600 text-2xl font-bold;
   }
 
   .stat-label {
@@ -309,23 +375,23 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
   }
 
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+    @apply bg-primary-500 hover:bg-primary-600 inline-flex items-center gap-2 rounded-lg px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 px-6 py-3 bg-white text-primary-600 border border-primary-200 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+    @apply text-primary-600 border-primary-200 hover:bg-primary-50 inline-flex items-center gap-2 rounded-lg border bg-white px-6 py-3 font-semibold shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl;
   }
 
   .btn-white {
-    @apply inline-flex items-center gap-2 px-6 py-3 bg-white text-primary-600 rounded-lg font-semibold hover:bg-neutral-50 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+    @apply text-primary-600 inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-neutral-50 hover:shadow-xl;
   }
 
   .btn-outline-white {
-    @apply inline-flex items-center gap-2 px-6 py-3 bg-transparent text-white border border-white rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+    @apply hover:text-primary-600 inline-flex items-center gap-2 rounded-lg border border-white bg-transparent px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-xl;
   }
 
   .project-card {
-    @apply bg-white rounded-2xl p-6 shadow-lg border border-neutral-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+    @apply rounded-2xl border border-neutral-100 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
   }
 
   .project-header {
@@ -333,19 +399,19 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
   }
 
   .project-icon {
-    @apply text-3xl mb-2;
+    @apply mb-2 text-3xl;
   }
 
   .project-title {
-    @apply text-xl font-bold text-neutral-800 mb-2;
+    @apply mb-2 text-xl font-bold text-neutral-800;
   }
 
   .project-description {
-    @apply text-neutral-600 text-sm;
+    @apply text-sm text-neutral-600;
   }
 
   .project-stats {
-    @apply flex gap-4 mb-4;
+    @apply mb-4 flex gap-4;
   }
 
   .project-stats .stat {
@@ -353,7 +419,7 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
   }
 
   .project-stats .stat-number {
-    @apply block text-lg font-bold text-primary-600;
+    @apply text-primary-600 block text-lg font-bold;
   }
 
   .project-stats .stat-label {
@@ -365,7 +431,7 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
   }
 
   .project-link {
-    @apply flex-1 px-3 py-2 bg-primary-100 text-primary-700 rounded-lg text-sm font-medium hover:bg-primary-200 transition-colors text-center;
+    @apply bg-primary-100 text-primary-700 hover:bg-primary-200 flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors;
   }
 
   /* Dark mode styles */
@@ -382,11 +448,11 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
   }
 
   .dark .stat-card {
-    @apply bg-neutral-800 border-neutral-700;
+    @apply border-neutral-700 bg-neutral-800;
   }
 
   .dark .project-card {
-    @apply bg-neutral-800 border-neutral-700;
+    @apply border-neutral-700 bg-neutral-800;
   }
 
   .dark .project-title {
@@ -402,11 +468,11 @@ const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
     .hero-section h1 {
       @apply text-3xl;
     }
-    
+
     .stat-card {
       @apply p-3;
     }
-    
+
     .project-card {
       @apply p-4;
     }

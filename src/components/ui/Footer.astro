@@ -247,15 +247,16 @@ const contactInfo = {
 
   /* Main Footer */
   .footer-main {
-    @apply py-12;
+    @apply py-16 md:py-20;
   }
   
   .footer-content {
-    @apply grid lg:grid-cols-2 gap-12;
+    @apply grid lg:grid-cols-2;
+    gap: var(--spacing-content-gap);
   }
   
   .footer-section {
-    @apply space-y-6;
+    margin-bottom: var(--spacing-content-gap);
   }
 
   /* Company Info */

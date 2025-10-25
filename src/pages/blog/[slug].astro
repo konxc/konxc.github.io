@@ -63,7 +63,7 @@ const getRelatedArticles = (currentPost: CollectionEntry<"blog">, maxArticles = 
       }
       
       // Shared tags get points
-      const sharedTags = (p.data.tags || []).filter(tag => currentTags.includes(tag));
+      const sharedTags = (p.data.tags || []).filter((tag: string) => currentTags.includes(tag));
       score += sharedTags.length * 5;
       
       // Featured articles get bonus points
@@ -97,7 +97,7 @@ const relatedArticles = getRelatedArticles(post, 4);
 
 <BlogSlugLayout title={post.data.title} description={post.data.description}>
   <!-- Blog Post Header -->
-  <section class="section bg-linear-to-br from-primary-50 to-secondary-50">
+  <section class="py-20 md:py-32 bg-linear-to-br from-primary-50 to-secondary-50">
     <div class="container">
       <div class="mx-auto max-w-4xl">
         <div class="my-8 text-center">
@@ -151,7 +151,7 @@ const relatedArticles = getRelatedArticles(post, 4);
   </section>
 
   <!-- Blog Post Content -->
-  <section class="section bg-white">
+  <section class="py-16 md:py-24 bg-white">
     <div class="container">
       <div class="mx-auto max-w-6xl">
         <!-- Article Series -->
@@ -264,14 +264,8 @@ const relatedArticles = getRelatedArticles(post, 4);
   
   /* Comments Section Styling */
   .comments-section {
-    @apply py-16 relative overflow-hidden;
-    background: linear-gradient(135deg, 
-      #fdfcfb 0%, 
-      #f8f5f1 25%, 
-      #f3ede6 50%, 
-      #efe7dc 75%, 
-      #ebe1d4 100%
-    );
+    @apply relative overflow-hidden py-16 md:py-20;
+    background: var(--gradient-cream-elegant);
   }
   
   .comments-section::before {
