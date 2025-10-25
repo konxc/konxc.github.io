@@ -1,0 +1,405 @@
+---
+// Blog Search Component
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class={`blog-search ${className || ''}`}>
+  <div class="search-container">
+    <div class="search-input-wrapper">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+      <input 
+        type="text" 
+        placeholder="Cari artikel..." 
+        class="search-input"
+        id="blog-search-input"
+        autocomplete="off"
+      />
+      <button class="search-clear" id="search-clear-btn" style="display: none;">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="search-results" id="search-results" style="display: none;">
+      <div class="search-results-header">
+        <span class="results-count" id="results-count">0 hasil ditemukan</span>
+        <button class="close-results" id="close-results-btn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="results-list" id="results-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Search functionality
+  class BlogSearch {
+    private searchInput: HTMLInputElement | null = null;
+    private searchResults: HTMLElement | null = null;
+    private resultsList: HTMLElement | null = null;
+    private resultsCount: HTMLElement | null = null;
+    private clearBtn: HTMLButtonElement | null = null;
+    private closeBtn: HTMLButtonElement | null = null;
+    private posts: any[] = [];
+    private searchTimeout: number | null = null;
+
+    constructor() {
+      this.initializeElements();
+      this.loadPosts();
+      this.setupEventListeners();
+    }
+
+    private initializeElements(): void {
+      this.searchInput = document.getElementById('blog-search-input') as HTMLInputElement;
+      this.searchResults = document.getElementById('search-results');
+      this.resultsList = document.getElementById('results-list');
+      this.resultsCount = document.getElementById('results-count');
+      this.clearBtn = document.getElementById('search-clear-btn') as HTMLButtonElement;
+      this.closeBtn = document.getElementById('close-results-btn') as HTMLButtonElement;
+    }
+
+    private async loadPosts(): Promise<void> {
+      try {
+        const response = await fetch('/api/posts');
+        if (response.ok) {
+          this.posts = await response.json();
+        } else {
+          // Fallback: load from page data
+          this.loadPostsFromPage();
+        }
+      } catch (error) {
+        console.log('API not available, loading from page data');
+        this.loadPostsFromPage();
+      }
+    }
+
+    private loadPostsFromPage(): void {
+      // This will be populated by the page that includes this component
+      const postsData = document.getElementById('posts-data');
+      if (postsData) {
+        this.posts = JSON.parse(postsData.textContent || '[]');
+      }
+    }
+
+    private setupEventListeners(): void {
+      if (!this.searchInput) return;
+
+      // Search input events
+      this.searchInput.addEventListener('input', (e) => {
+        const query = (e.target as HTMLInputElement).value.trim();
+        this.handleSearch(query);
+      });
+
+      this.searchInput.addEventListener('focus', () => {
+        if (this.searchInput?.value.trim()) {
+          this.showResults();
+        }
+      });
+
+      this.searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          this.hideResults();
+        }
+      });
+
+      // Clear button
+      this.clearBtn?.addEventListener('click', () => {
+        this.clearSearch();
+      });
+
+      // Close button
+      this.closeBtn?.addEventListener('click', () => {
+        this.hideResults();
+      });
+
+      // Click outside to close
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (!target.closest('.blog-search')) {
+          this.hideResults();
+        }
+      });
+    }
+
+    private handleSearch(query: string): void {
+      // Clear previous timeout
+      if (this.searchTimeout) {
+        clearTimeout(this.searchTimeout);
+      }
+
+      // Show/hide clear button
+      if (this.clearBtn) {
+        this.clearBtn.style.display = query ? 'block' : 'none';
+      }
+
+      if (!query) {
+        this.hideResults();
+        return;
+      }
+
+      // Debounce search
+      this.searchTimeout = setTimeout(() => {
+        this.performSearch(query);
+      }, 300);
+    }
+
+    private performSearch(query: string): void {
+      const results = this.searchPosts(query);
+      this.displayResults(results, query);
+    }
+
+    private searchPosts(query: string): any[] {
+      const searchTerm = query.toLowerCase();
+      
+      return this.posts.filter(post => {
+        const title = post.title?.toLowerCase() || '';
+        const description = post.description?.toLowerCase() || '';
+        const tags = post.tags?.map((tag: string) => tag.toLowerCase()) || [];
+        const category = post.category?.toLowerCase() || '';
+        const content = post.content?.toLowerCase() || '';
+
+        return (
+          title.includes(searchTerm) ||
+          description.includes(searchTerm) ||
+          tags.some((tag: string) => tag.includes(searchTerm)) ||
+          category.includes(searchTerm) ||
+          content.includes(searchTerm)
+        );
+      });
+    }
+
+    private displayResults(results: any[], query: string): void {
+      if (!this.resultsList || !this.resultsCount) return;
+
+      // Update results count
+      this.resultsCount.textContent = `${results.length} hasil ditemukan untuk "${query}"`;
+
+      // Clear previous results
+      this.resultsList.innerHTML = '';
+
+      if (results.length === 0) {
+        this.resultsList.innerHTML = `
+          <div class="no-results">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.576M15 6.343A7.962 7.962 0 0112 4c-2.34 0-4.29 1.009-5.824 2.576"/>
+            </svg>
+            <p>Tidak ada artikel yang cocok dengan pencarian Anda</p>
+            <p class="search-suggestion">Coba kata kunci yang berbeda atau periksa ejaan</p>
+          </div>
+        `;
+      } else {
+        results.forEach(post => {
+          const resultItem = this.createResultItem(post);
+          this.resultsList?.appendChild(resultItem);
+        });
+      }
+
+      this.showResults();
+    }
+
+    private createResultItem(post: any): HTMLElement {
+      const item = document.createElement('div');
+      item.className = 'search-result-item';
+      
+      const publishDate = new Date(post.publishDate).toLocaleDateString('id-ID', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      item.innerHTML = `
+        <div class="result-content">
+          <div class="result-meta">
+            <span class="result-category">${post.category}</span>
+            <span class="result-date">${publishDate}</span>
+            ${post.readingTime ? `<span class="result-reading-time">${post.readingTime} min read</span>` : ''}
+          </div>
+          <h3 class="result-title">
+            <a href="/blog/${post.slug}">${post.title}</a>
+          </h3>
+          <p class="result-description">${post.description}</p>
+          <div class="result-tags">
+            ${post.tags?.map((tag: string) => `<span class="result-tag">${tag}</span>`).join('') || ''}
+          </div>
+        </div>
+      `;
+
+      return item;
+    }
+
+    private showResults(): void {
+      if (this.searchResults) {
+        this.searchResults.style.display = 'block';
+      }
+    }
+
+    private hideResults(): void {
+      if (this.searchResults) {
+        this.searchResults.style.display = 'none';
+      }
+    }
+
+    private clearSearch(): void {
+      if (this.searchInput) {
+        this.searchInput.value = '';
+        this.searchInput.focus();
+      }
+      this.hideResults();
+      if (this.clearBtn) {
+        this.clearBtn.style.display = 'none';
+      }
+    }
+  }
+
+  // Initialize search when DOM is ready
+  function initSearch(): void {
+    new BlogSearch();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearch);
+  } else {
+    initSearch();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .blog-search {
+    @apply relative w-full max-w-2xl mx-auto;
+  }
+
+  .search-container {
+    @apply relative;
+  }
+
+  .search-input-wrapper {
+    @apply relative flex items-center;
+  }
+
+  .search-icon {
+    @apply absolute left-4 w-5 h-5 text-neutral-400 pointer-events-none;
+  }
+
+  .search-input {
+    @apply w-full pl-12 pr-12 py-3 bg-white border border-neutral-200 rounded-xl text-neutral-800 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+
+  .search-clear {
+    @apply absolute right-4 w-5 h-5 text-neutral-400 hover:text-neutral-600 transition-colors;
+  }
+
+  .search-results {
+    @apply absolute top-full left-0 right-0 mt-2 bg-white border border-neutral-200 rounded-xl shadow-lg z-50 max-h-96 overflow-hidden;
+  }
+
+  .search-results-header {
+    @apply flex items-center justify-between p-4 border-b border-neutral-100;
+  }
+
+  .results-count {
+    @apply text-sm font-medium text-neutral-600;
+  }
+
+  .close-results {
+    @apply w-5 h-5 text-neutral-400 hover:text-neutral-600 transition-colors;
+  }
+
+  .results-list {
+    @apply max-h-80 overflow-y-auto;
+  }
+
+  .search-result-item {
+    @apply p-4 border-b border-neutral-100 hover:bg-neutral-50 transition-colors;
+  }
+
+  .search-result-item:last-child {
+    @apply border-b-0;
+  }
+
+  .result-meta {
+    @apply flex items-center gap-3 mb-2 text-xs text-neutral-500;
+  }
+
+  .result-category {
+    @apply px-2 py-1 bg-primary-100 text-primary-700 rounded-full font-medium;
+  }
+
+  .result-title {
+    @apply text-lg font-semibold mb-2;
+  }
+
+  .result-title a {
+    @apply text-neutral-800 hover:text-primary-600 transition-colors;
+  }
+
+  .result-description {
+    @apply text-sm text-neutral-600 mb-3 line-clamp-2;
+  }
+
+  .result-tags {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .result-tag {
+    @apply px-2 py-1 bg-neutral-100 text-neutral-600 rounded text-xs;
+  }
+
+  .no-results {
+    @apply p-8 text-center text-neutral-500;
+  }
+
+  .no-results svg {
+    @apply w-12 h-12 mx-auto mb-4 text-neutral-300;
+  }
+
+  .search-suggestion {
+    @apply text-xs text-neutral-400 mt-2;
+  }
+
+  /* Dark mode styles */
+  .dark .search-input {
+    @apply bg-neutral-800 border-neutral-700 text-neutral-100 placeholder-neutral-500;
+  }
+
+  .dark .search-results {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .search-result-item {
+    @apply border-neutral-700 hover:bg-neutral-700;
+  }
+
+  .dark .result-title a {
+    @apply text-neutral-100 hover:text-primary-400;
+  }
+
+  .dark .result-description {
+    @apply text-neutral-300;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .search-input {
+      @apply py-2 text-sm;
+    }
+    
+    .search-results {
+      @apply max-h-80;
+    }
+    
+    .search-result-item {
+      @apply p-3;
+    }
+  }
+</style>

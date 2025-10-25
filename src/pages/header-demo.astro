@@ -1,0 +1,416 @@
+---
+// Header Demo Page
+import Header from '@components/ui/Header.astro';
+import SimpleHeader from '@components/ui/SimpleHeader.astro';
+import MinimalHeader from '@components/ui/MinimalHeader.astro';
+import MainLayout from '@layouts/MainLayout.astro';
+---
+
+<MainLayout 
+  title="Header Components Demo - KonXC"
+  description="Demo semua variant header components KonXC"
+  footerVariant="none"
+>
+  <div class="header-demo-page">
+    <!-- Page Header -->
+    <section class="demo-hero">
+      <div class="container">
+        <div class="text-center max-w-4xl mx-auto">
+          <h1 class="text-4xl lg:text-6xl font-bold mb-6">
+            <span class="text-gradient">Header</span> Components
+          </h1>
+          <p class="text-xl text-neutral-600 mb-8">
+            Demo semua variant header components KonXC dengan berbagai fitur dan styling
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Header Variants -->
+    <section class="demo-section">
+      <div class="container">
+        <h2 class="section-title">Header Variants</h2>
+        
+        <!-- Full Header -->
+        <div class="demo-item">
+          <h3 class="demo-title">Full Header (Default)</h3>
+          <p class="demo-description">
+            Header lengkap dengan dropdown menu, search, dan semua fitur
+          </p>
+          <div class="demo-preview">
+            <Header variant="default" />
+          </div>
+          <div class="demo-code">
+            <pre><code>&lt;Header variant="default" /&gt;</code></pre>
+          </div>
+        </div>
+
+        <!-- Transparent Header -->
+        <div class="demo-item">
+          <h3 class="demo-title">Transparent Header</h3>
+          <p class="demo-description">
+            Header dengan background transparan untuk overlay di atas hero sections
+          </p>
+          <div class="demo-preview transparent-bg">
+            <Header variant="transparent" />
+          </div>
+          <div class="demo-code">
+            <pre><code>&lt;Header variant="transparent" /&gt;</code></pre>
+          </div>
+        </div>
+
+        <!-- Minimal Header -->
+        <div class="demo-item">
+          <h3 class="demo-title">Minimal Header</h3>
+          <p class="demo-description">
+            Header dengan background netral untuk halaman yang lebih sederhana
+          </p>
+          <div class="demo-preview minimal-bg">
+            <Header variant="minimal" />
+          </div>
+          <div class="demo-code">
+            <pre><code>&lt;Header variant="minimal" /&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Simple Header Variants -->
+    <section class="demo-section">
+      <div class="container">
+        <h2 class="section-title">Simple Header Variants</h2>
+        
+        <!-- Simple Header -->
+        <div class="demo-item">
+          <h3 class="demo-title">Simple Header (Default)</h3>
+          <p class="demo-description">
+            Header sederhana dengan navigasi dasar dan dark mode toggle
+          </p>
+          <div class="demo-preview">
+            <SimpleHeader variant="default" />
+          </div>
+          <div class="demo-code">
+            <pre><code>&lt;SimpleHeader variant="default" /&gt;</code></pre>
+          </div>
+        </div>
+
+        <!-- Simple Transparent -->
+        <div class="demo-item">
+          <h3 class="demo-title">Simple Transparent</h3>
+          <p class="demo-description">
+            Simple header dengan background transparan
+          </p>
+          <div class="demo-preview transparent-bg">
+            <SimpleHeader variant="transparent" />
+          </div>
+          <div class="demo-code">
+            <pre><code>&lt;SimpleHeader variant="transparent" /&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Minimal Header Variants -->
+    <section class="demo-section">
+      <div class="container">
+        <h2 class="section-title">Minimal Header Variants</h2>
+        
+        <!-- Minimal Header -->
+        <div class="demo-item">
+          <h3 class="demo-title">Minimal Header (Default)</h3>
+          <p class="demo-description">
+            Header minimal dengan navigasi sederhana dan dark mode toggle
+          </p>
+          <div class="demo-preview">
+            <MinimalHeader variant="default" />
+          </div>
+          <div class="demo-code">
+            <pre><code>&lt;MinimalHeader variant="default" /&gt;</code></pre>
+          </div>
+        </div>
+
+        <!-- Minimal Transparent -->
+        <div class="demo-item">
+          <h3 class="demo-title">Minimal Transparent</h3>
+          <p class="demo-description">
+            Minimal header dengan background transparan
+          </p>
+          <div class="demo-preview transparent-bg">
+            <MinimalHeader variant="transparent" />
+          </div>
+          <div class="demo-code">
+            <pre><code>&lt;MinimalHeader variant="transparent" /&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="demo-section">
+      <div class="container">
+        <h2 class="section-title">Features</h2>
+        
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="i-mdi-responsive"></i>
+            </div>
+            <h3 class="feature-title">Responsive Design</h3>
+            <p class="feature-description">
+              Header otomatis menyesuaikan dengan ukuran layar dan menampilkan mobile menu
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="i-mdi-palette"></i>
+            </div>
+            <h3 class="feature-title">Dark Mode</h3>
+            <p class="feature-description">
+              Toggle dark mode dengan preferensi yang tersimpan di localStorage
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="i-mdi-magnify"></i>
+            </div>
+            <h3 class="feature-title">Search Integration</h3>
+            <p class="feature-description">
+              Search functionality terintegrasi dengan dropdown dan suggestions
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="i-mdi-menu"></i>
+            </div>
+            <h3 class="feature-title">Dropdown Menus</h3>
+            <p class="feature-description">
+              Dropdown menu untuk layanan dengan hover dan click interactions
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="i-mdi-accessibility"></i>
+            </div>
+            <h3 class="feature-title">Accessibility</h3>
+            <p class="feature-description">
+              ARIA labels, keyboard navigation, dan screen reader support
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="i-mdi-cog"></i>
+            </div>
+            <h3 class="feature-title">Customizable</h3>
+            <p class="feature-description">
+              Props untuk mengontrol visibility fitur dan styling variants
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Usage Examples -->
+    <section class="demo-section">
+      <div class="container">
+        <h2 class="section-title">Usage Examples</h2>
+        
+        <div class="usage-examples">
+          <div class="usage-example">
+            <h3 class="usage-title">Homepage</h3>
+            <div class="usage-code">
+              <pre><code>&lt;Header variant="transparent" /&gt;</code></pre>
+            </div>
+            <p class="usage-description">
+              Gunakan transparent header untuk homepage dengan hero section
+            </p>
+          </div>
+
+          <div class="usage-example">
+            <h3 class="usage-title">Blog Pages</h3>
+            <div class="usage-code">
+              <pre><code>&lt;SimpleHeader variant="default" /&gt;</code></pre>
+            </div>
+            <p class="usage-description">
+              Simple header untuk halaman blog dan konten
+            </p>
+          </div>
+
+          <div class="usage-example">
+            <h3 class="usage-title">Landing Pages</h3>
+            <div class="usage-code">
+              <pre><code>&lt;MinimalHeader variant="transparent" /&gt;</code></pre>
+            </div>
+            <p class="usage-description">
+              Minimal header untuk landing pages yang fokus pada konten
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</MainLayout>
+
+<style>
+  @reference "@/styles/global.css";
+  .header-demo-page {
+    @apply min-h-screen bg-neutral-50;
+  }
+
+  .demo-hero {
+    @apply py-16 lg:py-24 bg-gradient-to-br from-primary-50 to-secondary-50;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent;
+  }
+
+  .demo-section {
+    @apply py-16;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold text-center mb-12 text-neutral-900;
+  }
+
+  .demo-item {
+    @apply mb-16 bg-white rounded-lg shadow-sm border border-neutral-200 overflow-hidden;
+  }
+
+  .demo-title {
+    @apply text-xl font-semibold mb-2 px-6 pt-6 text-neutral-900;
+  }
+
+  .demo-description {
+    @apply text-neutral-600 mb-4 px-6;
+  }
+
+  .demo-preview {
+    @apply border-t border-neutral-200 bg-neutral-50;
+  }
+
+  .transparent-bg {
+    @apply bg-gradient-to-r from-blue-500 to-purple-600;
+  }
+
+  .minimal-bg {
+    @apply bg-neutral-100;
+  }
+
+  .demo-code {
+    @apply bg-neutral-900 text-neutral-100 p-4 border-t border-neutral-200;
+  }
+
+  .demo-code pre {
+    @apply text-sm font-mono;
+  }
+
+  .features-grid {
+    @apply grid md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .feature-card {
+    @apply bg-white p-6 rounded-lg shadow-sm border border-neutral-200 text-center;
+  }
+
+  .feature-icon {
+    @apply w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4;
+  }
+
+  .feature-icon i {
+    @apply text-primary-600 text-xl;
+  }
+
+  .feature-title {
+    @apply text-lg font-semibold mb-2 text-neutral-900;
+  }
+
+  .feature-description {
+    @apply text-neutral-600 text-sm;
+  }
+
+  .usage-examples {
+    @apply grid md:grid-cols-3 gap-6;
+  }
+
+  .usage-example {
+    @apply bg-white p-6 rounded-lg shadow-sm border border-neutral-200;
+  }
+
+  .usage-title {
+    @apply text-lg font-semibold mb-3 text-neutral-900;
+  }
+
+  .usage-code {
+    @apply bg-neutral-900 text-neutral-100 p-3 rounded mb-3;
+  }
+
+  .usage-code pre {
+    @apply text-sm font-mono;
+  }
+
+  .usage-description {
+    @apply text-neutral-600 text-sm;
+  }
+
+  /* Dark mode styles */
+  .dark .header-demo-page {
+    @apply bg-neutral-900;
+  }
+
+  .dark .demo-hero {
+    @apply bg-gradient-to-br from-neutral-800 to-neutral-900;
+  }
+
+  .dark .section-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .demo-item {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .demo-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .demo-description {
+    @apply text-neutral-400;
+  }
+
+  .dark .demo-preview {
+    @apply border-neutral-700 bg-neutral-700;
+  }
+
+  .dark .demo-code {
+    @apply bg-neutral-900 border-neutral-700;
+  }
+
+  .dark .feature-card {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .feature-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .feature-description {
+    @apply text-neutral-400;
+  }
+
+  .dark .usage-example {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .usage-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .usage-description {
+    @apply text-neutral-400;
+  }
+</style>

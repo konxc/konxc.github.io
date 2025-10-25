@@ -1,0 +1,316 @@
+---
+// Inline Like Button Component for placing between content paragraphs
+export interface Props {
+  postSlug?: string;
+  position?: 'left' | 'center' | 'right';
+  variant?: 'minimal' | 'card' | 'floating';
+  showText?: boolean;
+  className?: string;
+}
+
+const { 
+  postSlug = 'default',
+  position = 'center',
+  variant = 'card',
+  showText = true,
+  className = ''
+} = Astro.props;
+
+const buttonId = `inline-like-${postSlug}-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class={`inline-like-container ${position} ${variant} ${className}`}>
+  <div class="inline-like-wrapper">
+    {showText && (
+      <div class="inline-like-text">
+        <span class="inline-like-question">Suka artikel ini?</span>
+      </div>
+    )}
+    
+    <button 
+      id={buttonId}
+      class="inline-like-button group"
+      data-post-slug={postSlug}
+      aria-label="Suka artikel ini"
+    >
+      <div class="inline-like-icon">
+        <svg class="inline-heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path 
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      
+      {showText && (
+        <span class="inline-like-label">Like</span>
+      )}
+      
+      <span class="inline-like-count" data-count="0">0</span>
+    </button>
+    
+    <div class="inline-like-feedback">
+      <div class="inline-like-success">
+        <svg class="inline-success-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Terima kasih!</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @reference "@/styles/global.css";
+  .inline-like-container {
+    @apply my-12 flex justify-center;
+  }
+
+  .inline-like-container.left {
+    @apply justify-start;
+  }
+
+  .inline-like-container.right {
+    @apply justify-end;
+  }
+
+  .inline-like-wrapper {
+    @apply relative;
+  }
+
+  /* Text styling */
+  .inline-like-text {
+    @apply text-center mb-3;
+  }
+
+  .inline-like-question {
+    @apply text-base font-medium text-neutral-700;
+  }
+
+  /* Button styling */
+  .inline-like-button {
+    @apply relative flex items-center gap-2 px-4 py-2 bg-white border border-neutral-200 rounded-full shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer;
+    @apply hover:border-red-300 hover:bg-red-50;
+  }
+
+  .inline-like-button:focus {
+    @apply outline-none ring-2 ring-red-500 ring-offset-2;
+  }
+
+  .inline-like-button.liked {
+    @apply bg-red-500 border-red-500 text-white;
+  }
+
+  .inline-like-button.liked:hover {
+    @apply bg-red-600 border-red-600;
+  }
+
+  /* Icon styling */
+  .inline-like-icon {
+    @apply relative;
+  }
+
+  .inline-heart-icon {
+    @apply w-4 h-4 transition-all duration-300;
+  }
+
+  .inline-like-button:hover .inline-heart-icon {
+    @apply scale-110;
+  }
+
+  .inline-like-button.liked .inline-heart-icon {
+    @apply fill-current;
+  }
+
+  /* Label styling */
+  .inline-like-label {
+    @apply font-medium text-sm;
+  }
+
+  /* Count styling */
+  .inline-like-count {
+    @apply bg-neutral-100 text-neutral-600 text-xs px-2 py-1 rounded-full font-medium;
+  }
+
+  .inline-like-button.liked .inline-like-count {
+    @apply bg-red-100 text-red-600;
+  }
+
+  /* Feedback styling */
+  .inline-like-feedback {
+    @apply absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500;
+  }
+
+  .inline-like-feedback.show {
+    @apply opacity-100 pointer-events-auto;
+  }
+
+  .inline-like-success {
+    @apply flex items-center gap-2 bg-green-500 text-white px-3 py-1 rounded-full shadow-lg text-sm;
+  }
+
+  .inline-success-icon {
+    @apply w-3 h-3;
+  }
+
+  /* Variant styling */
+  .inline-like-container.minimal .inline-like-button {
+    @apply border-0 shadow-none bg-transparent hover:bg-neutral-50;
+  }
+
+  .inline-like-container.card {
+    @apply bg-gradient-to-r from-red-50 to-pink-50 p-4 rounded-lg border border-red-100;
+  }
+
+  .inline-like-container.card .inline-like-question {
+    @apply text-red-800;
+  }
+
+  /* Animations */
+  @keyframes inlineHeartBeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .inline-like-button.liked .inline-heart-icon {
+    animation: inlineHeartBeat 0.6s ease-in-out;
+  }
+
+  @keyframes inlineLikePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  .inline-like-button:hover {
+    animation: inlineLikePulse 0.3s ease-in-out;
+  }
+
+  /* Dark mode support */
+  .dark .inline-like-question {
+    @apply text-neutral-300;
+  }
+
+  .dark .inline-like-button {
+    @apply bg-neutral-800 border-neutral-700 text-neutral-100;
+  }
+
+  .dark .inline-like-button:hover {
+    @apply border-red-400 bg-red-900;
+  }
+
+  .dark .inline-like-count {
+    @apply bg-neutral-700 text-neutral-300;
+  }
+
+  .dark .inline-like-container.card {
+    @apply bg-gradient-to-r from-red-900 to-pink-900 border-red-800;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .inline-like-container {
+      @apply my-8;
+    }
+
+    .inline-like-button {
+      @apply px-3 py-1.5 text-sm;
+    }
+
+    .inline-like-question {
+      @apply text-sm;
+    }
+  }
+</style>
+
+<script>
+  // Inline Like Button Functionality
+  function initializeInlineLikeButton() {
+    const likeButton = document.getElementById('${buttonId}');
+    if (!likeButton) return;
+
+    const postSlug = likeButton.dataset.postSlug;
+    const countElement = likeButton.querySelector('.inline-like-count');
+    const feedbackElement = likeButton.closest('.inline-like-wrapper').querySelector('.inline-like-feedback');
+
+    // Load saved state
+    const savedState = localStorage.getItem(`like-${postSlug}`);
+    if (savedState) {
+      const { liked, count } = JSON.parse(savedState);
+      if (liked) {
+        likeButton.classList.add('liked');
+      }
+      if (countElement) {
+        countElement.textContent = count;
+        countElement.dataset.count = count;
+      }
+    }
+
+    // Handle click
+    likeButton.addEventListener('click', async () => {
+      if (likeButton.classList.contains('liked')) return;
+
+      // Add liked class immediately for better UX
+      likeButton.classList.add('liked');
+      
+      // Update count
+      const currentCount = parseInt(countElement?.dataset.count || '0');
+      const newCount = currentCount + 1;
+      
+      if (countElement) {
+        countElement.textContent = newCount;
+        countElement.dataset.count = newCount;
+      }
+
+      // Save to localStorage
+      localStorage.setItem(`like-${postSlug}`, JSON.stringify({
+        liked: true,
+        count: newCount
+      }));
+
+      // Show feedback
+      if (feedbackElement) {
+        feedbackElement.classList.add('show');
+        setTimeout(() => {
+          feedbackElement.classList.remove('show');
+        }, 2000);
+      }
+
+      // Send analytics event
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'like_article_inline', {
+          'post_slug': postSlug,
+          'like_count': newCount
+        });
+      }
+
+      // Optional: Send to server
+      try {
+        await fetch('/api/like', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            postSlug: postSlug,
+            action: 'like',
+            position: 'inline'
+          })
+        });
+      } catch (error) {
+        console.log('Inline like tracking failed:', error);
+      }
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeInlineLikeButton);
+  } else {
+    initializeInlineLikeButton();
+  }
+</script>

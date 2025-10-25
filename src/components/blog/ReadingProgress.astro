@@ -1,0 +1,150 @@
+---
+// Reading Progress Indicator Component
+---
+
+<div class="reading-progress">
+  <div class="progress-bar" id="reading-progress-bar"></div>
+</div>
+
+<script>
+  function updateReadingProgress() {
+    // Only target the specific blog content card, not the entire page
+    const article = document.querySelector('.blog-content');
+    const progressBar = document.getElementById('reading-progress-bar');
+    
+    if (!article || !progressBar) return;
+    
+    const articleRect = article.getBoundingClientRect();
+    const articleTop = articleRect.top + window.pageYOffset;
+    const articleHeight = articleRect.height;
+    const windowHeight = window.innerHeight;
+    const scrollTop = window.pageYOffset;
+    
+    // Calculate how much of the article is visible
+    const articleBottom = articleTop + articleHeight;
+    const viewportTop = scrollTop;
+    const viewportBottom = scrollTop + windowHeight;
+    
+    // Calculate progress based on how much content has been scrolled through
+    let progress = 0;
+    
+    if (viewportTop >= articleTop) {
+      // Article is in view, calculate progress
+      const scrolledThrough = Math.min(viewportTop - articleTop, articleHeight);
+      progress = Math.min(scrolledThrough / articleHeight, 1);
+    }
+    
+    // Update progress bar width
+    progressBar.style.width = `${progress * 100}%`;
+    
+    // Add completion class when fully read
+    if (progress >= 0.95) {
+      progressBar.classList.add('completed');
+    } else {
+      progressBar.classList.remove('completed');
+    }
+  }
+
+  // Throttle scroll events for better performance
+  let ticking = false;
+  function requestTick() {
+    if (!ticking) {
+      requestAnimationFrame(updateReadingProgress);
+      ticking = true;
+      setTimeout(() => ticking = false, 16); // ~60fps
+    }
+  }
+
+  // Initialize progress bar
+  function initReadingProgress() {
+    const progressBar = document.getElementById('reading-progress-bar');
+    if (!progressBar) return;
+    
+    // Check if blog content exists
+    const blogContent = document.querySelector('.blog-content');
+    if (!blogContent) {
+      console.log('Blog content not found, reading progress disabled');
+      return;
+    }
+    
+    // Ensure initial width is 0%
+    progressBar.style.width = '0%';
+    
+    // Add scroll listener
+    window.addEventListener('scroll', requestTick, { passive: true });
+    
+    // Recalculate on resize
+    window.addEventListener('resize', requestTick, { passive: true });
+    
+    // Initial calculation
+    updateReadingProgress();
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReadingProgress);
+  } else {
+    initReadingProgress();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .reading-progress {
+    @apply sticky top-0 left-0 w-full h-2 bg-neutral-200 z-40 mb-8 overflow-hidden;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    margin-top: -2.5rem;
+    width: calc(100% + 3rem);
+  }
+
+  .progress-bar {
+    @apply h-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all duration-300 ease-out;
+    width: 0%;
+    position: relative;
+    border-radius: inherit;
+  }
+
+  .progress-bar.completed {
+    @apply from-green-500 to-green-600;
+  }
+
+  .progress-bar::after {
+    content: '';
+    @apply absolute right-0 top-0 w-2 h-2 bg-current rounded-full transform translate-x-1 -translate-y-0.5;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .progress-bar.completed::after {
+    opacity: 1;
+  }
+
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+    .reading-progress {
+      @apply h-0.5 mb-6;
+      margin-left: -1rem;
+      margin-right: -1rem;
+      width: calc(100% + 2rem);
+      border-radius: 0.75rem 0.75rem 0 0; /* Slightly smaller radius for mobile */
+    }
+  }
+
+  /* Smooth animation */
+  .progress-bar {
+    transition: width 0.1s ease-out;
+  }
+
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .reading-progress {
+      @apply bg-neutral-700;
+    }
+  }
+
+  /* Dark mode class support */
+  .dark .reading-progress {
+    @apply bg-neutral-700;
+  }
+</style>

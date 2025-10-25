@@ -1,0 +1,65 @@
+---
+// Writers Grid Component
+import WriterCard from './WriterCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  writers: CollectionEntry<'contributors'>[];
+  variant?: 'default' | 'compact' | 'minimal';
+  showStats?: boolean;
+  showExpertise?: boolean;
+  showActions?: boolean;
+}
+
+const { 
+  writers, 
+  variant = 'default',
+  showStats = true,
+  showExpertise = true,
+  showActions = true
+} = Astro.props;
+---
+
+<section class="section bg-white">
+  <div class="container">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-12 text-center">
+        <h2 class="mb-4 text-3xl font-bold">Tim Penulis Kami</h2>
+        <p class="text-lg text-neutral-600">
+          Kontributor yang berdedikasi untuk menciptakan konten berkualitas tinggi
+        </p>
+      </div>
+
+      {writers.length > 0 ? (
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {writers.map((writer) => (
+            <WriterCard 
+              writer={writer}
+              variant={variant}
+              showStats={showStats}
+              showExpertise={showExpertise}
+              showActions={showActions}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <div class="mb-4 text-6xl">📝</div>
+          <h3 class="mb-2 text-xl font-semibold text-neutral-900">Belum Ada Penulis</h3>
+          <p class="text-neutral-600">
+            Kami sedang mencari penulis berbakat untuk bergabung dengan tim KonXC.
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

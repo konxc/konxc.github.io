@@ -1,0 +1,103 @@
+---
+// Logo Component
+export interface Props {
+  className?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'default' | 'white' | 'dark';
+  showText?: boolean;
+  textClass?: string;
+  href?: string;
+}
+
+const { 
+  className = '',
+  size = 'md',
+  variant = 'default',
+  showText = true,
+  textClass = '',
+  href
+} = Astro.props;
+
+// Size configurations
+const sizeConfig = {
+  xs: { image: 'w-4 h-4', text: 'text-xs' },
+  sm: { image: 'w-6 h-6', text: 'text-sm' },
+  md: { image: 'w-8 h-8', text: 'text-lg' },
+  lg: { image: 'w-12 h-12', text: 'text-xl' },
+  xl: { image: 'w-16 h-16', text: 'text-2xl' }
+};
+
+// Variant configurations
+const variantConfig = {
+  default: { text: 'text-neutral-900 dark:text-white' },
+  white: { text: 'text-white' },
+  dark: { text: 'text-neutral-900' }
+};
+
+const currentSize = sizeConfig[size];
+const currentVariant = variantConfig[variant];
+---
+
+{href ? (
+  <a href={href} class="logo-link">
+    <div class={`logo-container ${className}`}>
+      <div class="logo-wrapper">
+        <img 
+          src="/logo-konxc.jpg" 
+          alt="KonXC" 
+          class={`logo-image ${currentSize.image} rounded-lg object-cover`}
+        />
+        {showText && (
+          <span class={`logo-text ${currentSize.text} ${currentVariant.text} ${textClass} font-bold`}>
+            KonXC
+          </span>
+        )}
+      </div>
+    </div>
+  </a>
+) : (
+  <div class={`logo-container ${className}`}>
+    <div class="logo-wrapper">
+      <img 
+        src="/logo-konxc.jpg" 
+        alt="KonXC" 
+        class={`logo-image ${currentSize.image} rounded-lg object-cover`}
+      />
+      {showText && (
+        <span class={`logo-text ${currentSize.text} ${currentVariant.text} ${textClass} font-bold`}>
+          KonXC
+        </span>
+      )}
+    </div>
+  </div>
+)}
+
+<style>
+  @reference "@/styles/global.css";
+  .logo-container {
+    @apply inline-flex items-center;
+  }
+  
+  .logo-wrapper {
+    @apply flex items-center gap-2;
+  }
+  
+  .logo-image {
+    @apply flex-shrink-0;
+  }
+  
+  .logo-text {
+    @apply font-bold tracking-tight;
+  }
+  
+  .logo-link {
+    @apply transition-opacity hover:opacity-80;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .logo-wrapper {
+      @apply gap-1;
+    }
+  }
+</style>

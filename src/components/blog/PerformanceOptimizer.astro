@@ -1,0 +1,565 @@
+---
+// Performance Optimization Component
+export interface Props {
+  class?: string;
+  enableImageOptimization?: boolean;
+  enableLazyLoading?: boolean;
+  enablePreloading?: boolean;
+  enableCaching?: boolean;
+  enableCompression?: boolean;
+}
+
+const { 
+  class: className,
+  enableImageOptimization = true,
+  enableLazyLoading = true,
+  enablePreloading = true,
+  enableCaching = true,
+  enableCompression = true
+} = Astro.props;
+---
+
+<div class={`performance-optimizer ${className || ''}`}>
+  <!-- Performance optimization will be applied automatically -->
+</div>
+
+<script>
+  class PerformanceOptimizer {
+    private settings: any = {
+      imageOptimization: true,
+      lazyLoading: true,
+      preloading: true,
+      caching: true,
+      compression: true
+    };
+    private observer: IntersectionObserver | null = null;
+    private preloadQueue: Set<string> = new Set();
+
+    constructor() {
+      this.initializeOptimizations();
+      this.setupEventListeners();
+      this.startPerformanceMonitoring();
+    }
+
+    private initializeOptimizations(): void {
+      if (this.settings.imageOptimization) {
+        this.optimizeImages();
+      }
+      
+      if (this.settings.lazyLoading) {
+        this.setupLazyLoading();
+      }
+      
+      if (this.settings.preloading) {
+        this.setupPreloading();
+      }
+      
+      if (this.settings.caching) {
+        this.setupCaching();
+      }
+    }
+
+    private optimizeImages(): void {
+      const images = document.querySelectorAll('img');
+      
+      images.forEach(img => {
+        // Add loading="lazy" if not already present
+        if (!img.hasAttribute('loading')) {
+          img.setAttribute('loading', 'lazy');
+        }
+        
+        // Add decoding="async" for better performance
+        if (!img.hasAttribute('decoding')) {
+          img.setAttribute('decoding', 'async');
+        }
+        
+        // Optimize image sources
+        this.optimizeImageSource(img);
+        
+        // Add error handling
+        img.addEventListener('error', () => {
+          this.handleImageError(img);
+        });
+      });
+    }
+
+    private optimizeImageSource(img: HTMLImageElement): void {
+      const src = img.src;
+      
+      // Convert to WebP if supported and not already WebP
+      if (this.supportsWebP() && !src.includes('.webp')) {
+        const webpSrc = src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+        img.src = webpSrc;
+      }
+      
+      // Add responsive image attributes
+      if (!img.hasAttribute('sizes')) {
+        img.setAttribute('sizes', '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw');
+      }
+    }
+
+    private supportsWebP(): boolean {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1;
+      canvas.height = 1;
+      return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+    }
+
+    private handleImageError(img: HTMLImageElement): void {
+      // Fallback to original format if WebP fails
+      const src = img.src;
+      if (src.includes('.webp')) {
+        img.src = src.replace('.webp', '.jpg');
+      }
+    }
+
+    private setupLazyLoading(): void {
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const element = entry.target as HTMLElement;
+            
+            if (element.tagName === 'IMG') {
+              this.loadImage(element as HTMLImageElement);
+            } else if (element.tagName === 'VIDEO') {
+              this.loadVideo(element as HTMLVideoElement);
+            } else if (element.classList.contains('lazy-content')) {
+              this.loadContent(element);
+            }
+            
+            this.observer?.unobserve(element);
+          }
+        });
+      }, {
+        rootMargin: '50px 0px',
+        threshold: 0.1
+      });
+
+      // Observe lazy elements
+      this.observeLazyElements();
+    }
+
+    private observeLazyElements(): void {
+      const lazyElements = document.querySelectorAll('[data-lazy], .lazy-content');
+      lazyElements.forEach(element => {
+        this.observer?.observe(element);
+      });
+    }
+
+    private loadImage(img: HTMLImageElement): void {
+      const src = img.dataset.src;
+      if (src) {
+        img.src = src;
+        img.removeAttribute('data-src');
+        img.classList.add('loaded');
+      }
+    }
+
+    private loadVideo(video: HTMLVideoElement): void {
+      const src = video.dataset.src;
+      if (src) {
+        video.src = src;
+        video.removeAttribute('data-src');
+        video.classList.add('loaded');
+      }
+    }
+
+    private loadContent(element: HTMLElement): void {
+      const content = element.dataset.content;
+      if (content) {
+        element.innerHTML = content;
+        element.removeAttribute('data-content');
+        element.classList.add('loaded');
+      }
+    }
+
+    private setupPreloading(): void {
+      // Preload critical resources
+      this.preloadCriticalResources();
+      
+      // Preload on hover
+      this.setupHoverPreloading();
+      
+      // Preload next page
+      this.setupNextPagePreloading();
+    }
+
+    private preloadCriticalResources(): void {
+      // Only preload resources that actually exist
+      const criticalResources = [
+        '/css/critical.css',
+        '/js/main.js',
+        '/sw.js'
+        // '/fonts/inter.woff2', // Using Google Fonts CDN instead
+      ];
+      
+      criticalResources.forEach(resource => {
+        this.preloadResource(resource);
+      });
+    }
+
+    private preloadResource(href: string): void {
+      if (this.preloadQueue.has(href)) return;
+      
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.href = href;
+      
+      // Determine resource type
+      if (href.endsWith('.woff2') || href.endsWith('.woff')) {
+        link.as = 'font';
+        link.type = 'font/woff2';
+        link.crossOrigin = 'anonymous';
+      } else if (href.endsWith('.css')) {
+        link.as = 'style';
+      } else if (href.endsWith('.js')) {
+        link.as = 'script';
+      } else if (href.endsWith('.jpg') || href.endsWith('.png') || href.endsWith('.webp')) {
+        link.as = 'image';
+      }
+      
+      document.head.appendChild(link);
+      this.preloadQueue.add(href);
+    }
+
+    private setupHoverPreloading(): void {
+      const links = document.querySelectorAll('a[href]');
+      
+      links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+          const href = link.getAttribute('href');
+          if (href && this.isInternalLink(href)) {
+            this.preloadPage(href);
+          }
+        }, { once: true });
+      });
+    }
+
+    private setupNextPagePreloading(): void {
+      // Preload next blog post
+      const nextPostLink = document.querySelector('a[rel="next"]');
+      if (nextPostLink) {
+        const href = nextPostLink.getAttribute('href');
+        if (href) {
+          setTimeout(() => {
+            this.preloadPage(href);
+          }, 2000); // Preload after 2 seconds
+        }
+      }
+    }
+
+    private preloadPage(href: string): void {
+      if (this.preloadQueue.has(href)) return;
+      
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = href;
+      document.head.appendChild(link);
+      
+      this.preloadQueue.add(href);
+    }
+
+    private isInternalLink(href: string): boolean {
+      try {
+        const url = new URL(href, window.location.origin);
+        return url.origin === window.location.origin;
+      } catch {
+        return false;
+      }
+    }
+
+    private setupCaching(): void {
+      // Service Worker registration
+      if ('serviceWorker' in navigator) {
+        this.registerServiceWorker();
+      }
+      
+      // Cache API responses
+      this.setupResponseCaching();
+    }
+
+    private async registerServiceWorker(): Promise<void> {
+      try {
+        // Check if service worker file exists before registering
+        const response = await fetch('/sw.js', { method: 'HEAD' });
+        if (response.ok) {
+          const registration = await navigator.serviceWorker.register('/sw.js');
+          console.log('Service Worker registered:', registration);
+        } else {
+          console.log('Service Worker file not found, skipping registration');
+        }
+      } catch (error) {
+        console.log('Service Worker registration failed:', error);
+      }
+    }
+
+    private setupResponseCaching(): void {
+      // Cache API responses
+      const originalFetch = window.fetch;
+      
+      window.fetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+        const url = typeof input === 'string' ? input : input.toString();
+        
+        // Check cache first
+        const cachedResponse = await this.getCachedResponse(url);
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        
+        // Fetch from network
+        const response = await originalFetch(input, init);
+        
+        // Cache successful responses
+        if (response.ok) {
+          this.cacheResponse(url, response.clone());
+        }
+        
+        return response;
+      };
+    }
+
+    private async getCachedResponse(url: string): Promise<Response | null> {
+      try {
+        const cache = await caches.open('api-cache');
+        const response = await cache.match(url);
+        return response;
+      } catch {
+        return null;
+      }
+    }
+
+    private async cacheResponse(url: string, response: Response): Promise<void> {
+      try {
+        const cache = await caches.open('api-cache');
+        await cache.put(url, response);
+      } catch (error) {
+        console.log('Failed to cache response:', error);
+      }
+    }
+
+    private setupEventListeners(): void {
+      // Optimize scroll performance
+      let ticking = false;
+      const optimizeScroll = () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            this.handleScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
+      
+      window.addEventListener('scroll', optimizeScroll, { passive: true });
+      
+      // Optimize resize performance
+      let resizeTimeout: number;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          this.handleResize();
+        }, 250);
+      });
+      
+      // Preload on visibility change
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          this.preloadCriticalResources();
+        }
+      });
+    }
+
+    private handleScroll(): void {
+      // Update reading progress
+      this.updateReadingProgress();
+      
+      // Lazy load images in viewport
+      this.lazyLoadInViewport();
+    }
+
+    private handleResize(): void {
+      // Recalculate layouts
+      this.recalculateLayouts();
+      
+      // Update responsive images
+      this.updateResponsiveImages();
+    }
+
+    private updateReadingProgress(): void {
+      const progressBar = document.getElementById('reading-progress-bar');
+      if (!progressBar) return;
+      
+      // Only target the specific blog content card, not the entire page
+      const article = document.querySelector('.blog-content');
+      if (!article) return;
+      
+      const articleRect = article.getBoundingClientRect();
+      const articleTop = articleRect.top + window.pageYOffset;
+      const articleHeight = articleRect.height;
+      const windowHeight = window.innerHeight;
+      const scrollTop = window.pageYOffset;
+      
+      let progress = 0;
+      if (scrollTop >= articleTop) {
+        const scrolledThrough = Math.min(scrollTop - articleTop + windowHeight, articleHeight);
+        progress = Math.min(scrolledThrough / articleHeight, 1);
+      }
+      
+      progressBar.style.width = `${progress * 100}%`;
+    }
+
+    private lazyLoadInViewport(): void {
+      const lazyImages = document.querySelectorAll('img[data-src]');
+      lazyImages.forEach(img => {
+        const rect = img.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          this.loadImage(img as HTMLImageElement);
+        }
+      });
+    }
+
+    private recalculateLayouts(): void {
+      // Trigger layout recalculation for responsive elements
+      const responsiveElements = document.querySelectorAll('.responsive-element');
+      responsiveElements.forEach(element => {
+        element.style.height = 'auto';
+        element.style.height = element.scrollHeight + 'px';
+      });
+    }
+
+    private updateResponsiveImages(): void {
+      const responsiveImages = document.querySelectorAll('img[data-srcset]');
+      responsiveImages.forEach(img => {
+        const srcset = img.getAttribute('data-srcset');
+        if (srcset) {
+          img.srcset = srcset;
+          img.removeAttribute('data-srcset');
+        }
+      });
+    }
+
+    private startPerformanceMonitoring(): void {
+      // Monitor Core Web Vitals
+      this.monitorCoreWebVitals();
+      
+      // Monitor resource loading
+      this.monitorResourceLoading();
+      
+      // Monitor user interactions
+      this.monitorUserInteractions();
+    }
+
+    private monitorCoreWebVitals(): void {
+      // Largest Contentful Paint (LCP)
+      new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        const lastEntry = entries[entries.length - 1];
+        this.trackMetric('LCP', lastEntry.startTime);
+      }).observe({ entryTypes: ['largest-contentful-paint'] });
+      
+      // First Input Delay (FID)
+      new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        entries.forEach(entry => {
+          this.trackMetric('FID', entry.processingStart - entry.startTime);
+        });
+      }).observe({ entryTypes: ['first-input'] });
+      
+      // Cumulative Layout Shift (CLS)
+      let clsValue = 0;
+      new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        entries.forEach(entry => {
+          if (!entry.hadRecentInput) {
+            clsValue += entry.value;
+          }
+        });
+        this.trackMetric('CLS', clsValue);
+      }).observe({ entryTypes: ['layout-shift'] });
+    }
+
+    private monitorResourceLoading(): void {
+      const resources = performance.getEntriesByType('resource');
+      resources.forEach(resource => {
+        const loadTime = resource.responseEnd - resource.requestStart;
+        this.trackMetric('ResourceLoadTime', loadTime, {
+          resource: resource.name,
+          type: resource.initiatorType
+        });
+      });
+    }
+
+    private monitorUserInteractions(): void {
+      let interactionCount = 0;
+      const interactionTypes = ['click', 'scroll', 'keydown', 'touchstart'];
+      
+      interactionTypes.forEach(type => {
+        document.addEventListener(type, () => {
+          interactionCount++;
+          this.trackMetric('UserInteractions', interactionCount);
+        }, { passive: true });
+      });
+    }
+
+    private trackMetric(name: string, value: number, metadata: any = {}): void {
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'performance_metric', {
+          event_category: 'performance',
+          event_label: name,
+          value: Math.round(value),
+          ...metadata
+        });
+      }
+    }
+  }
+
+  // Initialize performance optimizer when DOM is ready
+  function initPerformanceOptimizer(): void {
+    new PerformanceOptimizer();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPerformanceOptimizer);
+  } else {
+    initPerformanceOptimizer();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .performance-optimizer {
+    @apply hidden; /* Hidden component, only for optimization */
+  }
+
+  /* Lazy loading styles */
+  img[data-src] {
+    @apply opacity-0 transition-opacity duration-300;
+  }
+
+  img[data-src].loaded {
+    @apply opacity-100;
+  }
+
+  /* Responsive image styles */
+  .responsive-element {
+    @apply transition-all duration-300;
+  }
+
+  /* Performance optimizations */
+  * {
+    @apply will-change-auto;
+  }
+
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

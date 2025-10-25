@@ -1,0 +1,129 @@
+---
+// Example: How to use the refactored TOC component
+import TableOfContentsEnhanced from '@/components/blog/TableOfContentsEnhanced.astro';
+
+// Example blog content
+const blogContent = `
+<h2>Introduction to Astro</h2>
+<p>Astro is a modern static site generator...</p>
+
+<h3>Key Features</h3>
+<p>Astro offers several key features...</p>
+
+<h4>Server-Side Rendering</h4>
+<p>One of the main features is SSR...</p>
+
+<h2>Getting Started</h2>
+<p>To get started with Astro...</p>
+`;
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>TOC Refactor Example</title>
+</head>
+<body>
+  <div class="container">
+    <div class="blog-layout">
+      <!-- Enhanced TOC Sidebar -->
+      <aside class="toc-sidebar">
+        <TableOfContentsEnhanced content={blogContent} />
+      </aside>
+      
+      <!-- Main Content -->
+      <main class="blog-content">
+        <h1>Astro Tutorial: Complete Guide</h1>
+        
+        <div class="blog-content">
+          <h2>Introduction to Astro</h2>
+          <p>Astro is a modern static site generator that allows you to build faster websites with less client-side JavaScript.</p>
+
+          <h3>Key Features</h3>
+          <p>Astro offers several key features that make it stand out from other static site generators.</p>
+
+          <h4>Server-Side Rendering</h4>
+          <p>One of the main features is Server-Side Rendering (SSR), which allows you to render pages on the server.</p>
+
+          <h2>Getting Started</h2>
+          <p>To get started with Astro, you'll need to understand the basic concepts and project structure.</p>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .blog-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .toc-sidebar {
+    position: sticky;
+    top: 2rem;
+  }
+
+  .blog-content {
+    line-height: 1.7;
+  }
+
+  .blog-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #1f2937;
+  }
+
+  .blog-content h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: #1f2937;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+  }
+
+  .blog-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #374151;
+  }
+
+  .blog-content h4 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #4b5563;
+  }
+
+  .blog-content p {
+    margin-bottom: 1rem;
+    color: #6b7280;
+  }
+
+  @media (max-width: 768px) {
+    .blog-layout {
+      grid-template-columns: 1fr;
+    }
+    
+    .toc-sidebar {
+      position: static;
+      order: -1;
+    }
+  }
+</style>

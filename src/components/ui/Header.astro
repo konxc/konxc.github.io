@@ -1,0 +1,652 @@
+---
+// Header Component
+import Logo from '@components/ui/Logo.astro';
+
+export interface Props {
+  className?: string;
+  variant?: 'default' | 'transparent' | 'minimal';
+  showSearch?: boolean;
+  showDarkMode?: boolean;
+  showMobileMenu?: boolean;
+}
+
+const { 
+  className = '',
+  variant = 'default',
+  showSearch = true,
+  showDarkMode = true,
+  showMobileMenu = true
+} = Astro.props;
+
+// Navigation links
+const navigationLinks = [
+  { name: 'Beranda', href: '/', current: false },
+  { name: 'Layanan', href: '/services', current: false },
+  { name: 'Blog', href: '/blog', current: false },
+  { name: 'Kontributor', href: '/contributors', current: false },
+  { name: 'Tentang', href: '/about', current: false },
+  { name: 'Kontak', href: '/contact', current: false }
+];
+
+// Service dropdown links
+const serviceLinks = [
+  { name: 'IT Support', href: '/services/it-support', description: 'Dukungan teknis 24/7' },
+  { name: 'Software Development', href: '/services/software-development', description: 'Pengembangan aplikasi custom' },
+  { name: 'Digital Branding', href: '/services/digital-branding', description: 'Strategi branding digital' },
+  { name: 'Retail Technology', href: '/services/retail-tech', description: 'Solusi teknologi retail' },
+  { name: 'Cloud & SaaS', href: '/services/cloud-saas', description: 'Layanan cloud dan SaaS' }
+];
+---
+
+<header class={`header ${variant} ${className}`}>
+  <nav class="nav-container">
+    <div class="container">
+      <div class="nav-content">
+        <!-- Logo -->
+        <div class="nav-brand">
+          <a href="/" class="brand-link">
+            <Logo size="md" variant="default" />
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="nav-desktop">
+          <ul class="nav-links">
+            {navigationLinks.map(link => (
+              <li class="nav-item">
+                {link.name === 'Layanan' ? (
+                  <div class="nav-dropdown">
+                    <button class="nav-link dropdown-trigger" aria-expanded="false">
+                      {link.name}
+                      <i class="i-mdi-chevron-down dropdown-icon"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <div class="dropdown-content">
+                        {serviceLinks.map(service => (
+                          <a href={service.href} class="dropdown-item">
+                            <div class="dropdown-item-content">
+                              <h4 class="dropdown-item-title">{service.name}</h4>
+                              <p class="dropdown-item-description">{service.description}</p>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <a href={link.href} class="nav-link">
+                    {link.name}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Right Side Actions -->
+        <div class="nav-actions">
+          <!-- Search -->
+          {showSearch && (
+            <div class="search-container">
+              <button class="search-toggle" aria-label="Search">
+                <i class="i-mdi-magnify"></i>
+              </button>
+              <div class="search-dropdown">
+                <form class="search-form">
+                  <div class="search-input-group">
+                    <input 
+                      type="search" 
+                      placeholder="Cari artikel, layanan..." 
+                      class="search-input"
+                      aria-label="Search"
+                    />
+                    <button type="submit" class="search-submit">
+                      <i class="i-mdi-magnify"></i>
+                    </button>
+                  </div>
+                </form>
+                <div class="search-suggestions">
+                  <div class="search-suggestion-item">
+                    <i class="i-mdi-clock-outline"></i>
+                    <span>Pencarian terbaru</span>
+                  </div>
+                  <div class="search-suggestion-item">
+                    <i class="i-mdi-trending-up"></i>
+                    <span>Artikel populer</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <!-- Dark Mode Toggle -->
+          {showDarkMode && (
+            <button class="dark-mode-toggle" aria-label="Toggle dark mode">
+              <i class="i-mdi-weather-sunny dark-mode-icon"></i>
+            </button>
+          )}
+
+          <!-- CTA Button -->
+          <a href="/contact" class="cta-button">
+            <span>Hubungi Kami</span>
+            <i class="i-mdi-arrow-right"></i>
+          </a>
+
+          <!-- Mobile Menu Toggle -->
+          {showMobileMenu && (
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+              <span class="hamburger-line"></span>
+              <span class="hamburger-line"></span>
+              <span class="hamburger-line"></span>
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    {showMobileMenu && (
+      <div class="mobile-menu">
+        <div class="mobile-menu-content">
+          <div class="mobile-menu-header">
+            <Logo size="sm" variant="default" />
+            <button class="mobile-menu-close" aria-label="Close mobile menu">
+              <i class="i-mdi-close"></i>
+            </button>
+          </div>
+          
+          <div class="mobile-menu-body">
+            <ul class="mobile-nav-links">
+              {navigationLinks.map(link => (
+                <li class="mobile-nav-item">
+                  {link.name === 'Layanan' ? (
+                    <div class="mobile-nav-dropdown">
+                      <button class="mobile-nav-link mobile-dropdown-trigger">
+                        {link.name}
+                        <i class="i-mdi-chevron-down"></i>
+                      </button>
+                      <div class="mobile-dropdown-content">
+                        {serviceLinks.map(service => (
+                          <a href={service.href} class="mobile-dropdown-item">
+                            <div class="mobile-dropdown-item-content">
+                              <h4 class="mobile-dropdown-item-title">{service.name}</h4>
+                              <p class="mobile-dropdown-item-description">{service.description}</p>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <a href={link.href} class="mobile-nav-link">
+                      {link.name}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+            
+            <div class="mobile-menu-actions">
+              <a href="/contact" class="mobile-cta-button">
+                <span>Hubungi Kami</span>
+                <i class="i-mdi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+  </nav>
+</header>
+
+<style>
+  @reference "@/styles/global.css";
+  .header {
+    @apply bg-white border-b border-neutral-200 sticky top-0 z-50;
+  }
+  
+  .header.transparent {
+    @apply bg-transparent border-transparent;
+  }
+  
+  .header.minimal {
+    @apply bg-neutral-50 border-neutral-100;
+  }
+
+  .nav-container {
+    @apply w-full;
+  }
+
+  .nav-content {
+    @apply flex items-center justify-between h-16 lg:h-20;
+  }
+
+  .nav-brand {
+    @apply shrink-0;
+  }
+
+  .brand-link {
+    @apply flex items-center transition-opacity hover:opacity-80;
+  }
+
+  .nav-desktop {
+    @apply hidden lg:flex flex-1 justify-center;
+  }
+
+  .nav-links {
+    @apply flex items-center space-x-8;
+  }
+
+  .nav-item {
+    @apply relative;
+  }
+
+  .nav-link {
+    @apply text-neutral-700 hover:text-primary-600 transition-colors font-medium text-sm;
+  }
+
+  .nav-dropdown {
+    @apply relative;
+  }
+
+  .dropdown-trigger {
+    @apply flex items-center gap-1;
+  }
+
+  .dropdown-icon {
+    @apply text-xs transition-transform;
+  }
+
+  .dropdown-trigger[aria-expanded="true"] .dropdown-icon {
+    @apply rotate-180;
+  }
+
+  .dropdown-menu {
+    @apply absolute top-full left-0 mt-2 w-80 opacity-0 invisible transition-all duration-200;
+  }
+
+  .dropdown-trigger[aria-expanded="true"] + .dropdown-menu {
+    @apply opacity-100 visible;
+  }
+
+  .dropdown-content {
+    @apply bg-white rounded-lg shadow-lg border border-neutral-200 p-2;
+  }
+
+  .dropdown-item {
+    @apply block p-3 rounded-md hover:bg-neutral-50 transition-colors;
+  }
+
+  .dropdown-item-content {
+    @apply space-y-1;
+  }
+
+  .dropdown-item-title {
+    @apply font-semibold text-neutral-900 text-sm;
+  }
+
+  .dropdown-item-description {
+    @apply text-xs text-neutral-600;
+  }
+
+  .nav-actions {
+    @apply flex items-center gap-3;
+  }
+
+  .search-container {
+    @apply relative;
+  }
+
+  .search-toggle {
+    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+  }
+
+  .search-dropdown {
+    @apply absolute top-full right-0 mt-2 w-80 opacity-0 invisible transition-all duration-200;
+  }
+
+  .search-toggle[aria-expanded="true"] + .search-dropdown {
+    @apply opacity-100 visible;
+  }
+
+  .search-form {
+    @apply bg-white rounded-lg shadow-lg border border-neutral-200 p-2;
+  }
+
+  .search-input-group {
+    @apply flex items-center;
+  }
+
+  .search-input {
+    @apply flex-1 px-3 py-2 text-sm border-0 outline-none;
+  }
+
+  .search-submit {
+    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+  }
+
+  .search-suggestions {
+    @apply mt-2 space-y-1;
+  }
+
+  .search-suggestion-item {
+    @apply flex items-center gap-2 px-3 py-2 text-sm text-neutral-600 hover:bg-neutral-50 rounded cursor-pointer;
+  }
+
+  .dark-mode-toggle {
+    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+  }
+
+  .dark-mode-icon {
+    @apply text-lg;
+  }
+
+  .cta-button {
+    @apply hidden sm:flex items-center gap-2 bg-primary-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors hover:bg-primary-700;
+  }
+
+  .mobile-menu-toggle {
+    @apply lg:hidden p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+  }
+
+  .hamburger-line {
+    @apply block w-5 h-0.5 bg-current mb-1 last:mb-0 transition-all duration-200;
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(1) {
+    @apply rotate-45 translate-y-1.5;
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(2) {
+    @apply opacity-0;
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(3) {
+    @apply -rotate-45 -translate-y-1.5;
+  }
+
+  .mobile-menu {
+    @apply fixed inset-0 z-50 lg:hidden opacity-0 invisible transition-all duration-300;
+  }
+
+  .mobile-menu.active {
+    @apply opacity-100 visible;
+  }
+
+  .mobile-menu-content {
+    @apply bg-white h-full flex flex-col;
+  }
+
+  .mobile-menu-header {
+    @apply flex items-center justify-between p-4 border-b border-neutral-200;
+  }
+
+  .mobile-menu-close {
+    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+  }
+
+  .mobile-menu-body {
+    @apply flex-1 overflow-y-auto p-4;
+  }
+
+  .mobile-nav-links {
+    @apply space-y-2;
+  }
+
+  .mobile-nav-item {
+    @apply border-b border-neutral-100 last:border-0;
+  }
+
+  .mobile-nav-link {
+    @apply block py-4 text-neutral-700 hover:text-primary-600 transition-colors font-medium;
+  }
+
+  .mobile-nav-dropdown {
+    @apply space-y-2;
+  }
+
+  .mobile-dropdown-trigger {
+    @apply flex items-center justify-between w-full;
+  }
+
+  .mobile-dropdown-content {
+    @apply pl-4 space-y-2;
+  }
+
+  .mobile-dropdown-item {
+    @apply block py-2;
+  }
+
+  .mobile-dropdown-item-content {
+    @apply space-y-1;
+  }
+
+  .mobile-dropdown-item-title {
+    @apply font-semibold text-neutral-900 text-sm;
+  }
+
+  .mobile-dropdown-item-description {
+    @apply text-xs text-neutral-600;
+  }
+
+  .mobile-menu-actions {
+    @apply mt-6;
+  }
+
+  .mobile-cta-button {
+    @apply flex items-center justify-center gap-2 bg-primary-600 text-white px-4 py-3 rounded-lg font-medium transition-colors hover:bg-primary-700;
+  }
+
+  /* Dark mode styles */
+  .dark .header {
+    @apply bg-neutral-900 border-neutral-700;
+  }
+
+  .dark .header.transparent {
+    @apply bg-transparent border-transparent;
+  }
+
+  .dark .header.minimal {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .nav-link {
+    @apply text-neutral-300 hover:text-primary-400;
+  }
+
+  .dark .dropdown-content {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .dropdown-item {
+    @apply hover:bg-neutral-700;
+  }
+
+  .dark .dropdown-item-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .dropdown-item-description {
+    @apply text-neutral-400;
+  }
+
+  .dark .search-form {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .search-input {
+    @apply text-neutral-100 placeholder-neutral-400;
+  }
+
+  .dark .search-suggestion-item {
+    @apply text-neutral-400 hover:bg-neutral-700;
+  }
+
+  .dark .mobile-menu-content {
+    @apply bg-neutral-900;
+  }
+
+  .dark .mobile-menu-header {
+    @apply border-neutral-700;
+  }
+
+  .dark .mobile-nav-link {
+    @apply text-neutral-300 hover:text-primary-400;
+  }
+
+  .dark .mobile-nav-item {
+    @apply border-neutral-700;
+  }
+
+  .dark .mobile-dropdown-item-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .mobile-dropdown-item-description {
+    @apply text-neutral-400;
+  }
+</style>
+
+<script>
+  // Header functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileMenuClose = document.querySelector('.mobile-menu-close');
+
+    if (mobileMenuToggle && mobileMenu) {
+      mobileMenuToggle.addEventListener('click', function(this: HTMLElement) {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!isExpanded));
+        mobileMenu.classList.toggle('active');
+      });
+    }
+
+    if (mobileMenuClose && mobileMenu) {
+      mobileMenuClose.addEventListener('click', function() {
+        mobileMenuToggle?.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('active');
+      });
+    }
+
+    // Search toggle
+    const searchToggle = document.querySelector('.search-toggle');
+    const searchDropdown = document.querySelector('.search-dropdown');
+
+    if (searchToggle && searchDropdown) {
+      searchToggle.addEventListener('click', function(this: HTMLElement) {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!isExpanded));
+        searchDropdown.classList.toggle('opacity-100');
+        searchDropdown.classList.toggle('visible');
+      });
+    }
+
+    // Dropdown menus
+    const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+    
+    dropdownTriggers.forEach(trigger => {
+      trigger.addEventListener('click', function(this: HTMLElement, e: Event) {
+        e.preventDefault();
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        
+        // Close all other dropdowns
+        dropdownTriggers.forEach(otherTrigger => {
+          if (otherTrigger !== this) {
+            otherTrigger.setAttribute('aria-expanded', 'false');
+            const otherMenu = otherTrigger.nextElementSibling;
+            if (otherMenu) {
+              otherMenu.classList.remove('opacity-100', 'visible');
+            }
+          }
+        });
+        
+        // Toggle current dropdown
+        this.setAttribute('aria-expanded', String(!isExpanded));
+        const menu = this.nextElementSibling;
+        if (menu) {
+          menu.classList.toggle('opacity-100');
+          menu.classList.toggle('visible');
+        }
+      });
+    });
+
+    // Mobile dropdown menus
+    const mobileDropdownTriggers = document.querySelectorAll('.mobile-dropdown-trigger');
+    
+    mobileDropdownTriggers.forEach(trigger => {
+      trigger.addEventListener('click', function(this: HTMLElement, e: Event) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        if (content) {
+          content.classList.toggle('hidden');
+        }
+      });
+    });
+
+    // Dark mode toggle
+    const darkModeToggle = document.querySelector('.dark-mode-toggle');
+    
+    if (darkModeToggle) {
+      darkModeToggle.addEventListener('click', function(this: HTMLElement) {
+        document.documentElement.classList.toggle('dark');
+        
+        // Save preference
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('darkMode', String(isDark));
+        
+        // Update icon
+        const icon = this.querySelector('.dark-mode-icon');
+        if (icon) {
+          icon.className = isDark ? 'i-mdi-weather-night dark-mode-icon' : 'i-mdi-weather-sunny dark-mode-icon';
+        }
+      });
+      
+      // Load saved preference
+      const savedDarkMode = localStorage.getItem('darkMode');
+      if (savedDarkMode === 'true') {
+        document.documentElement.classList.add('dark');
+        const icon = darkModeToggle.querySelector('.dark-mode-icon');
+        if (icon) {
+          icon.className = 'i-mdi-weather-night dark-mode-icon';
+        }
+      }
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      const target = e.target as HTMLElement;
+      if (!target?.closest('.nav-dropdown')) {
+        dropdownTriggers.forEach(trigger => {
+          trigger.setAttribute('aria-expanded', 'false');
+          const menu = trigger.nextElementSibling;
+          if (menu) {
+            menu.classList.remove('opacity-100', 'visible');
+          }
+        });
+      }
+      
+      if (!target?.closest('.search-container')) {
+        if (searchToggle && searchDropdown) {
+          searchToggle.setAttribute('aria-expanded', 'false');
+          searchDropdown.classList.remove('opacity-100', 'visible');
+        }
+      }
+    });
+
+    // Search functionality
+    const searchForm = document.querySelector('.search-form');
+    const searchInput = document.querySelector('.search-input');
+    
+    if (searchForm && searchInput) {
+      searchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const query = (searchInput as HTMLInputElement).value.trim();
+        if (query) {
+          // Redirect to search page or perform search
+          window.location.href = `/search?q=${encodeURIComponent(query)}`;
+        }
+      });
+    }
+  });
+</script>

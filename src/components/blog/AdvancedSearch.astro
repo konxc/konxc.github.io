@@ -1,0 +1,660 @@
+---
+// Advanced Search Component with Filters and Sorting
+export interface Props {
+  class?: string;
+  showFilters?: boolean;
+  showSorting?: boolean;
+  showCategories?: boolean;
+  showTags?: boolean;
+  showAuthors?: boolean;
+  showDateRange?: boolean;
+}
+
+const { 
+  class: className,
+  showFilters = true,
+  showSorting = true,
+  showCategories = true,
+  showTags = true,
+  showAuthors = true,
+  showDateRange = true
+} = Astro.props;
+---
+
+<div class={`advanced-search ${className || ''}`}>
+  <!-- Search Input -->
+  <div class="search-input-container mb-6">
+    <div class="relative">
+      <input
+        type="text"
+        placeholder="Cari artikel, penulis, atau topik..."
+        class="w-full px-5 py-3 pl-12 border border-neutral-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200"
+        id="advanced-search-input"
+        aria-label="Advanced search"
+      />
+      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+        <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+      </div>
+      <button
+        class="absolute inset-y-0 right-0 pr-4 flex items-center text-neutral-400 hover:text-neutral-600 transition-colors"
+        id="clear-search-btn"
+        style="display: none;"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters and Sorting -->
+  <div class="filters-container mb-6">
+    <div class="flex flex-wrap gap-4 items-center justify-between">
+      <!-- Sort Options -->
+      {showSorting && (
+        <div class="flex items-center gap-2">
+          <label class="text-sm font-medium text-neutral-700">Urutkan:</label>
+          <select
+            class="px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+            id="sort-select"
+          >
+            <option value="newest">Terbaru</option>
+            <option value="oldest">Terlama</option>
+            <option value="title-asc">Judul A-Z</option>
+            <option value="title-desc">Judul Z-A</option>
+            <option value="reading-time">Waktu Baca</option>
+            <option value="popular">Populer</option>
+          </select>
+        </div>
+      )}
+
+      <!-- Filter Toggle -->
+      {showFilters && (
+        <button
+          class="flex items-center gap-2 px-4 py-2 bg-white border border-neutral-300 rounded-lg text-sm font-medium text-neutral-700 hover:bg-neutral-50 transition-colors"
+          id="toggle-filters-btn"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z"/>
+          </svg>
+          Filter
+        </button>
+      )}
+    </div>
+
+    <!-- Advanced Filters Panel -->
+    <div class="filters-panel hidden mt-4 p-6 bg-neutral-50 rounded-lg border border-neutral-200" id="filters-panel">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Category Filter -->
+        {showCategories && (
+          <div>
+            <label class="block text-sm font-medium text-neutral-700 mb-2">Kategori</label>
+            <div class="space-y-2" id="category-filters">
+              <!-- Will be populated by JavaScript -->
+            </div>
+          </div>
+        )}
+
+        <!-- Tag Filter -->
+        {showTags && (
+          <div>
+            <label class="block text-sm font-medium text-neutral-700 mb-2">Tag</label>
+            <div class="space-y-2" id="tag-filters">
+              <!-- Will be populated by JavaScript -->
+            </div>
+          </div>
+        )}
+
+        <!-- Author Filter -->
+        {showAuthors && (
+          <div>
+            <label class="block text-sm font-medium text-neutral-700 mb-2">Penulis</label>
+            <div class="space-y-2" id="author-filters">
+              <!-- Will be populated by JavaScript -->
+            </div>
+          </div>
+        )}
+
+        <!-- Date Range Filter -->
+        {showDateRange && (
+          <div>
+            <label class="block text-sm font-medium text-neutral-700 mb-2">Tanggal</label>
+            <div class="space-y-2">
+              <input
+                type="date"
+                class="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                id="date-from"
+                placeholder="Dari"
+              />
+              <input
+                type="date"
+                class="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                id="date-to"
+                placeholder="Sampai"
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Filter Actions -->
+      <div class="flex justify-between items-center mt-6 pt-4 border-t border-neutral-200">
+        <button
+          class="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors"
+          id="clear-filters-btn"
+        >
+          Hapus Semua Filter
+        </button>
+        <div class="flex gap-2">
+          <button
+            class="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors"
+            id="close-filters-btn"
+          >
+            Tutup
+          </button>
+          <button
+            class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors"
+            id="apply-filters-btn"
+          >
+            Terapkan Filter
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <div class="search-results" id="advanced-search-results">
+    <!-- Results will be populated by JavaScript -->
+  </div>
+
+  <!-- Search Stats -->
+  <div class="search-stats hidden mt-4 text-sm text-neutral-600" id="search-stats">
+    <!-- Stats will be populated by JavaScript -->
+  </div>
+</div>
+
+<script>
+  class AdvancedSearch {
+    private searchInput: HTMLInputElement;
+    private sortSelect: HTMLSelectElement;
+    private filtersPanel: HTMLElement;
+    private toggleFiltersBtn: HTMLButtonElement;
+    private clearSearchBtn: HTMLButtonElement;
+    private clearFiltersBtn: HTMLButtonElement;
+    private closeFiltersBtn: HTMLButtonElement;
+    private applyFiltersBtn: HTMLButtonElement;
+    private searchResults: HTMLElement;
+    private searchStats: HTMLElement;
+    
+    private allPosts: any[] = [];
+    private filteredPosts: any[] = [];
+    private currentFilters: {
+      categories: string[];
+      tags: string[];
+      authors: string[];
+      dateFrom: string;
+      dateTo: string;
+    } = {
+      categories: [],
+      tags: [],
+      authors: [],
+      dateFrom: '',
+      dateTo: ''
+    };
+    private currentSort: string = 'newest';
+    private searchQuery: string = '';
+
+    constructor() {
+      this.initializeElements();
+      this.loadPostsData();
+      this.setupEventListeners();
+      this.populateFilters();
+    }
+
+    private initializeElements(): void {
+      this.searchInput = document.getElementById('advanced-search-input') as HTMLInputElement;
+      this.sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+      this.filtersPanel = document.getElementById('filters-panel') as HTMLElement;
+      this.toggleFiltersBtn = document.getElementById('toggle-filters-btn') as HTMLButtonElement;
+      this.clearSearchBtn = document.getElementById('clear-search-btn') as HTMLButtonElement;
+      this.clearFiltersBtn = document.getElementById('clear-filters-btn') as HTMLButtonElement;
+      this.closeFiltersBtn = document.getElementById('close-filters-btn') as HTMLButtonElement;
+      this.applyFiltersBtn = document.getElementById('apply-filters-btn') as HTMLButtonElement;
+      this.searchResults = document.getElementById('advanced-search-results') as HTMLElement;
+      this.searchStats = document.getElementById('search-stats') as HTMLElement;
+    }
+
+    private async loadPostsData(): Promise<void> {
+      try {
+        const response = await fetch('/api/posts');
+        if (response.ok) {
+          this.allPosts = await response.json();
+        } else {
+          // Fallback to embedded data
+          const fallbackDataScript = document.getElementById('posts-data');
+          if (fallbackDataScript && fallbackDataScript.textContent) {
+            this.allPosts = JSON.parse(fallbackDataScript.textContent);
+          }
+        }
+        this.filteredPosts = [...this.allPosts];
+        this.renderResults();
+      } catch (error) {
+        console.error('Failed to load posts data:', error);
+      }
+    }
+
+    private setupEventListeners(): void {
+      // Search input
+      this.searchInput.addEventListener('input', this.debounce(this.handleSearch.bind(this), 300));
+      
+      // Clear search
+      this.clearSearchBtn.addEventListener('click', this.clearSearch.bind(this));
+      
+      // Sort
+      this.sortSelect.addEventListener('change', this.handleSort.bind(this));
+      
+      // Filter toggle
+      this.toggleFiltersBtn.addEventListener('click', this.toggleFilters.bind(this));
+      
+      // Filter actions
+      this.clearFiltersBtn.addEventListener('click', this.clearFilters.bind(this));
+      this.closeFiltersBtn.addEventListener('click', this.toggleFilters.bind(this));
+      this.applyFiltersBtn.addEventListener('click', this.applyFilters.bind(this));
+      
+      // Date inputs
+      const dateFrom = document.getElementById('date-from') as HTMLInputElement;
+      const dateTo = document.getElementById('date-to') as HTMLInputElement;
+      dateFrom.addEventListener('change', this.handleDateFilter.bind(this));
+      dateTo.addEventListener('change', this.handleDateFilter.bind(this));
+    }
+
+    private populateFilters(): void {
+      this.populateCategoryFilters();
+      this.populateTagFilters();
+      this.populateAuthorFilters();
+    }
+
+    private populateCategoryFilters(): void {
+      const categories = [...new Set(this.allPosts.map(post => post.category))];
+      const categoryFilters = document.getElementById('category-filters');
+      if (!categoryFilters) return;
+
+      categoryFilters.innerHTML = categories.map(category => `
+        <label class="flex items-center">
+          <input type="checkbox" class="category-filter mr-2" value="${category}">
+          <span class="text-sm text-neutral-700">${category}</span>
+        </label>
+      `).join('');
+
+      // Add event listeners
+      categoryFilters.querySelectorAll('.category-filter').forEach(checkbox => {
+        checkbox.addEventListener('change', this.handleFilterChange.bind(this));
+      });
+    }
+
+    private populateTagFilters(): void {
+      const tagCounts: { [key: string]: number } = {};
+      this.allPosts.forEach(post => {
+        post.tags.forEach((tag: string) => {
+          tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+        });
+      });
+
+      const sortedTags = Object.entries(tagCounts)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 10); // Show top 10 tags
+
+      const tagFilters = document.getElementById('tag-filters');
+      if (!tagFilters) return;
+
+      tagFilters.innerHTML = sortedTags.map(([tag, count]) => `
+        <label class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input type="checkbox" class="tag-filter mr-2" value="${tag}">
+            <span class="text-sm text-neutral-700">${tag}</span>
+          </div>
+          <span class="text-xs text-neutral-500">${count}</span>
+        </label>
+      `).join('');
+
+      // Add event listeners
+      tagFilters.querySelectorAll('.tag-filter').forEach(checkbox => {
+        checkbox.addEventListener('change', this.handleFilterChange.bind(this));
+      });
+    }
+
+    private populateAuthorFilters(): void {
+      const authors = [...new Set(this.allPosts.map(post => post.author))];
+      const authorFilters = document.getElementById('author-filters');
+      if (!authorFilters) return;
+
+      authorFilters.innerHTML = authors.map(author => `
+        <label class="flex items-center">
+          <input type="checkbox" class="author-filter mr-2" value="${author}">
+          <span class="text-sm text-neutral-700">${author}</span>
+        </label>
+      `).join('');
+
+      // Add event listeners
+      authorFilters.querySelectorAll('.author-filter').forEach(checkbox => {
+        checkbox.addEventListener('change', this.handleFilterChange.bind(this));
+      });
+    }
+
+    private handleSearch(): void {
+      this.searchQuery = this.searchInput.value.trim();
+      this.clearSearchBtn.style.display = this.searchQuery ? 'block' : 'none';
+      this.performSearch();
+    }
+
+    private clearSearch(): void {
+      this.searchInput.value = '';
+      this.searchQuery = '';
+      this.clearSearchBtn.style.display = 'none';
+      this.performSearch();
+    }
+
+    private handleSort(): void {
+      this.currentSort = this.sortSelect.value;
+      this.performSearch();
+    }
+
+    private toggleFilters(): void {
+      this.filtersPanel.classList.toggle('hidden');
+    }
+
+    private handleFilterChange(): void {
+      // This will be called when any filter checkbox changes
+      // We'll collect the current filter state
+    }
+
+    private handleDateFilter(): void {
+      const dateFrom = (document.getElementById('date-from') as HTMLInputElement).value;
+      const dateTo = (document.getElementById('date-to') as HTMLInputElement).value;
+      
+      this.currentFilters.dateFrom = dateFrom;
+      this.currentFilters.dateTo = dateTo;
+    }
+
+    private clearFilters(): void {
+      // Clear all checkboxes
+      document.querySelectorAll('.category-filter, .tag-filter, .author-filter').forEach(checkbox => {
+        (checkbox as HTMLInputElement).checked = false;
+      });
+      
+      // Clear date inputs
+      (document.getElementById('date-from') as HTMLInputElement).value = '';
+      (document.getElementById('date-to') as HTMLInputElement).value = '';
+      
+      // Reset filter state
+      this.currentFilters = {
+        categories: [],
+        tags: [],
+        authors: [],
+        dateFrom: '',
+        dateTo: ''
+      };
+      
+      this.performSearch();
+    }
+
+    private applyFilters(): void {
+      // Collect current filter state
+      this.currentFilters.categories = Array.from(
+        document.querySelectorAll('.category-filter:checked')
+      ).map(checkbox => (checkbox as HTMLInputElement).value);
+      
+      this.currentFilters.tags = Array.from(
+        document.querySelectorAll('.tag-filter:checked')
+      ).map(checkbox => (checkbox as HTMLInputElement).value);
+      
+      this.currentFilters.authors = Array.from(
+        document.querySelectorAll('.author-filter:checked')
+      ).map(checkbox => (checkbox as HTMLInputElement).value);
+      
+      this.performSearch();
+      this.toggleFilters(); // Close filters panel
+    }
+
+    private performSearch(): void {
+      let results = [...this.allPosts];
+
+      // Apply text search using Fuse.js if available
+      if (this.searchQuery) {
+        if (typeof Fuse !== 'undefined') {
+          // Use Fuse.js for fuzzy search
+          const fuse = new Fuse(this.allPosts, {
+            keys: ['title', 'description', 'tags', 'category', 'author'],
+            includeScore: true,
+            threshold: 0.3
+          });
+          
+          const fuseResults = fuse.search(this.searchQuery);
+          results = fuseResults.map(result => result.item);
+        } else {
+          // Fallback to simple search
+          const query = this.searchQuery.toLowerCase();
+          results = results.filter(post => 
+            post.title.toLowerCase().includes(query) ||
+            post.description.toLowerCase().includes(query) ||
+            post.tags.some((tag: string) => tag.toLowerCase().includes(query)) ||
+            post.author.toLowerCase().includes(query) ||
+            post.category.toLowerCase().includes(query)
+          );
+        }
+      }
+
+      // Apply filters
+      if (this.currentFilters.categories.length > 0) {
+        results = results.filter(post => 
+          this.currentFilters.categories.includes(post.category)
+        );
+      }
+
+      if (this.currentFilters.tags.length > 0) {
+        results = results.filter(post => 
+          this.currentFilters.tags.some(tag => post.tags.includes(tag))
+        );
+      }
+
+      if (this.currentFilters.authors.length > 0) {
+        results = results.filter(post => 
+          this.currentFilters.authors.includes(post.author)
+        );
+      }
+
+      if (this.currentFilters.dateFrom) {
+        results = results.filter(post => 
+          new Date(post.publishDate) >= new Date(this.currentFilters.dateFrom)
+        );
+      }
+
+      if (this.currentFilters.dateTo) {
+        results = results.filter(post => 
+          new Date(post.publishDate) <= new Date(this.currentFilters.dateTo)
+        );
+      }
+
+      // Apply sorting
+      results = this.sortResults(results);
+
+      this.filteredPosts = results;
+      this.renderResults();
+    }
+
+    private sortResults(results: any[]): any[] {
+      switch (this.currentSort) {
+        case 'newest':
+          return results.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+        case 'oldest':
+          return results.sort((a, b) => new Date(a.publishDate).getTime() - new Date(b.publishDate).getTime());
+        case 'title-asc':
+          return results.sort((a, b) => a.title.localeCompare(b.title));
+        case 'title-desc':
+          return results.sort((a, b) => b.title.localeCompare(a.title));
+        case 'reading-time':
+          return results.sort((a, b) => (b.readingTime || 0) - (a.readingTime || 0));
+        case 'popular':
+          return results.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+        default:
+          return results;
+      }
+    }
+
+    private renderResults(): void {
+      if (this.filteredPosts.length === 0) {
+        this.searchResults.innerHTML = `
+          <div class="text-center py-16">
+            <div class="text-6xl mb-4">🔍</div>
+            <h3 class="text-2xl font-bold mb-4">Tidak ada artikel yang ditemukan</h3>
+            <p class="text-neutral-600 mb-8">
+              Coba ubah kata kunci pencarian atau filter yang digunakan.
+            </p>
+            <button class="btn-secondary" onclick="document.getElementById('advanced-search-input').focus()">
+              Coba Pencarian Lain
+            </button>
+          </div>
+        `;
+        this.searchStats.classList.add('hidden');
+        return;
+      }
+
+      this.searchResults.innerHTML = `
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          ${this.filteredPosts.map(post => `
+            <div class="group bg-white rounded-2xl p-6 shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col h-full">
+              <div class="mb-4 flex-grow">
+                <div class="text-xs font-semibold text-primary-600 mb-2 uppercase tracking-wide">
+                  ${post.category}
+                </div>
+                <h3 class="text-xl font-bold mb-3 group-hover:text-primary-600 transition-colors">
+                  ${post.title}
+                </h3>
+                <p class="text-neutral-600 text-sm mb-4 line-clamp-3">
+                  ${post.description}
+                </p>
+              </div>
+
+              <div class="flex items-center justify-between text-xs text-neutral-500 mb-4">
+                <span>By ${post.author}</span>
+                <span>${new Date(post.publishDate).toLocaleDateString('id-ID')}</span>
+              </div>
+
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex flex-wrap gap-1">
+                  ${post.tags.slice(0, 2).map((tag: string) => `
+                    <span class="px-2 py-1 bg-neutral-100 text-neutral-600 text-xs rounded">
+                      ${tag}
+                    </span>
+                  `).join('')}
+                </div>
+                <a href="/blog/${post.slug}" class="text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors">
+                  Baca →
+                </a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      // Update search stats
+      const totalResults = this.filteredPosts.length;
+      const totalPosts = this.allPosts.length;
+      const hasFilters = this.currentFilters.categories.length > 0 || 
+                        this.currentFilters.tags.length > 0 || 
+                        this.currentFilters.authors.length > 0 ||
+                        this.currentFilters.dateFrom || 
+                        this.currentFilters.dateTo;
+      
+      let statsText = `Menampilkan ${totalResults} dari ${totalPosts} artikel`;
+      if (this.searchQuery) {
+        statsText += ` untuk "${this.searchQuery}"`;
+      }
+      if (hasFilters) {
+        statsText += ` (dengan filter)`;
+      }
+
+      this.searchStats.innerHTML = statsText;
+      this.searchStats.classList.remove('hidden');
+    }
+
+    private debounce<T extends (...args: any[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
+      let timeout: number;
+      return (...args: Parameters<T>) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+  }
+
+  // Initialize when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    new AdvancedSearch();
+  });
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .advanced-search {
+    @apply w-full;
+  }
+
+  .search-input-container input::placeholder {
+    @apply text-neutral-400;
+  }
+
+  .filters-panel {
+    @apply transition-all duration-300;
+  }
+
+  .dark .advanced-search input {
+    @apply bg-neutral-800 border-neutral-700 text-neutral-100;
+  }
+
+  .dark .advanced-search input::placeholder {
+    @apply text-neutral-400;
+  }
+
+  .dark .advanced-search select {
+    @apply bg-neutral-800 border-neutral-700 text-neutral-100;
+  }
+
+  .dark .filters-panel {
+    @apply bg-neutral-900 border-neutral-700;
+  }
+
+  .dark .filters-panel label {
+    @apply text-neutral-300;
+  }
+
+  .dark .search-results .group {
+    @apply bg-neutral-900 border-neutral-700;
+  }
+
+  .dark .search-results .group h3 {
+    @apply text-neutral-100;
+  }
+
+  .dark .search-results .group p {
+    @apply text-neutral-400;
+  }
+
+  .dark .search-results .group span {
+    @apply text-neutral-400;
+  }
+
+  .dark .search-results .group .text-primary-600 {
+    @apply text-primary-400;
+  }
+
+  .dark .search-results .group .group-hover\:text-primary-600:hover {
+    @apply text-primary-300;
+  }
+
+  .dark .search-stats {
+    @apply text-neutral-400;
+  }
+</style>

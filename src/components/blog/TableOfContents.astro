@@ -1,0 +1,643 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class={`table-of-contents ${className || ''}`}>
+  <div class="toc-header">
+    <h4 class="text-lg font-semibold text-neutral-800">Daftar Isi</h4>
+    <button 
+      class="toc-toggle-btn" 
+      id="toc-toggle-btn"
+      aria-label="Toggle table of contents"
+    >
+      <svg class="toc-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </button>
+  </div>
+  
+  <nav class="toc-nav collapsed" id="toc-nav">
+    <!-- Generated dynamically by JavaScript -->
+    <div style="padding: 1rem; text-align: center; color: #6b7280; font-size: 0.875rem;">
+      Loading table of contents...
+    </div>
+  </nav>
+</div>
+
+<script>
+  function generateTOC() {
+    // Only target headings within the specific blog content card
+    const headings = document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6');
+    const tocNav = document.getElementById('toc-nav');
+    
+    if (!headings.length || !tocNav) {
+      console.log('No headings found or TOC nav not found');
+      return;
+    }
+    
+    // Clear existing TOC
+    tocNav.innerHTML = '';
+    
+    headings.forEach((heading, index) => {
+      const id = `heading-${index}`;
+      heading.id = id;
+      
+      const link = document.createElement('a');
+      link.href = `#${id}`;
+      link.textContent = heading.textContent;
+      link.className = `toc-link toc-${heading.tagName.toLowerCase()}`;
+      
+      // Add inline styles as fallback if CSS is not loaded
+      const tagName = heading.tagName.toLowerCase();
+      const level = parseInt(tagName.charAt(1));
+      
+      // Improved spacing calculation for better visual hierarchy
+      let marginLeft = 0;
+      let fontSize = '0.875rem';
+      let fontWeight = '400';
+      
+      switch(level) {
+        case 2: // H2 - Main headings
+          marginLeft = 0;
+          fontSize = '1rem';
+          fontWeight = '600';
+          break;
+        case 3: // H3 - Sub headings
+          marginLeft = 1;
+          fontSize = '0.875rem';
+          fontWeight = '500';
+          break;
+        case 4: // H4 - Sub-sub headings
+          marginLeft = 2;
+          fontSize = '0.8125rem';
+          fontWeight = '400';
+          break;
+        case 5: // H5 - Deep headings
+          marginLeft = 3;
+          fontSize = '0.75rem';
+          fontWeight = '400';
+          break;
+        case 6: // H6 - Deepest headings
+          marginLeft = 4;
+          fontSize = '0.75rem';
+          fontWeight = '400';
+          break;
+      }
+      
+      link.style.cssText = `
+        display: block;
+        // padding: 0.375rem 0.75rem;
+        // border-radius: 0.375rem;
+        font-size: ${fontSize};
+        font-weight: ${fontWeight};
+        color: #6b7280;
+        transition: all 0.2s ease;
+        position: relative;
+        margin-bottom: 0.125rem;
+        text-decoration: none;
+        width: 100%;
+        line-height: 1.5;
+        white-space: nowrap;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+        margin-left: ${marginLeft}rem;
+        // border-left: 2px solid transparent;
+      `;
+      
+      // Add click handler for smooth scroll
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.getElementById(id);
+        if (target) {
+          target.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+          
+          // Update active link
+          updateActiveTOCLink(link);
+        }
+      });
+      
+      tocNav.appendChild(link);
+    });
+    
+    // Add scroll listener to update active link with debouncing
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+    window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateActiveTOCOnScroll, 10);
+    }, { passive: true });
+    
+    console.log(`Generated TOC with ${headings.length} headings`);
+  }
+
+  function updateActiveTOCOnScroll() {
+    // Only target headings within the specific blog content card
+    const headings = document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6');
+    const tocLinks = document.querySelectorAll('.toc-link');
+
+    if (!headings.length || !tocLinks.length) {
+      console.log('TOC: No headings or links found');
+      return;
+    }
+
+    let currentHeading: Element | null = null;
+    const scrollPosition = window.scrollY + 150; // Increased offset for better detection
+    
+    // Find the current heading based on scroll position
+    headings.forEach(heading => {
+      const rect = heading.getBoundingClientRect();
+      const headingTop = rect.top + window.scrollY;
+      
+      if (headingTop <= scrollPosition) {
+        currentHeading = heading;
+      }
+    });
+    
+    // Update active states
+    tocLinks.forEach(link => {
+      link.classList.remove('active');
+      if (currentHeading && link.getAttribute('href') === `#${currentHeading.id}`) {
+        link.classList.add('active');
+        console.log(`TOC: Active heading changed to ${currentHeading.textContent}`);
+      }
+    });
+  }
+
+  function updateActiveTOCLink(activeLink: Element) {
+    const tocLinks = document.querySelectorAll('.toc-link');
+    tocLinks.forEach(link => {
+      link.classList.remove('active');
+      // Remove active styles
+      (link as HTMLElement).style.backgroundColor = '';
+      (link as HTMLElement).style.color = '';
+      (link as HTMLElement).style.fontWeight = '';
+      (link as HTMLElement).style.borderLeftColor = '';
+      (link as HTMLElement).style.transform = '';
+    });
+    
+    activeLink.classList.add('active');
+    // Add active styles inline with better visual feedback
+    (activeLink as HTMLElement).style.backgroundColor = '#f3f4f6';
+    (activeLink as HTMLElement).style.color = '#374151';
+    (activeLink as HTMLElement).style.fontWeight = '600';
+    (activeLink as HTMLElement).style.borderLeftColor = '#3b82f6';
+    (activeLink as HTMLElement).style.transform = 'translateX(2px)';
+  }
+
+  function toggleTOC() {
+    const tocNav = document.getElementById('toc-nav');
+    const toggleBtn = document.querySelector('.toc-toggle-btn');
+    
+    if (tocNav && toggleBtn) {
+      const isCollapsed = tocNav.classList.contains('collapsed');
+      
+      if (isCollapsed) {
+        // Expand
+        tocNav.classList.remove('collapsed');
+        toggleBtn.classList.add('expanded');
+      } else {
+        // Collapse
+        tocNav.classList.add('collapsed');
+        toggleBtn.classList.remove('expanded');
+      }
+    }
+  }
+
+  // Initialize TOC when DOM is ready
+  function initTOC() {
+    // Wait for CSS to be fully loaded to avoid race condition
+    const waitForCSS = () => {
+      return new Promise((resolve) => {
+        // Check if CSS is loaded by testing a computed style
+        const testElement = document.createElement('div');
+        testElement.className = 'toc-link';
+        testElement.style.display = 'none';
+        document.body.appendChild(testElement);
+        
+        const checkCSS = () => {
+          const computedStyle = window.getComputedStyle(testElement);
+          const hasStyles = computedStyle.display !== '' && computedStyle.padding !== '';
+          
+          if (hasStyles || document.readyState === 'complete') {
+            document.body.removeChild(testElement);
+            resolve(true);
+          } else {
+            setTimeout(checkCSS, 50);
+          }
+        };
+        
+        checkCSS();
+      });
+    };
+
+    // Initialize TOC after CSS is loaded
+    waitForCSS().then(() => {
+      // Additional delay to ensure Tailwind CSS is fully processed
+      setTimeout(() => {
+        generateTOC();
+        console.log('TOC initialized after CSS load');
+      }, 100);
+    });
+    
+    // Add toggle button event listener
+    const toggleBtn = document.getElementById('toc-toggle-btn');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', toggleTOC);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTOC);
+  } else {
+    initTOC();
+  }
+  
+  // Also run when window is fully loaded
+  window.addEventListener('load', () => {
+    setTimeout(generateTOC, 200);
+  });
+  
+  // Re-generate TOC if content changes (for dynamic content)
+  const observer = new MutationObserver(() => {
+    generateTOC();
+  });
+  
+  // Only observe the specific blog content card
+  const proseElement = document.querySelector('.blog-content');
+  if (proseElement) {
+    observer.observe(proseElement, { 
+      childList: true, 
+      subtree: true 
+    });
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  
+  .table-of-contents {
+    background-color: white;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .toc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+  }
+  
+  .toc-header h4 {
+    margin-bottom: 0;
+  }
+
+  .toc-toggle-btn {
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    color: var(--neutral-500);
+    transition: all 0.2s;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+.toc-toggle-btn:hover {
+    color: var(--neutral-700);
+    background-color: var(--neutral-100);
+  }
+
+  .toc-toggle-btn.expanded {
+    color: var(--neutral-700);
+    background-color: var(--neutral-100);
+  }
+  
+  .toc-toggle-btn.expanded .toc-icon {
+    transform: rotate(180deg);
+  }
+
+  .toc-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.2s;
+  }
+
+  .toc-nav {
+    overflow-y: auto;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+  
+  .toc-nav:not(.collapsed) {
+    max-height: 24rem;
+  }
+
+  .toc-nav.collapsed {
+    max-height: 0;
+    overflow: hidden;
+    margin-top: 0;
+  }
+
+  .toc-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--neutral-600);
+    transition: all 0.2s;
+    position: relative;
+    margin-bottom: 0.25rem;
+    text-decoration: none;
+    width: 100%;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .toc-link:hover {
+    color: var(--neutral-800);
+    background-color: var(--neutral-100);
+  }
+
+  .toc-link.active {
+    color: var(--primary-700);
+    background-color: var(--primary-50);
+    font-weight: 600;
+    border-left: 4px solid var(--primary-500);
+    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.1);
+    transform: translateX(2px);
+  }
+
+  /* H2 - Level 1 (Main headings) */
+  .toc-h2 {
+    font-weight: 600;
+    font-size: 1rem;
+    padding-left: 0;
+    margin-left: 0;
+    border-left: 3px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .toc-h2:hover {
+    border-left-color: #6b7280;
+  }
+
+  .toc-h2.active {
+    background-color: var(--primary-50);
+    color: var(--primary-700);
+    font-weight: 700;
+    border-left-color: var(--primary-500);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+    transform: translateX(2px);
+  }
+
+  /* H3 - Level 2 (Sub headings) */
+  .toc-h3 {
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding-left: 0;
+    margin-left: 1.5rem;
+    border-left: 2px solid transparent;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .toc-h3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0.25rem;
+    height: 0.25rem;
+    background-color: var(--neutral-400);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .toc-h3:hover {
+    border-left-color: #9ca3af;
+  }
+
+  .toc-h3.active {
+    background-color: var(--secondary-50);
+    color: var(--secondary-700);
+    font-weight: 600;
+    border-left-color: var(--secondary-500);
+    box-shadow: 0 2px 6px rgba(20, 184, 166, 0.12);
+    transform: translateX(2px);
+  }
+
+  .toc-h3.active::before {
+    background-color: var(--secondary-600);
+    box-shadow: 0 0 4px rgba(20, 184, 166, 0.3);
+  }
+
+  /* H4 - Level 3 (Sub-sub headings) */
+  .toc-h4 {
+    font-weight: 400;
+    font-size: 0.75rem;
+    padding-left: 0;
+    margin-left: 3rem;
+    border-left: 1px solid transparent;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .toc-h4::before {
+    content: '';
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    width: 0.125rem;
+    height: 0.125rem;
+    background-color: var(--neutral-300);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .toc-h4:hover {
+    border-left-color: #d1d5db;
+  }
+
+  .toc-h4.active {
+    background-color: var(--accent-50);
+    color: var(--accent-700);
+    font-weight: 600;
+    border-left-color: var(--accent-500);
+    box-shadow: 0 2px 4px rgba(168, 85, 247, 0.1);
+    transform: translateX(2px);
+  }
+
+  .toc-h4.active::before {
+    background-color: var(--accent-600);
+    box-shadow: 0 0 3px rgba(168, 85, 247, 0.25);
+  }
+
+  /* H5 - Level 4 (Deep sub headings) */
+  .toc-h5 {
+    font-weight: 400;
+    font-size: 0.75rem;
+    padding-left: 0;
+    margin-left: 4rem;
+    border-left: 1px solid transparent;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .toc-h5::before {
+    content: '';
+    position: absolute;
+    left: 2rem;
+    top: 50%;
+    width: 0.125rem;
+    height: 0.125rem;
+    background-color: var(--neutral-200);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .toc-h5:hover {
+    border-left-color: #e5e7eb;
+  }
+
+  .toc-h5.active {
+    background-color: var(--success-50);
+    color: var(--success-700);
+    font-weight: 600;
+    border-left-color: var(--success-500);
+    box-shadow: 0 2px 4px rgba(34, 197, 94, 0.1);
+    transform: translateX(2px);
+  }
+
+  .toc-h5.active::before {
+    background-color: var(--success-600);
+    box-shadow: 0 0 3px rgba(34, 197, 94, 0.25);
+  }
+
+  /* H6 - Level 5 (Deepest headings) */
+  .toc-h6 {
+    font-weight: 400;
+    font-size: 0.75rem;
+    padding-left: 0;
+    margin-left: 5rem;
+    border-left: 1px solid transparent;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .toc-h6::before {
+    content: '';
+    position: absolute;
+    left: 2.5rem;
+    top: 50%;
+    width: 0.125rem;
+    height: 0.125rem;
+    background-color: var(--neutral-200);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .toc-h6:hover {
+    border-left-color: #f3f4f6;
+  }
+
+  .toc-h6.active {
+    background-color: var(--warning-50);
+    color: var(--warning-700);
+    font-weight: 600;
+    border-left-color: var(--warning-500);
+    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.1);
+    transform: translateX(2px);
+  }
+
+  .toc-h6.active::before {
+    background-color: var(--warning-600);
+    box-shadow: 0 0 3px rgba(245, 158, 11, 0.25);
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .table-of-contents {
+      position: sticky;
+      top: 0;
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+    }
+    
+    .toc-nav {
+      max-height: 16rem;
+    }
+
+    /* Reduce indentation on mobile for better space usage */
+    .toc-h2 {
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    .toc-h3 {
+      margin-left: 1rem;
+    }
+
+    .toc-h3::before {
+      left: 0;
+    }
+
+    .toc-h4 {
+      padding-left: 0;
+      margin-left: 2rem;
+    }
+
+    .toc-h4::before {
+      left: 1rem;
+    }
+
+    .toc-h5 {
+      padding-left: 0;
+      margin-left: 3rem;
+    }
+
+    .toc-h5::before {
+      left: 1.5rem;
+    }
+
+    .toc-h6 {
+      padding-left: 0;
+      margin-left: 4rem;
+    }
+
+    .toc-h6::before {
+      left: 2rem;
+    }
+  }
+
+  /* Scrollbar styling */
+  .toc-nav::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+
+  .toc-nav::-webkit-scrollbar-track {
+    background-color: var(--neutral-100);
+    border-radius: 9999px;
+  }
+
+  .toc-nav::-webkit-scrollbar-thumb {
+    background-color: var(--neutral-300);
+    border-radius: 9999px;
+}
+
+.toc-nav::-webkit-scrollbar-thumb:hover {
+    background-color: var(--neutral-400);
+  }
+</style>

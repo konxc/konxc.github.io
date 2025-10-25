@@ -1,0 +1,293 @@
+---
+// Tag Cloud Component
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+
+// Count tags
+const tagCounts: { [key: string]: number } = {};
+posts.forEach(post => {
+  post.data.tags.forEach(tag => {
+    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+  });
+});
+
+// Sort tags by count and get top 20
+const sortedTags = Object.entries(tagCounts)
+  .sort(([,a], [,b]) => b - a)
+  .slice(0, 20);
+
+export interface Props {
+  class?: string;
+  maxTags?: number;
+  showCount?: boolean;
+}
+
+const { class: className, maxTags = 20, showCount = true } = Astro.props;
+
+const displayTags = sortedTags.slice(0, maxTags);
+---
+
+<div class={`tag-cloud ${className || ''}`}>
+  <div class="tag-cloud-header">
+    <h3 class="text-xl font-bold text-neutral-800">Topik Populer</h3>
+    <p class="text-sm text-neutral-600">Jelajahi artikel berdasarkan topik yang paling banyak dibahas</p>
+  </div>
+  
+  <div class="tag-cloud-content">
+    <div class="tags-container" id="tags-container">
+      {displayTags.map(([tag, count]) => {
+        // Calculate size based on count (relative to max count)
+        const maxCount = Math.max(...displayTags.map(([,c]) => c));
+        const size = Math.max(0.8, Math.min(1.5, count / maxCount * 1.5));
+        
+        return (
+          <a 
+            href={`/blog/tag/${tag}`} 
+            class="tag-item"
+            data-count={count}
+            data-size={size}
+            style={`--tag-size: ${size}`}
+          >
+            <span class="tag-text">{tag}</span>
+            {showCount && (
+              <span class="tag-count">({count})</span>
+            )}
+          </a>
+        );
+      })}
+    </div>
+    
+    {sortedTags.length > maxTags && (
+      <div class="tag-cloud-footer">
+        <button class="show-more-tags" id="show-more-tags">
+          Lihat Semua Topik ({sortedTags.length})
+        </button>
+      </div>
+    )}
+  </div>
+</div>
+
+<script>
+  class TagCloud {
+    private showMoreBtn: HTMLButtonElement | null = null;
+    private tagsContainer: HTMLElement | null = null;
+    private allTags: Array<[string, number]> = [];
+    private displayedTags: Array<[string, number]> = [];
+    private maxDisplayed: number = 20;
+    private isExpanded: boolean = false;
+
+    constructor() {
+      this.initializeElements();
+      this.loadTags();
+      this.setupEventListeners();
+    }
+
+    private initializeElements(): void {
+      this.showMoreBtn = document.getElementById('show-more-tags') as HTMLButtonElement;
+      this.tagsContainer = document.getElementById('tags-container');
+    }
+
+    private loadTags(): void {
+      // Load tags from the page data
+      const tagElements = document.querySelectorAll('.tag-item');
+      this.allTags = Array.from(tagElements).map(el => {
+        const tagText = el.querySelector('.tag-text')?.textContent || '';
+        const count = parseInt(el.getAttribute('data-count') || '0');
+        return [tagText, count];
+      });
+      
+      this.displayedTags = this.allTags.slice(0, this.maxDisplayed);
+    }
+
+    private setupEventListeners(): void {
+      this.showMoreBtn?.addEventListener('click', () => {
+        this.toggleExpanded();
+      });
+    }
+
+    private toggleExpanded(): void {
+      this.isExpanded = !this.isExpanded;
+      
+      if (this.isExpanded) {
+        this.showAllTags();
+      } else {
+        this.showLimitedTags();
+      }
+    }
+
+    private showAllTags(): void {
+      if (!this.tagsContainer || !this.showMoreBtn) return;
+
+      // Clear current tags
+      this.tagsContainer.innerHTML = '';
+
+      // Add all tags
+      this.allTags.forEach(([tag, count]) => {
+        const maxCount = Math.max(...this.allTags.map(([,c]) => c));
+        const size = Math.max(0.8, Math.min(1.5, count / maxCount * 1.5));
+        
+        const tagElement = document.createElement('a');
+        tagElement.href = `/blog/tag/${tag}`;
+        tagElement.className = 'tag-item';
+        tagElement.setAttribute('data-count', count.toString());
+        tagElement.setAttribute('data-size', size.toString());
+        tagElement.style.setProperty('--tag-size', size.toString());
+        
+        tagElement.innerHTML = `
+          <span class="tag-text">${tag}</span>
+          <span class="tag-count">(${count})</span>
+        `;
+        
+        this.tagsContainer.appendChild(tagElement);
+      });
+
+      // Update button text
+      this.showMoreBtn.textContent = 'Tampilkan Lebih Sedikit';
+    }
+
+    private showLimitedTags(): void {
+      if (!this.tagsContainer || !this.showMoreBtn) return;
+
+      // Clear current tags
+      this.tagsContainer.innerHTML = '';
+
+      // Add limited tags
+      this.displayedTags.forEach(([tag, count]) => {
+        const maxCount = Math.max(...this.displayedTags.map(([,c]) => c));
+        const size = Math.max(0.8, Math.min(1.5, count / maxCount * 1.5));
+        
+        const tagElement = document.createElement('a');
+        tagElement.href = `/blog/tag/${tag}`;
+        tagElement.className = 'tag-item';
+        tagElement.setAttribute('data-count', count.toString());
+        tagElement.setAttribute('data-size', size.toString());
+        tagElement.style.setProperty('--tag-size', size.toString());
+        
+        tagElement.innerHTML = `
+          <span class="tag-text">${tag}</span>
+          <span class="tag-count">(${count})</span>
+        `;
+        
+        this.tagsContainer.appendChild(tagElement);
+      });
+
+      // Update button text
+      this.showMoreBtn.textContent = `Lihat Semua Topik (${this.allTags.length})`;
+    }
+  }
+
+  // Initialize tag cloud when DOM is ready
+  function initTagCloud(): void {
+    new TagCloud();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTagCloud);
+  } else {
+    initTagCloud();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .tag-cloud {
+    @apply bg-white rounded-2xl p-6 shadow-lg border border-neutral-100;
+  }
+
+  .tag-cloud-header {
+    @apply mb-6;
+  }
+
+  .tag-cloud-content {
+    @apply space-y-4;
+  }
+
+  .tags-container {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .tag-item {
+    @apply inline-flex items-center gap-1 px-3 py-2 bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-700 rounded-lg text-sm font-medium hover:from-primary-100 hover:to-secondary-100 hover:text-primary-800 transition-all duration-200 hover:transform hover:-translate-y-0.5 hover:shadow-sm;
+    font-size: calc(0.875rem * var(--tag-size, 1));
+  }
+
+  .tag-text {
+    @apply font-medium;
+  }
+
+  .tag-count {
+    @apply text-xs opacity-75;
+  }
+
+  .tag-cloud-footer {
+    @apply text-center pt-4 border-t border-neutral-100;
+  }
+
+  .show-more-tags {
+    @apply px-4 py-2 bg-neutral-100 text-neutral-600 rounded-lg text-sm font-medium hover:bg-neutral-200 transition-colors;
+  }
+
+  /* Dark mode styles */
+  .dark .tag-cloud {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .tag-cloud-header h3 {
+    @apply text-neutral-100;
+  }
+
+  .dark .tag-cloud-header p {
+    @apply text-neutral-400;
+  }
+
+  .dark .tag-item {
+    @apply from-primary-900 to-secondary-900 text-primary-300 hover:from-primary-800 hover:to-secondary-800 hover:text-primary-200;
+  }
+
+  .dark .tag-cloud-footer {
+    @apply border-neutral-700;
+  }
+
+  .dark .show-more-tags {
+    @apply bg-neutral-700 text-neutral-300 hover:bg-neutral-600;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .tag-cloud {
+      @apply p-4;
+    }
+    
+    .tags-container {
+      @apply gap-1.5;
+    }
+    
+    .tag-item {
+      @apply px-2 py-1.5 text-xs;
+    }
+  }
+
+  /* Animation for tag hover */
+  .tag-item {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tag-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Size variations based on count */
+  .tag-item[data-size="1.5"] {
+    @apply text-base;
+  }
+
+  .tag-item[data-size="1.2"] {
+    @apply text-sm;
+  }
+
+  .tag-item[data-size="0.8"] {
+    @apply text-xs;
+  }
+</style>

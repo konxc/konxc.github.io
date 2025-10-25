@@ -1,0 +1,318 @@
+---
+// Reading Analytics Component
+export interface Props {
+  class?: string;
+  postSlug?: string;
+  trackProgress?: boolean;
+  trackTime?: boolean;
+  trackScroll?: boolean;
+}
+
+const { 
+  class: className, 
+  postSlug = '',
+  trackProgress = true,
+  trackTime = true,
+  trackScroll = true
+} = Astro.props;
+---
+
+<div class={`reading-analytics ${className || ''}`} data-post-slug={postSlug}>
+  <!-- Analytics data will be tracked automatically -->
+</div>
+
+<script>
+  class ReadingAnalytics {
+    private postSlug: string;
+    private startTime: number;
+    private lastActivity: number;
+    private readingProgress: number = 0;
+    private scrollDepth: number = 0;
+    private timeOnPage: number = 0;
+    private isActive: boolean = true;
+    private activityTimeout: number | null = null;
+    private progressInterval: number | null = null;
+    private timeInterval: number | null = null;
+
+    constructor() {
+      this.postSlug = this.getPostSlug();
+      this.startTime = Date.now();
+      this.lastActivity = Date.now();
+      
+      this.initializeTracking();
+      this.setupEventListeners();
+    }
+
+    private getPostSlug(): string {
+      const analyticsElement = document.querySelector('.reading-analytics');
+      return analyticsElement?.getAttribute('data-post-slug') || 
+             window.location.pathname.split('/').pop() || '';
+    }
+
+    private initializeTracking(): void {
+      // Track page view
+      this.trackEvent('page_view', {
+        post_slug: this.postSlug,
+        timestamp: new Date().toISOString(),
+        referrer: document.referrer,
+        user_agent: navigator.userAgent
+      });
+
+      // Start progress tracking
+      if (this.trackProgress) {
+        this.startProgressTracking();
+      }
+
+      // Start time tracking
+      if (this.trackTime) {
+        this.startTimeTracking();
+      }
+
+      // Start scroll tracking
+      if (this.trackScroll) {
+        this.startScrollTracking();
+      }
+    }
+
+    private setupEventListeners(): void {
+      // Track user activity
+      ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+        document.addEventListener(event, () => {
+          this.updateActivity();
+        }, { passive: true });
+      });
+
+      // Track page visibility changes
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          this.pauseTracking();
+        } else {
+          this.resumeTracking();
+        }
+      });
+
+      // Track before page unload
+      window.addEventListener('beforeunload', () => {
+        this.trackEvent('page_exit', {
+          post_slug: this.postSlug,
+          time_on_page: this.timeOnPage,
+          reading_progress: this.readingProgress,
+          scroll_depth: this.scrollDepth
+        });
+      });
+
+      // Track clicks on links
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const link = target.closest('a');
+        if (link) {
+          this.trackEvent('link_click', {
+            post_slug: this.postSlug,
+            link_url: link.href,
+            link_text: link.textContent?.trim() || ''
+          });
+        }
+      });
+    }
+
+    private startProgressTracking(): void {
+      this.progressInterval = setInterval(() => {
+        this.updateReadingProgress();
+      }, 1000); // Update every second
+    }
+
+    private startTimeTracking(): void {
+      this.timeInterval = setInterval(() => {
+        if (this.isActive) {
+          this.timeOnPage += 1;
+          this.trackEvent('time_update', {
+            post_slug: this.postSlug,
+            time_on_page: this.timeOnPage,
+            reading_progress: this.readingProgress
+          });
+        }
+      }, 1000); // Update every second
+    }
+
+    private startScrollTracking(): void {
+      let lastScrollDepth = 0;
+      
+      window.addEventListener('scroll', () => {
+        const scrollDepth = this.calculateScrollDepth();
+        
+        // Track significant scroll depth changes (every 25%)
+        if (Math.floor(scrollDepth / 25) > Math.floor(lastScrollDepth / 25)) {
+          this.trackEvent('scroll_depth', {
+            post_slug: this.postSlug,
+            scroll_depth: scrollDepth,
+            reading_progress: this.readingProgress
+          });
+        }
+        
+        lastScrollDepth = scrollDepth;
+        this.scrollDepth = scrollDepth;
+      }, { passive: true });
+    }
+
+    private updateReadingProgress(): void {
+      // Only target the specific blog content card, not the entire page
+      const article = document.querySelector('.blog-content');
+      if (!article) return;
+
+      const articleRect = article.getBoundingClientRect();
+      const articleTop = articleRect.top + window.pageYOffset;
+      const articleHeight = articleRect.height;
+      const windowHeight = window.innerHeight;
+      const scrollTop = window.pageYOffset;
+
+      let progress = 0;
+      if (scrollTop >= articleTop) {
+        const scrolledThrough = Math.min(scrollTop - articleTop + windowHeight, articleHeight);
+        progress = Math.min(scrolledThrough / articleHeight, 1);
+      }
+
+      this.readingProgress = Math.round(progress * 100);
+
+      // Track significant progress milestones
+      if (this.readingProgress >= 25 && this.readingProgress < 30) {
+        this.trackEvent('reading_milestone', {
+          post_slug: this.postSlug,
+          milestone: '25%',
+          reading_progress: this.readingProgress
+        });
+      } else if (this.readingProgress >= 50 && this.readingProgress < 55) {
+        this.trackEvent('reading_milestone', {
+          post_slug: this.postSlug,
+          milestone: '50%',
+          reading_progress: this.readingProgress
+        });
+      } else if (this.readingProgress >= 75 && this.readingProgress < 80) {
+        this.trackEvent('reading_milestone', {
+          post_slug: this.postSlug,
+          milestone: '75%',
+          reading_progress: this.readingProgress
+        });
+      } else if (this.readingProgress >= 95) {
+        this.trackEvent('reading_milestone', {
+          post_slug: this.postSlug,
+          milestone: 'completed',
+          reading_progress: this.readingProgress
+        });
+      }
+    }
+
+    private calculateScrollDepth(): number {
+      // Only target the specific blog content card, not the entire page
+      const article = document.querySelector('.blog-content');
+      if (!article) return 0;
+
+      const articleRect = article.getBoundingClientRect();
+      const articleTop = articleRect.top + window.pageYOffset;
+      const articleHeight = articleRect.height;
+      const windowHeight = window.innerHeight;
+      const scrollTop = window.pageYOffset;
+
+      const scrolledThrough = Math.min(scrollTop - articleTop + windowHeight, articleHeight);
+      return Math.round((scrolledThrough / articleHeight) * 100);
+    }
+
+    private updateActivity(): void {
+      this.lastActivity = Date.now();
+      
+      // Clear existing timeout
+      if (this.activityTimeout) {
+        clearTimeout(this.activityTimeout);
+      }
+
+      // Set new timeout for inactivity
+      this.activityTimeout = setTimeout(() => {
+        this.pauseTracking();
+      }, 30000); // 30 seconds of inactivity
+    }
+
+    private pauseTracking(): void {
+      this.isActive = false;
+      this.trackEvent('tracking_paused', {
+        post_slug: this.postSlug,
+        time_on_page: this.timeOnPage,
+        reading_progress: this.readingProgress
+      });
+    }
+
+    private resumeTracking(): void {
+      this.isActive = true;
+      this.trackEvent('tracking_resumed', {
+        post_slug: this.postSlug,
+        time_on_page: this.timeOnPage,
+        reading_progress: this.readingProgress
+      });
+    }
+
+    private trackEvent(eventName: string, data: any): void {
+      // Send to Google Analytics if available
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', eventName, {
+          event_category: 'reading_analytics',
+          event_label: this.postSlug,
+          ...data
+        });
+      }
+
+      // Send to custom analytics endpoint
+      this.sendToAnalytics(eventName, data);
+
+      // Log to console in development
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`Analytics Event: ${eventName}`, data);
+      }
+    }
+
+    private async sendToAnalytics(eventName: string, data: any): Promise<void> {
+      try {
+        const response = await fetch('/api/analytics', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            event: eventName,
+            post_slug: this.postSlug,
+            timestamp: new Date().toISOString(),
+            data: data
+          })
+        });
+
+        if (!response.ok) {
+          console.warn(`Analytics API returned ${response.status}: ${response.statusText}`);
+        }
+      } catch (error) {
+        // Silently fail - analytics should not break the user experience
+        console.debug('Analytics endpoint not available:', error);
+      }
+    }
+
+    public destroy(): void {
+      if (this.progressInterval) clearInterval(this.progressInterval);
+      if (this.timeInterval) clearInterval(this.timeInterval);
+      if (this.activityTimeout) clearTimeout(this.activityTimeout);
+    }
+  }
+
+  // Initialize analytics when DOM is ready
+  function initReadingAnalytics(): void {
+    new ReadingAnalytics();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReadingAnalytics);
+  } else {
+    initReadingAnalytics();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .reading-analytics {
+    @apply hidden; /* Hidden component, only for tracking */
+  }
+</style>

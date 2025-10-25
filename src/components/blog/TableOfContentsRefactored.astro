@@ -1,0 +1,343 @@
+---
+// TOC Component - Server-side generated approach
+export interface Props {
+  class?: string;
+  content?: string; // HTML content to parse
+}
+
+const { class: className, content } = Astro.props;
+
+// Server-side TOC generation
+function generateTOCFromContent(htmlContent: string) {
+  if (!htmlContent) return [];
+  
+  // Parse headings from HTML content
+  const headingRegex = /<h([2-6])[^>]*>(.*?)<\/h[2-6]>/gi;
+  const headings: Array<{level: number, text: string, id: string}> = [];
+  let match;
+  let index = 0;
+  
+  while ((match = headingRegex.exec(htmlContent)) !== null) {
+    const level = parseInt(match[1]);
+    const text = match[2].replace(/<[^>]*>/g, '').trim(); // Remove HTML tags
+    const id = `heading-${index}`;
+    
+    headings.push({
+      level,
+      text,
+      id
+    });
+    index++;
+  }
+  
+  return headings;
+}
+
+// Generate TOC data
+const tocItems = content ? generateTOCFromContent(content) : [];
+
+// TOC state management
+const tocState = {
+  isExpanded: true,
+  activeId: '',
+  items: tocItems
+};
+---
+
+<div class={`table-of-contents ${className || ''}`}>
+  <div class="toc-header">
+    <h4 class="text-lg font-semibold mb-4 text-neutral-800">Daftar Isi</h4>
+    <button 
+      class="toc-toggle-btn" 
+      id="toc-toggle-btn"
+      aria-label="Toggle table of contents"
+      aria-expanded={tocState.isExpanded}
+    >
+      <svg class="toc-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+  
+  <nav class="toc-nav" id="toc-nav">
+    {tocItems.length > 0 ? (
+      <ul class="toc-list">
+        {tocItems.map((item) => (
+          <li class={`toc-item toc-h${item.level}`}>
+            <a 
+              href={`#${item.id}`}
+              class="toc-link"
+              data-level={item.level}
+              data-id={item.id}
+            >
+              {item.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div class="toc-empty">
+        <p class="text-neutral-500 text-sm">Tidak ada heading yang ditemukan</p>
+      </div>
+    )}
+  </nav>
+</div>
+
+<style>
+  .table-of-contents {
+    background-color: white;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .toc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .toc-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+  }
+
+  .toc-toggle-btn:hover {
+    background-color: #f3f4f6;
+  }
+
+  .toc-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.2s ease;
+  }
+
+  .toc-toggle-btn.expanded .toc-icon {
+    transform: rotate(180deg);
+  }
+
+  .toc-nav {
+    max-height: 24rem;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .toc-nav.collapsed {
+    max-height: 0;
+    overflow: hidden;
+    margin-top: 0;
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc-item {
+    margin-bottom: 0.125rem;
+  }
+
+  .toc-link {
+    display: block;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    color: #6b7280;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 2px solid transparent;
+  }
+
+  .toc-link:hover {
+    color: #374151;
+    background-color: #f9fafb;
+  }
+
+  .toc-link.active {
+    color: #1f2937;
+    background-color: #f3f4f6;
+    border-left-color: #3b82f6;
+    font-weight: 500;
+  }
+
+  /* Level-specific styling */
+  .toc-h2 .toc-link {
+    margin-left: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .toc-h3 .toc-link {
+    margin-left: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .toc-h4 .toc-link {
+    margin-left: 2rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
+  }
+
+  .toc-h5 .toc-link {
+    margin-left: 3rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  .toc-h6 .toc-link {
+    margin-left: 4rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  .toc-empty {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  /* Active state enhancements */
+  .toc-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #3b82f6;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .toc-h2.active .toc-link {
+    color: #1e40af;
+    background-color: #dbeafe;
+    transform: translateX(2px);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+  }
+
+  .toc-h3.active .toc-link {
+    color: #059669;
+    background-color: #d1fae5;
+    transform: translateX(2px);
+    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.1);
+  }
+
+  .toc-h4.active .toc-link {
+    color: #dc2626;
+    background-color: #fee2e2;
+    transform: translateX(2px);
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+  }
+
+  .toc-h5.active .toc-link {
+    color: #7c3aed;
+    background-color: #ede9fe;
+    transform: translateX(2px);
+    box-shadow: 0 2px 4px rgba(124, 58, 237, 0.1);
+  }
+
+  .toc-h6.active .toc-link {
+    color: #ea580c;
+    background-color: #fed7aa;
+    transform: translateX(2px);
+    box-shadow: 0 2px 4px rgba(234, 88, 12, 0.1);
+  }
+</style>
+
+<script>
+  // Simplified client-side functionality
+  function initTOC() {
+    const tocNav = document.getElementById('toc-nav');
+    const toggleBtn = document.getElementById('toc-toggle-btn');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    
+    if (!tocNav || !toggleBtn) return;
+
+    // Toggle functionality
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = tocNav.classList.contains('collapsed');
+      
+      if (isExpanded) {
+        tocNav.classList.remove('collapsed');
+        toggleBtn.classList.add('expanded');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        tocNav.classList.add('collapsed');
+        toggleBtn.classList.remove('expanded');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Active link detection
+    function updateActiveLink() {
+      const headings = document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6');
+      let activeId = '';
+
+      headings.forEach((heading) => {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top <= 100) {
+          activeId = heading.id;
+        }
+      });
+
+      // Update active states
+      tocLinks.forEach((link) => {
+        const linkId = link.getAttribute('data-id');
+        const linkElement = link as HTMLElement;
+        
+        if (linkId === activeId) {
+          linkElement.classList.add('active');
+        } else {
+          linkElement.classList.remove('active');
+        }
+      });
+    }
+
+    // Smooth scroll for TOC links
+    tocLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href')?.substring(1);
+        const targetElement = document.getElementById(targetId || '');
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Scroll event listener
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+    window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateActiveLink, 100);
+    });
+
+    // Initial update
+    updateActiveLink();
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTOC);
+  } else {
+    initTOC();
+  }
+</script>

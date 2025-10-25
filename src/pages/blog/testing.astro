@@ -1,0 +1,401 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import SocialShare from "../../components/blog/SocialShare.astro";
+import ReadingProgress from "../../components/blog/ReadingProgress.astro";
+import TableOfContents from "../../components/blog/TableOfContents.astro";
+import DarkModeToggle from "../../components/blog/DarkModeToggle.astro";
+import LikeButton from "../../components/blog/LikeButton.astro";
+import InlineLikeButton from "../../components/blog/InlineLikeButton.astro";
+import AutoInlineLikeButton from "../../components/blog/AutoInlineLikeButton.astro";
+import NewsletterSignup from "../../components/blog/NewsletterSignup.astro";
+import NewsletterSection from "../../components/blog/NewsletterSection.astro";
+---
+
+<MainLayout
+  title="Testing Page for Playwright"
+  description="This page is used for testing components with Playwright"
+>
+  <!-- Reading Progress Indicator -->
+  <ReadingProgress />
+
+  <!-- Blog Post Header -->
+  <section class="section bg-gradient-to-br from-primary-50 to-secondary-50">
+    <div class="container">
+      <div class="mx-auto max-w-4xl">
+        <!-- Dark Mode Toggle -->
+        <div class="mb-6 flex justify-end">
+          <DarkModeToggle />
+        </div>
+
+        <div class="mb-8 text-center">
+          <div
+            class="mb-4 text-sm font-semibold uppercase tracking-wide text-primary-600"
+          >
+            Testing
+          </div>
+          <h1 class="mb-6 text-4xl font-bold lg:text-5xl">
+            Testing Page for Playwright
+          </h1>
+          <p class="mb-8 text-xl text-neutral-600">
+            This page contains various components for testing with Playwright
+            automation.
+          </p>
+
+          <div
+            class="mb-8 flex items-center justify-center gap-6 text-sm text-neutral-500"
+          >
+            <div class="flex items-center gap-2">
+              <span
+                class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 font-semibold text-primary-600"
+              >
+                T
+              </span>
+              <span>By Test Author</span>
+            </div>
+            <span>•</span>
+            <span>2024-01-01</span>
+            <span>•</span>
+            <span>5 min read</span>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-2">
+            <span
+              class="rounded-full bg-white px-3 py-1 text-sm text-primary-600 shadow-sm"
+            >
+              #testing
+            </span>
+            <span
+              class="rounded-full bg-white px-3 py-1 text-sm text-primary-600 shadow-sm"
+            >
+              #playwright
+            </span>
+            <span
+              class="rounded-full bg-white px-3 py-1 text-sm text-primary-600 shadow-sm"
+            >
+              #automation
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Post Content -->
+  <section class="section bg-white">
+    <div class="container">
+      <div class="mx-auto max-w-6xl">
+        <div class="grid gap-8 lg:grid-cols-4">
+          <!-- Main Content -->
+          <div class="lg:col-span-3">
+            <div
+              class="prose prose-lg blog-content max-w-none hover:translate-y-0"
+            >
+              <!-- Reading Progress Bar -->
+              <ReadingProgress />
+
+              <!-- Test Content with Various Heading Levels -->
+              <h2 id="heading-0">Main Heading Level 2</h2>
+              <p>
+                This is a test paragraph under the main heading. It contains
+                some content to make the page more realistic for testing
+                purposes.
+              </p>
+
+              <!-- Inline Like Button Example -->
+              <InlineLikeButton
+                postSlug="testing"
+                variant="card"
+                showText={true}
+              />
+
+              <h3 id="heading-1">Sub Heading Level 3</h3>
+              <p>
+                This is content under a sub heading. It helps test the table of
+                contents functionality and reading progress tracking.
+              </p>
+
+              <h4 id="heading-2">Sub-sub Heading Level 4</h4>
+              <p>
+                This is content under a sub-sub heading. It tests the deeper
+                levels of the table of contents hierarchy.
+              </p>
+
+              <h2 id="heading-3">Another Main Heading</h2>
+              <p>
+                This is another main heading to test multiple H2 elements in the
+                table of contents.
+              </p>
+
+              <!-- Another Inline Like Button -->
+              <InlineLikeButton
+                postSlug="testing"
+                variant="minimal"
+                showText={false}
+              />
+
+              <h3 id="heading-4">Another Sub Heading</h3>
+              <p>This is another sub heading to test multiple H3 elements.</p>
+
+              <h5 id="heading-5">Deep Heading Level 5</h5>
+              <p>
+                This is a deep heading to test H5 level in the table of
+                contents.
+              </p>
+
+              <h6 id="heading-6">Deepest Heading Level 6</h6>
+              <p>
+                This is the deepest heading to test H6 level in the table of
+                contents.
+              </p>
+
+              <h2 id="heading-7">Final Main Heading</h2>
+              <p>
+                This is the final main heading to test the complete hierarchy
+                and ensure all levels work correctly.
+              </p>
+
+              <!-- More content to make scrolling meaningful -->
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </p>
+
+              <p>
+                Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt
+                mollit anim id est laborum.
+              </p>
+
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+                quae ab illo inventore veritatis et quasi architecto beatae
+                vitae dicta sunt explicabo.
+              </p>
+
+              <p>
+                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
+                aut fugit, sed quia consequuntur magni dolores eos qui ratione
+                voluptatem sequi nesciunt.
+              </p>
+
+              <p>
+                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
+                consectetur, adipisci velit, sed quia non numquam eius modi
+                tempora incidunt ut labore et dolore magnam aliquam quaerat
+                voluptatem.
+              </p>
+
+              <p>
+                Ut enim ad minima veniam, quis nostrum exercitationem ullam
+                corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
+                consequatur? Quis autem vel eum iure reprehenderit qui in ea
+                voluptate velit esse quam nihil molestiae consequatur.
+              </p>
+
+              <p>
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                blanditiis praesentium voluptatum deleniti atque corrupti quos
+                dolores et quas molestias excepturi sint occaecati cupiditate
+                non provident.
+              </p>
+
+              <p>
+                Similique sunt in culpa qui officia deserunt mollitia animi, id
+                est laborum et dolorum fuga. Et harum quidem rerum facilis est
+                et expedita distinctio.
+              </p>
+
+              <p>
+                Nam libero tempore, cum soluta nobis est eligendi optio cumque
+                nihil impedit quo minus id quod maxime placeat facere possimus,
+                omnis voluptas assumenda est, omnis dolor repellendus.
+              </p>
+
+              <p>
+                Temporibus autem quibusdam et aut officiis debitis aut rerum
+                necessitatibus saepe eveniet ut et voluptates repudiandae sint
+                et molestiae non recusandae.
+              </p>
+
+              <p>
+                Itaque earum rerum hic tenetur a sapiente delectus, ut aut
+                reiciendis voluptatibus maiores alias consequatur aut
+                perferendis doloribus asperiores repellat.
+              </p>
+
+              <!-- Auto Inline Like Button - will automatically insert like buttons between paragraphs -->
+              <AutoInlineLikeButton
+                postSlug="testing"
+                contentSelector=".blog-content"
+                insertFrequency={3}
+                variant="card"
+                showText={true}
+              />
+            </div>
+
+            <!-- Main Like Button -->
+            <div class="mt-8">
+              <LikeButton
+                postSlug="testing"
+                position="center"
+                variant="card"
+                size="lg"
+                showText={true}
+                showCount={true}
+              />
+            </div>
+
+            <!-- Newsletter Signup Examples -->
+            <div class="mt-12">
+              <h3 class="mb-6 text-xl font-bold">Newsletter Signup Examples</h3>
+
+              <!-- Default Variant -->
+              <div class="mb-8">
+                <h4 class="mb-4 text-lg font-semibold">Default Variant</h4>
+                <NewsletterSignup
+                  variant="default"
+                  size="md"
+                  showIcon={true}
+                  showDescription={true}
+                />
+              </div>
+
+              <!-- Card Variant -->
+              <div class="mb-8">
+                <h4 class="mb-4 text-lg font-semibold">Card Variant</h4>
+                <NewsletterSignup
+                  variant="card"
+                  size="md"
+                  showIcon={true}
+                  showDescription={true}
+                />
+              </div>
+
+              <!-- Gradient Variant -->
+              <div class="mb-8">
+                <h4 class="mb-4 text-lg font-semibold">Gradient Variant</h4>
+                <NewsletterSignup
+                  variant="gradient"
+                  size="md"
+                  showIcon={true}
+                  showDescription={true}
+                />
+              </div>
+
+              <!-- Minimal Variant -->
+              <div class="mb-8">
+                <h4 class="mb-4 text-lg font-semibold">Minimal Variant</h4>
+                <NewsletterSignup
+                  variant="minimal"
+                  size="sm"
+                  showIcon={false}
+                  showDescription={true}
+                />
+              </div>
+            </div>
+
+            <!-- Newsletter Section Examples -->
+            <div class="mt-12">
+              <h3 class="mb-6 text-xl font-bold">
+                Newsletter Section Examples
+              </h3>
+
+              <!-- Card Variant -->
+              <div class="mb-8">
+                <h4 class="mb-4 text-lg font-semibold">
+                  Card Variant (Used in Blog)
+                </h4>
+                <NewsletterSection
+                  variant="card"
+                  size="md"
+                  showIcon={true}
+                  showDescription={true}
+                  title="Suka Artikel Ini?"
+                  description="Dapatkan artikel serupa langsung di inbox Anda. Subscribe newsletter KonXC untuk tips teknologi terbaru."
+                  placeholder="Email Anda"
+                  buttonText="Subscribe"
+                />
+              </div>
+
+              <!-- Gradient Variant -->
+              <div class="mb-8">
+                <h4 class="mb-4 text-lg font-semibold">Gradient Variant</h4>
+                <NewsletterSection
+                  variant="gradient"
+                  size="md"
+                  showIcon={true}
+                  showDescription={true}
+                  title="Stay Updated"
+                  description="Dapatkan artikel terbaru tentang teknologi dan digitalisasi langsung di inbox Anda"
+                  placeholder="Masukkan email Anda"
+                  buttonText="Subscribe"
+                />
+              </div>
+
+              <!-- Minimal Variant -->
+              <div class="mb-8">
+                <h4 class="mb-4 text-lg font-semibold">Minimal Variant</h4>
+                <NewsletterSection
+                  variant="minimal"
+                  size="sm"
+                  showIcon={false}
+                  showDescription={true}
+                  title="Newsletter"
+                  description="Subscribe untuk update terbaru"
+                  placeholder="Email"
+                  buttonText="Subscribe"
+                />
+              </div>
+            </div>
+
+            <!-- Social Sharing -->
+            <div class="mt-8">
+              <SocialShare
+                title="Testing Page for Playwright"
+                url="http://localhost:4321/blog/testing"
+                description="This page is used for testing components with Playwright"
+              />
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="lg:col-span-1">
+            <div class="sticky-sidebar">
+              <TableOfContents />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .sticky-sidebar {
+    position: sticky;
+    top: 2rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
+  .sticky-sidebar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .sticky-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sticky-sidebar::-webkit-scrollbar-thumb {
+    background: #e5e7eb;
+    border-radius: 2px;
+  }
+
+  .sticky-sidebar::-webkit-scrollbar-thumb:hover {
+    background: #d1d5db;
+  }
+</style>

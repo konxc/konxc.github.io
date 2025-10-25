@@ -1,0 +1,76 @@
+---
+// Writers Stats Component - Reusable stats display
+export interface Props {
+  totalWriters: number;
+  totalBlogPosts: number;
+  totalContributions: number;
+  variant?: 'hero' | 'compact' | 'minimal';
+  class?: string;
+}
+
+const { 
+  totalWriters, 
+  totalBlogPosts, 
+  totalContributions, 
+  variant = 'hero',
+  class: className = ''
+} = Astro.props;
+
+const stats = [
+  { value: totalWriters, label: 'Penulis Aktif', icon: '👥' },
+  { value: totalBlogPosts, label: 'Artikel Diterbitkan', icon: '📝' },
+  { value: totalContributions, label: 'Total Kontribusi', icon: '🎯' }
+];
+---
+
+<div class={`writers-stats ${variant} ${className}`}>
+  {variant === 'hero' && (
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {stats.map((stat) => (
+        <div class="rounded-lg bg-white p-6 shadow-sm">
+          <div class="text-3xl font-bold text-primary-600">{stat.value}</div>
+          <div class="text-sm text-neutral-600">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  )}
+  
+  {variant === 'compact' && (
+    <div class="flex gap-6">
+      {stats.map((stat) => (
+        <div class="text-center">
+          <div class="text-2xl font-bold text-primary-600">{stat.value}</div>
+          <div class="text-xs text-neutral-600">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  )}
+  
+  {variant === 'minimal' && (
+    <div class="flex gap-4 text-sm">
+      {stats.map((stat, index) => (
+        <>
+          <span class="text-neutral-600">
+            <span class="font-semibold text-primary-600">{stat.value}</span> {stat.label}
+          </span>
+          {index < stats.length - 1 && <span class="text-neutral-400">•</span>}
+        </>
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  @reference "@/styles/global.css";
+  .writers-stats.hero {
+    @apply w-full;
+  }
+  
+  .writers-stats.compact {
+    @apply justify-center;
+  }
+  
+  .writers-stats.minimal {
+    @apply justify-center;
+  }
+</style>

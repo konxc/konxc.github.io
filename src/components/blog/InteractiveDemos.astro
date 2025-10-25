@@ -1,0 +1,962 @@
+---
+export interface Props {
+  class?: string;
+  demos?: Array<{
+    id: string;
+    title: string;
+    description: string;
+    type: 'code' | 'visual' | 'interactive';
+    content: string;
+    language?: string;
+    interactive?: boolean;
+  }>;
+}
+
+const { 
+  class: className,
+  demos = [
+    {
+      id: 'tailwind-config',
+      title: 'Tailwind CSS Config Comparison',
+      description: 'Lihat perbedaan antara Tailwind v3 dan v4 configuration',
+      type: 'code',
+      content: `// Tailwind v3 (Config File)
+module.exports = {
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#eff6ff',
+          500: '#3b82f6',
+          900: '#1e3a8a',
+        }
+      }
+    }
+  }
+}
+
+// Tailwind v4 (CSS-First)
+@theme {
+  --color-primary-50: #eff6ff;
+  --color-primary-500: #3b82f6;
+  --color-primary-900: #1e3a8a;
+}`,
+      language: 'javascript'
+    },
+    {
+      id: 'path-aliases',
+      title: 'Path Aliases Demo',
+      description: 'Coba implementasi path aliases di project Astro Anda',
+      type: 'interactive',
+      content: `// tsconfig.json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@layouts/*": ["./src/layouts/*"]
+    }
+  }
+}
+
+// Usage in components
+import MainLayout from '@layouts/MainLayout.astro';
+import Card from '@components/ui/Card.astro';`,
+      language: 'json'
+    },
+    {
+      id: 'color-palette',
+      title: 'Color Palette Generator',
+      description: 'Generate color palette untuk design system Anda',
+      type: 'visual',
+      content: 'color-palette-generator',
+      interactive: true
+    }
+  ]
+} = Astro.props;
+
+const activeTabId = `tab-${demos[0]?.id || 'default'}`;
+---
+
+<div class={`interactive-demos-tabbed ${className || ''}`}>
+  <!-- Header and Tabs Container -->
+  <div class="header-tabs-container">
+    <!-- Header Section -->
+    <div class="demos-header">
+      <h3 class="demos-title">
+        🎮 Interactive Demos
+      </h3>
+      <p class="demos-subtitle">Coba dan eksplorasi konsep-konsep yang dibahas dalam artikel</p>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tabs-navigation">
+      {demos.map((demo, index) => (
+        <button 
+          class={`tab-badge ${index === 0 ? 'active' : ''}`}
+          data-tab={demo.id}
+          data-tab-index={index}
+          aria-selected={index === 0}
+          role="tab"
+          title={demo.description}
+        >
+          <span class="tab-icon">
+            {demo.type === 'code' && '💻'}
+            {demo.type === 'visual' && '🎨'}
+            {demo.type === 'interactive' && '🎮'}
+          </span>
+          <span class="tab-label">
+            {demo.type === 'code' && 'Code'}
+            {demo.type === 'visual' && 'Visual'}
+            {demo.type === 'interactive' && 'Interactive'}
+          </span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tabs-content">
+    {demos.map((demo, index) => (
+      <div 
+        class={`tab-panel ${index === 0 ? 'active' : ''}`}
+        data-tab={demo.id}
+        role="tabpanel"
+        aria-hidden={index !== 0}
+      >
+        <div class="tab-panel-header">
+          <div class="demo-type-badge">
+            {demo.type === 'code' && '💻 Code Demo'}
+            {demo.type === 'visual' && '🎨 Visual Demo'}
+            {demo.type === 'interactive' && '🎮 Interactive Demo'}
+          </div>
+          <h4 class="demo-title">{demo.title}</h4>
+          <p class="demo-description">{demo.description}</p>
+        </div>
+
+        <div class="tab-panel-content">
+          {demo.type === 'code' && (
+            <div class="code-demo">
+              <div class="code-header">
+                <span class="code-language">{demo.language}</span>
+                <button class="copy-code-btn" data-code={demo.content}>
+                  <svg class="copy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="code-block"><code set:html={demo.content}></code></pre>
+            </div>
+          )}
+
+          {demo.type === 'visual' && (
+            <div class="visual-demo">
+              {demo.id === 'color-palette' && (
+                <div class="color-palette-generator">
+                  <div class="color-inputs">
+                    <div class="color-input-group">
+                      <label for="primary-color">Primary Color</label>
+                      <input type="color" id="primary-color" value="#3b82f6" class="color-picker">
+                    </div>
+                    <div class="color-input-group">
+                      <label for="secondary-color">Secondary Color</label>
+                      <input type="color" id="secondary-color" value="#14b8a6" class="color-picker">
+                    </div>
+                  </div>
+                  
+                  <div class="color-palette-output">
+                    <div class="palette-row">
+                      <div class="color-swatch" data-shade="50">
+                        <div class="color-preview"></div>
+                        <span class="color-name">50</span>
+                        <span class="color-value">#eff6ff</span>
+                      </div>
+                      <div class="color-swatch" data-shade="100">
+                        <div class="color-preview"></div>
+                        <span class="color-name">100</span>
+                        <span class="color-value">#dbeafe</span>
+                      </div>
+                      <div class="color-swatch" data-shade="200">
+                        <div class="color-preview"></div>
+                        <span class="color-name">200</span>
+                        <span class="color-value">#bfdbfe</span>
+                      </div>
+                      <div class="color-swatch" data-shade="300">
+                        <div class="color-preview"></div>
+                        <span class="color-name">300</span>
+                        <span class="color-value">#93c5fd</span>
+                      </div>
+                      <div class="color-swatch" data-shade="400">
+                        <div class="color-preview"></div>
+                        <span class="color-name">400</span>
+                        <span class="color-value">#60a5fa</span>
+                      </div>
+                    </div>
+                    <div class="palette-row">
+                      <div class="color-swatch" data-shade="500">
+                        <div class="color-preview"></div>
+                        <span class="color-name">500</span>
+                        <span class="color-value">#3b82f6</span>
+                      </div>
+                      <div class="color-swatch" data-shade="600">
+                        <div class="color-preview"></div>
+                        <span class="color-name">600</span>
+                        <span class="color-value">#2563eb</span>
+                      </div>
+                      <div class="color-swatch" data-shade="700">
+                        <div class="color-preview"></div>
+                        <span class="color-name">700</span>
+                        <span class="color-value">#1d4ed8</span>
+                      </div>
+                      <div class="color-swatch" data-shade="800">
+                        <div class="color-preview"></div>
+                        <span class="color-name">800</span>
+                        <span class="color-value">#1e40af</span>
+                      </div>
+                      <div class="color-swatch" data-shade="900">
+                        <div class="color-preview"></div>
+                        <span class="color-name">900</span>
+                        <span class="color-value">#1e3a8a</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="code-output">
+                    <h5>Generated CSS Variables:</h5>
+                    <pre class="generated-code"><code id="generated-css">{`:root {
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+}`}</code></pre>
+                    <button class="copy-generated-btn" data-target="generated-css">
+                      Copy CSS Variables
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {demo.type === 'interactive' && (
+            <div class="interactive-demo">
+              <div class="interactive-content">
+                <p class="interactive-text">Klik tombol di bawah untuk melihat efek interaktif:</p>
+                <button class="interactive-btn" data-demo={demo.id}>
+                  <span class="btn-text">Coba Sekarang</span>
+                  <span class="btn-effect"></span>
+                </button>
+                <div class="interactive-result" id={`result-${demo.id}`}></div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div class="tab-panel-footer">
+          <div class="demo-actions">
+            <button class="action-btn run-demo" data-demo={demo.id}>
+              <svg class="action-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Run Demo
+            </button>
+            <button class="action-btn share-demo" data-demo={demo.id}>
+              <svg class="action-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+              </svg>
+              Share
+            </button>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  class InteractiveDemosTabbed {
+    private tabs: NodeListOf<HTMLButtonElement> | null = null;
+    private panels: NodeListOf<HTMLElement> | null = null;
+    private activeTab: string = '';
+    private colorPalette: any = null;
+
+    constructor() {
+      this.initializeTabs();
+      this.setupEventListeners();
+      this.initializeColorPalette();
+    }
+
+    private initializeTabs(): void {
+      this.tabs = document.querySelectorAll('.tab-badge');
+      this.panels = document.querySelectorAll('.tab-panel');
+      
+      console.log('Found tabs:', this.tabs.length);
+      console.log('Found panels:', this.panels.length);
+      
+      // Set initial active tab
+      if (this.tabs.length > 0) {
+        this.activeTab = this.tabs[0].getAttribute('data-tab') || '';
+        console.log('Initial active tab:', this.activeTab);
+      }
+    }
+
+    private setupEventListeners(): void {
+      // Tab navigation
+      this.tabs?.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabId = tab.getAttribute('data-tab');
+          if (tabId) {
+            this.switchTab(tabId);
+          }
+        });
+      });
+
+      // Copy code buttons
+      document.querySelectorAll('.copy-code-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          const button = target.closest('.copy-code-btn') as HTMLButtonElement;
+          const code = button.getAttribute('data-code');
+          if (code) {
+            this.copyToClipboard(code);
+            this.showCopyFeedback(button);
+          }
+        });
+      });
+
+      // Copy generated CSS
+      document.querySelectorAll('.copy-generated-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          const button = target.closest('.copy-generated-btn') as HTMLButtonElement;
+          const targetId = button.getAttribute('data-target');
+          const codeElement = document.getElementById(targetId!);
+          if (codeElement) {
+            this.copyToClipboard(codeElement.textContent || '');
+            this.showCopyFeedback(button);
+          }
+        });
+      });
+
+      // Interactive buttons
+      document.querySelectorAll('.interactive-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          const button = target.closest('.interactive-btn') as HTMLButtonElement;
+          const demoId = button.getAttribute('data-demo');
+          this.runInteractiveDemo(demoId!);
+        });
+      });
+
+      // Run demo buttons
+      document.querySelectorAll('.run-demo').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          const button = target.closest('.run-demo') as HTMLButtonElement;
+          const demoId = button.getAttribute('data-demo');
+          this.runDemo(demoId!);
+        });
+      });
+
+      // Share demo buttons
+      document.querySelectorAll('.share-demo').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          const button = target.closest('.share-demo') as HTMLButtonElement;
+          const demoId = button.getAttribute('data-demo');
+          this.shareDemo(demoId!);
+        });
+      });
+    }
+
+    private switchTab(tabId: string): void {
+      console.log('Switching to tab:', tabId);
+      
+      // Update active tab button
+      this.tabs?.forEach(tab => {
+        const isActive = tab.getAttribute('data-tab') === tabId;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-selected', isActive.toString());
+        console.log('Tab button updated:', tab.getAttribute('data-tab'), 'active:', isActive);
+      });
+
+      // Update active panel
+      this.panels?.forEach(panel => {
+        const isActive = panel.getAttribute('data-tab') === tabId;
+        panel.classList.toggle('active', isActive);
+        panel.setAttribute('aria-hidden', (!isActive).toString());
+        console.log('Panel updated:', panel.getAttribute('data-tab'), 'active:', isActive);
+      });
+
+      this.activeTab = tabId;
+      this.trackTabEvent('tab_switch', tabId);
+    }
+
+    private initializeColorPalette(): void {
+      const primaryColorInput = document.getElementById('primary-color') as HTMLInputElement;
+      const secondaryColorInput = document.getElementById('secondary-color') as HTMLInputElement;
+      
+      if (primaryColorInput && secondaryColorInput) {
+        primaryColorInput.addEventListener('input', () => {
+          this.updateColorPalette(primaryColorInput.value, 'primary');
+        });
+        
+        secondaryColorInput.addEventListener('input', () => {
+          this.updateColorPalette(secondaryColorInput.value, 'secondary');
+        });
+        
+        // Initial update
+        this.updateColorPalette(primaryColorInput.value, 'primary');
+      }
+    }
+
+    private updateColorPalette(baseColor: string, type: 'primary' | 'secondary'): void {
+      const palette = this.generateColorPalette(baseColor);
+      const swatches = document.querySelectorAll(`.color-swatch[data-type="${type}"]`);
+      
+      swatches.forEach((swatch, index) => {
+        const preview = swatch.querySelector('.color-preview') as HTMLElement;
+        const value = swatch.querySelector('.color-value') as HTMLElement;
+        
+        if (preview && value) {
+          preview.style.backgroundColor = palette[index];
+          value.textContent = palette[index];
+        }
+      });
+      
+      // Update generated CSS
+      this.updateGeneratedCSS(palette, type);
+    }
+
+    private generateColorPalette(baseColor: string): string[] {
+      // Simple color palette generation
+      const colors = [
+        this.lightenColor(baseColor, 0.9),
+        this.lightenColor(baseColor, 0.8),
+        this.lightenColor(baseColor, 0.7),
+        this.lightenColor(baseColor, 0.6),
+        this.lightenColor(baseColor, 0.5),
+        baseColor,
+        this.darkenColor(baseColor, 0.1),
+        this.darkenColor(baseColor, 0.2),
+        this.darkenColor(baseColor, 0.3),
+        this.darkenColor(baseColor, 0.4)
+      ];
+      
+      return colors;
+    }
+
+    private lightenColor(color: string, amount: number): string {
+      // Simple color lightening (in production, use a proper color library)
+      return color; // Placeholder
+    }
+
+    private darkenColor(color: string, amount: number): string {
+      // Simple color darkening (in production, use a proper color library)
+      return color; // Placeholder
+    }
+
+    private updateGeneratedCSS(palette: string[], type: string): void {
+      const generatedElement = document.getElementById('generated-css');
+      if (generatedElement) {
+        const css = `:root {
+  --color-${type}-50: ${palette[0]};
+  --color-${type}-100: ${palette[1]};
+  --color-${type}-200: ${palette[2]};
+  --color-${type}-300: ${palette[3]};
+  --color-${type}-400: ${palette[4]};
+  --color-${type}-500: ${palette[5]};
+  --color-${type}-600: ${palette[6]};
+  --color-${type}-700: ${palette[7]};
+  --color-${type}-800: ${palette[8]};
+  --color-${type}-900: ${palette[9]};
+}`;
+        generatedElement.textContent = css;
+      }
+    }
+
+    private runInteractiveDemo(demoId: string): void {
+      const resultElement = document.getElementById(`result-${demoId}`);
+      if (!resultElement) return;
+
+      // Demo-specific logic
+      switch (demoId) {
+        case 'path-aliases':
+          this.runPathAliasesDemo(resultElement);
+          break;
+        default:
+          this.runGenericDemo(resultElement);
+      }
+    }
+
+    private runPathAliasesDemo(element: HTMLElement): void {
+      element.innerHTML = `
+        <div class="demo-success">
+          <h5>✅ Path Aliases Berhasil Dikonfigurasi!</h5>
+          <p>Anda sekarang dapat menggunakan:</p>
+          <ul>
+            <li><code>@layouts/MainLayout.astro</code></li>
+            <li><code>@components/ui/Card.astro</code></li>
+            <li><code>@utils/helpers.ts</code></li>
+          </ul>
+        </div>
+      `;
+    }
+
+    private runGenericDemo(element: HTMLElement): void {
+      element.innerHTML = `
+        <div class="demo-success">
+          <h5>🎉 Demo Berhasil Dijalankan!</h5>
+          <p>Fitur ini berfungsi dengan baik dalam environment development Anda.</p>
+        </div>
+      `;
+    }
+
+    private runDemo(demoId: string): void {
+      console.log(`Running demo: ${demoId}`);
+      this.trackDemoEvent('demo_run', demoId);
+    }
+
+    private shareDemo(demoId: string): void {
+      const url = `${window.location.origin}${window.location.pathname}#demo-${demoId}`;
+      this.copyToClipboard(url);
+      this.showShareFeedback();
+      this.trackDemoEvent('demo_share', demoId);
+    }
+
+    private async copyToClipboard(text: string): Promise<void> {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+    }
+
+    private showCopyFeedback(button: HTMLButtonElement): void {
+      const originalText = button.textContent;
+      button.textContent = 'Copied!';
+      button.classList.add('copied');
+      
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove('copied');
+      }, 2000);
+    }
+
+    private showShareFeedback(): void {
+      console.log('Demo shared successfully!');
+    }
+
+    private trackTabEvent(event: string, tabId: string): void {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', event, {
+          event_category: 'interactive_demos_tabs',
+          event_label: tabId
+        });
+      }
+    }
+
+    private trackDemoEvent(event: string, demoId: string): void {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', event, {
+          event_category: 'interactive_demos',
+          event_label: demoId
+        });
+      }
+    }
+  }
+
+  // Initialize interactive demos when DOM is ready
+  function initInteractiveDemosTabbed(): void {
+    new InteractiveDemosTabbed();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initInteractiveDemosTabbed);
+  } else {
+    initInteractiveDemosTabbed();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .interactive-demos-tabbed {
+    @apply bg-white rounded-2xl p-6 shadow-lg border border-neutral-100;
+  }
+
+  /* Header and Tabs Container */
+  .header-tabs-container {
+    @apply flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6;
+  }
+
+  .demos-header {
+    @apply flex-shrink-0;
+  }
+
+  .demos-title {
+    @apply text-2xl font-bold text-neutral-800 mb-2;
+  }
+
+  .demos-subtitle {
+    @apply text-neutral-600;
+  }
+
+  /* Tab Navigation */
+  .tabs-navigation {
+    @apply flex flex-wrap gap-2 lg:flex-shrink-0;
+  }
+
+  .tab-badge {
+    @apply inline-flex items-center gap-2 px-3 py-2 bg-neutral-100 text-neutral-600 rounded-full text-sm font-medium transition-all duration-200;
+    @apply hover:bg-neutral-200 hover:text-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  .tab-badge.active {
+    @apply bg-primary-500 text-white shadow-sm;
+  }
+
+  .tab-badge.active:hover {
+    @apply bg-primary-600 text-white;
+  }
+
+  .tab-icon {
+    @apply text-base;
+  }
+
+  .tab-label {
+    @apply font-medium;
+  }
+
+  /* Tab Panels */
+  .tabs-content {
+    @apply relative;
+  }
+
+  .tab-panel {
+    @apply hidden;
+  }
+
+  .tab-panel.active {
+    @apply block;
+  }
+
+  .tab-panel-header {
+    @apply mb-6;
+  }
+
+  .demo-type-badge {
+    @apply inline-block px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium mb-3;
+  }
+
+  .demo-title {
+    @apply text-xl font-bold text-neutral-800 mb-2;
+  }
+
+  .demo-description {
+    @apply text-neutral-600;
+  }
+
+  .tab-panel-content {
+    @apply mb-6;
+  }
+
+  /* Code Demo Styles */
+  .code-demo {
+    @apply bg-neutral-900 rounded-lg overflow-hidden;
+  }
+
+  .code-header {
+    @apply flex items-center justify-between px-4 py-2 bg-neutral-800 border-b border-neutral-700;
+  }
+
+  .code-language {
+    @apply text-sm text-neutral-300 font-medium;
+  }
+
+  .copy-code-btn {
+    @apply flex items-center gap-2 px-3 py-1 bg-neutral-700 text-neutral-300 rounded text-sm hover:bg-neutral-600 transition-colors;
+  }
+
+  .copy-icon {
+    @apply w-4 h-4;
+  }
+
+  .code-block {
+    @apply p-4 text-sm text-neutral-100 overflow-x-auto max-h-96;
+  }
+
+  .code-block code {
+    @apply font-mono;
+  }
+
+  /* Visual Demo Styles */
+  .visual-demo {
+    @apply space-y-6;
+  }
+
+  .color-palette-generator {
+    @apply space-y-6;
+  }
+
+  .color-inputs {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+
+  .color-input-group {
+    @apply space-y-2;
+  }
+
+  .color-input-group label {
+    @apply block text-sm font-medium text-neutral-700;
+  }
+
+  .color-picker {
+    @apply w-full h-12 border border-neutral-300 rounded-lg cursor-pointer;
+  }
+
+  .color-palette-output {
+    @apply space-y-3;
+  }
+
+  .palette-row {
+    @apply flex gap-2;
+  }
+
+  .color-swatch {
+    @apply flex-1 text-center;
+  }
+
+  .color-preview {
+    @apply w-full h-16 rounded-lg border border-neutral-300 mb-2;
+  }
+
+  .color-name {
+    @apply block text-xs font-medium text-neutral-600;
+  }
+
+  .color-value {
+    @apply block text-xs text-neutral-500 font-mono;
+  }
+
+  .code-output {
+    @apply mt-6 p-4 bg-neutral-50 rounded-lg;
+  }
+
+  .code-output h5 {
+    @apply text-sm font-medium text-neutral-700 mb-2;
+  }
+
+  .generated-code {
+    @apply bg-neutral-900 text-neutral-100 p-3 rounded text-xs font-mono overflow-x-auto;
+  }
+
+  .copy-generated-btn {
+    @apply mt-2 px-3 py-1 bg-primary-500 text-white rounded text-sm hover:bg-primary-600 transition-colors;
+  }
+
+  /* Interactive Demo Styles */
+  .interactive-demo {
+    @apply text-center py-8;
+  }
+
+  .interactive-content {
+    @apply space-y-6;
+  }
+
+  .interactive-text {
+    @apply text-neutral-600 text-lg;
+  }
+
+  .interactive-btn {
+    @apply relative px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg font-medium text-lg overflow-hidden transition-all duration-300 hover:transform hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  .btn-effect {
+    @apply absolute inset-0 bg-white opacity-0 transition-opacity duration-300;
+  }
+
+  .interactive-btn:hover .btn-effect {
+    @apply opacity-20;
+  }
+
+  .interactive-result {
+    @apply mt-6 p-6 bg-green-50 border border-green-200 rounded-lg;
+  }
+
+  .demo-success {
+    @apply text-green-700;
+  }
+
+  .demo-success h5 {
+    @apply font-semibold mb-3 text-lg;
+  }
+
+  .demo-success ul {
+    @apply list-disc list-inside space-y-2;
+  }
+
+  .demo-success code {
+    @apply bg-green-100 px-2 py-1 rounded text-sm;
+  }
+
+  /* Tab Panel Footer */
+  .tab-panel-footer {
+    @apply pt-6 border-t border-neutral-200;
+  }
+
+  .demo-actions {
+    @apply flex gap-3;
+  }
+
+  .action-btn {
+    @apply flex items-center gap-2 px-4 py-2 bg-white border border-neutral-300 rounded-lg text-sm text-neutral-600 hover:bg-neutral-50 transition-colors;
+  }
+
+  .action-icon {
+    @apply w-4 h-4;
+  }
+
+  .copied {
+    @apply bg-green-500 text-white border-green-500;
+  }
+
+  /* Dark mode styles */
+  .dark .interactive-demos-tabbed {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .tab-badge {
+    @apply bg-neutral-700 text-neutral-300 hover:bg-neutral-600 hover:text-neutral-200;
+  }
+
+  .dark .tab-badge.active {
+    @apply bg-primary-500 text-white;
+  }
+
+  .dark .tab-badge.active:hover {
+    @apply bg-primary-600 text-white;
+  }
+
+  .dark .demo-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .demo-description {
+    @apply text-neutral-400;
+  }
+
+  .dark .color-input-group label {
+    @apply text-neutral-300;
+  }
+
+  .dark .color-picker {
+    @apply border-neutral-600;
+  }
+
+  .dark .code-output {
+    @apply bg-neutral-700;
+  }
+
+  .dark .code-output h5 {
+    @apply text-neutral-300;
+  }
+
+  .dark .interactive-text {
+    @apply text-neutral-400;
+  }
+
+  .dark .interactive-result {
+    @apply bg-green-900 border-green-700;
+  }
+
+  .dark .demo-success {
+    @apply text-green-300;
+  }
+
+  .dark .demo-success code {
+    @apply bg-green-800;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 1024px) {
+    .header-tabs-container {
+      @apply flex-col gap-3;
+    }
+    
+    .tabs-navigation {
+      @apply justify-start;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .interactive-demos-tabbed {
+      @apply p-4;
+    }
+    
+    .header-tabs-container {
+      @apply gap-2;
+    }
+    
+    .tabs-navigation {
+      @apply gap-1.5;
+    }
+    
+    .tab-badge {
+      @apply px-2.5 py-1.5 text-xs;
+    }
+    
+    .tab-icon {
+      @apply text-sm;
+    }
+    
+    .color-inputs {
+      @apply grid-cols-1;
+    }
+    
+    .palette-row {
+      @apply grid grid-cols-5 gap-1;
+    }
+    
+    .demo-actions {
+      @apply flex-col;
+    }
+    
+    .interactive-btn {
+      @apply px-6 py-3 text-base;
+    }
+  }
+
+  /* Animation for tab switching */
+  .tab-panel {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Smooth transitions */
+  .tab-button {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tab-panel-content {
+    transition: all 0.3s ease-in-out;
+  }
+</style>

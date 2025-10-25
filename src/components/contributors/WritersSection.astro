@@ -1,0 +1,64 @@
+---
+// Writers Section Component - Complete writers page section
+import WritersHero from './WritersHero.astro';
+import WritersGrid from './WritersGrid.astro';
+import WritersCTA from './WritersCTA.astro';
+import ContentRecommendations from './ContentRecommendations.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  writers: CollectionEntry<'contributors'>[];
+  totalWriters: number;
+  totalBlogPosts: number;
+  totalContributions: number;
+  showRecommendations?: boolean;
+  showCTA?: boolean;
+  recommendationsConfig?: {
+    algorithm?: 'similarity' | 'popularity' | 'recent' | 'hybrid';
+    maxRecommendations?: number;
+    title?: string;
+    subtitle?: string;
+  };
+}
+
+const { 
+  writers,
+  totalWriters,
+  totalBlogPosts,
+  totalContributions,
+  showRecommendations = true,
+  showCTA = true,
+  recommendationsConfig = {}
+} = Astro.props;
+
+const {
+  algorithm = 'hybrid',
+  maxRecommendations = 6,
+  title = 'Artikel dari Penulis Kami',
+  subtitle = 'Temukan karya terbaik dari tim penulis KonXC'
+} = recommendationsConfig;
+---
+
+<!-- Hero Section -->
+<WritersHero 
+  totalWriters={totalWriters}
+  totalBlogPosts={totalBlogPosts}
+  totalContributions={totalContributions}
+/>
+
+<!-- Writers Grid -->
+<WritersGrid writers={writers} />
+
+<!-- Content Recommendations -->
+{showRecommendations && (
+  <ContentRecommendations 
+    context="writers"
+    algorithm={algorithm}
+    maxRecommendations={maxRecommendations}
+    title={title}
+    subtitle={subtitle}
+  />
+)}
+
+<!-- Call to Action -->
+{showCTA && <WritersCTA />}

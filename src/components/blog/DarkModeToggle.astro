@@ -1,0 +1,179 @@
+---
+// Dark Mode Toggle Component
+---
+
+<button 
+  class="dark-mode-toggle" 
+  onclick="toggleDarkMode()"
+  aria-label="Toggle dark mode"
+  id="dark-mode-toggle"
+>
+  <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+  </svg>
+  <svg class="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+  </svg>
+</button>
+
+<script>
+  function toggleDarkMode() {
+    const html = document.documentElement;
+    const toggle = document.getElementById('dark-mode-toggle');
+    
+    // Toggle dark class
+    html.classList.toggle('dark');
+    
+    // Save preference
+    const isDark = html.classList.contains('dark');
+    localStorage.setItem('darkMode', String(isDark));
+    
+    // Update toggle state
+    if (toggle) {
+      toggle.classList.toggle('dark-active', isDark);
+    }
+    
+    // Dispatch custom event for other components
+    window.dispatchEvent(new CustomEvent('darkModeToggle', { 
+      detail: { isDark } 
+    }));
+  }
+
+  function initializeDarkMode() {
+    const html = document.documentElement;
+    const toggle = document.getElementById('dark-mode-toggle');
+    
+    // Check saved preference
+    const savedMode = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Apply dark mode if saved preference exists or system prefers dark
+    const shouldBeDark = savedMode === 'true' || (savedMode === null && prefersDark);
+    
+    if (shouldBeDark) {
+      html.classList.add('dark');
+      if (toggle) {
+        toggle.classList.add('dark-active');
+      }
+    }
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (localStorage.getItem('darkMode') === null) {
+        if (e.matches) {
+          html.classList.add('dark');
+          if (toggle) toggle.classList.add('dark-active');
+        } else {
+          html.classList.remove('dark');
+          if (toggle) toggle.classList.remove('dark-active');
+        }
+      }
+    });
+  }
+
+  // Initialize on DOM ready
+  document.addEventListener('DOMContentLoaded', initializeDarkMode);
+  
+  // Also initialize immediately in case DOM is already ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeDarkMode);
+  } else {
+    initializeDarkMode();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .dark-mode-toggle {
+    @apply relative w-12 h-12 rounded-xl bg-white border border-neutral-300 hover:bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-700 dark:hover:bg-neutral-700 transition-all duration-200 flex items-center justify-center text-neutral-600 dark:text-neutral-300 shrink-0;
+  }
+
+  .dark-mode-toggle:hover {
+    @apply border-primary-300 text-neutral-800 dark:border-primary-700 dark:text-neutral-100;
+  }
+  
+  .dark-mode-toggle:focus {
+    @apply outline-none ring-2 ring-primary-500 border-primary-500;
+  }
+
+  .sun-icon,
+  .moon-icon {
+    @apply w-6 h-6 absolute transition-all duration-300;
+  }
+
+  .sun-icon {
+    @apply text-neutral-700 dark:opacity-0 dark:rotate-90;
+  }
+
+  .moon-icon {
+    @apply text-neutral-700 opacity-0 rotate-90 dark:opacity-100 dark:rotate-0;
+  }
+
+  .dark-mode-toggle.dark-active .sun-icon {
+    @apply opacity-0 rotate-90;
+  }
+
+  .dark-mode-toggle.dark-active .moon-icon {
+    @apply opacity-100 rotate-0;
+  }
+
+  /* Dark mode styles */
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+  }
+
+  .dark {
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border-color: #374151;
+  }
+
+  /* Apply dark mode to specific elements */
+  .dark .prose {
+    @apply text-neutral-100;
+  }
+
+  .dark .prose h1,
+  .dark .prose h2,
+  .dark .prose h3,
+  .dark .prose h4,
+  .dark .prose h5,
+  .dark .prose h6 {
+    @apply text-white;
+  }
+
+  .dark .prose p {
+    @apply text-neutral-300;
+  }
+
+  .dark .prose code {
+    @apply bg-neutral-800 text-neutral-200;
+  }
+
+  .dark .prose pre {
+    @apply bg-neutral-900 border-neutral-700;
+  }
+
+  .dark .card {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700;
+  }
+
+  .dark .btn-secondary {
+    @apply bg-neutral-700 text-neutral-200 border-neutral-600 hover:bg-neutral-600;
+  }
+
+  /* Smooth transition for all elements */
+  * {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+</style>

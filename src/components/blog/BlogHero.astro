@@ -1,0 +1,91 @@
+---
+// Blog Hero Component
+import AdvancedSearch from '@components/blog/AdvancedSearch.astro';
+
+export interface Props {
+  class?: string;
+  totalPosts?: number;
+}
+
+const { 
+  class: className,
+  totalPosts = 0
+} = Astro.props;
+---
+
+<section class={`blog-hero section bg-linear-to-br from-primary-50 to-secondary-50 ${className || ''}`}>
+  <div class="container">
+    <div class="text-center max-w-4xl mx-auto">
+      <h1 class="text-4xl lg:text-5xl font-bold mb-6">
+        Blog <span class="text-gradient">KonXC</span>
+      </h1>
+      <p class="text-xl text-neutral-600 mb-8">
+        Insights, tutorials, dan success stories dari tim KonXC. 
+        Pelajari cara mengoptimalkan teknologi untuk pertumbuhan bisnis Anda.
+      </p>
+      
+      <!-- Advanced Search -->
+      <div class="mb-8">
+        <AdvancedSearch />
+      </div>
+      
+      <!-- Stats Badges -->
+      <div class="flex flex-wrap justify-center gap-4">
+        <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-primary-600 shadow-sm">
+          📝 {totalPosts} Artikel
+        </span>
+        <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-secondary-600 shadow-sm">
+          🎯 Tips Teknologi
+        </span>
+        <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-accent-600 shadow-sm">
+          💡 Case Studies
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "@/styles/global.css";
+  .text-gradient {
+    background: linear-gradient(135deg, #3b82f6, #14b8a6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .blog-hero {
+    @apply relative overflow-hidden;
+  }
+  
+  .blog-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+  
+  .blog-hero .container {
+    @apply relative z-10;
+  }
+  
+  /* Dark mode styles */
+  .dark .blog-hero {
+    @apply from-primary-900 to-secondary-900;
+  }
+  
+  .dark .blog-hero h1 {
+    @apply text-neutral-100;
+  }
+  
+  .dark .blog-hero p {
+    @apply text-neutral-300;
+  }
+  
+  .dark .blog-hero span {
+    @apply bg-white text-neutral-800;
+  }
+</style>

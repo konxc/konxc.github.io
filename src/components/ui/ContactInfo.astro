@@ -1,0 +1,144 @@
+---
+export interface Props {
+  variant?: 'full' | 'minimal' | 'inline';
+  showWhatsApp?: boolean;
+  class?: string;
+}
+
+const { 
+  variant = 'full', 
+  showWhatsApp = true,
+  class: className = '' 
+} = Astro.props;
+
+const phoneNumber = '+62 882 0079 502010';
+const whatsappNumber = '6288200795020100'; // Format untuk WhatsApp (tanpa + dan spasi)
+const email = 'info@konxc.space';
+---
+
+{variant === 'full' && (
+  <div class={`space-y-4 ${className}`}>
+    <div class="flex items-start gap-4">
+      <div class="text-primary-600 text-xl">📍</div>
+      <div>
+        <div class="font-semibold">Alamat</div>
+        <div class="text-neutral-600">Jakarta, Indonesia</div>
+      </div>
+    </div>
+    
+    <div class="flex items-start gap-4">
+      <div class="text-primary-600 text-xl">📞</div>
+      <div>
+        <div class="font-semibold">Telepon</div>
+        <div class="text-neutral-600">
+          <a href={`tel:${phoneNumber}`} class="hover:text-primary-600 transition-colors">
+            {phoneNumber}
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    {showWhatsApp && (
+      <div class="flex items-start gap-4">
+        <div class="text-primary-600 text-xl">💬</div>
+        <div>
+          <div class="font-semibold">WhatsApp</div>
+          <div class="text-neutral-600">
+            <a 
+              href={`https://wa.me/${whatsappNumber}?text=Halo%20KonXC,%20saya%20ingin%20konsultasi%20tentang%20layanan%20teknologi`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-primary-600 transition-colors"
+            >
+              {phoneNumber}
+            </a>
+          </div>
+        </div>
+      </div>
+    )}
+    
+    <div class="flex items-start gap-4">
+      <div class="text-primary-600 text-xl">✉️</div>
+      <div>
+        <div class="font-semibold">Email</div>
+        <div class="text-neutral-600">
+          <a href={`mailto:${email}`} class="hover:text-primary-600 transition-colors">
+            {email}
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="flex items-start gap-4">
+      <div class="text-primary-600 text-xl">🕒</div>
+      <div>
+        <div class="font-semibold">Jam Kerja</div>
+        <div class="text-neutral-600">Senin - Jumat: 09:00 - 18:00</div>
+      </div>
+    </div>
+  </div>
+)}
+
+{variant === 'minimal' && (
+  <div class={`space-y-2 ${className}`}>
+    <div class="flex items-center gap-2 text-sm">
+      <span class="text-primary-600">📞</span>
+      <a href={`tel:${phoneNumber}`} class="hover:text-primary-600 transition-colors">
+        {phoneNumber}
+      </a>
+    </div>
+    
+    {showWhatsApp && (
+      <div class="flex items-center gap-2 text-sm">
+        <span class="text-primary-600">💬</span>
+        <a 
+          href={`https://wa.me/${whatsappNumber}?text=Halo%20KonXC,%20saya%20ingin%20konsultasi`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-primary-600 transition-colors"
+        >
+          WhatsApp
+        </a>
+      </div>
+    )}
+    
+    <div class="flex items-center gap-2 text-sm">
+      <span class="text-primary-600">✉️</span>
+      <a href={`mailto:${email}`} class="hover:text-primary-600 transition-colors">
+        {email}
+      </a>
+    </div>
+  </div>
+)}
+
+{variant === 'inline' && (
+  <div class={`flex flex-wrap items-center gap-4 text-sm ${className}`}>
+    <a 
+      href={`tel:${phoneNumber}`} 
+      class="flex items-center gap-1 hover:text-primary-600 transition-colors"
+    >
+      <span>📞</span>
+      <span>{phoneNumber}</span>
+    </a>
+    
+    {showWhatsApp && (
+      <a 
+        href={`https://wa.me/${whatsappNumber}?text=Halo%20KonXC,%20saya%20ingin%20konsultasi`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-1 hover:text-primary-600 transition-colors"
+      >
+        <span>💬</span>
+        <span>WhatsApp</span>
+      </a>
+    )}
+    
+    <a 
+      href={`mailto:${email}`} 
+      class="flex items-center gap-1 hover:text-primary-600 transition-colors"
+    >
+      <span>✉️</span>
+      <span>{email}</span>
+    </a>
+  </div>
+)}

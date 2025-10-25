@@ -1,0 +1,358 @@
+---
+// Smart Header untuk Blog Slug Page - Fixed Version
+// Menggunakan komponen Header.astro dengan interaktivitas scroll behavior
+import Header from '@components/ui/Header.astro';
+---
+
+<header id="smart-header" class="smart-header">
+  <Header 
+    variant="default"
+    showSearch={false}
+    showDarkMode={true}
+    showMobileMenu={true}
+    className="smart-header-content"
+  />
+</header>
+
+<style>
+  .smart-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+  }
+
+  .smart-header.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .smart-header.scrolled {
+    /* Additional styling when scrolled - handled by .smart-header-content */
+  }
+
+  /* Show animation - applied when showing class is present */
+  .smart-header.showing {
+    animation: slideDownWithScale 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  /* Hide animation - applied when hiding class is present */
+  .smart-header.hiding {
+    animation: slideUpWithScale 0.3s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+  }
+
+
+  /* Override Header.astro styles untuk smart behavior */
+  .smart-header .smart-header-content {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.3) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    transform: scale(1);
+  }
+
+  .smart-header.scrolled .smart-header-content {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.5) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    transform: scale(1.02);
+  }
+
+  /* Enhanced show animation with scale effect */
+  .smart-header.showing .smart-header-content {
+    animation: slideDownWithScale 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  /* Enhanced hide animation with scale effect */
+  .smart-header.hiding .smart-header-content {
+    animation: slideUpWithScale 0.3s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+  }
+
+  @keyframes slideDownWithScale {
+    0% {
+      transform: translateY(-100%) scale(0.95);
+      opacity: 0;
+      backdrop-filter: blur(0px);
+    }
+    50% {
+      transform: translateY(-20%) scale(1.01);
+      opacity: 0.8;
+      backdrop-filter: blur(8px);
+    }
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      backdrop-filter: blur(12px);
+    }
+  }
+
+  @keyframes slideUpWithScale {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      backdrop-filter: blur(12px);
+    }
+    50% {
+      transform: translateY(-20%) scale(1.01);
+      opacity: 0.8;
+      backdrop-filter: blur(8px);
+    }
+    100% {
+      transform: translateY(-100%) scale(0.95);
+      opacity: 0;
+      backdrop-filter: blur(0px);
+    }
+  }
+
+  /* Hover effects and micro-interactions */
+  .smart-header:not(.hidden):hover .smart-header-content {
+    background: rgba(255, 255, 255, 1) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
+    transform: scale(1.01);
+  }
+
+  .smart-header.scrolled:hover .smart-header-content {
+    transform: scale(1.03);
+  }
+
+  /* Smooth transitions for all interactive elements */
+  .smart-header .smart-header-content * {
+    transition: all 0.2s ease;
+  }
+
+  /* Pulse effect when showing */
+  .smart-header.showing .smart-header-content {
+    animation: slideDownWithScale 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+               pulse 0.6s ease-in-out 0.2s;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+  }
+
+  /* Dark mode styles */
+  .dark .smart-header .smart-header-content {
+    background: rgba(17, 24, 39, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom-color: rgba(75, 85, 99, 0.3) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .dark .smart-header.scrolled .smart-header-content {
+    background: rgba(17, 24, 39, 0.98) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom-color: rgba(75, 85, 99, 0.5) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .dark .smart-header:not(.hidden):hover .smart-header-content {
+    background: rgba(17, 24, 39, 1) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Optional: Visual feedback for threshold */
+  .section.approaching-threshold {
+    position: relative;
+  }
+
+  .section.approaching-threshold::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+      rgba(147, 51, 234, 0.3) 0%, 
+      rgba(147, 51, 234, 0.8) 60%, 
+      rgba(147, 51, 234, 1) 100%
+    );
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const header = document.getElementById('smart-header');
+    
+    // Find blog post header section (the first section with gradient background)
+    const blogPostHeader = document.querySelector('.section.bg-linear-to-br') || 
+                          document.querySelector('.section.bg-gradient-to-br') ||
+                          document.querySelector('section:first-of-type');
+    
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    let isScrollingDown = false;
+    
+    // 🎯 CONFIGURATION: Adjust hide threshold here
+    // Options:
+    // - 0.2 = Hide after 20% of blog post header (very sensitive)
+    // - 0.5 = Hide after 50% of blog post header (sensitive)
+    // - 0.8 = Hide after 80% of blog post header (balanced - default)
+    // - 0.9 = Hide after 90% of blog post header (conservative)
+    // - 1.0 = Hide after 100% of blog post header (very conservative)
+    const hideThresholdPercentage = 0.3; // 🔧 CHANGE THIS VALUE
+    
+    // Function to update header visibility with smooth animations
+    function updateHeaderVisibility() {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - lastScrollY;
+      
+      // Determine scroll direction
+      isScrollingDown = scrollDelta > 0;
+      
+      if (!blogPostHeader) {
+        // Fallback: Hide header if no blog post header found
+        // Header should NOT appear in other sections
+        console.log('⚠️ No blog post header found - hiding header');
+        hideHeader();
+        return;
+      }
+      
+      const blogPostHeaderHeight = blogPostHeader.offsetHeight;
+      
+      // Calculate hide threshold using the configuration
+      const hideThreshold = blogPostHeaderHeight * hideThresholdPercentage;
+      
+      // Show/hide header based on scroll position and direction
+      // Header ONLY appears in blog post header section
+      if (currentScrollY < 100) {
+        // Show header at the top of blog post header
+        showHeader(false); // Don't add scrolled class
+      } else if (currentScrollY > hideThreshold) {
+        // Hide header when scrolled past blog post header
+        // Header should NOT appear in other sections
+        hideHeader();
+      } else {
+        // Show header with scrolled styling when in blog post header area
+        showHeader(true); // Add scrolled class
+      }
+      
+      // Additional check: Ensure header is hidden in other sections
+      // Check if we're in a different section (not blog post header)
+      const currentSection = document.elementFromPoint(window.innerWidth / 2, 100);
+      const isInBlogPostHeader = currentSection?.closest('.section.bg-linear-to-br') || 
+                                currentSection?.closest('.section.bg-gradient-to-br');
+      
+      if (!isInBlogPostHeader && currentScrollY > hideThreshold) {
+        // Force hide header if we're in a different section
+        hideHeader();
+      }
+      
+      // Optional: Add visual feedback for blog post header
+      const progress = Math.min(currentScrollY / blogPostHeaderHeight, 1);
+      blogPostHeader.style.setProperty('--scroll-progress', progress);
+      
+      // 🎯 CONFIGURATION: Visual feedback threshold
+      // When to show "approaching threshold" visual feedback
+      const visualFeedbackThreshold = hideThreshold * 0.9; // 90% of hide threshold
+      
+      // Add class when approaching threshold
+      if (currentScrollY >= visualFeedbackThreshold) {
+        blogPostHeader.classList.add('approaching-threshold');
+      } else {
+        blogPostHeader.classList.remove('approaching-threshold');
+      }
+      
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+    
+    // Smooth show animation
+    function showHeader(addScrolledClass = true) {
+      if (header.classList.contains('hidden')) {
+        console.log('🎬 Starting show animation...');
+        
+        // Remove hidden class and add showing class for animation
+        header.classList.remove('hidden', 'hiding');
+        header.classList.add('showing');
+        
+        // Add scrolled class if needed
+        if (addScrolledClass) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+        
+        // Remove showing class after animation completes
+        setTimeout(() => {
+          header.classList.remove('showing');
+          console.log('✅ Show animation completed');
+        }, 500);
+      } else {
+        // Just update scrolled class if already visible
+        if (addScrolledClass) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }
+    }
+    
+    // Smooth hide animation
+    function hideHeader() {
+      if (!header.classList.contains('hidden')) {
+        console.log('🎬 Starting hide animation...');
+        
+        // Remove any existing animation classes
+        header.classList.remove('showing');
+        
+        // Add hiding class for animation
+        header.classList.add('hiding');
+        
+        // Wait for animation to complete before adding hidden class
+        setTimeout(() => {
+          header.classList.add('hidden');
+          header.classList.remove('hiding', 'scrolled');
+          console.log('✅ Hide animation completed');
+        }, 300); // Match animation duration (300ms)
+      }
+    }
+    
+    // Throttled scroll handler
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(updateHeaderVisibility);
+        ticking = true;
+      }
+    }
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', onScroll);
+    
+    // Initial check
+    updateHeaderVisibility();
+    
+    // Debug logging
+    console.log('SmartHeader initialized:', {
+      header: header ? 'found' : 'not found',
+      blogPostHeader: blogPostHeader ? 'found' : 'not found',
+      blogPostHeaderHeight: blogPostHeader ? blogPostHeader.offsetHeight : 'N/A',
+      hideThresholdPercentage: hideThresholdPercentage,
+      hideThreshold: blogPostHeader ? Math.round(blogPostHeader.offsetHeight * hideThresholdPercentage) : 'N/A',
+      visualFeedbackThreshold: blogPostHeader ? Math.round(blogPostHeader.offsetHeight * hideThresholdPercentage * 0.9) : 'N/A',
+      behavior: 'Header ONLY appears in blog post header section'
+    });
+  });
+</script>

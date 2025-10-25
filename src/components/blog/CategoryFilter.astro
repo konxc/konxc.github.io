@@ -1,0 +1,292 @@
+---
+// Category Filter Component
+export interface Props {
+  class?: string;
+  currentCategory?: string;
+}
+
+const { class: className, currentCategory = 'all' } = Astro.props;
+
+const categories = [
+  { id: 'all', label: 'Semua', count: 0 },
+  { id: 'business', label: 'Business', count: 0 },
+  { id: 'technical', label: 'Technical', count: 0 },
+  { id: 'case-study', label: 'Case Study', count: 0 },
+  { id: 'tutorial', label: 'Tutorial', count: 0 },
+  { id: 'insights', label: 'Insights', count: 0 }
+];
+---
+
+<div class={`category-filter ${className || ''}`}>
+  <div class="filter-container">
+    <div class="filter-buttons" id="category-filter-buttons">
+      {categories.map((category) => (
+        <button 
+          class={`filter-btn ${currentCategory === category.id ? 'active' : ''}`}
+          data-category={category.id}
+          data-count={category.count}
+        >
+          {category.label}
+          {category.count > 0 && (
+            <span class="filter-count">({category.count})</span>
+          )}
+        </button>
+      ))}
+    </div>
+    
+    <div class="filter-results" id="filter-results">
+      <div class="results-info">
+        <span class="results-text" id="results-text">Menampilkan semua artikel</span>
+        <button class="clear-filter" id="clear-filter-btn" style="display: none;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+          Reset Filter
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  class CategoryFilter {
+    private filterButtons: NodeListOf<HTMLButtonElement> | null = null;
+    private resultsText: HTMLElement | null = null;
+    private clearBtn: HTMLButtonElement | null = null;
+    private posts: any[] = [];
+    private currentCategory: string = 'all';
+
+    constructor() {
+      this.initializeElements();
+      this.loadPosts();
+      this.setupEventListeners();
+      this.updateCategoryCounts();
+    }
+
+    private initializeElements(): void {
+      this.filterButtons = document.querySelectorAll('.filter-btn');
+      this.resultsText = document.getElementById('results-text');
+      this.clearBtn = document.getElementById('clear-filter-btn') as HTMLButtonElement;
+    }
+
+    private async loadPosts(): Promise<void> {
+      try {
+        const response = await fetch('/api/posts');
+        if (response.ok) {
+          this.posts = await response.json();
+        } else {
+          this.loadPostsFromPage();
+        }
+      } catch (error) {
+        console.log('API not available, loading from page data');
+        this.loadPostsFromPage();
+      }
+    }
+
+    private loadPostsFromPage(): void {
+      const postsData = document.getElementById('posts-data');
+      if (postsData) {
+        this.posts = JSON.parse(postsData.textContent || '[]');
+      }
+    }
+
+    private setupEventListeners(): void {
+      if (!this.filterButtons) return;
+
+      this.filterButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          const target = e.target as HTMLButtonElement;
+          const category = target.dataset.category || 'all';
+          this.filterByCategory(category);
+        });
+      });
+
+      this.clearBtn?.addEventListener('click', () => {
+        this.clearFilter();
+      });
+    }
+
+    private updateCategoryCounts(): void {
+      if (!this.filterButtons) return;
+
+      // Count posts by category
+      const categoryCounts: { [key: string]: number } = {};
+      this.posts.forEach(post => {
+        const category = post.category || 'all';
+        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+      });
+
+      // Update button counts
+      this.filterButtons.forEach(button => {
+        const category = button.dataset.category || 'all';
+        const count = category === 'all' ? this.posts.length : (categoryCounts[category] || 0);
+        button.dataset.count = count.toString();
+        
+        const countElement = button.querySelector('.filter-count');
+        if (count > 0) {
+          if (!countElement) {
+            const span = document.createElement('span');
+            span.className = 'filter-count';
+            span.textContent = `(${count})`;
+            button.appendChild(span);
+          } else {
+            countElement.textContent = `(${count})`;
+          }
+        } else if (countElement) {
+          countElement.remove();
+        }
+      });
+    }
+
+    private filterByCategory(category: string): void {
+      this.currentCategory = category;
+      
+      // Update active button
+      this.filterButtons?.forEach(button => {
+        button.classList.toggle('active', button.dataset.category === category);
+      });
+
+      // Filter posts
+      const filteredPosts = this.getFilteredPosts(category);
+      
+      // Update results text
+      this.updateResultsText(category, filteredPosts.length);
+      
+      // Show/hide clear button
+      if (this.clearBtn) {
+        this.clearBtn.style.display = category === 'all' ? 'none' : 'block';
+      }
+
+      // Trigger custom event for other components
+      this.dispatchFilterEvent(category, filteredPosts);
+    }
+
+    private getFilteredPosts(category: string): any[] {
+      if (category === 'all') {
+        return this.posts;
+      }
+      return this.posts.filter(post => post.category === category);
+    }
+
+    private updateResultsText(category: string, count: number): void {
+      if (!this.resultsText) return;
+
+      const categoryLabels: { [key: string]: string } = {
+        'all': 'semua artikel',
+        'business': 'artikel business',
+        'technical': 'artikel technical',
+        'case-study': 'case study',
+        'tutorial': 'tutorial',
+        'insights': 'insights'
+      };
+
+      const label = categoryLabels[category] || category;
+      this.resultsText.textContent = `Menampilkan ${count} ${label}`;
+    }
+
+    private clearFilter(): void {
+      this.filterByCategory('all');
+    }
+
+    private dispatchFilterEvent(category: string, filteredPosts: any[]): void {
+      const event = new CustomEvent('categoryFilter', {
+        detail: {
+          category,
+          posts: filteredPosts,
+          totalPosts: this.posts.length
+        }
+      });
+      document.dispatchEvent(event);
+    }
+  }
+
+  // Initialize filter when DOM is ready
+  function initCategoryFilter(): void {
+    new CategoryFilter();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCategoryFilter);
+  } else {
+    initCategoryFilter();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .category-filter {
+    @apply w-full;
+  }
+
+  .filter-container {
+    @apply space-y-4;
+  }
+
+  .filter-buttons {
+    @apply flex flex-wrap gap-2 justify-center;
+  }
+
+  .filter-btn {
+    @apply px-4 py-2 bg-white border border-neutral-200 rounded-lg text-sm font-medium text-neutral-600 hover:text-primary-600 hover:border-primary-300 transition-all duration-200 flex items-center gap-2;
+  }
+
+  .filter-btn.active {
+    @apply bg-primary-500 text-white border-primary-500 shadow-sm;
+  }
+
+  .filter-btn:hover {
+    @apply transform -translate-y-0.5 shadow-sm;
+  }
+
+  .filter-count {
+    @apply text-xs opacity-75;
+  }
+
+  .filter-results {
+    @apply text-center;
+  }
+
+  .results-info {
+    @apply flex items-center justify-center gap-4;
+  }
+
+  .results-text {
+    @apply text-sm text-neutral-600;
+  }
+
+  .clear-filter {
+    @apply flex items-center gap-2 px-3 py-1 bg-neutral-100 text-neutral-600 rounded-lg text-sm hover:bg-neutral-200 transition-colors;
+  }
+
+  .clear-filter svg {
+    @apply w-4 h-4;
+  }
+
+  /* Dark mode styles */
+  .dark .filter-btn {
+    @apply bg-neutral-800 border-neutral-700 text-neutral-300 hover:text-primary-400 hover:border-primary-600;
+  }
+
+  .dark .filter-btn.active {
+    @apply bg-primary-600 text-white border-primary-600;
+  }
+
+  .dark .clear-filter {
+    @apply bg-neutral-700 text-neutral-300 hover:bg-neutral-600;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .filter-buttons {
+      @apply justify-start overflow-x-auto pb-2;
+    }
+    
+    .filter-btn {
+      @apply whitespace-nowrap flex-shrink-0;
+    }
+    
+    .results-info {
+      @apply flex-col gap-2;
+    }
+  }
+</style>

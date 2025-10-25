@@ -1,0 +1,113 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e6]:
+      - button "Toggle dark mode" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+        - img [ref=e11]
+      - generic [ref=e13]:
+        - generic [ref=e14]: Testing
+        - heading "Testing Page for Playwright" [level=1] [ref=e15]
+        - paragraph [ref=e16]: This page contains various components for testing with Playwright automation.
+        - generic [ref=e17]:
+          - generic [ref=e18]:
+            - generic [ref=e19]: T
+            - generic [ref=e20]: By Test Author
+          - generic [ref=e21]: •
+          - generic [ref=e22]: 2024-01-01
+          - generic [ref=e23]: •
+          - generic [ref=e24]: 5 min read
+        - generic [ref=e25]:
+          - generic [ref=e26]: "#testing"
+          - generic [ref=e27]: "#playwright"
+          - generic [ref=e28]: "#automation"
+    - generic [ref=e32]:
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - heading "Main Heading Level 2" [level=2] [ref=e36]
+          - paragraph [ref=e37]: This is a test paragraph under the main heading. It contains some content to make the page more realistic for testing purposes.
+          - heading "Sub Heading Level 3" [level=3] [ref=e38]
+          - paragraph [ref=e39]: This is content under a sub heading. It helps test the table of contents functionality and reading progress tracking.
+          - heading "Sub-sub Heading Level 4" [level=4] [ref=e40]
+          - paragraph [ref=e41]: This is content under a sub-sub heading. It tests the deeper levels of the table of contents hierarchy.
+          - heading "Another Main Heading" [level=2] [ref=e42]
+          - paragraph [ref=e43]: This is another main heading to test multiple H2 elements in the table of contents.
+          - heading "Another Sub Heading" [level=3] [ref=e44]
+          - paragraph [ref=e45]: This is another sub heading to test multiple H3 elements.
+          - heading "Deep Heading Level 5" [level=5] [ref=e46]
+          - paragraph [ref=e47]: This is a deep heading to test H5 level in the table of contents.
+          - heading "Deepest Heading Level 6" [level=6] [ref=e48]
+          - paragraph [ref=e49]: This is the deepest heading to test H6 level in the table of contents.
+          - heading "Final Main Heading" [level=2] [ref=e50]
+          - paragraph [ref=e51]: This is the final main heading to test the complete hierarchy and ensure all levels work correctly.
+          - paragraph [ref=e52]: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          - paragraph [ref=e53]: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          - paragraph [ref=e54]: Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+          - paragraph [ref=e55]: Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+          - paragraph [ref=e56]: Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+          - paragraph [ref=e57]: Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.
+          - paragraph [ref=e58]: At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+          - paragraph [ref=e59]: Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+          - paragraph [ref=e60]: Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.
+          - paragraph [ref=e61]: Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
+          - paragraph [ref=e62]: Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+        - generic [ref=e64]:
+          - heading "Bagikan Artikel Ini" [level=4] [ref=e65]
+          - generic [ref=e66]:
+            - link "Bagikan di Twitter" [ref=e67] [cursor=pointer]:
+              - /url: https://twitter.com/intent/tweet?text=Testing%20Page%20for%20Playwright&url=http%3A%2F%2Flocalhost%3A4321%2Fblog%2Ftesting&via=konxc_id
+              - img [ref=e68]
+              - generic [ref=e70]: Twitter
+            - link "Bagikan di LinkedIn" [ref=e71] [cursor=pointer]:
+              - /url: https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2Flocalhost%3A4321%2Fblog%2Ftesting
+              - img [ref=e72]
+              - generic [ref=e74]: LinkedIn
+            - link "Bagikan di Facebook" [ref=e75] [cursor=pointer]:
+              - /url: https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4321%2Fblog%2Ftesting
+              - img [ref=e76]
+              - generic [ref=e78]: Facebook
+            - link "Bagikan di WhatsApp" [ref=e79] [cursor=pointer]:
+              - /url: https://wa.me/?text=Testing%20Page%20for%20Playwright%20http%3A%2F%2Flocalhost%3A4321%2Fblog%2Ftesting
+              - img [ref=e80]
+              - generic [ref=e82]: WhatsApp
+            - button "Copy link" [ref=e83] [cursor=pointer]:
+              - img [ref=e84]
+              - generic [ref=e86]: Copy Link
+      - generic [ref=e89]:
+        - generic [ref=e90]:
+          - heading "Daftar Isi" [level=4] [ref=e91]
+          - button "Toggle table of contents" [ref=e92] [cursor=pointer]:
+            - img [ref=e93]
+        - navigation [ref=e95]:
+          - link "Main Heading Level 2" [ref=e96] [cursor=pointer]:
+            - /url: "#heading-0"
+          - link "Sub Heading Level 3" [ref=e97] [cursor=pointer]:
+            - /url: "#heading-1"
+          - link "Sub-sub Heading Level 4" [ref=e98] [cursor=pointer]:
+            - /url: "#heading-2"
+          - link "Another Main Heading" [ref=e99] [cursor=pointer]:
+            - /url: "#heading-3"
+          - link "Another Sub Heading" [ref=e100] [cursor=pointer]:
+            - /url: "#heading-4"
+          - link "Deep Heading Level 5" [ref=e101] [cursor=pointer]:
+            - /url: "#heading-5"
+          - link "Deepest Heading Level 6" [ref=e102] [cursor=pointer]:
+            - /url: "#heading-6"
+          - link "Final Main Heading" [ref=e103] [cursor=pointer]:
+            - /url: "#heading-7"
+  - generic [ref=e106]:
+    - button "Menu" [ref=e107]:
+      - img [ref=e109]
+      - generic: Menu
+    - button "Inspect" [ref=e113]:
+      - img [ref=e115]
+      - generic: Inspect
+    - button "Audit" [ref=e117]:
+      - img [ref=e119]
+      - generic: Audit
+    - button "Settings" [ref=e122]:
+      - img [ref=e124]
+      - generic: Settings
+```

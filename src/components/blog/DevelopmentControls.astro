@@ -1,0 +1,286 @@
+---
+// Development Controls - Unified development tools
+// Only appears in development environment
+---
+
+<div class="development-controls" id="development-controls">
+  <!-- Development Mode Indicator -->
+  <div class="dev-indicator">
+    <span class="dev-badge">DEV</span>
+  </div>
+  
+  <!-- Control Buttons -->
+  <div class="control-buttons">
+    <!-- Reading Mode Button -->
+    <button class="control-btn reading-mode-btn" id="reading-mode-toggle-dev" title="Toggle Reading Mode">
+      <svg class="control-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+      </svg>
+      <span class="control-text">Reading Mode</span>
+    </button>
+    
+    <!-- Testing Suite Button -->
+    <button class="control-btn testing-btn" id="testing-toggle-dev" title="Toggle Testing Suite">
+      <svg class="control-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      <span class="control-text">Testing Suite</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  // Enhanced development environment detection using Vite env
+  function isDevelopmentEnvironment() {
+    // Check Vite environment variables (most reliable)
+    const isViteDev = import.meta.env.DEV; // true in development, false in production/preview
+    const isViteProd = import.meta.env.PROD; // true in production/preview, false in development
+    const mode = import.meta.env.MODE; // 'development', 'production', or custom
+    
+    // Primary check: Vite environment variables
+    if (isViteDev && mode === 'development') {
+      return true;
+    }
+    
+    // Fallback: Check for Node adapter specific indicators
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    const protocol = window.location.protocol;
+    
+    // Check for localhost variations
+    const isLocalhost = hostname === 'localhost' || 
+                       hostname === '127.0.0.1' || 
+                       hostname === '0.0.0.0' ||
+                       hostname.startsWith('192.168.') ||
+                       hostname.startsWith('10.0.');
+    
+    // Check for development ports (but NOT preview mode)
+    const isDevPort = port === '4321' && !isPreviewMode(); // Astro dev server (not preview)
+    
+    // Check for other development ports
+    const isOtherDevPort = port === '3000' || // Common dev port
+                          port === '8080' || // Common dev port
+                          port === '5173' || // Vite dev server
+                          port === '4173';  // Vite preview
+    
+    // Check for development protocol
+    const isDevProtocol = protocol === 'http:' && (isLocalhost || isDevPort || isOtherDevPort);
+    
+    // Check for development URL patterns
+    const isDevUrl = window.location.href.includes('localhost') ||
+                    window.location.href.includes('127.0.0.1') ||
+                    window.location.href.includes('dev.') ||
+                    window.location.href.includes('staging.') ||
+                    window.location.href.includes('test.');
+    
+    // Check for development environment variables (if available)
+    const hasDevFlag = window.location.search.includes('dev=true') ||
+                       window.location.search.includes('debug=true') ||
+                       localStorage.getItem('dev-mode') === 'true';
+    
+    // Check if it's actually development mode (not preview)
+    const isActualDev = isDevProtocol || isDevUrl || hasDevFlag;
+    
+    return isActualDev && !isPreviewMode();
+  }
+  
+  // Detect if we're in preview mode using Vite env
+  function isPreviewMode() {
+    // Check Vite environment variables first
+    const isViteProd = import.meta.env.PROD; // true in production/preview
+    const mode = import.meta.env.MODE; // 'development', 'production', or custom
+    
+    // If we're in production mode but on localhost, it's likely preview
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1';
+    
+    if (isViteProd && isLocalhost) {
+      return true;
+    }
+    
+    // Fallback: Check for Astro preview mode indicators
+    const hasPreviewIndicator = window.location.search.includes('preview=true') ||
+                               localStorage.getItem('preview-mode') === 'true';
+    
+    // Check if we're serving from dist/ directory (preview mode)
+    const isServingDist = document.querySelector('script[src*="/_astro/"]') !== null ||
+                         document.querySelector('link[href*="/_astro/"]') !== null;
+    
+    // Check for production build indicators
+    const hasProductionBuild = document.querySelector('meta[name="generator"][content*="Astro"]') !== null;
+    
+    // Check if we're on localhost:4321 but it's preview mode
+    const isLocalhost4321 = window.location.hostname === 'localhost' && window.location.port === '4321';
+    const isPreviewOnLocalhost = isLocalhost4321 && (hasPreviewIndicator || isServingDist);
+    
+    return isPreviewOnLocalhost || hasPreviewIndicator;
+  }
+
+  // Initialize development controls
+  function initDevelopmentControls() {
+    const controls = document.getElementById('development-controls');
+    if (!controls) return;
+
+    // Show controls only in development environment
+    const isDev = isDevelopmentEnvironment();
+    const isPreview = isPreviewMode();
+    
+    // Debug Vite environment variables
+    console.log('🔍 DevelopmentControls Environment Detection:', {
+      'import.meta.env.DEV': import.meta.env.DEV,
+      'import.meta.env.PROD': import.meta.env.PROD,
+      'import.meta.env.MODE': import.meta.env.MODE,
+      'isDevelopment': isDev,
+      'isPreview': isPreview,
+      'hostname': window.location.hostname,
+      'port': window.location.port
+    });
+    
+    if (!isDev) {
+      controls.style.display = 'none';
+      if (isPreview) {
+        console.log('🚫 Development controls hidden - Preview mode detected (production build)');
+      } else {
+        console.log('🚫 Development controls hidden - Production environment detected');
+      }
+      return;
+    }
+
+    console.log('✅ Development controls available - Development environment detected');
+
+    // Setup event listeners
+    setupControlEventListeners();
+  }
+
+  // Setup event listeners for control buttons
+  function setupControlEventListeners() {
+    const readingModeBtn = document.getElementById('reading-mode-toggle-dev');
+    const testingBtn = document.getElementById('testing-toggle-dev');
+
+    // Reading Mode functionality
+    if (readingModeBtn) {
+      readingModeBtn.addEventListener('click', () => {
+        // Sync with original reading mode toggle
+        const originalToggle = document.getElementById('reading-mode-toggle');
+        if (originalToggle) {
+          originalToggle.click();
+          readingModeBtn.classList.toggle('active');
+        } else {
+          console.warn('⚠️ Original reading mode toggle not found');
+        }
+      });
+    }
+
+    // Testing Suite functionality
+    if (testingBtn) {
+      testingBtn.addEventListener('click', () => {
+        // Sync with original testing suite toggle
+        const originalToggle = document.getElementById('testing-toggle-btn');
+        if (originalToggle) {
+          originalToggle.click();
+          testingBtn.classList.toggle('active');
+        } else {
+          console.warn('⚠️ Original testing suite toggle not found');
+        }
+      });
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDevelopmentControls);
+  } else {
+    initDevelopmentControls();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  
+  .development-controls {
+    @apply fixed top-4 right-4 z-50 flex items-center gap-3 bg-white rounded-lg shadow-lg border border-neutral-200 p-2;
+    transition: all 0.3s ease;
+  }
+
+  .dev-indicator {
+    @apply flex items-center;
+  }
+
+  .dev-badge {
+    @apply px-2 py-1 bg-red-100 text-red-700 text-xs font-bold rounded uppercase;
+    animation: pulse 2s infinite;
+  }
+
+  .control-buttons {
+    @apply flex items-center gap-2;
+  }
+
+  .control-btn {
+    @apply flex items-center gap-2 px-3 py-2 text-sm font-medium text-neutral-700 bg-neutral-50 rounded-md hover:bg-neutral-100 transition-colors duration-200;
+    border: 1px solid transparent;
+  }
+
+  .control-btn:hover {
+    @apply bg-neutral-100 border-neutral-200;
+  }
+
+  .control-btn.active {
+    @apply bg-primary-100 text-primary-700 border-primary-200;
+  }
+
+  .control-icon {
+    @apply w-4 h-4;
+  }
+
+  .control-text {
+    @apply hidden lg:block;
+  }
+
+  /* Dark mode support */
+  .dark .development-controls {
+    @apply bg-neutral-900 border-neutral-700;
+  }
+
+  .dark .dev-badge {
+    @apply bg-red-900 text-red-300;
+  }
+
+  .dark .control-btn {
+    @apply text-neutral-300 bg-neutral-800 hover:bg-neutral-700 border-neutral-600;
+  }
+
+  .dark .control-btn.active {
+    @apply bg-primary-900 text-primary-300 border-primary-700;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .development-controls {
+      @apply top-2 right-2 p-1 gap-2;
+    }
+    
+    .control-btn {
+      @apply px-2 py-1;
+    }
+    
+    .control-text {
+      @apply hidden;
+    }
+  }
+
+  /* Animation for DEV badge */
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  /* Hide original toggles when development controls are active */
+  .development-controls:not([style*="display: none"]) ~ * .testing-toggle,
+  .development-controls:not([style*="display: none"]) ~ * .reading-mode-toggle {
+    display: none !important;
+  }
+</style>

@@ -1,0 +1,315 @@
+---
+// Related Articles Component - Reusable component for displaying related content
+// Supports dynamic articles with flexible configuration
+
+export interface Article {
+  id: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  readTime: string;
+  slug: string;
+  href?: string;
+}
+
+export interface Props {
+  // Content configuration
+  title?: string;
+  articles: Article[];
+  
+  // Layout options
+  columns?: 1 | 2 | 3 | 4;
+  maxArticles?: number;
+  
+  // Styling options
+  className?: string;
+  showCategory?: boolean;
+  showReadTime?: boolean;
+  
+  // CTA configuration
+  ctaText?: string;
+  baseUrl?: string;
+}
+
+const {
+  title = 'Artikel Terkait',
+  articles = [],
+  columns = 2,
+  maxArticles = 4,
+  className = '',
+  showCategory = true,
+  showReadTime = true,
+  ctaText = 'Baca →',
+  baseUrl = '/blog'
+} = Astro.props;
+
+// Limit articles to maxArticles
+const displayArticles = articles.slice(0, maxArticles);
+
+// Generate grid classes based on columns
+const getGridClasses = (cols: number) => {
+  const gridMap: Record<number, string> = {
+    1: 'grid-cols-1',
+    2: 'md:grid-cols-2',
+    3: 'md:grid-cols-2 lg:grid-cols-3',
+    4: 'md:grid-cols-2 lg:grid-cols-4'
+  };
+  return `grid gap-6 ${gridMap[cols] || gridMap[2]}`;
+};
+
+// Generate article URL
+const getArticleUrl = (article: Article) => {
+  return article.href || `${baseUrl}/${article.slug}`;
+};
+---
+
+<section class={`related-articles ${className}`}>
+  <div class="mx-auto max-w-6xl">
+    <!-- Section Header -->
+    <div class="mb-8 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-neutral-800 mb-2">
+        {title}
+      </h2>
+      <div class="w-16 h-1 bg-gradient-to-r from-primary-500 to-primary-600 mx-auto rounded-full"></div>
+    </div>
+    
+    <!-- Articles Grid -->
+    {displayArticles.length > 0 ? (
+      <div class={getGridClasses(columns)}>
+        {displayArticles.map((article) => (
+          <article class="related-article-card group">
+            <div class="article-content">
+              <!-- Category Badge -->
+              {showCategory && article.category && (
+                <div class="article-category">
+                  {article.category}
+                </div>
+              )}
+              
+              <!-- Article Title -->
+              <h3 class="article-title">
+                <a href={getArticleUrl(article)} class="article-link">
+                  {article.title}
+                </a>
+              </h3>
+              
+              <!-- Article Excerpt -->
+              <p class="article-excerpt">
+                {article.excerpt}
+              </p>
+            </div>
+            
+            <!-- Article Footer -->
+            <div class="article-footer">
+              {showReadTime && article.readTime && (
+                <span class="read-time">{article.readTime}</span>
+              )}
+              
+              <a href={getArticleUrl(article)} class="article-cta">
+                {ctaText}
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <!-- Empty State -->
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg class="w-12 h-12 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <p class="empty-text">Belum ada artikel terkait yang tersedia.</p>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  @reference "@/styles/global.css";
+  
+  /* Related Articles Section */
+  .related-articles {
+    @apply py-12 bg-gradient-to-br from-neutral-50 to-neutral-100;
+  }
+  
+  /* Article Card */
+  .related-article-card {
+    @apply bg-white rounded-xl border border-neutral-200 p-6 transition-all duration-300 hover:shadow-lg hover:shadow-neutral-900/10 hover:-translate-y-1;
+  }
+  
+  .related-article-card:hover {
+    @apply border-primary-200;
+  }
+  
+  /* Article Content */
+  .article-content {
+    @apply mb-4 flex-1;
+  }
+  
+  .article-category {
+    @apply mb-3 text-xs font-semibold uppercase tracking-wide text-primary-600 bg-primary-50 px-2 py-1 rounded-md inline-block;
+  }
+  
+  .article-title {
+    @apply mb-3 text-lg md:text-xl font-bold leading-tight;
+  }
+  
+  .article-link {
+    @apply text-neutral-800 transition-colors duration-200 hover:text-primary-600 focus:text-primary-600 focus:outline-none;
+  }
+  
+  .article-excerpt {
+    @apply text-sm text-neutral-600 leading-relaxed line-clamp-3;
+  }
+  
+  /* Article Footer */
+  .article-footer {
+    @apply flex items-center justify-between pt-4 border-t border-neutral-100;
+  }
+  
+  .read-time {
+    @apply text-xs text-neutral-500 font-medium;
+  }
+  
+  .article-cta {
+    @apply text-sm font-semibold text-primary-600 transition-all duration-200 hover:text-primary-700 hover:translate-x-1 focus:text-primary-700 focus:outline-none focus:translate-x-1;
+  }
+  
+  /* Empty State */
+  .empty-state {
+    @apply text-center py-12;
+  }
+  
+  .empty-icon {
+    @apply mb-4 flex justify-center;
+  }
+  
+  .empty-text {
+    @apply text-neutral-500 text-sm;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .related-articles {
+      @apply py-8;
+    }
+    
+    .related-article-card {
+      @apply p-4;
+    }
+    
+    .article-title {
+      @apply text-lg;
+    }
+  }
+  
+  /* Line Clamp Utility */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Hover Animations */
+  .related-article-card {
+    transform-origin: center;
+  }
+  
+  .article-cta {
+    position: relative;
+  }
+  
+  .article-cta::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+    transition: width 0.3s ease;
+  }
+  
+  .article-cta:hover::after,
+  .article-cta:focus::after {
+    width: 100%;
+  }
+</style>
+
+<script>
+  // Related Articles Interaction Handler
+  class RelatedArticles {
+    private container: HTMLElement;
+    
+    constructor(container: HTMLElement) {
+      this.container = container;
+      this.init();
+    }
+    
+    private init(): void {
+      this.setupAnalytics();
+      this.setupAccessibility();
+    }
+    
+    private setupAnalytics(): void {
+      // Track article clicks for analytics
+      const articleLinks = this.container.querySelectorAll('.article-link, .article-cta');
+      
+      articleLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          const article = target.closest('.related-article-card');
+          const title = article?.querySelector('.article-title')?.textContent?.trim();
+          const category = article?.querySelector('.article-category')?.textContent?.trim();
+          
+          // Track with Google Analytics if available
+          if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'related_article_click', {
+              event_category: 'engagement',
+              event_label: title,
+              custom_parameter_1: category,
+              custom_parameter_2: 'related_articles'
+            });
+          }
+          
+          // Console log for development
+          console.log('Related Article Click:', {
+            title,
+            category,
+            href: (target as HTMLAnchorElement).href
+          });
+        });
+      });
+    }
+    
+    private setupAccessibility(): void {
+      // Enhance keyboard navigation
+      const cards = this.container.querySelectorAll('.related-article-card');
+      
+      cards.forEach(card => {
+        const links = card.querySelectorAll('a');
+        
+        // Add keyboard navigation between links within card
+        links.forEach((link, index) => {
+          link.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+              // Custom tab handling if needed
+            }
+          });
+        });
+      });
+    }
+  }
+  
+  // Initialize Related Articles when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const relatedArticlesContainers = document.querySelectorAll('.related-articles') as NodeListOf<HTMLElement>;
+    
+    relatedArticlesContainers.forEach(container => {
+      new RelatedArticles(container);
+    });
+  });
+</script>

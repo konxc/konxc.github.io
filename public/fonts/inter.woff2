@@ -1,0 +1,16 @@
+/* Inter Font Placeholder */
+/* This file serves as a placeholder for Inter font files */
+/* In production, you would download Inter font files from Google Fonts */
+
+/* 
+To add Inter font files:
+1. Download from https://fonts.google.com/specimen/Inter
+2. Convert to woff2 format
+3. Place files in this directory:
+   - inter-regular.woff2
+   - inter-medium.woff2
+   - inter-semibold.woff2
+   - inter-bold.woff2
+*/
+
+/* For now, we're using Google Fonts CDN in Head.astro */

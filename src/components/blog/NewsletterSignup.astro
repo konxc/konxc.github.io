@@ -1,0 +1,306 @@
+---
+// Newsletter Signup Component
+export interface Props {
+  class?: string;
+  title?: string;
+  description?: string;
+  placeholder?: string;
+  buttonText?: string;
+  privacyText?: string;
+  variant?: 'default' | 'card' | 'minimal';
+}
+
+const { 
+  class: className,
+  title = "Dapatkan Tips Teknologi Mingguan",
+  description = "Subscribe newsletter kami untuk mendapatkan tips teknologi terbaru, case studies, dan insights dari tim KonXC.",
+  placeholder = "Email Anda",
+  buttonText = "Subscribe",
+  privacyText = "Kami menghargai privasi Anda. Tidak ada spam, unsubscribe kapan saja.",
+  variant = 'default'
+} = Astro.props;
+---
+
+<section id="newsletter" class={`newsletter-signup section bg-white ${className || ''}`}>
+  <div class="container">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-4">
+        {title}
+      </h2>
+      <p class="text-xl text-neutral-600 mb-8">
+        {description}
+      </p>
+      
+      {variant === 'default' && (
+        <div class="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-8">
+          <form class="newsletter-form space-y-4" id="newsletter-form">
+            <div class="flex flex-col sm:flex-row gap-4">
+              <input 
+                type="email" 
+                name="email"
+                placeholder={placeholder}
+                class="form-input flex-1"
+                required
+              />
+              <button type="submit" class="btn-primary whitespace-nowrap">
+                {buttonText}
+              </button>
+            </div>
+            <p class="text-sm text-neutral-500">
+              {privacyText}
+            </p>
+          </form>
+        </div>
+      )}
+      
+      {variant === 'card' && (
+        <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
+          <form class="newsletter-form space-y-4" id="newsletter-form">
+            <div class="flex flex-col sm:flex-row gap-4">
+              <input 
+                type="email" 
+                name="email"
+                placeholder={placeholder}
+                class="form-input flex-1"
+                required
+              />
+              <button type="submit" class="btn-primary whitespace-nowrap">
+                {buttonText}
+              </button>
+            </div>
+            <p class="text-sm text-neutral-500">
+              {privacyText}
+            </p>
+          </form>
+        </div>
+      )}
+      
+      {variant === 'minimal' && (
+        <form class="newsletter-form flex flex-col sm:flex-row gap-4 max-w-md mx-auto" id="newsletter-form">
+          <input 
+            type="email" 
+            name="email"
+            placeholder={placeholder}
+            class="form-input flex-1"
+            required
+          />
+          <button type="submit" class="btn-primary whitespace-nowrap">
+            {buttonText}
+          </button>
+        </form>
+      )}
+    </div>
+  </div>
+</section>
+
+<script>
+  class NewsletterSignup {
+    private form: HTMLFormElement | null = null;
+    private isSubmitting: boolean = false;
+
+    constructor() {
+      this.initializeElements();
+      this.setupEventListeners();
+    }
+
+    private initializeElements(): void {
+      this.form = document.getElementById('newsletter-form') as HTMLFormElement;
+    }
+
+    private setupEventListeners(): void {
+      this.form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.handleSubmit();
+      });
+    }
+
+    private async handleSubmit(): Promise<void> {
+      if (this.isSubmitting) return;
+      
+      this.isSubmitting = true;
+      
+      const formData = new FormData(this.form!);
+      const email = formData.get('email') as string;
+      
+      try {
+        // Show loading state
+        this.showLoading();
+        
+        // Simulate API call (replace with actual API endpoint)
+        await this.subscribeToNewsletter(email);
+        
+        // Show success message
+        this.showSuccess();
+        
+        // Reset form
+        this.form?.reset();
+        
+        // Track subscription
+        this.trackSubscription(email);
+        
+      } catch (error) {
+        console.error('Newsletter subscription error:', error);
+        this.showError();
+      } finally {
+        this.isSubmitting = false;
+        this.hideLoading();
+      }
+    }
+
+    private async subscribeToNewsletter(email: string): Promise<void> {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // In production, replace with actual API call:
+      // const response = await fetch('/api/newsletter/subscribe', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email })
+      // });
+      // 
+      // if (!response.ok) {
+      //   throw new Error('Subscription failed');
+      // }
+    }
+
+    private showLoading(): void {
+      const button = this.form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Subscribing...';
+        button.classList.add('opacity-50');
+      }
+    }
+
+    private hideLoading(): void {
+      const button = this.form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+      if (button) {
+        button.disabled = false;
+        button.textContent = 'Subscribe';
+        button.classList.remove('opacity-50');
+      }
+    }
+
+    private showSuccess(): void {
+      const message = document.createElement('div');
+      message.className = 'newsletter-message success';
+      message.innerHTML = `
+        <div class="flex items-center gap-2 text-green-700 bg-green-50 border border-green-200 rounded-lg p-4">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span>Terima kasih! Anda telah berhasil subscribe ke newsletter kami.</span>
+        </div>
+      `;
+      
+      this.form?.parentNode?.insertBefore(message, this.form);
+      
+      // Remove message after 5 seconds
+      setTimeout(() => {
+        message.remove();
+      }, 5000);
+    }
+
+    private showError(): void {
+      const message = document.createElement('div');
+      message.className = 'newsletter-message error';
+      message.innerHTML = `
+        <div class="flex items-center gap-2 text-red-700 bg-red-50 border border-red-200 rounded-lg p-4">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+          <span>Terjadi kesalahan. Silakan coba lagi.</span>
+        </div>
+      `;
+      
+      this.form?.parentNode?.insertBefore(message, this.form);
+      
+      // Remove message after 5 seconds
+      setTimeout(() => {
+        message.remove();
+      }, 5000);
+    }
+
+    private trackSubscription(email: string): void {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'newsletter_subscribe', {
+          event_category: 'engagement',
+          event_label: 'newsletter_signup',
+          value: 1
+        });
+      }
+    }
+  }
+
+  // Initialize newsletter signup when DOM is ready
+  function initNewsletterSignup(): void {
+    if (document.getElementById('newsletter-form')) {
+      new NewsletterSignup();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNewsletterSignup);
+  } else {
+    initNewsletterSignup();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .newsletter-signup {
+    @apply relative;
+  }
+  
+  .form-input {
+    @apply w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors;
+  }
+  
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 transition-all duration-200 shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-primary:hover {
+    @apply transform -translate-y-0.5;
+  }
+  
+  .btn-primary:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  
+  .newsletter-message {
+    @apply mb-4;
+  }
+  
+  /* Dark mode styles */
+  .dark .newsletter-signup h2 {
+    @apply text-neutral-100;
+  }
+  
+  .dark .newsletter-signup p {
+    @apply text-neutral-400;
+  }
+  
+  .dark .form-input {
+    @apply bg-neutral-700 border-neutral-600 text-neutral-100 placeholder-neutral-400 focus:ring-primary-400 focus:border-primary-400;
+  }
+  
+  .dark .newsletter-signup .bg-gradient-to-br {
+    @apply from-primary-900 to-secondary-900;
+  }
+  
+  .dark .newsletter-signup .bg-white {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .newsletter-signup .flex-col {
+      @apply gap-3;
+    }
+    
+    .newsletter-signup .btn-primary {
+      @apply w-full justify-center;
+    }
+  }
+</style>

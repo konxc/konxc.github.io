@@ -1,0 +1,193 @@
+---
+// Optimized Logo Component - Production Ready
+export interface Props {
+  className?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'default' | 'white' | 'dark';
+  showText?: boolean;
+  textClass?: string;
+  href?: string;
+  priority?: boolean;
+}
+
+const { 
+  className = '',
+  size = 'md',
+  variant = 'default',
+  showText = true,
+  textClass = '',
+  href,
+  priority = false
+} = Astro.props;
+
+// Size configurations
+const sizeConfig = {
+  xs: { image: 'w-4 h-4', text: 'text-xs', width: 16, height: 16 },
+  sm: { image: 'w-6 h-6', text: 'text-sm', width: 24, height: 24 },
+  md: { image: 'w-8 h-8', text: 'text-lg', width: 32, height: 32 },
+  lg: { image: 'w-12 h-12', text: 'text-xl', width: 48, height: 48 },
+  xl: { image: 'w-16 h-16', text: 'text-2xl', width: 64, height: 64 }
+};
+
+// Variant configurations
+const variantConfig = {
+  default: { text: 'text-neutral-900 dark:text-white' },
+  white: { text: 'text-white' },
+  dark: { text: 'text-neutral-900' }
+};
+
+const currentSize = sizeConfig[size];
+const currentVariant = variantConfig[variant];
+
+// Generate responsive image sources
+const generateImageSources = (baseName: string) => {
+  const sizes = {
+    xs: { width: 16, height: 16 },
+    sm: { width: 24, height: 24 },
+    md: { width: 32, height: 32 },
+    lg: { width: 48, height: 48 },
+    xl: { width: 64, height: 64 }
+  };
+  
+  return Object.entries(sizes).map(([sizeName, dimensions]) => ({
+    size: sizeName,
+    webp: `/${baseName}-${sizeName}.webp`,
+    png: `/${baseName}-${sizeName}.png`,
+    svg: `/${baseName}.svg`,
+    width: dimensions.width,
+    height: dimensions.height
+  }));
+};
+
+const imageSources = generateImageSources('logo-konxc');
+const currentImageSource = imageSources.find(source => source.size === size) || imageSources[2]; // fallback to md
+---
+
+{href ? (
+  <a href={href} class="logo-link">
+    <div class={`logo-container ${className}`}>
+      <div class="logo-wrapper">
+        <picture>
+          <!-- WebP format (modern browsers) -->
+          <source 
+            srcset={currentImageSource.webp} 
+            type="image/webp"
+            width={currentSize.width}
+            height={currentSize.height}
+          />
+          
+          <!-- PNG format (fallback) -->
+          <source 
+            srcset={currentImageSource.png} 
+            type="image/png"
+            width={currentSize.width}
+            height={currentSize.height}
+          />
+          
+          <!-- SVG format (ultimate fallback) -->
+          <img 
+            src={currentImageSource.svg} 
+            alt="KonXC Logo" 
+            class={`logo-image ${currentSize.image} rounded-lg object-cover`}
+            loading={priority ? "eager" : "lazy"}
+            fetchpriority={priority ? "high" : "auto"}
+            width={currentSize.width}
+            height={currentSize.height}
+            decoding="async"
+          />
+        </picture>
+        
+        {showText && (
+          <span class={`logo-text ${currentSize.text} ${currentVariant.text} ${textClass} font-bold`}>
+            KonXC
+          </span>
+        )}
+      </div>
+    </div>
+  </a>
+) : (
+  <div class={`logo-container ${className}`}>
+    <div class="logo-wrapper">
+      <picture>
+        <!-- WebP format (modern browsers) -->
+        <source 
+          srcset={currentImageSource.webp} 
+          type="image/webp"
+          width={currentSize.width}
+          height={currentSize.height}
+        />
+        
+        <!-- PNG format (fallback) -->
+        <source 
+          srcset={currentImageSource.png} 
+          type="image/png"
+          width={currentSize.width}
+          height={currentSize.height}
+        />
+        
+        <!-- SVG format (ultimate fallback) -->
+        <img 
+          src={currentImageSource.svg} 
+          alt="KonXC Logo" 
+          class={`logo-image ${currentSize.image} rounded-lg object-cover`}
+          loading={priority ? "eager" : "lazy"}
+          fetchpriority={priority ? "high" : "auto"}
+          width={currentSize.width}
+          height={currentSize.height}
+          decoding="async"
+        />
+      </picture>
+      
+      {showText && (
+        <span class={`logo-text ${currentSize.text} ${currentVariant.text} ${textClass} font-bold`}>
+          KonXC
+        </span>
+      )}
+    </div>
+  </div>
+)}
+
+<style>
+  @reference "@/styles/global.css";
+  
+  .logo-container {
+    @apply inline-flex items-center;
+  }
+  
+  .logo-wrapper {
+    @apply flex items-center gap-2;
+  }
+  
+  .logo-image {
+    @apply flex-shrink-0 transition-opacity duration-200;
+  }
+  
+  .logo-text {
+    @apply font-bold tracking-tight transition-colors duration-200;
+  }
+  
+  .logo-link {
+    @apply transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg;
+  }
+  
+  /* Performance optimizations */
+  .logo-image {
+    @apply will-change-auto;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .logo-wrapper {
+      @apply gap-1;
+    }
+  }
+  
+  /* Dark mode optimizations */
+  .dark .logo-image {
+    @apply filter brightness-0 invert;
+  }
+  
+  .dark .logo-image[src*="white"] {
+    @apply filter-none;
+  }
+</style>

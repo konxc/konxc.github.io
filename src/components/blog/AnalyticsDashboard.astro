@@ -1,0 +1,268 @@
+---
+// Analytics Dashboard Component using Chart.js from npm
+import Chart from 'chart.js/auto';
+
+export interface Props {
+  class?: string;
+  data?: {
+    pageViews: number;
+    averageReadingTime: number;
+    averageScrollDepth: number;
+    popularPosts: Array<{
+      slug: string;
+      views: number;
+      completionRate: number;
+    }>;
+    readingMilestones: {
+      '25%': number;
+      '50%': number;
+      '75%': number;
+      'completed': number;
+    };
+  };
+}
+
+const { 
+  class: className,
+  data = {
+    pageViews: 1250,
+    averageReadingTime: 245,
+    averageScrollDepth: 68,
+    popularPosts: [
+      { slug: 'evolusi-tailwind-css-v4', views: 450, completionRate: 78 },
+      { slug: 'path-aliases-astro', views: 320, completionRate: 82 }
+    ],
+    readingMilestones: {
+      '25%': 1200,
+      '50%': 980,
+      '75%': 750,
+      'completed': 650
+    }
+  }
+} = Astro.props;
+---
+
+<div class={`analytics-dashboard ${className || ''}`}>
+  <div class="mb-6">
+    <h3 class="text-2xl font-bold text-neutral-800 mb-2">
+      Analytics Dashboard
+    </h3>
+    <p class="text-neutral-600">
+      Statistik dan insights dari blog KonXC
+    </p>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="grid md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white rounded-lg p-6 shadow-soft">
+      <div class="flex items-center">
+        <div class="p-3 bg-primary-100 rounded-lg">
+          <i class="bi bi-eye text-primary-600 text-xl"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-neutral-600">Total Page Views</p>
+          <p class="text-2xl font-bold text-neutral-900">{data.pageViews.toLocaleString()}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg p-6 shadow-soft">
+      <div class="flex items-center">
+        <div class="p-3 bg-secondary-100 rounded-lg">
+          <i class="bi bi-clock text-secondary-600 text-xl"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-neutral-600">Avg Reading Time</p>
+          <p class="text-2xl font-bold text-neutral-900">{Math.round(data.averageReadingTime / 60)} min</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg p-6 shadow-soft">
+      <div class="flex items-center">
+        <div class="p-3 bg-accent-100 rounded-lg">
+          <i class="bi bi-graph-up text-accent-600 text-xl"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-neutral-600">Avg Scroll Depth</p>
+          <p class="text-2xl font-bold text-neutral-900">{data.averageScrollDepth}%</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="grid lg:grid-cols-2 gap-8">
+    <!-- Popular Posts Chart -->
+    <div class="bg-white rounded-lg p-6 shadow-soft">
+      <h4 class="text-lg font-semibold text-neutral-800 mb-4">Popular Posts</h4>
+      <div class="relative h-64">
+        <canvas id="popularPostsChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Reading Milestones Chart -->
+    <div class="bg-white rounded-lg p-6 shadow-soft">
+      <h4 class="text-lg font-semibold text-neutral-800 mb-4">Reading Milestones</h4>
+      <div class="relative h-64">
+        <canvas id="readingMilestonesChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popular Posts Table -->
+  <div class="mt-8 bg-white rounded-lg p-6 shadow-soft">
+    <h4 class="text-lg font-semibold text-neutral-800 mb-4">Top Performing Posts</h4>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-neutral-200">
+            <th class="text-left py-3 px-4 font-semibold text-neutral-700">Post</th>
+            <th class="text-right py-3 px-4 font-semibold text-neutral-700">Views</th>
+            <th class="text-right py-3 px-4 font-semibold text-neutral-700">Completion Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.popularPosts.map((post, index) => (
+            <tr class="border-b border-neutral-100">
+              <td class="py-3 px-4">
+                <div class="flex items-center">
+                  <span class="w-6 h-6 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-xs font-semibold mr-3">
+                    {index + 1}
+                  </span>
+                  <span class="text-neutral-800">{post.slug}</span>
+                </div>
+              </td>
+              <td class="text-right py-3 px-4 text-neutral-600">{post.views.toLocaleString()}</td>
+              <td class="text-right py-3 px-4">
+                <span class="inline-flex items-center px-2 py-1 bg-success-100 text-success-700 text-xs rounded-full">
+                  {post.completionRate}%
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ data, Chart }}>
+  // Initialize charts
+  function initializeCharts() {
+    // Popular Posts Chart
+    const popularPostsCtx = document.getElementById('popularPostsChart');
+    if (popularPostsCtx) {
+      const popularPostsData = {
+        labels: data.popularPosts.map(p => p.slug),
+        datasets: [{
+          label: 'Views',
+          data: data.popularPosts.map(p => p.views),
+          backgroundColor: 'rgba(59, 130, 246, 0.8)',
+          borderColor: 'rgba(59, 130, 246, 1)',
+          borderWidth: 1
+        }]
+      };
+      
+      new Chart(popularPostsCtx, {
+        type: 'bar',
+        data: popularPostsData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    // Reading Milestones Chart
+    const milestonesCtx = document.getElementById('readingMilestonesChart');
+    if (milestonesCtx) {
+      const milestonesData = {
+        labels: ['25%', '50%', '75%', 'Completed'],
+        datasets: [{
+          data: [
+            data.readingMilestones['25%'],
+            data.readingMilestones['50%'],
+            data.readingMilestones['75%'],
+            data.readingMilestones['completed']
+          ],
+          backgroundColor: [
+            'rgba(239, 68, 68, 0.8)',
+            'rgba(245, 158, 11, 0.8)',
+            'rgba(59, 130, 246, 0.8)',
+            'rgba(16, 185, 129, 0.8)'
+          ],
+          borderColor: [
+            'rgba(239, 68, 68, 1)',
+            'rgba(245, 158, 11, 1)',
+            'rgba(59, 130, 246, 1)',
+            'rgba(16, 185, 129, 1)'
+          ],
+          borderWidth: 1
+        }]
+      };
+      
+      new Chart(milestonesCtx, {
+        type: 'doughnut',
+        data: milestonesData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
+    }
+  }
+
+  // Initialize when DOM is ready
+  document.addEventListener('DOMContentLoaded', initializeCharts);
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .analytics-dashboard {
+    @apply w-full;
+  }
+
+  .dark .analytics-dashboard h3,
+  .dark .analytics-dashboard h4 {
+    @apply text-neutral-100;
+  }
+
+  .dark .analytics-dashboard p {
+    @apply text-neutral-400;
+  }
+
+  .dark .analytics-dashboard .bg-white {
+    @apply bg-neutral-900;
+  }
+
+  .dark .analytics-dashboard .text-neutral-800,
+  .dark .analytics-dashboard .text-neutral-900 {
+    @apply text-neutral-100;
+  }
+
+  .dark .analytics-dashboard .text-neutral-600,
+  .dark .analytics-dashboard .text-neutral-700 {
+    @apply text-neutral-400;
+  }
+
+  .dark .analytics-dashboard .border-neutral-200,
+  .dark .analytics-dashboard .border-neutral-100 {
+    @apply border-neutral-700;
+  }
+</style>

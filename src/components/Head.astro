@@ -16,8 +16,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/jpeg" href="/logo-konxc.jpg" />
+    <link rel="apple-touch-icon" href="/logo-konxc.jpg" />
     <meta name="generator" content={Astro.generator} />
+    
+    <!-- Preload critical images for faster loading -->
+    <link rel="preload" href="/logo-konxc.webp" as="image" type="image/webp">
+    <link rel="preload" href="/logo-konxc.png" as="image" type="image/png">
+    <link rel="preload" href="/logo-konxc.svg" as="image" type="image/svg+xml">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self';" />
     
     <!-- SEO Meta Tags -->
     <title>{title}</title>
@@ -44,6 +53,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    
+    <!-- CDN Libraries -->
+    <!-- Fuse.js for search functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js" defer></script>
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Alpine.js for lightweight interactivity -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -53,7 +74,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         "name": "PT Koneksi Jaringan Indonesia",
         "alternateName": "KonXC",
         "url": "https://www.konxc.space",
-        "logo": "https://www.konxc.space/logo.png",
+        "logo": "https://www.konxc.space/logo-konxc.jpg",
         "description": "Mitra teknologi terpercaya yang menyederhanakan teknologi untuk pertumbuhan bisnis",
         "address": {
           "@type": "PostalAddress",
@@ -62,7 +83,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         },
         "contactPoint": {
           "@type": "ContactPoint",
-          "telephone": "+62-xxx-xxx-xxxx",
+          "telephone": "+62-882-0079-502010",
           "contactType": "customer service"
         },
         "sameAs": [

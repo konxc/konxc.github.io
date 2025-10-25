@@ -1,0 +1,715 @@
+---
+// Smart Blog Testing Suite - Toggleable Development Tool
+---
+
+<div class="testing-toggle" id="testing-toggle-original">
+  <button 
+    id="testing-toggle-btn" 
+    class="testing-toggle-btn"
+    title="Toggle Blog Testing Suite"
+  >
+    🧪
+  </button>
+</div>
+
+<div class="testing-suite" id="testing-suite" style="display: none;">
+  <div class="testing-header">
+    <div class="flex justify-between items-center">
+      <div>
+        <h2 class="text-2xl font-bold mb-2">🧪 Blog Features Testing Suite</h2>
+        <p class="text-neutral-600">Development mode - Testing semua fitur blog KonXC</p>
+      </div>
+      <button 
+        id="close-testing-btn" 
+        class="close-btn"
+        title="Close Testing Suite"
+      >
+        ✕
+      </button>
+    </div>
+  </div>
+
+  <div class="testing-grid">
+    <!-- Table of Contents Test -->
+    <div class="test-card" id="toc-test">
+      <h3 class="text-lg font-semibold mb-3">📋 Table of Contents Test</h3>
+      <div class="test-status" id="toc-status">⏳ Ready to test</div>
+      <div class="test-details" id="toc-details"></div>
+      <button class="test-btn" id="test-toc-btn">Test TOC</button>
+    </div>
+
+    <!-- Reading Progress Test -->
+    <div class="test-card" id="progress-test">
+      <h3 class="text-lg font-semibold mb-3">📊 Reading Progress Test</h3>
+      <div class="test-status" id="progress-status">⏳ Ready to test</div>
+      <div class="test-details" id="progress-details"></div>
+      <button class="test-btn" id="test-progress-btn">Test Progress</button>
+    </div>
+
+    <!-- Social Sharing Test -->
+    <div class="test-card" id="social-test">
+      <h3 class="text-lg font-semibold mb-3">📤 Social Sharing Test</h3>
+      <div class="test-status" id="social-status">⏳ Ready to test</div>
+      <div class="test-details" id="social-details"></div>
+      <button class="test-btn" id="test-social-btn">Test Social</button>
+    </div>
+
+    <!-- Dark Mode Test -->
+    <div class="test-card" id="darkmode-test">
+      <h3 class="text-lg font-semibold mb-3">🌙 Dark Mode Test</h3>
+      <div class="test-status" id="darkmode-status">⏳ Ready to test</div>
+      <div class="test-details" id="darkmode-details"></div>
+      <button class="test-btn" id="test-darkmode-btn">Test Dark Mode</button>
+    </div>
+
+    <!-- Overall Test -->
+    <div class="test-card test-card-full">
+      <h3 class="text-lg font-semibold mb-3">🎯 Overall Test Results</h3>
+      <div class="test-summary" id="test-summary">
+        <div class="summary-item">
+          <span class="summary-label">Total Tests:</span>
+          <span class="summary-value" id="total-tests">0</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Passed:</span>
+          <span class="summary-value passed" id="passed-tests">0</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Failed:</span>
+          <span class="summary-value failed" id="failed-tests">0</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Success Rate:</span>
+          <span class="summary-value" id="success-rate">0%</span>
+        </div>
+      </div>
+      <button class="test-btn test-btn-primary" id="run-all-tests-btn">🚀 Run All Tests</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Test Results Storage
+  const testResults = {
+    toc: { passed: 0, failed: 0, total: 0 },
+    progress: { passed: 0, failed: 0, total: 0 },
+    social: { passed: 0, failed: 0, total: 0 },
+    darkmode: { passed: 0, failed: 0, total: 0 }
+  };
+
+  // Utility Functions
+  function updateTestStatus(testId: string, status: string, details: string = ''): void {
+    const statusEl = document.getElementById(`${testId}-status`);
+    const detailsEl = document.getElementById(`${testId}-details`);
+    
+    if (statusEl) statusEl.textContent = status;
+    if (detailsEl) detailsEl.innerHTML = details;
+  }
+
+  function updateSummary(): void {
+    const total = Object.values(testResults).reduce((sum, test) => sum + test.total, 0);
+    const passed = Object.values(testResults).reduce((sum, test) => sum + test.passed, 0);
+    const failed = Object.values(testResults).reduce((sum, test) => sum + test.failed, 0);
+    const successRate = total > 0 ? Math.round((passed / total) * 100) : 0;
+
+    const totalEl = document.getElementById('total-tests');
+    const passedEl = document.getElementById('passed-tests');
+    const failedEl = document.getElementById('failed-tests');
+    const rateEl = document.getElementById('success-rate');
+
+    if (totalEl) totalEl.textContent = total.toString();
+    if (passedEl) passedEl.textContent = passed.toString();
+    if (failedEl) failedEl.textContent = failed.toString();
+    if (rateEl) rateEl.textContent = `${successRate}%`;
+  }
+
+  // Table of Contents Tests
+  function testTOC() {
+    updateTestStatus('toc', '🔄 Testing TOC...');
+    
+    const tests = [
+      {
+        name: 'TOC Container Exists',
+        test: () => document.getElementById('toc-nav') !== null
+      },
+      {
+        name: 'TOC Has Headings',
+        test: () => {
+          const headings = document.querySelectorAll('.prose h2, .prose h3, .prose h4, .blog-content h2, .blog-content h3, .blog-content h4');
+          return headings.length > 0;
+        }
+      },
+      {
+        name: 'TOC Links Generated',
+        test: () => {
+          const tocLinks = document.querySelectorAll('.toc-link');
+          return tocLinks.length > 0;
+        }
+      },
+      {
+        name: 'TOC Links Have Correct Href',
+        test: () => {
+          const tocLinks = document.querySelectorAll('.toc-link');
+          return Array.from(tocLinks).every(link => {
+            const anchor = link as HTMLAnchorElement;
+            return anchor.href.includes('#heading-');
+          });
+        }
+      },
+      {
+        name: 'TOC Toggle Button Works',
+        test: () => {
+          const toggleBtn = document.getElementById('toc-toggle-btn') as HTMLButtonElement;
+          if (!toggleBtn) return false;
+          
+          const tocNav = document.getElementById('toc-nav');
+          if (!tocNav) return false;
+          
+          // TOC should be expanded by default
+          const initialExpanded = tocNav.classList.contains('expanded');
+          if (!initialExpanded) return false;
+          
+          // Test toggle functionality
+          toggleBtn.click();
+          const afterClick = tocNav.classList.contains('expanded');
+          toggleBtn.click(); // Reset to expanded
+          
+          return initialExpanded !== afterClick;
+        }
+      }
+    ];
+
+    let passed = 0;
+    let failed = 0;
+    let details = '';
+
+    tests.forEach((test, index) => {
+      try {
+        const result = test.test();
+        if (result) {
+          passed++;
+          details += `<div class="test-item passed">✅ ${test.name}</div>`;
+        } else {
+          failed++;
+          details += `<div class="test-item failed">❌ ${test.name}</div>`;
+        }
+      } catch (error) {
+        failed++;
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        details += `<div class="test-item failed">❌ ${test.name} - Error: ${errorMessage}</div>`;
+      }
+    });
+
+    testResults.toc = { passed, failed, total: tests.length };
+    updateTestStatus('toc', passed === tests.length ? '✅ All Tests Passed' : `⚠️ ${passed}/${tests.length} Tests Passed`, details);
+    updateSummary();
+  }
+
+  // Reading Progress Tests
+  function testProgress() {
+    updateTestStatus('progress', '🔄 Testing Progress Bar...');
+    
+    const tests = [
+      {
+        name: 'Progress Bar Element Exists',
+        test: () => document.getElementById('reading-progress-bar') !== null
+      },
+      {
+        name: 'Progress Bar Has Correct Classes',
+        test: () => {
+          const progressBar = document.getElementById('reading-progress-bar');
+          return progressBar && progressBar.classList.contains('progress-bar');
+        }
+      },
+      {
+        name: 'Progress Bar Initial Width',
+        test: () => {
+          const progressBar = document.getElementById('reading-progress-bar');
+          return progressBar && progressBar.style.width === '0%';
+        }
+      },
+      {
+        name: 'Progress Bar Responsive',
+        test: () => {
+          const progressBar = document.getElementById('reading-progress-bar');
+          const container = progressBar?.parentElement;
+          return container && container.classList.contains('reading-progress');
+        }
+      }
+    ];
+
+    let passed = 0;
+    let failed = 0;
+    let details = '';
+
+    tests.forEach((test, index) => {
+      try {
+        const result = test.test();
+        if (result) {
+          passed++;
+          details += `<div class="test-item passed">✅ ${test.name}</div>`;
+        } else {
+          failed++;
+          details += `<div class="test-item failed">❌ ${test.name}</div>`;
+        }
+      } catch (error) {
+        failed++;
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        details += `<div class="test-item failed">❌ ${test.name} - Error: ${errorMessage}</div>`;
+      }
+    });
+
+    testResults.progress = { passed, failed, total: tests.length };
+    updateTestStatus('progress', passed === tests.length ? '✅ All Tests Passed' : `⚠️ ${passed}/${tests.length} Tests Passed`, details);
+    updateSummary();
+  }
+
+  // Social Sharing Tests
+  function testSocial() {
+    updateTestStatus('social', '🔄 Testing Social Sharing...');
+    
+    const tests = [
+      {
+        name: 'Social Share Container Exists',
+        test: () => document.querySelector('.social-share') !== null
+      },
+      {
+        name: 'Twitter Share Button',
+        test: () => {
+          const twitterBtn = document.querySelector('.social-share-btn.twitter') as HTMLAnchorElement;
+          return twitterBtn && twitterBtn.href.includes('twitter.com');
+        }
+      },
+      {
+        name: 'LinkedIn Share Button',
+        test: () => {
+          const linkedinBtn = document.querySelector('.social-share-btn.linkedin') as HTMLAnchorElement;
+          return linkedinBtn && linkedinBtn.href.includes('linkedin.com');
+        }
+      },
+      {
+        name: 'Facebook Share Button',
+        test: () => {
+          const facebookBtn = document.querySelector('.social-share-btn.facebook') as HTMLAnchorElement;
+          return facebookBtn && facebookBtn.href.includes('facebook.com');
+        }
+      },
+      {
+        name: 'WhatsApp Share Button',
+        test: () => {
+          const whatsappBtn = document.querySelector('.social-share-btn.whatsapp') as HTMLAnchorElement;
+          return whatsappBtn && whatsappBtn.href.includes('wa.me');
+        }
+      },
+      {
+        name: 'Copy Link Button',
+        test: () => {
+          const copyBtn = document.querySelector('.social-share-btn.copy-link') as HTMLButtonElement;
+          return copyBtn && copyBtn.onclick !== null;
+        }
+      }
+    ];
+
+    let passed = 0;
+    let failed = 0;
+    let details = '';
+
+    tests.forEach((test, index) => {
+      try {
+        const result = test.test();
+        if (result) {
+          passed++;
+          details += `<div class="test-item passed">✅ ${test.name}</div>`;
+        } else {
+          failed++;
+          details += `<div class="test-item failed">❌ ${test.name}</div>`;
+        }
+      } catch (error) {
+        failed++;
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        details += `<div class="test-item failed">❌ ${test.name} - Error: ${errorMessage}</div>`;
+      }
+    });
+
+    testResults.social = { passed, failed, total: tests.length };
+    updateTestStatus('social', passed === tests.length ? '✅ All Tests Passed' : `⚠️ ${passed}/${tests.length} Tests Passed`, details);
+    updateSummary();
+  }
+
+  // Dark Mode Tests
+  function testDarkMode() {
+    updateTestStatus('darkmode', '🔄 Testing Dark Mode...');
+    
+    const tests = [
+      {
+        name: 'Dark Mode Toggle Exists',
+        test: () => document.querySelector('.dark-mode-toggle') !== null
+      },
+      {
+        name: 'Toggle Button Has Icons',
+        test: () => {
+          const toggle = document.querySelector('.dark-mode-toggle');
+          const sunIcon = toggle?.querySelector('.sun-icon');
+          const moonIcon = toggle?.querySelector('.moon-icon');
+          return sunIcon && moonIcon;
+        }
+      },
+      {
+        name: 'Toggle Button Clickable',
+        test: () => {
+          const toggle = document.querySelector('.dark-mode-toggle') as HTMLButtonElement;
+          return toggle && toggle.onclick !== null;
+        }
+      },
+      {
+        name: 'Dark Mode Classes Work',
+        test: () => {
+          const html = document.documentElement;
+          const initialDark = html.classList.contains('dark');
+          
+          // Toggle dark mode
+          html.classList.toggle('dark');
+          const afterToggle = html.classList.contains('dark');
+          
+          // Reset to initial state
+          if (initialDark) {
+            html.classList.add('dark');
+          } else {
+            html.classList.remove('dark');
+          }
+          
+          return initialDark !== afterToggle;
+        }
+      }
+    ];
+
+    let passed = 0;
+    let failed = 0;
+    let details = '';
+
+    tests.forEach((test, index) => {
+      try {
+        const result = test.test();
+        if (result) {
+          passed++;
+          details += `<div class="test-item passed">✅ ${test.name}</div>`;
+        } else {
+          failed++;
+          details += `<div class="test-item failed">❌ ${test.name}</div>`;
+        }
+      } catch (error) {
+        failed++;
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        details += `<div class="test-item failed">❌ ${test.name} - Error: ${errorMessage}</div>`;
+      }
+    });
+
+    testResults.darkmode = { passed, failed, total: tests.length };
+    updateTestStatus('darkmode', passed === tests.length ? '✅ All Tests Passed' : `⚠️ ${passed}/${tests.length} Tests Passed`, details);
+    updateSummary();
+  }
+
+  // Run All Tests
+  function runAllTests() {
+    updateTestStatus('toc', '⏳ Waiting...');
+    updateTestStatus('progress', '⏳ Waiting...');
+    updateTestStatus('social', '⏳ Waiting...');
+    updateTestStatus('darkmode', '⏳ Waiting...');
+
+    // Run tests with slight delays to avoid conflicts
+    setTimeout(() => testTOC(), 100);
+    setTimeout(() => testProgress(), 200);
+    setTimeout(() => testSocial(), 300);
+    setTimeout(() => testDarkMode(), 400);
+  }
+
+  // Toggle Testing Suite
+  function toggleTestingSuite() {
+    const suite = document.getElementById('testing-suite');
+    const toggleBtn = document.getElementById('testing-toggle-btn');
+    
+    if (suite.style.display === 'none') {
+      suite.style.display = 'block';
+      toggleBtn.classList.add('active');
+      // Auto-run tests when opened
+      setTimeout(runAllTests, 500);
+    } else {
+      suite.style.display = 'none';
+      toggleBtn.classList.remove('active');
+    }
+  }
+
+  // Close Testing Suite
+  function closeTestingSuite() {
+    const suite = document.getElementById('testing-suite');
+    const toggleBtn = document.getElementById('testing-toggle-btn');
+    
+    suite.style.display = 'none';
+    toggleBtn.classList.remove('active');
+  }
+
+  // Event Listeners
+  function setupEventListeners() {
+    document.getElementById('testing-toggle-btn')?.addEventListener('click', toggleTestingSuite);
+    document.getElementById('close-testing-btn')?.addEventListener('click', closeTestingSuite);
+    document.getElementById('test-toc-btn')?.addEventListener('click', testTOC);
+    document.getElementById('test-progress-btn')?.addEventListener('click', testProgress);
+    document.getElementById('test-social-btn')?.addEventListener('click', testSocial);
+    document.getElementById('test-darkmode-btn')?.addEventListener('click', testDarkMode);
+    document.getElementById('run-all-tests-btn')?.addEventListener('click', runAllTests);
+  }
+
+  // Initialize when DOM is ready
+  function init() {
+    setupEventListeners();
+    
+    // Show testing toggle only in development mode
+    const isDev = isDevelopmentEnvironment();
+    const isPreview = isPreviewMode();
+    
+    // Debug Vite environment variables
+    console.log('🔍 Environment Detection:', {
+      'import.meta.env.DEV': import.meta.env.DEV,
+      'import.meta.env.PROD': import.meta.env.PROD,
+      'import.meta.env.MODE': import.meta.env.MODE,
+      'isDevelopment': isDev,
+      'isPreview': isPreview,
+      'hostname': window.location.hostname,
+      'port': window.location.port
+    });
+    
+    if (!isDev) {
+      document.querySelector('.testing-toggle')?.remove();
+      if (isPreview) {
+        console.log('🚫 Testing suite hidden - Preview mode detected (production build)');
+      } else {
+        console.log('🚫 Testing suite hidden - Production environment detected');
+      }
+    } else {
+      console.log('✅ Testing suite available - Development environment detected');
+      
+      // Check if DevelopmentControls is available
+      setTimeout(() => {
+        const devControls = document.getElementById('development-controls');
+        if (devControls && devControls.style.display !== 'none') {
+          // Hide original toggle when DevelopmentControls is active
+          const originalToggle = document.getElementById('testing-toggle-original');
+          if (originalToggle) {
+            originalToggle.style.display = 'none';
+            console.log('🔄 Original testing toggle hidden - DevelopmentControls active');
+          }
+        }
+      }, 100);
+    }
+  }
+  
+  // Enhanced development environment detection using Vite env
+  function isDevelopmentEnvironment() {
+    // Check Vite environment variables (most reliable)
+    const isViteDev = import.meta.env.DEV; // true in development, false in production/preview
+    const isViteProd = import.meta.env.PROD; // true in production/preview, false in development
+    const mode = import.meta.env.MODE; // 'development', 'production', or custom
+    
+    // Primary check: Vite environment variables
+    if (isViteDev && mode === 'development') {
+      return true;
+    }
+    
+    // Fallback: Check for Node adapter specific indicators
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    const protocol = window.location.protocol;
+    
+    // Check for localhost variations
+    const isLocalhost = hostname === 'localhost' || 
+                       hostname === '127.0.0.1' || 
+                       hostname === '0.0.0.0' ||
+                       hostname.startsWith('192.168.') ||
+                       hostname.startsWith('10.0.');
+    
+    // Check for development ports (but NOT preview mode)
+    const isDevPort = port === '4321' && !isPreviewMode(); // Astro dev server (not preview)
+    
+    // Check for other development ports
+    const isOtherDevPort = port === '3000' || // Common dev port
+                          port === '8080' || // Common dev port
+                          port === '5173' || // Vite dev server
+                          port === '4173';  // Vite preview
+    
+    // Check for development protocol
+    const isDevProtocol = protocol === 'http:' && (isLocalhost || isDevPort || isOtherDevPort);
+    
+    // Check for development URL patterns
+    const isDevUrl = window.location.href.includes('localhost') ||
+                    window.location.href.includes('127.0.0.1') ||
+                    window.location.href.includes('dev.') ||
+                    window.location.href.includes('staging.') ||
+                    window.location.href.includes('test.');
+    
+    // Check for development environment variables (if available)
+    const hasDevFlag = window.location.search.includes('dev=true') ||
+                       window.location.search.includes('debug=true') ||
+                       localStorage.getItem('dev-mode') === 'true';
+    
+    // Check if it's actually development mode (not preview)
+    const isActualDev = isDevProtocol || isDevUrl || hasDevFlag;
+    
+    return isActualDev && !isPreviewMode();
+  }
+  
+  // Detect if we're in preview mode using Vite env
+  function isPreviewMode() {
+    // Check Vite environment variables first
+    const isViteProd = import.meta.env.PROD; // true in production/preview
+    const mode = import.meta.env.MODE; // 'development', 'production', or custom
+    
+    // If we're in production mode but on localhost, it's likely preview
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1';
+    
+    if (isViteProd && isLocalhost) {
+      return true;
+    }
+    
+    // Fallback: Check for Astro preview mode indicators
+    const hasPreviewIndicator = window.location.search.includes('preview=true') ||
+                               localStorage.getItem('preview-mode') === 'true';
+    
+    // Check if we're serving from dist/ directory (preview mode)
+    const isServingDist = document.querySelector('script[src*="/_astro/"]') !== null ||
+                         document.querySelector('link[href*="/_astro/"]') !== null;
+    
+    // Check for production build indicators
+    const hasProductionBuild = document.querySelector('meta[name="generator"][content*="Astro"]') !== null;
+    
+    // Check if we're on localhost:4321 but it's preview mode
+    const isLocalhost4321 = window.location.hostname === 'localhost' && window.location.port === '4321';
+    const isPreviewOnLocalhost = isLocalhost4321 && (hasPreviewIndicator || isServingDist);
+    
+    return isPreviewOnLocalhost || hasPreviewIndicator;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .testing-toggle {
+    @apply fixed bottom-6 right-6 z-50;
+    /* Position below reading mode button */
+    bottom: 5.5rem; /* 88px - below reading mode button */
+  }
+
+  .testing-toggle-btn {
+    @apply w-12 h-12 bg-primary-500 text-white rounded-full shadow-lg hover:bg-primary-600 transition-all duration-300 flex items-center justify-center text-xl;
+  }
+
+  .testing-toggle-btn.active {
+    @apply bg-secondary-500;
+  }
+
+  .testing-suite {
+    @apply fixed top-4 left-4 right-4 bottom-4 bg-white rounded-2xl shadow-2xl border border-neutral-200 z-50 overflow-y-auto;
+    max-height: calc(100vh - 2rem);
+  }
+
+  .testing-header {
+    @apply p-6 border-b border-neutral-200;
+  }
+
+  .close-btn {
+    @apply w-8 h-8 bg-neutral-100 hover:bg-neutral-200 rounded-full flex items-center justify-center text-neutral-600 hover:text-neutral-800 transition-colors;
+  }
+
+  .testing-grid {
+    @apply grid md:grid-cols-2 gap-6 p-6;
+  }
+
+  .test-card {
+    @apply bg-linear-to-br from-neutral-50 to-neutral-100 rounded-xl p-6 border border-neutral-200;
+  }
+
+  .test-card-full {
+    @apply md:col-span-2 bg-linear-to-br from-primary-50 to-secondary-50;
+  }
+
+  .test-status {
+    @apply text-lg font-medium mb-3;
+  }
+
+  .test-details {
+    @apply mb-4 max-h-32 overflow-y-auto;
+  }
+
+  .test-item {
+    @apply text-sm py-1 px-2 rounded mb-1;
+  }
+
+  .test-item.passed {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .test-item.failed {
+    @apply bg-red-100 text-red-800;
+  }
+
+  .test-btn {
+    @apply px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-colors;
+  }
+
+  .test-btn-primary {
+    @apply bg-linear-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600;
+  }
+
+  .test-summary {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-4 mb-6;
+  }
+
+  .summary-item {
+    @apply text-center;
+  }
+
+  .summary-label {
+    @apply block text-sm text-neutral-600 mb-1;
+  }
+
+  .summary-value {
+    @apply text-2xl font-bold text-neutral-800;
+  }
+
+  .summary-value.passed {
+    @apply text-green-600;
+  }
+
+  .summary-value.failed {
+    @apply text-red-600;
+  }
+
+  /* Dark mode styles */
+  .dark .testing-suite {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .test-card {
+    @apply bg-neutral-700 border-neutral-600;
+  }
+
+  .dark .test-card-full {
+    @apply bg-linear-to-br from-primary-900 to-secondary-900;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .testing-suite {
+      @apply top-2 left-2 right-2 bottom-2;
+    }
+    
+    .testing-grid {
+      @apply grid-cols-1 gap-4 p-4;
+    }
+  }
+</style>

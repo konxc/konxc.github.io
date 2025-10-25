@@ -1,0 +1,683 @@
+---
+// Project Showcase Component
+export interface Props {
+  class?: string;
+  projects?: Array<{
+    name: string;
+    description: string;
+    url: string;
+    githubUrl?: string;
+    category: 'open-source' | 'koneksi' | 'community';
+    status: 'active' | 'completed' | 'archived';
+    contributors: number;
+    stars?: number;
+    downloads?: number;
+    technologies: string[];
+    featured?: boolean;
+  }>;
+  showFilters?: boolean;
+  maxProjects?: number;
+}
+
+const { 
+  class: className,
+  projects = [
+    {
+      name: 'SLiMS',
+      description: 'Sistem Informasi Perpustakaan Berbasis Web yang digunakan oleh ribuan perpustakaan di Indonesia',
+      url: 'https://slims.web.id',
+      githubUrl: 'https://github.com/slims/slims9_bulian',
+      category: 'open-source',
+      status: 'active',
+      contributors: 50,
+      stars: 500,
+      technologies: ['PHP', 'MySQL', 'JavaScript', 'Bootstrap'],
+      featured: true
+    },
+    {
+      name: 'DracOS',
+      description: 'Linux Distribution khusus untuk security testing dan penetration testing',
+      url: 'https://dracos-linux.org',
+      githubUrl: 'https://github.com/dracos-linux',
+      category: 'open-source',
+      status: 'active',
+      contributors: 20,
+      stars: 300,
+      technologies: ['Linux', 'Python', 'Bash', 'Security Tools'],
+      featured: true
+    },
+    {
+      name: 'OpenSID',
+      description: 'Sistem Informasi Desa Terbuka yang digunakan oleh ribuan desa di Indonesia',
+      url: 'https://opensid.my.id',
+      githubUrl: 'https://github.com/OpenSID/OpenSID',
+      category: 'open-source',
+      status: 'active',
+      contributors: 100,
+      stars: 1000,
+      technologies: ['PHP', 'CodeIgniter', 'MySQL', 'Bootstrap'],
+      featured: true
+    },
+    {
+      name: 'Koneksi CMS',
+      description: 'Content Management System modern untuk klien enterprise Koneksi',
+      url: '#',
+      category: 'koneksi',
+      status: 'active',
+      contributors: 5,
+      technologies: ['React', 'Node.js', 'PostgreSQL', 'Docker'],
+      featured: false
+    },
+    {
+      name: 'Koneksi Analytics Dashboard',
+      description: 'Dashboard analitik untuk monitoring infrastruktur klien Koneksi',
+      url: '#',
+      category: 'koneksi',
+      status: 'completed',
+      contributors: 3,
+      technologies: ['Vue.js', 'Python', 'InfluxDB', 'Grafana'],
+      featured: false
+    },
+    {
+      name: 'Astro Indonesia',
+      description: 'Komunitas dan dokumentasi Astro framework dalam bahasa Indonesia',
+      url: 'https://astro-indonesia.dev',
+      githubUrl: 'https://github.com/astro-indonesia',
+      category: 'community',
+      status: 'active',
+      contributors: 15,
+      stars: 150,
+      technologies: ['Astro', 'TypeScript', 'Markdown', 'Tailwind CSS'],
+      featured: false
+    }
+  ],
+  showFilters = true,
+  maxProjects = 6
+} = Astro.props;
+
+const filteredProjects = projects.slice(0, maxProjects);
+const featuredProjects = filteredProjects.filter(p => p.featured);
+const otherProjects = filteredProjects.filter(p => !p.featured);
+
+const categories = ['all', 'open-source', 'koneksi', 'community'];
+const statuses = ['all', 'active', 'completed', 'archived'];
+---
+
+<div class={`project-showcase ${className || ''}`}>
+  <div class="showcase-header">
+    <h3 class="showcase-title">🚀 Project Showcase</h3>
+    <p class="showcase-subtitle">Project-project yang dikontribusi oleh komunitas Koneksi</p>
+  </div>
+
+  {showFilters && (
+    <div class="showcase-filters">
+      <div class="filter-group">
+        <label class="filter-label">Kategori:</label>
+        <div class="filter-buttons">
+          {categories.map((category) => (
+            <button 
+              class={`filter-btn ${category === 'all' ? 'active' : ''}`}
+              data-filter="category"
+              data-value={category}
+            >
+              {category === 'all' && 'Semua'}
+              {category === 'open-source' && 'Open Source'}
+              {category === 'koneksi' && 'Koneksi'}
+              {category === 'community' && 'Komunitas'}
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <label class="filter-label">Status:</label>
+        <div class="filter-buttons">
+          {statuses.map((status) => (
+            <button 
+              class={`filter-btn ${status === 'all' ? 'active' : ''}`}
+              data-filter="status"
+              data-value={status}
+            >
+              {status === 'all' && 'Semua'}
+              {status === 'active' && 'Aktif'}
+              {status === 'completed' && 'Selesai'}
+              {status === 'archived' && 'Arsip'}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- Featured Projects -->
+  {featuredProjects.length > 0 && (
+    <div class="featured-projects-section">
+      <h4 class="section-title">⭐ Project Unggulan</h4>
+      <div class="featured-projects-grid">
+        {featuredProjects.map((project) => (
+          <div class="project-card featured" data-category={project.category} data-status={project.status}>
+            <div class="project-header">
+              <div class="project-icon">
+                {project.category === 'open-source' && '🌐'}
+                {project.category === 'koneksi' && '🏢'}
+                {project.category === 'community' && '👥'}
+              </div>
+              <div class="project-info">
+                <h5 class="project-title">{project.name}</h5>
+                <span class={`project-status ${project.status}`}>
+                  {project.status === 'active' && 'Aktif'}
+                  {project.status === 'completed' && 'Selesai'}
+                  {project.status === 'archived' && 'Arsip'}
+                </span>
+              </div>
+            </div>
+            
+            <p class="project-description">{project.description}</p>
+            
+            <div class="project-stats">
+              <div class="stat-item">
+                <span class="stat-number">{project.contributors}</span>
+                <span class="stat-label">Kontributor</span>
+              </div>
+              {project.stars && (
+                <div class="stat-item">
+                  <span class="stat-number">{project.stars}</span>
+                  <span class="stat-label">Stars</span>
+                </div>
+              )}
+              {project.downloads && (
+                <div class="stat-item">
+                  <span class="stat-number">{project.downloads.toLocaleString()}</span>
+                  <span class="stat-label">Downloads</span>
+                </div>
+              )}
+            </div>
+            
+            <div class="project-technologies">
+              {project.technologies.slice(0, 4).map((tech) => (
+                <span class="tech-tag">{tech}</span>
+              ))}
+              {project.technologies.length > 4 && (
+                <span class="tech-more">+{project.technologies.length - 4}</span>
+              )}
+            </div>
+            
+            <div class="project-actions">
+              {project.url && project.url !== '#' && (
+                <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-link primary">
+                  <svg class="link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                  </svg>
+                  Website
+                </a>
+              )}
+              {project.githubUrl && (
+                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" class="project-link secondary">
+                  <svg class="link-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  GitHub
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- Other Projects -->
+  {otherProjects.length > 0 && (
+    <div class="other-projects-section">
+      <h4 class="section-title">📋 Project Lainnya</h4>
+      <div class="other-projects-grid">
+        {otherProjects.map((project) => (
+          <div class="project-card" data-category={project.category} data-status={project.status}>
+            <div class="project-header">
+              <div class="project-icon">
+                {project.category === 'open-source' && '🌐'}
+                {project.category === 'koneksi' && '🏢'}
+                {project.category === 'community' && '👥'}
+              </div>
+              <div class="project-info">
+                <h5 class="project-title">{project.name}</h5>
+                <span class={`project-status ${project.status}`}>
+                  {project.status === 'active' && 'Aktif'}
+                  {project.status === 'completed' && 'Selesai'}
+                  {project.status === 'archived' && 'Arsip'}
+                </span>
+              </div>
+            </div>
+            
+            <p class="project-description">{project.description}</p>
+            
+            <div class="project-stats">
+              <div class="stat-item">
+                <span class="stat-number">{project.contributors}</span>
+                <span class="stat-label">Kontributor</span>
+              </div>
+              {project.stars && (
+                <div class="stat-item">
+                  <span class="stat-number">{project.stars}</span>
+                  <span class="stat-label">Stars</span>
+                </div>
+              )}
+            </div>
+            
+            <div class="project-technologies">
+              {project.technologies.slice(0, 3).map((tech) => (
+                <span class="tech-tag">{tech}</span>
+              ))}
+              {project.technologies.length > 3 && (
+                <span class="tech-more">+{project.technologies.length - 3}</span>
+              )}
+            </div>
+            
+            <div class="project-actions">
+              {project.url && project.url !== '#' && (
+                <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-link primary">
+                  <svg class="link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                  </svg>
+                  Website
+                </a>
+              )}
+              {project.githubUrl && (
+                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" class="project-link secondary">
+                  <svg class="link-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  GitHub
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
+
+<script>
+  class ProjectShowcase {
+    private showcaseElement: HTMLElement | null = null;
+    private filterButtons: NodeListOf<HTMLButtonElement> | null = null;
+    private projectCards: NodeListOf<HTMLElement> | null = null;
+    private currentFilters: { category: string; status: string } = { category: 'all', status: 'all' };
+
+    constructor() {
+      this.initializeElements();
+      this.setupEventListeners();
+      this.applyFilters();
+    }
+
+    private initializeElements(): void {
+      this.showcaseElement = document.querySelector('.project-showcase');
+      this.filterButtons = document.querySelectorAll('.filter-btn');
+      this.projectCards = document.querySelectorAll('.project-card');
+    }
+
+    private setupEventListeners(): void {
+      this.filterButtons?.forEach(button => {
+        button.addEventListener('click', (e) => {
+          const target = e.target as HTMLButtonElement;
+          const filterType = target.getAttribute('data-filter') as 'category' | 'status';
+          const filterValue = target.getAttribute('data-value') || 'all';
+          
+          this.updateFilter(filterType, filterValue);
+          this.applyFilters();
+        });
+      });
+
+      // Track project link clicks
+      this.projectCards?.forEach(card => {
+        card.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          const link = target.closest('a');
+          if (link) {
+            this.trackProjectClick(link);
+          }
+        });
+      });
+    }
+
+    private updateFilter(filterType: 'category' | 'status', value: string): void {
+      // Update active filter button
+      this.filterButtons?.forEach(btn => {
+        const btnFilterType = btn.getAttribute('data-filter');
+        const btnValue = btn.getAttribute('data-value');
+        
+        if (btnFilterType === filterType) {
+          btn.classList.toggle('active', btnValue === value);
+        }
+      });
+
+      // Update current filters
+      this.currentFilters[filterType] = value;
+    }
+
+    private applyFilters(): void {
+      this.projectCards?.forEach(card => {
+        const cardCategory = card.getAttribute('data-category') || '';
+        const cardStatus = card.getAttribute('data-status') || '';
+        
+        const categoryMatch = this.currentFilters.category === 'all' || cardCategory === this.currentFilters.category;
+        const statusMatch = this.currentFilters.status === 'all' || cardStatus === this.currentFilters.status;
+        
+        if (categoryMatch && statusMatch) {
+          card.style.display = 'block';
+          card.classList.add('filtered-in');
+          card.classList.remove('filtered-out');
+        } else {
+          card.style.display = 'none';
+          card.classList.add('filtered-out');
+          card.classList.remove('filtered-in');
+        }
+      });
+
+      // Update section visibility
+      this.updateSectionVisibility();
+    }
+
+    private updateSectionVisibility(): void {
+      const featuredSection = document.querySelector('.featured-projects-section');
+      const otherSection = document.querySelector('.other-projects-section');
+      
+      const visibleFeatured = document.querySelectorAll('.featured-projects-section .project-card.filtered-in').length > 0;
+      const visibleOther = document.querySelectorAll('.other-projects-section .project-card.filtered-in').length > 0;
+      
+      if (featuredSection) {
+        featuredSection.style.display = visibleFeatured ? 'block' : 'none';
+      }
+      
+      if (otherSection) {
+        otherSection.style.display = visibleOther ? 'block' : 'none';
+      }
+    }
+
+    private trackProjectClick(link: HTMLAnchorElement): void {
+      const projectCard = link.closest('.project-card');
+      const projectName = projectCard?.querySelector('.project-title')?.textContent || '';
+      const linkType = link.classList.contains('primary') ? 'website' : 'github';
+      
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'project_link_click', {
+          event_category: 'project_showcase',
+          event_label: projectName,
+          custom_map: {
+            link_type: linkType,
+            project_name: projectName
+          }
+        });
+      }
+    }
+  }
+
+  // Initialize project showcase when DOM is ready
+  function initProjectShowcase(): void {
+    if (document.querySelector('.project-showcase')) {
+      new ProjectShowcase();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProjectShowcase);
+  } else {
+    initProjectShowcase();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .project-showcase {
+    @apply bg-white rounded-2xl p-6 shadow-lg border border-neutral-100;
+  }
+
+  .showcase-header {
+    @apply mb-6;
+  }
+
+  .showcase-title {
+    @apply text-2xl font-bold text-neutral-800 mb-2;
+  }
+
+  .showcase-subtitle {
+    @apply text-neutral-600;
+  }
+
+  .showcase-filters {
+    @apply mb-8 space-y-4;
+  }
+
+  .filter-group {
+    @apply space-y-2;
+  }
+
+  .filter-label {
+    @apply block text-sm font-semibold text-neutral-700;
+  }
+
+  .filter-buttons {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .filter-btn {
+    @apply px-3 py-1 bg-neutral-100 text-neutral-600 rounded-lg text-sm font-medium hover:bg-neutral-200 transition-colors;
+  }
+
+  .filter-btn.active {
+    @apply bg-primary-500 text-white hover:bg-primary-600;
+  }
+
+  .featured-projects-section,
+  .other-projects-section {
+    @apply mb-8;
+  }
+
+  .section-title {
+    @apply text-lg font-semibold text-neutral-800 mb-4;
+  }
+
+  .featured-projects-grid {
+    @apply grid md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .other-projects-grid {
+    @apply grid md:grid-cols-2 lg:grid-cols-4 gap-4;
+  }
+
+  .project-card {
+    @apply bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-xl p-6 border border-neutral-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .project-card.featured {
+    @apply from-primary-50 to-secondary-50 border-primary-200;
+  }
+
+  .project-header {
+    @apply flex items-start gap-3 mb-4;
+  }
+
+  .project-icon {
+    @apply text-2xl flex-shrink-0;
+  }
+
+  .project-info {
+    @apply flex-1 min-w-0;
+  }
+
+  .project-title {
+    @apply text-lg font-bold text-neutral-800 mb-1;
+  }
+
+  .project-status {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .project-status.active {
+    @apply bg-green-100 text-green-700;
+  }
+
+  .project-status.completed {
+    @apply bg-blue-100 text-blue-700;
+  }
+
+  .project-status.archived {
+    @apply bg-gray-100 text-gray-700;
+  }
+
+  .project-description {
+    @apply text-sm text-neutral-600 mb-4 line-clamp-3;
+  }
+
+  .project-stats {
+    @apply flex gap-4 mb-4;
+  }
+
+  .stat-item {
+    @apply text-center;
+  }
+
+  .stat-number {
+    @apply block text-lg font-bold text-primary-600;
+  }
+
+  .stat-label {
+    @apply block text-xs text-neutral-500;
+  }
+
+  .project-technologies {
+    @apply flex flex-wrap gap-2 mb-4;
+  }
+
+  .tech-tag {
+    @apply px-2 py-1 bg-primary-100 text-primary-700 rounded text-xs font-medium;
+  }
+
+  .tech-more {
+    @apply px-2 py-1 bg-neutral-100 text-neutral-600 rounded text-xs font-medium;
+  }
+
+  .project-actions {
+    @apply flex gap-2;
+  }
+
+  .project-link {
+    @apply flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors;
+  }
+
+  .project-link.primary {
+    @apply bg-primary-500 text-white hover:bg-primary-600;
+  }
+
+  .project-link.secondary {
+    @apply bg-white border border-neutral-300 text-neutral-600 hover:bg-neutral-50;
+  }
+
+  .link-icon {
+    @apply w-4 h-4;
+  }
+
+  /* Animation for filtered items */
+  .project-card.filtered-in {
+    animation: fadeInUp 0.3s ease-out;
+  }
+
+  .project-card.filtered-out {
+    animation: fadeOutDown 0.3s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOutDown {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  /* Dark mode styles */
+  .dark .project-showcase {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .showcase-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .showcase-subtitle {
+    @apply text-neutral-400;
+  }
+
+  .dark .filter-label {
+    @apply text-neutral-300;
+  }
+
+  .dark .filter-btn {
+    @apply bg-neutral-700 text-neutral-300 hover:bg-neutral-600;
+  }
+
+  .dark .section-title {
+    @apply text-neutral-200;
+  }
+
+  .dark .project-card {
+    @apply from-neutral-700 to-neutral-800 border-neutral-600;
+  }
+
+  .dark .project-card.featured {
+    @apply from-primary-900 to-secondary-900 border-primary-600;
+  }
+
+  .dark .project-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .project-description {
+    @apply text-neutral-400;
+  }
+
+  .dark .project-link.secondary {
+    @apply bg-neutral-600 border-neutral-500 text-neutral-300 hover:bg-neutral-500;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .project-showcase {
+      @apply p-4;
+    }
+    
+    .featured-projects-grid {
+      @apply grid-cols-1 gap-4;
+    }
+    
+    .other-projects-grid {
+      @apply grid-cols-1 gap-3;
+    }
+    
+    .project-card {
+      @apply p-4;
+    }
+    
+    .project-actions {
+      @apply flex-col;
+    }
+    
+    .project-link {
+      @apply justify-center;
+    }
+  }
+</style>

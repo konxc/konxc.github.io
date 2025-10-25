@@ -1,15 +1,26 @@
 ---
-import Head from '../components/Head.astro';
-import '../styles/global.css';
+import '@styles/global.css';
+import Head from '@components/Head.astro';
+import SimpleHeader from '@components/ui/SimpleHeader.astro';
+import SimpleFooter from '@components/ui/SimpleFooter.astro';
 
 export interface Props {
   title: string;
   description?: string;
   image?: string;
   canonical?: string;
+  headerVariant?: 'default' | 'transparent' | 'minimal';
+  footerVariant?: 'default' | 'minimal' | 'extended' | 'none';
 }
 
-const { title, description, image, canonical } = Astro.props;
+const { 
+  title, 
+  description, 
+  image, 
+  canonical, 
+  headerVariant = 'default',
+  footerVariant = 'default' 
+} = Astro.props;
 ---
 
 <Head 
@@ -19,6 +30,12 @@ const { title, description, image, canonical } = Astro.props;
   canonical={canonical}
 />
 
+<SimpleHeader variant={headerVariant} />
+
 <main>
   <slot />
 </main>
+
+{footerVariant !== 'none' && (
+  <SimpleFooter />
+)}

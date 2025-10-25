@@ -1,0 +1,414 @@
+---
+import ExtendedLayout from '@layouts/ExtendedLayout.astro';
+import { getCollection } from 'astro:content';
+import ContributorCard from '@components/contributors/ContributorCard.astro';
+
+const contributors = await getCollection('contributors');
+const activeContributors = contributors.filter(contributor => contributor.data.isActive);
+const sortedContributors = activeContributors.sort((a, b) => {
+  const aScore = a.data.socialProof.githubStars + a.data.socialProof.communityReputation;
+  const bScore = b.data.socialProof.githubStars + b.data.socialProof.communityReputation;
+  return bScore - aScore;
+});
+
+// Group contributors by role
+const contributorsByRole = sortedContributors.reduce((acc, contributor) => {
+  const role = contributor.data.role;
+  if (!acc[role]) {
+    acc[role] = [];
+  }
+  acc[role].push(contributor);
+  return acc;
+}, {} as Record<string, typeof sortedContributors>);
+
+// Calculate community stats
+const totalContributions = contributors.reduce((sum, contributor) => {
+  return sum + contributor.data.contributions.blogPosts + 
+    contributor.data.contributions.openSourceProjects.reduce((projectSum, project) => projectSum + (project.contributions || 0), 0) +
+    contributor.data.contributions.koneksiProjects.length +
+    contributor.data.contributions.communityContributions.length;
+}, 0);
+
+const totalOpenSourceProjects = contributors.reduce((sum, contributor) => {
+  return sum + contributor.data.contributions.openSourceProjects.length;
+}, 0);
+
+const totalKoneksiProjects = contributors.reduce((sum, contributor) => {
+  return sum + contributor.data.contributions.koneksiProjects.length;
+}, 0);
+---
+
+<ExtendedLayout 
+  title="Kontributor Koneksi - Komunitas Pengembang Indonesia"
+  description="Temukan kontributor-kontributor terbaik di ekosistem teknologi Indonesia. Dari open source hingga project Koneksi, mari bersama membangun komunitas yang kompetitif dan kolaboratif."
+>
+  <!-- Hero Section -->
+  <section class="hero-section bg-linear-to-br from-primary-50 to-secondary-50">
+    <div class="container">
+      <div class="text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl lg:text-6xl font-bold mb-6">
+          <span class="text-gradient">Kontributor</span> Koneksi
+        </h1>
+        <p class="text-xl text-neutral-600 mb-8">
+          Komunitas pengembang Indonesia yang kompetitif, kolaboratif, dan sehat. 
+          Dari open source hingga project Koneksi, mari bersama membangun ekosistem teknologi yang lebih baik.
+        </p>
+        
+        <!-- Community Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div class="stat-card">
+            <div class="stat-number">{contributors.length}</div>
+            <div class="stat-label">Kontributor Aktif</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">{totalContributions}</div>
+            <div class="stat-label">Total Kontribusi</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">{totalOpenSourceProjects}</div>
+            <div class="stat-label">Project Open Source</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">{totalKoneksiProjects}</div>
+            <div class="stat-label">Project Koneksi</div>
+          </div>
+        </div>
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#contributors" class="btn-primary">
+            Lihat Kontributor
+          </a>
+          <a href="/contributors/join" class="btn-secondary">
+            Bergabung sebagai Kontributor
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Contributors -->
+  <section class="section bg-white">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4">Kontributor Unggulan</h2>
+        <p class="text-neutral-600">Kontributor dengan dampak terbesar di komunitas</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {sortedContributors.slice(0, 6).map((contributor, index) => (
+          <ContributorCard 
+            contributor={contributor} 
+            variant={index < 3 ? 'featured' : 'default'}
+            showDetails={true}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+  <!-- Join Community CTA -->
+  <section class="section bg-linear-to-br from-primary-500 to-secondary-500 text-white">
+    <div class="container">
+      <div class="text-center max-w-3xl mx-auto">
+        <h2 class="text-3xl font-bold mb-4">Bergabung dengan Komunitas</h2>
+        <p class="text-xl mb-8 opacity-90">
+          Apakah Anda ingin berkontribusi pada project open source Indonesia atau project Koneksi? 
+          Mari bergabung dan bersama-sama membangun ekosistem teknologi yang lebih baik.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/contributors/join" class="btn-white">
+            Daftar sebagai Kontributor
+          </a>
+          <a href="/projects" class="btn-outline-white">
+            Lihat Project Tersedia
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Contributors by Role -->
+  <section id="contributors" class="section bg-neutral-50">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4">Kontributor Berdasarkan Peran</h2>
+        <p class="text-neutral-600">Temukan kontributor berdasarkan keahlian dan peran mereka</p>
+      </div>
+      
+      {Object.entries(contributorsByRole).map(([role, roleContributors]) => (
+        <div class="mb-12">
+          <div class="flex items-center gap-3 mb-6">
+            <h3 class="text-2xl font-bold text-neutral-800">
+              {role === 'developer' && '👨‍💻 Developer'}
+              {role === 'designer' && '🎨 Designer'}
+              {role === 'writer' && '✍️ Writer'}
+              {role === 'researcher' && '🔬 Researcher'}
+              {role === 'mentor' && '🎓 Mentor'}
+              {role === 'community-leader' && '👑 Community Leader'}
+              {role === 'open-source-contributor' && '🌐 Open Source Contributor'}
+            </h3>
+            <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium">
+              {roleContributors.length} kontributor
+            </span>
+            {role === 'writer' && (
+              <a 
+                href="/contributors/writers"
+                class="px-3 py-1 bg-primary-600 text-white rounded-full text-sm font-medium hover:bg-primary-700 transition-colors"
+              >
+                Lihat Semua Writers
+              </a>
+            )}
+          </div>
+          
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {roleContributors.map((contributor) => (
+              <ContributorCard 
+                contributor={contributor} 
+                variant="compact"
+                showDetails={false}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Open Source Projects Showcase -->
+  <section class="section bg-white">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4">Project Open Source Indonesia</h2>
+        <p class="text-neutral-600">Project-project yang dikontribusi oleh komunitas Koneksi</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- SLiMS -->
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon">📚</div>
+            <h3 class="project-title">SLiMS</h3>
+            <p class="project-description">Sistem Informasi Perpustakaan Berbasis Web</p>
+          </div>
+          <div class="project-stats">
+            <div class="stat">
+              <span class="stat-number">500+</span>
+              <span class="stat-label">Instalasi</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">Kontributor</span>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/slims/slims9_bulian" target="_blank" class="project-link">
+              GitHub
+            </a>
+            <a href="https://slims.web.id" target="_blank" class="project-link">
+              Website
+            </a>
+          </div>
+        </div>
+
+        <!-- DracOS -->
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon">🐉</div>
+            <h3 class="project-title">DracOS</h3>
+            <p class="project-description">Linux Distribution untuk Security Testing</p>
+          </div>
+          <div class="project-stats">
+            <div class="stat">
+              <span class="stat-number">1000+</span>
+              <span class="stat-label">Downloads</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">20+</span>
+              <span class="stat-label">Kontributor</span>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/dracos-linux" target="_blank" class="project-link">
+              GitHub
+            </a>
+            <a href="https://dracos-linux.org" target="_blank" class="project-link">
+              Website
+            </a>
+          </div>
+        </div>
+
+        <!-- OpenSID -->
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon">🏘️</div>
+            <h3 class="project-title">OpenSID</h3>
+            <p class="project-description">Sistem Informasi Desa Terbuka</p>
+          </div>
+          <div class="project-stats">
+            <div class="stat">
+              <span class="stat-number">10K+</span>
+              <span class="stat-label">Desa</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">100+</span>
+              <span class="stat-label">Kontributor</span>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/OpenSID/OpenSID" target="_blank" class="project-link">
+              GitHub
+            </a>
+            <a href="https://opensid.my.id" target="_blank" class="project-link">
+              Website
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ExtendedLayout>
+
+<style>
+  @reference "@/styles/global.css";
+  
+  .text-gradient {
+    background: linear-gradient(135deg, #3b82f6, #14b8a6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-section {
+    @apply relative overflow-hidden;
+  }
+
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+  .hero-section .container {
+    @apply relative z-10;
+  }
+
+  .stat-card {
+    @apply bg-white rounded-xl p-4 shadow-sm border border-neutral-100 text-center;
+  }
+
+  .stat-number {
+    @apply text-2xl font-bold text-primary-600;
+  }
+
+  .stat-label {
+    @apply text-sm text-neutral-600;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-white text-primary-600 border border-primary-200 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+  }
+
+  .btn-white {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-white text-primary-600 rounded-lg font-semibold hover:bg-neutral-50 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+  }
+
+  .btn-outline-white {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-transparent text-white border border-white rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+  }
+
+  .project-card {
+    @apply bg-white rounded-2xl p-6 shadow-lg border border-neutral-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .project-header {
+    @apply mb-4;
+  }
+
+  .project-icon {
+    @apply text-3xl mb-2;
+  }
+
+  .project-title {
+    @apply text-xl font-bold text-neutral-800 mb-2;
+  }
+
+  .project-description {
+    @apply text-neutral-600 text-sm;
+  }
+
+  .project-stats {
+    @apply flex gap-4 mb-4;
+  }
+
+  .project-stats .stat {
+    @apply text-center;
+  }
+
+  .project-stats .stat-number {
+    @apply block text-lg font-bold text-primary-600;
+  }
+
+  .project-stats .stat-label {
+    @apply block text-xs text-neutral-500;
+  }
+
+  .project-links {
+    @apply flex gap-2;
+  }
+
+  .project-link {
+    @apply flex-1 px-3 py-2 bg-primary-100 text-primary-700 rounded-lg text-sm font-medium hover:bg-primary-200 transition-colors text-center;
+  }
+
+  /* Dark mode styles */
+  .dark .hero-section {
+    @apply from-primary-900 to-secondary-900;
+  }
+
+  .dark .hero-section h1 {
+    @apply text-neutral-100;
+  }
+
+  .dark .hero-section p {
+    @apply text-neutral-300;
+  }
+
+  .dark .stat-card {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .project-card {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .project-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .project-description {
+    @apply text-neutral-400;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .hero-section h1 {
+      @apply text-3xl;
+    }
+    
+    .stat-card {
+      @apply p-3;
+    }
+    
+    .project-card {
+      @apply p-4;
+    }
+  }
+</style>

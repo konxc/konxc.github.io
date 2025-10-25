@@ -1,0 +1,399 @@
+---
+// Code Block Enhancer Script
+// This script enhances existing code blocks in blog content with copy buttons and line numbers
+---
+
+      <script>
+        // HTML escape function
+        function escapeHtml(text) {
+          const div = document.createElement('div');
+          div.textContent = text;
+          return div.innerHTML;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+          console.log('CodeBlockEnhancer: Starting enhancement...');
+          
+          // Find all code blocks in blog content
+          const codeBlocks = document.querySelectorAll('.blog-content pre code');
+          console.log(`CodeBlockEnhancer: Found ${codeBlocks.length} code blocks`);
+    
+          codeBlocks.forEach((codeElement, index) => {
+            const preElement = codeElement.parentElement;
+            if (!preElement) {
+              console.log(`CodeBlockEnhancer: Skipping code block ${index} - no parent element`);
+              return;
+            }
+            
+            // Skip if already enhanced
+            if (preElement.classList.contains('enhanced-code-block')) {
+              console.log(`CodeBlockEnhancer: Skipping code block ${index} - already enhanced`);
+              return;
+            }
+            
+            console.log(`CodeBlockEnhancer: Enhancing code block ${index}`);
+            
+            // Get code content
+            const code = codeElement.textContent || '';
+            let language = codeElement.className.match(/language-(\w+)/)?.[1] || 'text';
+            
+            console.log(`CodeBlockEnhancer: Original language: ${language}`);
+            
+            // Smart language detection based on content
+            if (language === 'text' || !language) {
+              if (code.includes('import ') && code.includes('from ')) {
+                language = 'typescript';
+              } else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) {
+                language = 'javascript';
+              } else if (code.includes('<') && code.includes('>')) {
+                language = 'html';
+              } else if (code.includes('{') && code.includes('}') && code.includes(':')) {
+                language = 'css';
+              } else if (code.includes('SELECT ') || code.includes('INSERT ') || code.includes('UPDATE ')) {
+                language = 'sql';
+              } else if (code.includes('def ') || code.includes('import ')) {
+                language = 'python';
+              } else if (code.includes('package ') || code.includes('func ')) {
+                language = 'go';
+              } else if (code.includes('public class ') || code.includes('private ')) {
+                language = 'java';
+              }
+            }
+            
+            console.log(`CodeBlockEnhancer: Detected language: ${language}`);
+      
+            // Generate unique ID
+            const codeId = `code-${Date.now()}-${index}`;
+            
+            // Create enhanced code block structure
+            const enhancedBlock = document.createElement('div');
+            enhancedBlock.className = 'enhanced-code-block';
+            enhancedBlock.innerHTML = `
+              <div class="code-container">
+                <div class="line-numbers" aria-hidden="true">
+                  ${code.split('\n').map((_, i) => `<div class="line-number">${i + 1}</div>`).join('')}
+                </div>
+                <pre class="code-content">
+                  <code id="${codeId}" class="language-${language}" data-language="${language}">
+                    ${escapeHtml(code)}
+                  </code>
+                </pre>
+                <button class="copy-button-floating" data-code-id="${codeId}" aria-label="Copy code to clipboard">
+                  <svg class="copy-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
+                  </svg>
+                </button>
+              </div>
+              <div class="code-footer">
+                <span class="language-label">${language}</span>
+                <span class="line-count">${code.split('\n').length} lines</span>
+              </div>
+            `;
+            
+            // Replace original code block
+            if (preElement.parentNode) {
+              preElement.parentNode.replaceChild(enhancedBlock, preElement);
+              console.log(`CodeBlockEnhancer: Successfully enhanced code block ${index}`);
+            } else {
+              console.error(`CodeBlockEnhancer: Failed to replace code block ${index} - no parent node`);
+            }
+          });
+          
+          // Add copy functionality
+          console.log('CodeBlockEnhancer: Setting up copy functionality...');
+          const copyButtons = document.querySelectorAll('.copy-button-floating');
+          console.log(`CodeBlockEnhancer: Found ${copyButtons.length} copy buttons`);
+          
+          copyButtons.forEach((button, index) => {
+            button.addEventListener('click', async function() {
+              const codeId = this.getAttribute('data-code-id');
+              const codeElement = document.getElementById(codeId || '');
+              
+              console.log(`CodeBlockEnhancer: Copy button ${index} clicked for code ID: ${codeId}`);
+              
+              if (!codeElement) {
+                console.error(`CodeBlockEnhancer: Code element not found for ID: ${codeId}`);
+                return;
+              }
+              
+              try {
+                // Copy text to clipboard
+                await navigator.clipboard.writeText(codeElement.textContent || '');
+                console.log(`CodeBlockEnhancer: Successfully copied code for ID: ${codeId}`);
+                
+                // Show success state
+                this.classList.add('copied');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                  this.classList.remove('copied');
+                }, 2000);
+                
+              } catch (err) {
+                console.error('CodeBlockEnhancer: Failed to copy text: ', err);
+                
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = codeElement.textContent || '';
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                console.log(`CodeBlockEnhancer: Used fallback copy method for ID: ${codeId}`);
+                
+                // Show success state
+                this.classList.add('copied');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                  this.classList.remove('copied');
+                }, 2000);
+              }
+            });
+          });
+          
+          console.log('CodeBlockEnhancer: Enhancement completed successfully!');
+        });
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .enhanced-code-block {
+    @apply relative bg-neutral-900 rounded-lg overflow-hidden shadow-lg mb-6;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+  }
+
+  /* Code Container */
+  .code-container {
+    @apply relative flex overflow-x-auto;
+  }
+
+  /* Line Numbers */
+  .line-numbers {
+    @apply bg-neutral-800 text-neutral-500 text-sm select-none pr-4 py-4 border-r border-neutral-700 flex-shrink-0;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    min-width: 3rem;
+    width: 3rem;
+  }
+
+  .line-number {
+    @apply leading-6 text-right;
+    height: 1.5rem;
+  }
+
+  /* Code Content */
+  .code-content {
+    @apply flex-1 p-4 m-0 bg-transparent text-neutral-100 overflow-x-auto;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    min-width: 0;
+  }
+
+  .code-content code {
+    @apply bg-transparent text-neutral-100 p-0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* Copy Button */
+  .copy-button-floating {
+    @apply absolute top-4 right-4 p-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white rounded-md transition-colors opacity-0;
+  }
+
+  .enhanced-code-block:hover .copy-button-floating {
+    @apply opacity-100;
+  }
+
+  .copy-icon {
+    @apply w-4 h-4;
+  }
+
+  /* Code Footer */
+  .code-footer {
+    @apply flex items-center justify-between bg-neutral-800 px-4 py-2 text-xs text-neutral-400 border-t border-neutral-700;
+  }
+
+  .language-label {
+    @apply font-medium uppercase tracking-wide;
+  }
+
+  .line-count {
+    @apply text-neutral-500;
+  }
+
+  /* Copy Success Animation */
+  .copy-button-floating.copied {
+    @apply bg-green-600 text-white;
+  }
+
+  /* Syntax highlighting for common languages */
+  .language-typescript .token.keyword,
+  .language-javascript .token.keyword {
+    @apply text-blue-600;
+  }
+
+  .language-typescript .token.string,
+  .language-javascript .token.string {
+    @apply text-green-600;
+  }
+
+  .language-typescript .token.comment,
+  .language-javascript .token.comment {
+    @apply text-gray-500 italic;
+  }
+
+  .language-typescript .token.function,
+  .language-javascript .token.function {
+    @apply text-purple-600;
+  }
+
+  .language-typescript .token.number,
+  .language-javascript .token.number {
+    @apply text-orange-600;
+  }
+
+  .language-html .token.tag {
+    @apply text-red-600;
+  }
+
+  .language-html .token.attr-name {
+    @apply text-blue-600;
+  }
+
+  .language-html .token.attr-value {
+    @apply text-green-600;
+  }
+
+  .language-css .token.selector {
+    @apply text-purple-600;
+  }
+
+  .language-css .token.property {
+    @apply text-blue-600;
+  }
+
+  .language-css .token.value {
+    @apply text-green-600;
+  }
+
+  /* Dark mode adjustments */
+  .dark .enhanced-code-block {
+    @apply bg-neutral-900;
+  }
+
+  .dark .line-numbers {
+    @apply bg-neutral-800 text-neutral-500 border-neutral-700;
+  }
+
+  .dark .code-content {
+    @apply text-neutral-100;
+  }
+
+  .dark .copy-button-floating {
+    @apply bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white;
+  }
+
+  .dark .code-footer {
+    @apply bg-neutral-800 text-neutral-400 border-neutral-700;
+  }
+
+  /* Dark mode syntax highlighting */
+  .dark .language-typescript .token.keyword,
+  .dark .language-javascript .token.keyword {
+    @apply text-blue-400;
+  }
+
+  .dark .language-typescript .token.string,
+  .dark .language-javascript .token.string {
+    @apply text-green-400;
+  }
+
+  .dark .language-typescript .token.comment,
+  .dark .language-javascript .token.comment {
+    @apply text-gray-400 italic;
+  }
+
+  .dark .language-typescript .token.function,
+  .dark .language-javascript .token.function {
+    @apply text-purple-400;
+  }
+
+  .dark .language-typescript .token.number,
+  .dark .language-javascript .token.number {
+    @apply text-orange-400;
+  }
+
+  .dark .language-html .token.tag {
+    @apply text-red-400;
+  }
+
+  .dark .language-html .token.attr-name {
+    @apply text-blue-400;
+  }
+
+  .dark .language-html .token.attr-value {
+    @apply text-green-400;
+  }
+
+  .dark .language-css .token.selector {
+    @apply text-purple-400;
+  }
+
+  .dark .language-css .token.property {
+    @apply text-blue-400;
+  }
+
+  .dark .language-css .token.value {
+    @apply text-green-400;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .copy-button-floating {
+      @apply top-2 right-2 p-1.5;
+    }
+
+    .line-numbers {
+      @apply pr-2 py-3;
+      min-width: 2.5rem;
+    }
+
+    .line-number {
+      @apply text-xs;
+    }
+
+    .code-content {
+      @apply p-3 text-xs;
+    }
+
+    .code-footer {
+      @apply px-3 py-1.5 text-xs;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .enhanced-code-block {
+      @apply bg-white border border-neutral-300;
+    }
+
+    .copy-button-floating {
+      @apply hidden;
+    }
+
+    .line-numbers {
+      @apply bg-neutral-100 text-neutral-600 border-neutral-300;
+    }
+
+    .code-content {
+      @apply text-neutral-900;
+    }
+
+    .code-footer {
+      @apply bg-neutral-100 text-neutral-600 border-neutral-300;
+    }
+  }
+</style>

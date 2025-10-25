@@ -1,0 +1,369 @@
+---
+// Like Button Component for inline content engagement
+export interface Props {
+  postSlug?: string;
+  position?: 'left' | 'center' | 'right';
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'minimal' | 'card' | 'floating';
+  showCount?: boolean;
+  showText?: boolean;
+  className?: string;
+}
+
+const { 
+  postSlug = 'default',
+  position = 'center',
+  size = 'md',
+  variant = 'card',
+  showCount = true,
+  showText = true,
+  className = ''
+} = Astro.props;
+
+// Generate unique ID for this like button instance
+const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class={`like-button-container ${position} ${variant} ${size} ${className}`}>
+  <div class="like-button-wrapper">
+    {showText && (
+      <div class="like-text">
+        <span class="like-question">Suka artikel ini?</span>
+        <span class="like-subtitle">Berikan apresiasi dengan like</span>
+      </div>
+    )}
+    
+    <button 
+      id={buttonId}
+      class="like-button group"
+      data-post-slug={postSlug}
+      aria-label="Suka artikel ini"
+    >
+      <div class="like-icon">
+        <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path 
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      
+      {showText && (
+        <span class="like-label">Like</span>
+      )}
+      
+      {showCount && (
+        <span class="like-count" data-count="0">0</span>
+      )}
+    </button>
+    
+    <div class="like-feedback">
+      <div class="like-success">
+        <svg class="success-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Terima kasih!</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @reference "@/styles/global.css";
+  .like-button-container {
+    @apply my-8 flex justify-center;
+  }
+
+  .like-button-container.left {
+    @apply justify-start;
+  }
+
+  .like-button-container.right {
+    @apply justify-end;
+  }
+
+  .like-button-wrapper {
+    @apply relative;
+  }
+
+  /* Text styling */
+  .like-text {
+    @apply text-center mb-4;
+  }
+
+  .like-question {
+    @apply block text-lg font-semibold text-neutral-800 mb-1;
+  }
+
+  .like-subtitle {
+    @apply block text-sm text-neutral-600;
+  }
+
+  /* Button styling */
+  .like-button {
+    @apply relative flex items-center gap-2 px-6 py-3 bg-white border border-neutral-200 rounded-full shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer;
+    @apply hover:border-red-300 hover:bg-red-50;
+  }
+
+  .like-button:focus {
+    @apply outline-none ring-2 ring-red-500 ring-offset-2;
+  }
+
+  .like-button.liked {
+    @apply bg-red-500 border-red-500 text-white;
+  }
+
+  .like-button.liked:hover {
+    @apply bg-red-600 border-red-600;
+  }
+
+  /* Icon styling */
+  .like-icon {
+    @apply relative;
+  }
+
+  .heart-icon {
+    @apply w-5 h-5 transition-all duration-300;
+  }
+
+  .like-button:hover .heart-icon {
+    @apply scale-110;
+  }
+
+  .like-button.liked .heart-icon {
+    @apply fill-current;
+  }
+
+  /* Label styling */
+  .like-label {
+    @apply font-medium text-sm;
+  }
+
+  /* Count styling */
+  .like-count {
+    @apply bg-neutral-100 text-neutral-600 text-xs px-2 py-1 rounded-full font-medium;
+  }
+
+  .like-button.liked .like-count {
+    @apply bg-red-100 text-red-600;
+  }
+
+  /* Feedback styling */
+  .like-feedback {
+    @apply absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500;
+  }
+
+  .like-feedback.show {
+    @apply opacity-100 pointer-events-auto;
+  }
+
+  .like-success {
+    @apply flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-full shadow-lg;
+  }
+
+  .success-icon {
+    @apply w-4 h-4;
+  }
+
+  /* Size variants */
+  .like-button-container.sm .like-button {
+    @apply px-4 py-2 text-sm;
+  }
+
+  .like-button-container.sm .heart-icon {
+    @apply w-4 h-4;
+  }
+
+  .like-button-container.lg .like-button {
+    @apply px-8 py-4 text-lg;
+  }
+
+  .like-button-container.lg .heart-icon {
+    @apply w-6 h-6;
+  }
+
+  /* Variant styling */
+  .like-button-container.minimal .like-button {
+    @apply border-0 shadow-none bg-transparent hover:bg-neutral-50;
+  }
+
+  .like-button-container.floating {
+    @apply fixed bottom-6 right-6 z-50;
+  }
+
+  .like-button-container.floating .like-button {
+    @apply shadow-lg hover:shadow-xl;
+  }
+
+  /* Card variant */
+  .like-button-container.card {
+    @apply bg-gradient-to-r from-red-50 to-pink-50 p-6 rounded-xl border border-red-100;
+  }
+
+  .like-button-container.card .like-question {
+    @apply text-red-800;
+  }
+
+  .like-button-container.card .like-subtitle {
+    @apply text-red-600;
+  }
+
+  /* Animations */
+  @keyframes heartBeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .like-button.liked .heart-icon {
+    animation: heartBeat 0.6s ease-in-out;
+  }
+
+  @keyframes likePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  .like-button:hover {
+    animation: likePulse 0.3s ease-in-out;
+  }
+
+  /* Dark mode support */
+  .dark .like-question {
+    @apply text-neutral-100;
+  }
+
+  .dark .like-subtitle {
+    @apply text-neutral-400;
+  }
+
+  .dark .like-button {
+    @apply bg-neutral-800 border-neutral-700 text-neutral-100;
+  }
+
+  .dark .like-button:hover {
+    @apply border-red-400 bg-red-900;
+  }
+
+  .dark .like-count {
+    @apply bg-neutral-700 text-neutral-300;
+  }
+
+  .dark .like-button-container.card {
+    @apply bg-gradient-to-r from-red-900 to-pink-900 border-red-800;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .like-button-container {
+      @apply my-6;
+    }
+
+    .like-button {
+      @apply px-4 py-2 text-sm;
+    }
+
+    .like-question {
+      @apply text-base;
+    }
+
+    .like-subtitle {
+      @apply text-xs;
+    }
+
+    .like-button-container.floating {
+      @apply bottom-4 right-4;
+    }
+  }
+</style>
+
+<script>
+  // Like Button Functionality
+  function initializeLikeButton() {
+    const likeButton = document.getElementById('${buttonId}');
+    if (!likeButton) return;
+
+    const postSlug = likeButton.dataset.postSlug;
+    const countElement = likeButton.querySelector('.like-count');
+    const feedbackElement = likeButton.closest('.like-button-wrapper').querySelector('.like-feedback');
+
+    // Load saved state
+    const savedState = localStorage.getItem(`like-${postSlug}`);
+    if (savedState) {
+      const { liked, count } = JSON.parse(savedState);
+      if (liked) {
+        likeButton.classList.add('liked');
+      }
+      if (countElement) {
+        countElement.textContent = count;
+        countElement.dataset.count = count;
+      }
+    }
+
+    // Handle click
+    likeButton.addEventListener('click', async () => {
+      if (likeButton.classList.contains('liked')) return;
+
+      // Add liked class immediately for better UX
+      likeButton.classList.add('liked');
+      
+      // Update count
+      const currentCount = parseInt(countElement?.dataset.count || '0');
+      const newCount = currentCount + 1;
+      
+      if (countElement) {
+        countElement.textContent = newCount;
+        countElement.dataset.count = newCount;
+      }
+
+      // Save to localStorage
+      localStorage.setItem(`like-${postSlug}`, JSON.stringify({
+        liked: true,
+        count: newCount
+      }));
+
+      // Show feedback
+      if (feedbackElement) {
+        feedbackElement.classList.add('show');
+        setTimeout(() => {
+          feedbackElement.classList.remove('show');
+        }, 2000);
+      }
+
+      // Send analytics event
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'like_article', {
+          'post_slug': postSlug,
+          'like_count': newCount
+        });
+      }
+
+      // Optional: Send to server
+      try {
+        await fetch('/api/like', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            postSlug: postSlug,
+            action: 'like'
+          })
+        });
+      } catch (error) {
+        console.log('Like tracking failed:', error);
+      }
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeLikeButton);
+  } else {
+    initializeLikeButton();
+  }
+</script>

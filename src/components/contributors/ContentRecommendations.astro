@@ -1,0 +1,251 @@
+---
+// Content Recommendations Component - Modular version
+import { getCollection } from 'astro:content';
+import Card from '@components/ui/Card.astro';
+
+export interface Props {
+  class?: string;
+  currentPostSlug?: string;
+  maxRecommendations?: number;
+  algorithm?: 'similarity' | 'popularity' | 'recent' | 'hybrid';
+  showReason?: boolean;
+  title?: string;
+  subtitle?: string;
+  variant?: 'default' | 'compact' | 'minimal';
+  showHeader?: boolean;
+  context?: 'blog' | 'writers' | 'contributors' | 'general';
+}
+
+const { 
+  class: className,
+  currentPostSlug = '',
+  maxRecommendations = 4,
+  algorithm = 'hybrid',
+  showReason = true,
+  title = 'Artikel Terkait',
+  subtitle = 'Temukan konten menarik lainnya',
+  variant = 'default',
+  showHeader = true,
+  context = 'general'
+} = Astro.props;
+
+const allPosts = await getCollection('blog');
+
+// Get current post data
+const currentPost = allPosts.find(post => post.slug === currentPostSlug);
+
+// Generate recommendations based on algorithm
+let recommendations: typeof allPosts = [];
+
+if (currentPost) {
+  switch (algorithm) {
+    case 'similarity':
+      recommendations = getSimilarityRecommendations(allPosts, currentPost, maxRecommendations);
+      break;
+    case 'popularity':
+      recommendations = getPopularityRecommendations(allPosts, currentPostSlug, maxRecommendations);
+      break;
+    case 'recent':
+      recommendations = getRecentRecommendations(allPosts, currentPostSlug, maxRecommendations);
+      break;
+    case 'hybrid':
+      recommendations = getHybridRecommendations(allPosts, currentPost, currentPostSlug, maxRecommendations);
+      break;
+  }
+} else {
+  // Fallback to recent posts if no current post
+  recommendations = getRecentRecommendations(allPosts, '', maxRecommendations);
+}
+
+// Helper functions
+function getSimilarityRecommendations(posts: typeof allPosts, currentPost: any, max: number) {
+  return posts
+    .filter(post => post.slug !== currentPost.slug)
+    .map(post => ({
+      ...post,
+      similarityScore: calculateSimilarity(currentPost, post)
+    }))
+    .sort((a, b) => b.similarityScore - a.similarityScore)
+    .slice(0, max);
+}
+
+function getPopularityRecommendations(posts: typeof allPosts, excludeSlug: string, max: number) {
+  return posts
+    .filter(post => post.slug !== excludeSlug)
+    .sort((a, b) => (b.data.views || 0) - (a.data.views || 0))
+    .slice(0, max);
+}
+
+function getRecentRecommendations(posts: typeof allPosts, excludeSlug: string, max: number) {
+  return posts
+    .filter(post => post.slug !== excludeSlug)
+    .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
+    .slice(0, max);
+}
+
+function getHybridRecommendations(posts: typeof allPosts, currentPost: any, excludeSlug: string, max: number) {
+  const similarityRecs = getSimilarityRecommendations(posts, currentPost, Math.ceil(max / 2));
+  const popularityRecs = getPopularityRecommendations(posts, excludeSlug, Math.ceil(max / 2));
+  
+  // Combine and deduplicate
+  const combined = [...similarityRecs, ...popularityRecs];
+  const unique = combined.filter((post, index, self) => 
+    index === self.findIndex(p => p.slug === post.slug)
+  );
+  
+  return unique.slice(0, max);
+}
+
+function calculateSimilarity(post1: any, post2: any) {
+  let score = 0;
+  
+  // Category similarity
+  if (post1.data.category === post2.data.category) score += 3;
+  
+  // Tag similarity
+  const tags1 = post1.data.tags || [];
+  const tags2 = post2.data.tags || [];
+  const commonTags = tags1.filter((tag: string) => tags2.includes(tag));
+  score += commonTags.length * 2;
+  
+  // Author similarity
+  if (post1.data.author === post2.data.author) score += 1;
+  
+  return score;
+}
+
+function getRecommendationReason(post: any, currentPost: any) {
+  if (!currentPost) return 'Artikel terbaru';
+  
+  if (post.data.category === currentPost.data.category) {
+    return `Kategori: ${post.data.category}`;
+  }
+  
+  const tags1 = currentPost.data.tags || [];
+  const tags2 = post.data.tags || [];
+  const commonTags = tags1.filter((tag: string) => tags2.includes(tag));
+  
+  if (commonTags.length > 0) {
+    return `Tag: ${commonTags[0]}`;
+  }
+  
+  if (post.data.author === currentPost.data.author) {
+    return `Penulis: ${post.data.author}`;
+  }
+  
+  return 'Artikel populer';
+}
+
+// Context-specific configurations
+const contextConfig = {
+  blog: {
+    title: 'Artikel Terkait',
+    subtitle: 'Temukan konten menarik lainnya',
+    bgClass: 'bg-neutral-50'
+  },
+  writers: {
+    title: 'Artikel dari Penulis',
+    subtitle: 'Karya terbaik dari tim penulis kami',
+    bgClass: 'bg-primary-50'
+  },
+  contributors: {
+    title: 'Konten Terbaru',
+    subtitle: 'Artikel dan tutorial terbaru dari kontributor',
+    bgClass: 'bg-secondary-50'
+  },
+  general: {
+    title: 'Rekomendasi Konten',
+    subtitle: 'Temukan konten menarik lainnya',
+    bgClass: 'bg-neutral-50'
+  }
+};
+
+const config = contextConfig[context];
+---
+
+<section class={`content-recommendations ${variant} ${config.bgClass} ${className}`}>
+  <div class="container">
+    <div class="mx-auto max-w-6xl">
+      {showHeader && (
+        <div class="mb-12 text-center">
+          <h2 class="mb-4 text-3xl font-bold">{title || config.title}</h2>
+          <p class="text-lg text-neutral-600">{subtitle || config.subtitle}</p>
+        </div>
+      )}
+
+      {recommendations.length > 0 ? (
+        <div class={`grid gap-6 ${variant === 'compact' ? 'md:grid-cols-2' : variant === 'minimal' ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
+          {recommendations.map((post) => (
+            <Card class="group transition-all hover:shadow-lg">
+              <a href={`/blog/${post.slug}`} class="block">
+                {post.data.coverImage && (
+                  <img
+                    src={post.data.coverImage}
+                    alt={post.data.title}
+                    class="mb-4 h-48 w-full object-cover rounded-lg"
+                  />
+                )}
+                <div class="p-6">
+                  <div class="mb-2 flex items-center justify-between">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-primary-600">
+                      {post.data.category}
+                    </span>
+                    {showReason && (
+                      <span class="text-xs text-neutral-500">
+                        {getRecommendationReason(post, currentPost)}
+                      </span>
+                    )}
+                  </div>
+                  <h3 class="mb-3 text-xl font-bold transition-colors group-hover:text-primary-600">
+                    {post.data.title}
+                  </h3>
+                  <p class="mb-4 text-sm text-neutral-600 line-clamp-3">
+                    {post.data.description}
+                  </p>
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs text-neutral-500">
+                      {post.data.readingTime} min read
+                    </span>
+                    <span class="text-xs text-neutral-500">
+                      {post.data.views || 0} views
+                    </span>
+                  </div>
+                </div>
+              </a>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <div class="mb-4 text-6xl">📝</div>
+          <h3 class="mb-2 text-xl font-semibold text-neutral-900">Belum Ada Rekomendasi</h3>
+          <p class="text-neutral-600">
+            Kami sedang menyiapkan konten menarik lainnya.
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "@/styles/global.css";
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .content-recommendations.compact .card {
+    @apply p-4;
+  }
+  
+  .content-recommendations.minimal .card {
+    @apply p-3;
+  }
+  
+  .content-recommendations.minimal h3 {
+    @apply text-lg;
+  }
+</style>

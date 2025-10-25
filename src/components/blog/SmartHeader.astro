@@ -1,0 +1,169 @@
+---
+// Smart Header untuk Blog Slug Page
+// Menggunakan komponen Header.astro dengan interaktivitas scroll behavior
+import Header from '@components/ui/Header.astro';
+---
+
+<header id="smart-header" class="smart-header">
+  <Header 
+    variant="default"
+    showSearch={false}
+    showDarkMode={true}
+    showMobileMenu={true}
+    className="smart-header-content"
+  />
+</header>
+
+
+<style>
+  .smart-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transform: translateY(0);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .smart-header.hidden {
+    transform: translateY(-100%);
+  }
+
+  .smart-header.scrolled {
+    /* Additional styling when scrolled - handled by .smart-header-content */
+  }
+
+  /* Override Header.astro styles untuk smart behavior */
+  .smart-header .smart-header-content {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.3) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .smart-header.scrolled .smart-header-content {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.4) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Dark mode styles */
+  .dark .smart-header .smart-header-content {
+    background: rgba(17, 24, 39, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom-color: rgba(75, 85, 99, 0.3) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .dark .smart-header.scrolled .smart-header-content {
+    background: rgba(17, 24, 39, 0.95) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom-color: rgba(75, 85, 99, 0.4) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* Optional: Visual feedback for threshold */
+  .section.approaching-threshold {
+    position: relative;
+  }
+
+  .section.approaching-threshold::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+      rgba(147, 51, 234, 0.3) 0%, 
+      rgba(147, 51, 234, 0.8) 60%, 
+      rgba(147, 51, 234, 1) 100%
+    );
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const header = document.getElementById('smart-header');
+    
+    // Find hero section with more flexible selectors
+    const heroSection = document.querySelector('.section.bg-linear-to-br') || 
+                       document.querySelector('.section.bg-gradient-to-br') ||
+                       document.querySelector('section:first-of-type');
+    
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    let isScrollingDown = false;
+    
+    // Function to update header visibility
+    function updateHeaderVisibility() {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - lastScrollY;
+      
+      // Determine scroll direction
+      isScrollingDown = scrollDelta > 0;
+      
+      // Show/hide header based on scroll position and direction
+      if (currentScrollY < 100) {
+        // Always show header at the top
+        header.classList.remove('hidden');
+        header.classList.remove('scrolled');
+      } else if (isScrollingDown && currentScrollY > 200) {
+        // Hide header when scrolling down past 200px
+        header.classList.add('hidden');
+        header.classList.add('scrolled');
+      } else if (!isScrollingDown) {
+        // Show header when scrolling up
+        header.classList.remove('hidden');
+        header.classList.add('scrolled');
+      }
+      
+      // Optional: Add visual feedback for hero section
+      if (heroSection) {
+        const heroHeight = heroSection.offsetHeight;
+        const progress = Math.min(currentScrollY / heroHeight, 1);
+        heroSection.style.setProperty('--scroll-progress', progress);
+        
+        // Add class when approaching threshold
+        if (currentScrollY >= heroHeight * 0.5) {
+          heroSection.classList.add('approaching-threshold');
+        } else {
+          heroSection.classList.remove('approaching-threshold');
+        }
+      }
+      
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+    
+    // Throttled scroll handler
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(updateHeaderVisibility);
+        ticking = true;
+      }
+    }
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', onScroll);
+    
+    // Initial check
+    updateHeaderVisibility();
+    
+    // Debug logging
+    console.log('SmartHeader initialized:', {
+      header: header ? 'found' : 'not found',
+      heroSection: heroSection ? 'found' : 'not found',
+      heroHeight: heroSection ? heroSection.offsetHeight : 'N/A'
+    });
+  });
+</script>

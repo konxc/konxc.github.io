@@ -1,0 +1,176 @@
+---
+// Writer Card Component - Individual writer card
+import type { CollectionEntry } from 'astro:content';
+import Avatar from '@components/ui/Avatar.astro';
+
+export interface Props {
+  writer: CollectionEntry<'contributors'>;
+  variant?: 'default' | 'compact' | 'minimal';
+  showStats?: boolean;
+  showExpertise?: boolean;
+  showActions?: boolean;
+  class?: string;
+}
+
+const { 
+  writer, 
+  variant = 'default',
+  showStats = true,
+  showExpertise = true,
+  showActions = true,
+  class: className = ''
+} = Astro.props;
+
+const { data } = writer;
+---
+
+<div class={`writer-card ${variant} ${className}`}>
+  {variant === 'default' && (
+    <div class="group rounded-lg border border-neutral-200 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+              <!-- Avatar -->
+              <div class="mb-4 flex items-center gap-4">
+                <Avatar 
+                  name={data.name}
+                  email={data.github ? `user@${data.github.split('/').pop()}.github.com` : undefined}
+                  size={64}
+                  src={data.avatar}
+                  fallbackType="placeholder"
+                  backgroundColor="random"
+                  class="flex-shrink-0"
+                />
+                <div class="flex-1">
+                  <h3 class="text-lg font-semibold text-neutral-900 group-hover:text-primary-600 transition-colors">
+                    {data.name}
+                  </h3>
+                  <p class="text-sm text-neutral-600">
+                    {data.role === 'writer' ? 'Penulis' : 'Kontributor'}
+                  </p>
+                </div>
+              </div>
+
+      <!-- Bio -->
+      <p class="mb-4 text-sm text-neutral-700 line-clamp-3">
+        {data.bio}
+      </p>
+
+      <!-- Stats -->
+      {showStats && (
+        <div class="mb-4 grid grid-cols-2 gap-4">
+          <div class="text-center">
+            <div class="text-lg font-semibold text-primary-600">
+              {data.contributions.blogPosts || 0}
+            </div>
+            <div class="text-xs text-neutral-600">Artikel</div>
+          </div>
+          <div class="text-center">
+            <div class="text-lg font-semibold text-primary-600">
+              {data.expertise.length}
+            </div>
+            <div class="text-xs text-neutral-600">Keahlian</div>
+          </div>
+        </div>
+      )}
+
+      <!-- Expertise Tags -->
+      {showExpertise && (
+        <div class="mb-4 flex flex-wrap gap-1">
+          {data.expertise.slice(0, 3).map((skill) => (
+            <span class="rounded-full bg-primary-100 px-2 py-1 text-xs text-primary-700">
+              {skill}
+            </span>
+          ))}
+          {data.expertise.length > 3 && (
+            <span class="rounded-full bg-neutral-100 px-2 py-1 text-xs text-neutral-600">
+              +{data.expertise.length - 3}
+            </span>
+          )}
+        </div>
+      )}
+
+      <!-- Action Buttons -->
+      {showActions && (
+        <div class="flex gap-2">
+          <a 
+            href={`/contributors/${writer.slug}`}
+            class="flex-1 rounded-md bg-primary-600 px-3 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-primary-700"
+          >
+            Lihat Profil
+          </a>
+          {data.github && (
+            <a 
+              href={data.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-md border border-neutral-300 px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50"
+            >
+              GitHub
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  )}
+
+  {variant === 'compact' && (
+    <div class="flex items-center gap-3 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm">
+      <!-- Avatar -->
+      <Avatar 
+        name={data.name}
+        email={data.github ? `user@${data.github.split('/').pop()}.github.com` : undefined}
+        size={48}
+        src={data.avatar}
+        fallbackType="ui-avatars"
+        backgroundColor="random"
+        class="flex-shrink-0"
+      />
+      
+      <!-- Info -->
+      <div class="flex-1">
+        <h3 class="font-semibold text-neutral-900">{data.name}</h3>
+        <p class="text-sm text-neutral-600">{data.contributions.blogPosts || 0} artikel</p>
+      </div>
+      
+      <!-- Action -->
+      {showActions && (
+        <a 
+          href={`/contributors/${writer.slug}`}
+          class="rounded-md bg-primary-600 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+        >
+          Lihat
+        </a>
+      )}
+    </div>
+  )}
+
+  {variant === 'minimal' && (
+    <div class="flex items-center gap-2">
+      <!-- Avatar -->
+      <Avatar 
+        name={data.name}
+        email={data.github ? `user@${data.github.split('/').pop()}.github.com` : undefined}
+        size={32}
+        src={data.avatar}
+        fallbackType="ui-avatars"
+        backgroundColor="random"
+        class="flex-shrink-0"
+      />
+      
+      <!-- Name -->
+      <span class="text-sm font-medium text-neutral-900">{data.name}</span>
+      
+      <!-- Stats -->
+      {showStats && (
+        <span class="text-xs text-neutral-600">({data.contributions.blogPosts || 0} artikel)</span>
+      )}
+    </div>
+  )}
+</div>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

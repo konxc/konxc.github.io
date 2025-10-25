@@ -1,0 +1,41 @@
+---
+import '@styles/global.css';
+import Head from '@components/Head.astro';
+import MinimalHeader from '@components/ui/MinimalHeader.astro';
+import MinimalFooter from '@components/ui/MinimalFooter.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  headerVariant?: 'default' | 'transparent';
+  showFooter?: boolean;
+}
+
+const { 
+  title, 
+  description, 
+  image, 
+  canonical, 
+  headerVariant = 'default',
+  showFooter = true 
+} = Astro.props;
+---
+
+<Head 
+  title={title} 
+  description={description} 
+  image={image} 
+  canonical={canonical}
+/>
+
+<MinimalHeader variant={headerVariant} />
+
+<main>
+  <slot />
+</main>
+
+{showFooter && (
+  <MinimalFooter />
+)}

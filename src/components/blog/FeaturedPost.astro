@@ -1,0 +1,106 @@
+---
+// Featured Post Component
+import Card from '@components/ui/Card.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  class?: string;
+  post: CollectionEntry<'blog'>;
+}
+
+const { 
+  class: className,
+  post
+} = Astro.props;
+
+const publishDate = post.data.publishDate.toLocaleDateString('id-ID', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<section class={`featured-post section bg-white ${className || ''}`}>
+  <div class="container">
+    <h2 class="text-3xl font-bold mb-8 text-center">Artikel Unggulan</h2>
+    <div class="max-w-4xl mx-auto">
+      <Card variant="featured" class="text-center group">
+        <div class="mb-6">
+          <div class="text-sm font-semibold text-primary-600 mb-2">
+            {post.data.category.toUpperCase()}
+          </div>
+          <h3 class="text-2xl font-bold mb-4 group-hover:text-primary-600 transition-colors">
+            {post.data.title}
+          </h3>
+          <p class="text-neutral-600 mb-4">{post.data.description}</p>
+        </div>
+        
+        <div class="flex items-center justify-center gap-4 text-sm text-neutral-500 mb-6">
+          <div class="flex items-center gap-2">
+            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 font-semibold text-primary-600">
+              {post.data.author.charAt(0)}
+            </span>
+            <span>By {post.data.author}</span>
+          </div>
+          <span>•</span>
+          <span>{publishDate}</span>
+          {post.data.readingTime && (
+            <>
+              <span>•</span>
+              <span>{post.data.readingTime} min read</span>
+            </>
+          )}
+        </div>
+        
+        <div class="flex items-center justify-center gap-4 mb-6">
+          {post.data.tags.slice(0, 3).map((tag) => (
+            <span class="px-3 py-1 bg-primary-100 text-primary-700 text-xs rounded-full font-medium">
+              #{tag}
+            </span>
+          ))}
+        </div>
+        
+        <a href={`/blog/${post.slug}`} class="btn-primary group-hover:transform group-hover:-translate-y-0.5 transition-all duration-200">
+          Baca Artikel
+        </a>
+      </Card>
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "@/styles/global.css";
+  .featured-post {
+    @apply relative;
+  }
+  
+  .featured-post .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 transition-all duration-200 shadow-lg hover:shadow-xl;
+  }
+  
+  .featured-post .btn-primary:hover {
+    @apply transform -translate-y-0.5;
+  }
+  
+  /* Dark mode styles */
+  .dark .featured-post h2 {
+    @apply text-neutral-100;
+  }
+  
+  .dark .featured-post h3 {
+    @apply text-neutral-200;
+  }
+  
+  .dark .featured-post p {
+    @apply text-neutral-400;
+  }
+  
+  .dark .featured-post .text-neutral-500 {
+    @apply text-neutral-400;
+  }
+  
+  /* Animation for featured card */
+  .featured-post .group:hover {
+    @apply transform -translate-y-1 transition-all duration-300;
+  }
+</style>

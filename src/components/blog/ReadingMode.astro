@@ -1,0 +1,857 @@
+---
+// Reading Mode Component
+export interface Props {
+  class?: string;
+  enableFocusMode?: boolean;
+  enableNightMode?: boolean;
+  enableTypography?: boolean;
+  enableProgressTracking?: boolean;
+}
+
+const { 
+  class: className,
+  enableFocusMode = true,
+  enableNightMode = true,
+  enableTypography = true,
+  enableProgressTracking = true
+} = Astro.props;
+---
+
+<div class={`reading-mode ${className || ''}`}>
+  <!-- Reading Mode Toggle Button -->
+  <button class="reading-mode-toggle" id="reading-mode-toggle" aria-label="Toggle Reading Mode">
+    <svg class="toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+    </svg>
+    <span class="toggle-text">Reading Mode</span>
+  </button>
+
+  <!-- Reading Mode Overlay -->
+  <div class="reading-mode-overlay" id="reading-mode-overlay">
+    <div class="reading-mode-container">
+      <!-- Reading Mode Header -->
+      <div class="reading-header">
+        <div class="reading-controls">
+          <button class="control-btn" id="focus-mode-btn" title="Focus Mode">
+            <svg class="control-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            Focus
+          </button>
+          
+          <button class="control-btn" id="night-mode-btn" title="Night Mode">
+            <svg class="control-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+            Night
+          </button>
+          
+          <button class="control-btn" id="typography-btn" title="Typography Settings">
+            <svg class="control-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+            </svg>
+            Font
+          </button>
+          
+          <button class="control-btn" id="progress-btn" title="Reading Progress">
+            <svg class="control-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+            Progress
+          </button>
+        </div>
+        
+        <button class="close-reading-mode" id="close-reading-mode" title="Close Reading Mode">
+          <svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Reading Content Area -->
+      <div class="reading-content" id="reading-content">
+        <!-- Content will be dynamically loaded here -->
+      </div>
+
+      <!-- Reading Mode Footer -->
+      <div class="reading-footer">
+        <div class="reading-stats">
+          <div class="stat-item">
+            <span class="stat-label">Words</span>
+            <span class="stat-value" id="word-count">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Reading Time</span>
+            <span class="stat-value" id="reading-time">0 min</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Progress</span>
+            <span class="stat-value" id="reading-progress">0%</span>
+          </div>
+        </div>
+        
+        <div class="reading-actions">
+          <button class="action-btn" id="print-btn" title="Print Article">
+            <svg class="action-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            Print
+          </button>
+          
+          <button class="action-btn" id="share-btn" title="Share Article">
+            <svg class="action-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+            </svg>
+            Share
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Typography Settings Panel -->
+  <div class="typography-panel" id="typography-panel">
+    <div class="panel-header">
+      <h4 class="panel-title">Typography Settings</h4>
+      <button class="panel-close" id="close-typography-panel">
+        <svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="panel-content">
+      <div class="setting-group">
+        <label for="font-family">Font Family</label>
+        <select id="font-family" class="setting-select">
+          <option value="system">System Font</option>
+          <option value="serif">Serif</option>
+          <option value="sans-serif">Sans Serif</option>
+          <option value="monospace">Monospace</option>
+        </select>
+      </div>
+      
+      <div class="setting-group">
+        <label for="font-size">Font Size</label>
+        <input type="range" id="font-size" min="14" max="24" value="18" class="setting-range">
+        <span class="setting-value" id="font-size-value">18px</span>
+      </div>
+      
+      <div class="setting-group">
+        <label for="line-height">Line Height</label>
+        <input type="range" id="line-height" min="1.2" max="2.0" step="0.1" value="1.6" class="setting-range">
+        <span class="setting-value" id="line-height-value">1.6</span>
+      </div>
+      
+      <div class="setting-group">
+        <label for="max-width">Max Width</label>
+        <input type="range" id="max-width" min="600" max="1200" step="50" value="800" class="setting-range">
+        <span class="setting-value" id="max-width-value">800px</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  class ReadingMode {
+    private isActive: boolean = false;
+    private settings: any = {
+      focusMode: false,
+      nightMode: false,
+      typography: {
+        fontFamily: 'system',
+        fontSize: 18,
+        lineHeight: 1.6,
+        maxWidth: 800
+      }
+    };
+    private originalContent: string = '';
+    private wordCount: number = 0;
+    private readingTime: number = 0;
+
+    constructor() {
+      this.initializeElements();
+      this.setupEventListeners();
+      this.loadSettings();
+    }
+
+    private initializeElements(): void {
+      // Elements will be initialized when needed
+    }
+
+    private setupEventListeners(): void {
+      // Reading mode toggle
+      const toggleBtn = document.getElementById('reading-mode-toggle');
+      toggleBtn?.addEventListener('click', () => {
+        this.toggleReadingMode();
+      });
+
+      // Close reading mode
+      const closeBtn = document.getElementById('close-reading-mode');
+      closeBtn?.addEventListener('click', () => {
+        this.closeReadingMode();
+      });
+
+      // Control buttons
+      document.getElementById('focus-mode-btn')?.addEventListener('click', () => {
+        this.toggleFocusMode();
+      });
+
+      document.getElementById('night-mode-btn')?.addEventListener('click', () => {
+        this.toggleNightMode();
+      });
+
+      document.getElementById('typography-btn')?.addEventListener('click', () => {
+        this.toggleTypographyPanel();
+      });
+
+      document.getElementById('progress-btn')?.addEventListener('click', () => {
+        this.showProgressInfo();
+      });
+
+      // Typography settings
+      this.setupTypographySettings();
+
+      // Action buttons
+      document.getElementById('print-btn')?.addEventListener('click', () => {
+        this.printArticle();
+      });
+
+      document.getElementById('share-btn')?.addEventListener('click', () => {
+        this.shareArticle();
+      });
+
+      // Close typography panel
+      document.getElementById('close-typography-panel')?.addEventListener('click', () => {
+        this.closeTypographyPanel();
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        this.handleKeyboardShortcuts(e);
+      });
+    }
+
+    private setupTypographySettings(): void {
+      // Font family
+      const fontFamilySelect = document.getElementById('font-family') as HTMLSelectElement;
+      fontFamilySelect?.addEventListener('change', (e) => {
+        const target = e.target as HTMLSelectElement;
+        this.settings.typography.fontFamily = target.value;
+        this.applyTypographySettings();
+      });
+
+      // Font size
+      const fontSizeRange = document.getElementById('font-size') as HTMLInputElement;
+      fontSizeRange?.addEventListener('input', (e) => {
+        const target = e.target as HTMLInputElement;
+        this.settings.typography.fontSize = parseInt(target.value);
+        this.updateSettingValue('font-size-value', `${target.value}px`);
+        this.applyTypographySettings();
+      });
+
+      // Line height
+      const lineHeightRange = document.getElementById('line-height') as HTMLInputElement;
+      lineHeightRange?.addEventListener('input', (e) => {
+        const target = e.target as HTMLInputElement;
+        this.settings.typography.lineHeight = parseFloat(target.value);
+        this.updateSettingValue('line-height-value', target.value);
+        this.applyTypographySettings();
+      });
+
+      // Max width
+      const maxWidthRange = document.getElementById('max-width') as HTMLInputElement;
+      maxWidthRange?.addEventListener('input', (e) => {
+        const target = e.target as HTMLInputElement;
+        this.settings.typography.maxWidth = parseInt(target.value);
+        this.updateSettingValue('max-width-value', `${target.value}px`);
+        this.applyTypographySettings();
+      });
+    }
+
+    private toggleReadingMode(): void {
+      if (this.isActive) {
+        this.closeReadingMode();
+      } else {
+        this.openReadingMode();
+      }
+    }
+
+    private openReadingMode(): void {
+      this.isActive = true;
+      this.extractContent();
+      this.loadContentIntoReadingMode();
+      this.updateReadingStats();
+      
+      const overlay = document.getElementById('reading-mode-overlay');
+      overlay?.classList.add('active');
+      
+      document.body.classList.add('reading-mode-active');
+      
+      this.trackEvent('reading_mode_opened');
+    }
+
+    private closeReadingMode(): void {
+      this.isActive = false;
+      
+      const overlay = document.getElementById('reading-mode-overlay');
+      overlay?.classList.remove('active');
+      
+      document.body.classList.remove('reading-mode-active');
+      
+      this.trackEvent('reading_mode_closed');
+    }
+
+    private extractContent(): void {
+      const article = document.querySelector('.prose, .blog-content, main');
+      if (article) {
+        this.originalContent = article.innerHTML;
+        this.wordCount = this.countWords(article.textContent || '');
+        this.readingTime = Math.ceil(this.wordCount / 200); // 200 words per minute
+      }
+    }
+
+    private loadContentIntoReadingMode(): void {
+      const contentArea = document.getElementById('reading-content');
+      if (contentArea) {
+        contentArea.innerHTML = this.originalContent;
+        this.applyTypographySettings();
+      }
+    }
+
+    private countWords(text: string): number {
+      return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+    }
+
+    private updateReadingStats(): void {
+      this.updateStatValue('word-count', this.wordCount.toString());
+      this.updateStatValue('reading-time', `${this.readingTime} min`);
+      
+      // Update progress
+      this.updateReadingProgress();
+    }
+
+    private updateReadingProgress(): void {
+      const progressElement = document.getElementById('reading-progress');
+      if (progressElement) {
+        // Simple progress calculation based on scroll
+        const progress = Math.min(100, Math.max(0, this.getScrollProgress()));
+        progressElement.textContent = `${Math.round(progress)}%`;
+      }
+    }
+
+    private getScrollProgress(): number {
+      const contentArea = document.getElementById('reading-content');
+      if (!contentArea) return 0;
+      
+      const rect = contentArea.getBoundingClientRect();
+      const scrollTop = window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      
+      const contentTop = rect.top + scrollTop;
+      const contentHeight = rect.height;
+      
+      const scrolled = Math.max(0, scrollTop - contentTop);
+      const progress = Math.min(100, (scrolled / contentHeight) * 100);
+      
+      return progress;
+    }
+
+    private updateStatValue(id: string, value: string): void {
+      const element = document.getElementById(id);
+      if (element) {
+        element.textContent = value;
+      }
+    }
+
+    private updateSettingValue(id: string, value: string): void {
+      const element = document.getElementById(id);
+      if (element) {
+        element.textContent = value;
+      }
+    }
+
+    private toggleFocusMode(): void {
+      this.settings.focusMode = !this.settings.focusMode;
+      const btn = document.getElementById('focus-mode-btn');
+      
+      if (this.settings.focusMode) {
+        btn?.classList.add('active');
+        document.body.classList.add('focus-mode');
+      } else {
+        btn?.classList.remove('active');
+        document.body.classList.remove('focus-mode');
+      }
+      
+      this.trackEvent('focus_mode_toggled', { enabled: this.settings.focusMode });
+    }
+
+    private toggleNightMode(): void {
+      this.settings.nightMode = !this.settings.nightMode;
+      const btn = document.getElementById('night-mode-btn');
+      
+      if (this.settings.nightMode) {
+        btn?.classList.add('active');
+        document.body.classList.add('night-mode');
+      } else {
+        btn?.classList.remove('active');
+        document.body.classList.remove('night-mode');
+      }
+      
+      this.trackEvent('night_mode_toggled', { enabled: this.settings.nightMode });
+    }
+
+    private toggleTypographyPanel(): void {
+      const panel = document.getElementById('typography-panel');
+      panel?.classList.toggle('active');
+    }
+
+    private closeTypographyPanel(): void {
+      const panel = document.getElementById('typography-panel');
+      panel?.classList.remove('active');
+    }
+
+    private applyTypographySettings(): void {
+      const contentArea = document.getElementById('reading-content');
+      if (!contentArea) return;
+      
+      const { fontFamily, fontSize, lineHeight, maxWidth } = this.settings.typography;
+      
+      contentArea.style.fontFamily = this.getFontFamily(fontFamily);
+      contentArea.style.fontSize = `${fontSize}px`;
+      contentArea.style.lineHeight = lineHeight.toString();
+      contentArea.style.maxWidth = `${maxWidth}px`;
+    }
+
+    private getFontFamily(family: string): string {
+      const families = {
+        'system': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        'serif': 'Georgia, "Times New Roman", serif',
+        'sans-serif': 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+        'monospace': 'JetBrains Mono, Consolas, monospace'
+      };
+      return families[family as keyof typeof families] || families.system;
+    }
+
+    private showProgressInfo(): void {
+      // Show detailed progress information
+      console.log('Reading Progress:', {
+        words: this.wordCount,
+        readingTime: this.readingTime,
+        progress: this.getScrollProgress()
+      });
+    }
+
+    private printArticle(): void {
+      const contentArea = document.getElementById('reading-content');
+      if (contentArea) {
+        const printWindow = window.open('', '_blank');
+        if (printWindow) {
+          printWindow.document.write(`
+            <html>
+              <head>
+                <title>Print Article</title>
+                <style>
+  @reference "@/styles/global.css";
+                  body { font-family: ${this.getFontFamily(this.settings.typography.fontFamily)}; font-size: ${this.settings.typography.fontSize}px; line-height: ${this.settings.typography.lineHeight}; max-width: ${this.settings.typography.maxWidth}px; margin: 0 auto; padding: 20px; }
+                </style>
+              </head>
+              <body>
+                ${contentArea.innerHTML}
+              </body>
+            </html>
+          `);
+          printWindow.document.close();
+          printWindow.print();
+        }
+      }
+    }
+
+    private shareArticle(): void {
+      if (navigator.share) {
+        navigator.share({
+          title: document.title,
+          url: window.location.href
+        });
+      } else {
+        // Fallback to clipboard
+        navigator.clipboard.writeText(window.location.href);
+        this.showMessage('Link copied to clipboard!');
+      }
+    }
+
+    private handleKeyboardShortcuts(e: KeyboardEvent): void {
+      if (!this.isActive) return;
+      
+      // Close with Escape
+      if (e.key === 'Escape') {
+        this.closeReadingMode();
+      }
+      
+      // Toggle focus mode with F
+      if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        this.toggleFocusMode();
+      }
+      
+      // Toggle night mode with N
+      if (e.key === 'n' || e.key === 'N') {
+        e.preventDefault();
+        this.toggleNightMode();
+      }
+    }
+
+    private loadSettings(): void {
+      const saved = localStorage.getItem('reading-mode-settings');
+      if (saved) {
+        this.settings = { ...this.settings, ...JSON.parse(saved) };
+      }
+    }
+
+    private saveSettings(): void {
+      localStorage.setItem('reading-mode-settings', JSON.stringify(this.settings));
+    }
+
+    private showMessage(message: string): void {
+      // Simple message display
+      console.log(message);
+    }
+
+    private trackEvent(eventName: string, data: any = {}): void {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', eventName, {
+          event_category: 'reading_mode',
+          ...data
+        });
+      }
+    }
+  }
+
+  // Enhanced development environment detection using Vite env
+  function isDevelopmentEnvironment(): boolean {
+    // Check Vite environment variables (most reliable)
+    const isViteDev = import.meta.env.DEV; // true in development, false in production/preview
+    const isViteProd = import.meta.env.PROD; // true in production/preview, false in development
+    const mode = import.meta.env.MODE; // 'development', 'production', or custom
+    
+    // Primary check: Vite environment variables
+    if (isViteDev && mode === 'development') {
+      return true;
+    }
+    
+    // Fallback: Check for Node adapter specific indicators
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    const protocol = window.location.protocol;
+    
+    // Check for localhost variations
+    const isLocalhost = hostname === 'localhost' || 
+                       hostname === '127.0.0.1' || 
+                       hostname === '0.0.0.0' ||
+                       hostname.startsWith('192.168.') ||
+                       hostname.startsWith('10.0.');
+    
+    // Check for development ports (but NOT preview mode)
+    const isDevPort = port === '4321' && !isPreviewMode(); // Astro dev server (not preview)
+    
+    // Check for other development ports
+    const isOtherDevPort = port === '3000' || // Common dev port
+                          port === '8080' || // Common dev port
+                          port === '5173' || // Vite dev server
+                          port === '4173';  // Vite preview
+    
+    // Check for development protocol
+    const isDevProtocol = protocol === 'http:' && (isLocalhost || isDevPort || isOtherDevPort);
+    
+    // Check for development URL patterns
+    const isDevUrl = window.location.href.includes('localhost') ||
+                    window.location.href.includes('127.0.0.1') ||
+                    window.location.href.includes('dev.') ||
+                    window.location.href.includes('staging.') ||
+                    window.location.href.includes('test.');
+    
+    // Check for development environment variables (if available)
+    const hasDevFlag = window.location.search.includes('dev=true') ||
+                       window.location.search.includes('debug=true') ||
+                       localStorage.getItem('dev-mode') === 'true';
+    
+    // Check if it's actually development mode (not preview)
+    const isActualDev = isDevProtocol || isDevUrl || hasDevFlag;
+    
+    return isActualDev && !isPreviewMode();
+  }
+  
+  // Detect if we're in preview mode using Vite env
+  function isPreviewMode(): boolean {
+    // Check Vite environment variables first
+    const isViteProd = import.meta.env.PROD; // true in production/preview
+    const mode = import.meta.env.MODE; // 'development', 'production', or custom
+    
+    // If we're in production mode but on localhost, it's likely preview
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1';
+    
+    if (isViteProd && isLocalhost) {
+      return true;
+    }
+    
+    // Fallback: Check for Astro preview mode indicators
+    const hasPreviewIndicator = window.location.search.includes('preview=true') ||
+                               localStorage.getItem('preview-mode') === 'true';
+    
+    // Check if we're serving from dist/ directory (preview mode)
+    const isServingDist = document.querySelector('script[src*="/_astro/"]') !== null ||
+                         document.querySelector('link[href*="/_astro/"]') !== null;
+    
+    // Check for production build indicators
+    const hasProductionBuild = document.querySelector('meta[name="generator"][content*="Astro"]') !== null;
+    
+    // Check if we're on localhost:4321 but it's preview mode
+    const isLocalhost4321 = window.location.hostname === 'localhost' && window.location.port === '4321';
+    const isPreviewOnLocalhost = isLocalhost4321 && (hasPreviewIndicator || isServingDist);
+    
+    return isPreviewOnLocalhost || hasPreviewIndicator;
+  }
+
+  // Initialize reading mode when DOM is ready
+  function initReadingMode(): void {
+    new ReadingMode();
+    
+    // Check if DevelopmentControls is available and hide original toggle
+    setTimeout(() => {
+      const devControls = document.getElementById('development-controls');
+      if (devControls && devControls.style.display !== 'none') {
+        // Hide original reading mode toggle when DevelopmentControls is active
+        const originalToggle = document.getElementById('reading-mode-toggle');
+        if (originalToggle) {
+          originalToggle.style.display = 'none';
+          console.log('🔄 Original reading mode toggle hidden - DevelopmentControls active');
+        }
+      }
+    }, 100);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReadingMode);
+  } else {
+    initReadingMode();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .reading-mode {
+    @apply relative;
+  }
+
+  .reading-mode-toggle {
+    @apply fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 bg-primary-500 text-white rounded-full shadow-lg hover:bg-primary-600 transition-all duration-300 hover:transform hover:-translate-y-0.5;
+  }
+
+  .toggle-icon {
+    @apply w-5 h-5;
+  }
+
+  .toggle-text {
+    @apply font-medium;
+  }
+
+  .reading-mode-overlay {
+    @apply fixed inset-0 z-50 bg-black/50 opacity-0 invisible transition-all duration-300;
+  }
+
+  .reading-mode-overlay.active {
+    @apply opacity-100 visible;
+  }
+
+  .reading-mode-container {
+    @apply absolute inset-4 bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden;
+  }
+
+  .reading-header {
+    @apply flex items-center justify-between p-6 border-b border-neutral-200 bg-linear-to-r from-primary-50 to-secondary-50;
+  }
+
+  .reading-controls {
+    @apply flex gap-3;
+  }
+
+  .control-btn {
+    @apply flex items-center gap-2 px-4 py-2 bg-white border border-neutral-300 rounded-lg text-sm text-neutral-600 hover:bg-neutral-50 transition-colors;
+  }
+
+  .control-btn.active {
+    @apply bg-primary-500 text-white border-primary-500;
+  }
+
+  .control-icon {
+    @apply w-4 h-4;
+  }
+
+  .close-reading-mode {
+    @apply p-2 bg-white border border-neutral-300 rounded-lg text-neutral-600 hover:bg-neutral-50 transition-colors;
+  }
+
+  .close-icon {
+    @apply w-5 h-5;
+  }
+
+  .reading-content {
+    @apply flex-1 p-8 overflow-y-auto;
+  }
+
+  .reading-footer {
+    @apply flex items-center justify-between p-6 border-t border-neutral-200 bg-neutral-50;
+  }
+
+  .reading-stats {
+    @apply flex gap-6;
+  }
+
+  .stat-item {
+    @apply text-center;
+  }
+
+  .stat-label {
+    @apply block text-xs text-neutral-500 mb-1;
+  }
+
+  .stat-value {
+    @apply block text-lg font-bold text-neutral-800;
+  }
+
+  .reading-actions {
+    @apply flex gap-3;
+  }
+
+  .action-btn {
+    @apply flex items-center gap-2 px-4 py-2 bg-white border border-neutral-300 rounded-lg text-sm text-neutral-600 hover:bg-neutral-50 transition-colors;
+  }
+
+  .action-icon {
+    @apply w-4 h-4;
+  }
+
+  .typography-panel {
+    @apply fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white rounded-2xl shadow-2xl p-6 w-96 opacity-0 invisible transition-all duration-300;
+  }
+
+  .typography-panel.active {
+    @apply opacity-100 visible;
+  }
+
+  .panel-header {
+    @apply flex items-center justify-between mb-6;
+  }
+
+  .panel-title {
+    @apply text-lg font-bold text-neutral-800;
+  }
+
+  .panel-close {
+    @apply p-1 text-neutral-500 hover:text-neutral-700 transition-colors;
+  }
+
+  .panel-content {
+    @apply space-y-4;
+  }
+
+  .setting-group {
+    @apply space-y-2;
+  }
+
+  .setting-group label {
+    @apply block text-sm font-medium text-neutral-700;
+  }
+
+  .setting-select {
+    @apply w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500;
+  }
+
+  .setting-range {
+    @apply w-full;
+  }
+
+  .setting-value {
+    @apply text-sm text-neutral-600 font-medium;
+  }
+
+  /* Focus Mode Styles */
+  .focus-mode .reading-content {
+    @apply bg-linear-to-br from-blue-50 to-indigo-50;
+  }
+
+  .focus-mode .reading-content * {
+    @apply text-blue-900;
+  }
+
+  /* Night Mode Styles */
+  .night-mode .reading-mode-container {
+    @apply bg-neutral-900;
+  }
+
+  .night-mode .reading-content {
+    @apply bg-neutral-800 text-neutral-100;
+  }
+
+  .night-mode .reading-content * {
+    @apply text-neutral-100;
+  }
+
+  .night-mode .reading-header {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .night-mode .reading-footer {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .night-mode .control-btn {
+    @apply bg-neutral-700 border-neutral-600 text-neutral-300;
+  }
+
+  .night-mode .action-btn {
+    @apply bg-neutral-700 border-neutral-600 text-neutral-300;
+  }
+
+  /* Body classes for global effects */
+  .reading-mode-active {
+    @apply overflow-hidden;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .reading-mode-toggle {
+      @apply bottom-4 right-4 px-3 py-2;
+    }
+    
+    .toggle-text {
+      @apply hidden;
+    }
+    
+    .reading-mode-container {
+      @apply inset-2;
+    }
+    
+    .reading-header {
+      @apply p-4;
+    }
+    
+    .reading-content {
+      @apply p-4;
+    }
+    
+    .reading-footer {
+      @apply p-4 flex-col gap-4;
+    }
+    
+    .reading-stats {
+      @apply gap-4;
+    }
+    
+    .typography-panel {
+      @apply w-80;
+    }
+  }
+</style>

@@ -1,0 +1,593 @@
+---
+// Contributor Stats Component
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  class?: string;
+  contributors: CollectionEntry<'contributors'>[];
+  showDetails?: boolean;
+  variant?: 'default' | 'compact' | 'detailed';
+}
+
+const { 
+  class: className,
+  contributors,
+  showDetails = true,
+  variant = 'default'
+} = Astro.props;
+
+// Calculate comprehensive stats
+const totalContributors = contributors.length;
+const activeContributors = contributors.filter(c => (c as any).data.isActive).length;
+const totalBlogPosts = contributors.reduce((sum, c) => sum + ((c as any).data.contributions.blogPosts || 0), 0);
+const totalOpenSourceContributions = contributors.reduce((sum, c) => 
+  sum + ((c as any).data.contributions.openSourceProjects || []).reduce((projectSum: number, project: any) => projectSum + (project.contributions || 0), 0), 0);
+const totalKoneksiProjects = contributors.reduce((sum, c) => sum + ((c as any).data.contributions.koneksiProjects || []).length, 0);
+const totalCommunityContributions = contributors.reduce((sum, c) => sum + ((c as any).data.contributions.communityContributions || []).length, 0);
+const totalGitHubStars = contributors.reduce((sum, c) => sum + ((c as any).data.socialProof.githubStars || 0), 0);
+const totalNpmDownloads = contributors.reduce((sum, c) => sum + ((c as any).data.socialProof.npmDownloads || 0), 0);
+const totalVerifiedContributions = contributors.reduce((sum, c) => sum + ((c as any).data.socialProof.verifiedContributions || 0), 0);
+
+// Role distribution
+const roleDistribution = contributors.reduce((acc, contributor) => {
+  const role = (contributor as any).data.role;
+  acc[role] = (acc[role] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+// Top contributors by different metrics
+const topContributorsByStars = [...contributors].sort((a, b) => (b as any).data.socialProof.githubStars - (a as any).data.socialProof.githubStars).slice(0, 3);
+const topContributorsByBlogs = [...contributors].sort((a, b) => (b as any).data.contributions.blogPosts - (a as any).data.contributions.blogPosts).slice(0, 3);
+const topContributorsByReputation = [...contributors].sort((a, b) => (b as any).data.socialProof.communityReputation - (a as any).data.socialProof.communityReputation).slice(0, 3);
+
+// Skills distribution
+const allSkills = contributors.flatMap(c => (c as any).data.expertise || []);
+const skillDistribution = allSkills.reduce((acc, skill) => {
+  acc[skill] = (acc[skill] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+const topSkills = Object.entries(skillDistribution)
+  .sort(([,a], [,b]) => (b as number) - (a as number))
+  .slice(0, 10)
+  .map(([skill, count]) => ({ skill, count: count as number }));
+---
+
+<div class={`contributor-stats ${variant} ${className || ''}`}>
+  <div class="stats-header">
+    <h3 class="stats-title">📊 Statistik Komunitas</h3>
+    <p class="stats-subtitle">Data dan insights tentang kontributor Koneksi</p>
+  </div>
+
+  {variant === 'compact' ? (
+    <!-- Compact Stats -->
+    <div class="compact-stats">
+      <div class="stat-item">
+        <span class="stat-number">{totalContributors}</span>
+        <span class="stat-label">Kontributor</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{totalBlogPosts}</span>
+        <span class="stat-label">Artikel</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{totalOpenSourceContributions}</span>
+        <span class="stat-label">Open Source</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{totalKoneksiProjects}</span>
+        <span class="stat-label">Project Koneksi</span>
+      </div>
+    </div>
+  ) : (
+    <!-- Detailed Stats -->
+    <div class="detailed-stats">
+      <!-- Overview Stats -->
+      <div class="stats-section">
+        <h4 class="section-title">Ringkasan Komunitas</h4>
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-icon">👥</div>
+            <div class="stat-content">
+              <div class="stat-number">{totalContributors}</div>
+              <div class="stat-label">Total Kontributor</div>
+              <div class="stat-detail">{activeContributors} aktif</div>
+            </div>
+          </div>
+          
+          <div class="stat-card secondary">
+            <div class="stat-icon">📝</div>
+            <div class="stat-content">
+              <div class="stat-number">{totalBlogPosts}</div>
+              <div class="stat-label">Artikel Blog</div>
+              <div class="stat-detail">Konten berkualitas</div>
+            </div>
+          </div>
+          
+          <div class="stat-card accent">
+            <div class="stat-icon">🔧</div>
+            <div class="stat-content">
+              <div class="stat-number">{totalOpenSourceContributions}</div>
+              <div class="stat-label">Kontribusi Open Source</div>
+              <div class="stat-detail">Project Indonesia</div>
+            </div>
+          </div>
+          
+          <div class="stat-card success">
+            <div class="stat-icon">🏢</div>
+            <div class="stat-content">
+              <div class="stat-number">{totalKoneksiProjects}</div>
+              <div class="stat-label">Project Koneksi</div>
+              <div class="stat-detail">Inovasi bisnis</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {showDetails && (
+        <>
+          <!-- Social Proof Stats -->
+          <div class="stats-section">
+            <h4 class="section-title">Social Proof</h4>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-content">
+                  <div class="stat-number">{totalGitHubStars}</div>
+                  <div class="stat-label">GitHub Stars</div>
+                </div>
+              </div>
+              
+              <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-content">
+                  <div class="stat-number">{totalNpmDownloads.toLocaleString()}</div>
+                  <div class="stat-label">NPM Downloads</div>
+                </div>
+              </div>
+              
+              <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-content">
+                  <div class="stat-number">{totalVerifiedContributions}</div>
+                  <div class="stat-label">Kontribusi Terverifikasi</div>
+                </div>
+              </div>
+              
+              <div class="stat-card">
+                <div class="stat-icon">🤝</div>
+                <div class="stat-content">
+                  <div class="stat-number">{totalCommunityContributions}</div>
+                  <div class="stat-label">Kontribusi Komunitas</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Role Distribution -->
+          <div class="stats-section">
+            <h4 class="section-title">Distribusi Peran</h4>
+            <div class="role-distribution">
+              {Object.entries(roleDistribution).map(([role, count]) => (
+                <div class="role-item">
+                  <div class="role-info">
+                    <span class="role-name">
+                      {role === 'developer' && '👨‍💻 Developer'}
+                      {role === 'designer' && '🎨 Designer'}
+                      {role === 'writer' && '✍️ Writer'}
+                      {role === 'researcher' && '🔬 Researcher'}
+                      {role === 'mentor' && '🎓 Mentor'}
+                      {role === 'community-leader' && '👑 Community Leader'}
+                      {role === 'open-source-contributor' && '🌐 Open Source Contributor'}
+                    </span>
+                    <span class="role-count">{count} kontributor</span>
+                  </div>
+                  <div class="role-bar">
+                    <div 
+                      class="role-fill" 
+                      style={`width: ${(count / totalContributors) * 100}%`}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Top Skills -->
+          <div class="stats-section">
+            <h4 class="section-title">Keahlian Populer</h4>
+            <div class="skills-cloud">
+              {topSkills.map(({ skill, count }) => (
+                <span 
+                  class="skill-tag" 
+                  style={`--size: ${Math.min(Math.max(count / Math.max(...topSkills.map(s => s.count)) * 100, 20), 100)}%`}
+                >
+                  {skill} ({count})
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Top Contributors -->
+          <div class="stats-section">
+            <h4 class="section-title">Kontributor Terbaik</h4>
+            <div class="top-contributors">
+              <div class="contributor-category">
+                <h5 class="category-title">⭐ GitHub Stars</h5>
+                <div class="contributor-list">
+                  {topContributorsByStars.map((contributor, index) => (
+                    <div class="contributor-item">
+                      <span class="contributor-rank">#{index + 1}</span>
+                      <span class="contributor-name">{(contributor as any).data.name}</span>
+                      <span class="contributor-value">{(contributor as any).data.socialProof.githubStars} stars</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div class="contributor-category">
+                <h5 class="category-title">📝 Artikel Blog</h5>
+                <div class="contributor-list">
+                  {topContributorsByBlogs.map((contributor, index) => (
+                    <div class="contributor-item">
+                      <span class="contributor-rank">#{index + 1}</span>
+                      <span class="contributor-name">{(contributor as any).data.name}</span>
+                      <span class="contributor-value">{(contributor as any).data.contributions.blogPosts} artikel</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div class="contributor-category">
+                <h5 class="category-title">🏆 Reputasi Komunitas</h5>
+                <div class="contributor-list">
+                  {topContributorsByReputation.map((contributor, index) => (
+                    <div class="contributor-item">
+                      <span class="contributor-rank">#{index + 1}</span>
+                      <span class="contributor-name">{(contributor as any).data.name}</span>
+                      <span class="contributor-value">{(contributor as any).data.socialProof.communityReputation} pts</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  )}
+</div>
+
+<script>
+  class ContributorStats {
+    private statsElement: HTMLElement | null = null;
+
+    constructor() {
+      this.initializeElements();
+      this.setupEventListeners();
+      this.animateStats();
+    }
+
+    private initializeElements(): void {
+      this.statsElement = document.querySelector('.contributor-stats');
+    }
+
+    private setupEventListeners(): void {
+      // Add hover effects for stat cards
+      document.querySelectorAll('.stat-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.classList.add('hovered');
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.classList.remove('hovered');
+        });
+      });
+
+      // Add click tracking for skill tags
+      document.querySelectorAll('.skill-tag').forEach(tag => {
+        tag.addEventListener('click', () => {
+          this.trackSkillClick(tag.textContent || '');
+        });
+      });
+    }
+
+    private animateStats(): void {
+      // Animate stat numbers on scroll
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.animateNumber(entry.target as HTMLElement);
+          }
+        });
+      });
+
+      document.querySelectorAll('.stat-number').forEach(stat => {
+        observer.observe(stat);
+      });
+    }
+
+    private animateNumber(element: HTMLElement): void {
+      const finalNumber = parseInt(element.textContent || '0');
+      const duration = 2000;
+      const startTime = performance.now();
+
+      const animate = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const currentNumber = Math.floor(progress * finalNumber);
+        element.textContent = currentNumber.toLocaleString();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+
+      requestAnimationFrame(animate);
+    }
+
+    private trackSkillClick(skill: string): void {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'skill_click', {
+          event_category: 'contributor_stats',
+          event_label: skill,
+          value: 1
+        });
+      }
+    }
+  }
+
+  // Initialize contributor stats when DOM is ready
+  function initContributorStats(): void {
+    if (document.querySelector('.contributor-stats')) {
+      new ContributorStats();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initContributorStats);
+  } else {
+    initContributorStats();
+  }
+</script>
+
+<style>
+  @reference "@/styles/global.css";
+  .contributor-stats {
+    @apply bg-white rounded-2xl p-6 shadow-lg border border-neutral-100;
+  }
+
+  .stats-header {
+    @apply mb-6;
+  }
+
+  .stats-title {
+    @apply text-2xl font-bold text-neutral-800 mb-2;
+  }
+
+  .stats-subtitle {
+    @apply text-neutral-600;
+  }
+
+  /* Compact Stats */
+  .compact-stats {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-4;
+  }
+
+  .stat-item {
+    @apply text-center p-4 bg-linear-to-br from-primary-50 to-secondary-50 rounded-lg;
+  }
+
+  .stat-number {
+    @apply block text-2xl font-bold text-primary-600;
+  }
+
+  .stat-label {
+    @apply block text-sm text-neutral-600;
+  }
+
+  /* Detailed Stats */
+  .detailed-stats {
+    @apply space-y-6;
+  }
+
+  .stats-section {
+    @apply space-y-4;
+  }
+
+  .section-title {
+    @apply text-lg font-semibold text-neutral-800;
+  }
+
+  .stats-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4;
+  }
+
+  .stat-card {
+    @apply flex items-center gap-4 p-4 bg-linear-to-br from-neutral-50 to-neutral-100 rounded-xl border border-neutral-200 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5;
+  }
+
+  .stat-card.primary {
+    @apply from-primary-50 to-primary-100 border-primary-200;
+  }
+
+  .stat-card.secondary {
+    @apply from-secondary-50 to-secondary-100 border-secondary-200;
+  }
+
+  .stat-card.accent {
+    @apply from-accent-50 to-accent-100 border-accent-200;
+  }
+
+  .stat-card.success {
+    @apply from-green-50 to-green-100 border-green-200;
+  }
+
+  .stat-icon {
+    @apply text-2xl;
+  }
+
+  .stat-content {
+    @apply flex-1;
+  }
+
+  .stat-number {
+    @apply text-xl font-bold text-neutral-800;
+  }
+
+  .stat-label {
+    @apply text-sm text-neutral-600;
+  }
+
+  .stat-detail {
+    @apply text-xs text-neutral-500;
+  }
+
+  /* Role Distribution */
+  .role-distribution {
+    @apply space-y-3;
+  }
+
+  .role-item {
+    @apply space-y-2;
+  }
+
+  .role-info {
+    @apply flex justify-between items-center;
+  }
+
+  .role-name {
+    @apply text-sm font-medium text-neutral-700;
+  }
+
+  .role-count {
+    @apply text-sm text-neutral-500;
+  }
+
+  .role-bar {
+    @apply w-full h-2 bg-neutral-200 rounded-full overflow-hidden;
+  }
+
+  .role-fill {
+    @apply h-full bg-linear-to-r from-primary-500 to-secondary-500 transition-all duration-1000;
+  }
+
+  /* Skills Cloud */
+  .skills-cloud {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .skill-tag {
+    @apply px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium hover:bg-primary-200 transition-colors cursor-pointer;
+    font-size: calc(var(--size) * 0.01em + 0.75rem);
+  }
+
+  /* Top Contributors */
+  .top-contributors {
+    @apply grid md:grid-cols-3 gap-6;
+  }
+
+  .contributor-category {
+    @apply space-y-3;
+  }
+
+  .category-title {
+    @apply text-sm font-semibold text-neutral-700;
+  }
+
+  .contributor-list {
+    @apply space-y-2;
+  }
+
+  .contributor-item {
+    @apply flex items-center gap-3 p-2 bg-neutral-50 rounded-lg;
+  }
+
+  .contributor-rank {
+    @apply w-6 h-6 bg-primary-500 text-white rounded-full flex items-center justify-center text-xs font-bold;
+  }
+
+  .contributor-name {
+    @apply flex-1 text-sm font-medium text-neutral-800;
+  }
+
+  .contributor-value {
+    @apply text-xs text-neutral-500;
+  }
+
+  /* Dark mode styles */
+  .dark .contributor-stats {
+    @apply bg-neutral-800 border-neutral-700;
+  }
+
+  .dark .stats-title {
+    @apply text-neutral-100;
+  }
+
+  .dark .stats-subtitle {
+    @apply text-neutral-400;
+  }
+
+  .dark .stat-card {
+    @apply from-neutral-700 to-neutral-800 border-neutral-600;
+  }
+
+  .dark .stat-number {
+    @apply text-neutral-100;
+  }
+
+  .dark .stat-label {
+    @apply text-neutral-400;
+  }
+
+  .dark .stat-detail {
+    @apply text-neutral-500;
+  }
+
+  .dark .section-title {
+    @apply text-neutral-200;
+  }
+
+  .dark .role-name {
+    @apply text-neutral-300;
+  }
+
+  .dark .role-count {
+    @apply text-neutral-400;
+  }
+
+  .dark .role-bar {
+    @apply bg-neutral-600;
+  }
+
+  .dark .contributor-item {
+    @apply bg-neutral-700;
+  }
+
+  .dark .contributor-name {
+    @apply text-neutral-200;
+  }
+
+  .dark .contributor-value {
+    @apply text-neutral-400;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .contributor-stats {
+      @apply p-4;
+    }
+    
+    .stats-grid {
+      @apply grid-cols-1 gap-3;
+    }
+    
+    .top-contributors {
+      @apply grid-cols-1 gap-4;
+    }
+    
+    .compact-stats {
+      @apply grid-cols-2 gap-3;
+    }
+  }
+</style>

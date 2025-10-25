@@ -1,0 +1,52 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import WritersSection from '@components/contributors/WritersSection.astro';
+
+// Get all contributors with writer/blogger roles
+const allContributors = await getCollection('contributors');
+const writers = allContributors.filter(contributor => 
+  contributor.data.role === 'writer' || 
+  contributor.data.expertise.some(skill => 
+    skill.toLowerCase().includes('writing') || 
+    skill.toLowerCase().includes('blog') ||
+    skill.toLowerCase().includes('content')
+  )
+);
+
+// Sort by blog posts count (most active writers first)
+const sortedWriters = writers.sort((a, b) => 
+  (b.data.contributions.blogPosts || 0) - (a.data.contributions.blogPosts || 0)
+);
+
+// Calculate total stats
+const totalWriters = sortedWriters.length;
+const totalBlogPosts = sortedWriters.reduce((sum, writer) => sum + (writer.data.contributions.blogPosts || 0), 0);
+const totalContributions = sortedWriters.reduce((sum, writer) => {
+  const contributions = writer.data.contributions;
+  return sum + (contributions.blogPosts || 0) + 
+         contributions.openSourceProjects.length + 
+         contributions.koneksiProjects.length + 
+         contributions.communityContributions.length;
+}, 0);
+---
+
+<MainLayout 
+  title="Writers & Bloggers - KonXC Contributors"
+  description="Temukan penulis dan blogger berpengalaman di KonXC. Kontributor yang berdedikasi untuk berbagi pengetahuan melalui artikel berkualitas."
+>
+  <WritersSection 
+    writers={sortedWriters}
+    totalWriters={totalWriters}
+    totalBlogPosts={totalBlogPosts}
+    totalContributions={totalContributions}
+    showRecommendations={true}
+    showCTA={true}
+    recommendationsConfig={{
+      algorithm: 'hybrid',
+      maxRecommendations: 6,
+      title: 'Artikel dari Penulis Kami',
+      subtitle: 'Temukan karya terbaik dari tim penulis KonXC'
+    }}
+  />
+</MainLayout>

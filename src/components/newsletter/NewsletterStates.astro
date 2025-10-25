@@ -1,0 +1,187 @@
+---
+// Newsletter Form States Component
+// Handles different form states and animations
+
+export interface Props {
+  variant?: 'default' | 'compact' | 'sidebar';
+  currentState?: 'idle' | 'loading' | 'success' | 'error';
+  message?: string;
+}
+
+const {
+  variant = 'default',
+  currentState = 'idle',
+  message = ''
+} = Astro.props;
+
+// State configurations
+const stateConfig = {
+  idle: {
+    buttonText: 'Berlangganan',
+    iconClass: 'icon-arrow',
+    disabled: false
+  },
+  loading: {
+    buttonText: 'Mengirim...',
+    iconClass: 'icon-loading',
+    disabled: true
+  },
+  success: {
+    buttonText: 'Berhasil!',
+    iconClass: 'icon-success',
+    disabled: true
+  },
+  error: {
+    buttonText: 'Coba Lagi',
+    iconClass: 'icon-arrow',
+    disabled: false
+  }
+};
+
+const config = stateConfig[currentState];
+---
+
+<!-- Button State Component -->
+<div class={`newsletter-button-state state-${currentState} variant-${variant}`}>
+  <span class="button-text">{config.buttonText}</span>
+  <span class="button-icon">
+    <svg class={`icon-arrow ${config.iconClass === 'icon-arrow' ? '' : 'hidden'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+    </svg>
+    <svg class={`icon-loading ${config.iconClass === 'icon-loading' ? 'animate-spin' : 'hidden'}`} fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+    <svg class={`icon-success ${config.iconClass === 'icon-success' ? '' : 'hidden'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+    </svg>
+  </span>
+</div>
+
+<!-- Status Message Component -->
+{message && (
+  <div class={`newsletter-status-message state-${currentState} variant-${variant}`}>
+    <div class="status-content">
+      {currentState === 'success' && (
+        <svg class="status-icon text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      )}
+      {currentState === 'error' && (
+        <svg class="status-icon text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      )}
+      <span class="status-text">{message}</span>
+    </div>
+  </div>
+)}
+
+<style>
+  @reference "@/styles/global.css";
+  
+  /* Button States */
+  .newsletter-button-state {
+    @apply flex items-center gap-2 transition-all duration-200;
+  }
+  
+  .button-icon {
+    @apply flex items-center justify-center w-4 h-4;
+  }
+  
+  .icon-arrow,
+  .icon-loading,
+  .icon-success {
+    @apply w-4 h-4 transition-all duration-200;
+  }
+  
+  /* State-specific styling */
+  .state-loading .button-text {
+    @apply opacity-75;
+  }
+  
+  .state-success .button-text {
+    @apply text-green-600;
+  }
+  
+  .state-error .button-text {
+    @apply text-red-600;
+  }
+  
+  /* Status Messages */
+  .newsletter-status-message {
+    @apply mt-2 text-sm;
+  }
+  
+  .status-content {
+    @apply flex items-center gap-2;
+  }
+  
+  .status-icon {
+    @apply w-4 h-4 shrink-0;
+  }
+  
+  .status-text {
+    @apply font-medium;
+  }
+  
+  /* Variant-specific colors */
+  .variant-default .state-success .status-text,
+  .variant-compact .state-success .status-text {
+    @apply text-green-200;
+  }
+  
+  .variant-default .state-error .status-text,
+  .variant-compact .state-error .status-text {
+    @apply text-red-200;
+  }
+  
+  .variant-sidebar .state-success .status-text {
+    @apply text-green-600;
+  }
+  
+  .variant-sidebar .state-error .status-text {
+    @apply text-red-600;
+  }
+  
+  /* Animations */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  .newsletter-status-message {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  .state-loading {
+    animation: pulse 2s infinite;
+  }
+  
+  /* Accessibility */
+  .hidden {
+    @apply sr-only;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .newsletter-status-message,
+    .state-loading {
+      animation: none;
+    }
+  }
+</style>

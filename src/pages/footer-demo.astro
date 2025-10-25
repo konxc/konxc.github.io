@@ -1,0 +1,191 @@
+---
+// Footer Demo Page
+import Footer from '@components/ui/Footer.astro';
+import SimpleFooter from '@components/ui/SimpleFooter.astro';
+import MinimalFooter from '@components/ui/MinimalFooter.astro';
+---
+
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footer Components Demo - KonXC</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css">
+</head>
+<body class="bg-neutral-100">
+  <div class="min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm py-8">
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-center">Footer Components Demo</h1>
+        <p class="text-neutral-600 text-center mt-2">
+          Berbagai variant footer untuk website KonXC
+        </p>
+      </div>
+    </header>
+
+    <!-- Demo Sections -->
+    <main class="py-12">
+      <div class="container mx-auto px-4 space-y-16">
+        
+        <!-- Extended Footer -->
+        <section>
+          <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-2">Extended Footer</h2>
+            <p class="text-neutral-600 mb-4">
+              Footer lengkap dengan newsletter, semua link, dan informasi kontak.
+            </p>
+            <div class="bg-neutral-50 p-4 rounded-lg">
+              <code class="text-sm">
+                &lt;Footer variant="extended" /&gt;
+              </code>
+            </div>
+          </div>
+          <Footer variant="extended" />
+        </section>
+
+        <!-- Default Footer -->
+        <section>
+          <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-2">Default Footer</h2>
+            <p class="text-neutral-600 mb-4">
+              Footer standar dengan newsletter dan link utama.
+            </p>
+            <div class="bg-neutral-50 p-4 rounded-lg">
+              <code class="text-sm">
+                &lt;Footer /&gt;
+              </code>
+            </div>
+          </div>
+          <Footer />
+        </section>
+
+        <!-- Simple Footer -->
+        <section>
+          <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-2">Simple Footer</h2>
+            <p class="text-neutral-600 mb-4">
+              Footer sederhana dengan layout yang lebih compact.
+            </p>
+            <div class="bg-neutral-50 p-4 rounded-lg">
+              <code class="text-sm">
+                &lt;SimpleFooter /&gt;
+              </code>
+            </div>
+          </div>
+          <SimpleFooter />
+        </section>
+
+        <!-- Minimal Footer -->
+        <section>
+          <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-2">Minimal Footer</h2>
+            <p class="text-neutral-600 mb-4">
+              Footer minimal untuk halaman-halaman tertentu.
+            </p>
+            <div class="bg-neutral-50 p-4 rounded-lg">
+              <code class="text-sm">
+                &lt;MinimalFooter /&gt;
+              </code>
+            </div>
+          </div>
+          <MinimalFooter />
+        </section>
+
+        <!-- Footer without Newsletter -->
+        <section>
+          <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-2">Footer tanpa Newsletter</h2>
+            <p class="text-neutral-600 mb-4">
+              Footer tanpa section newsletter.
+            </p>
+            <div class="bg-neutral-50 p-4 rounded-lg">
+              <code class="text-sm">
+                &lt;Footer showNewsletter={false} /&gt;
+              </code>
+            </div>
+          </div>
+          <Footer showNewsletter={false} />
+        </section>
+
+        <!-- Footer without Social Links -->
+        <section>
+          <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-2">Footer tanpa Social Links</h2>
+            <p class="text-neutral-600 mb-4">
+              Footer tanpa social media links.
+            </p>
+            <div class="bg-neutral-50 p-4 rounded-lg">
+              <code class="text-sm">
+                &lt;Footer showSocialLinks={false} /&gt;
+              </code>
+            </div>
+          </div>
+          <Footer showSocialLinks={false} />
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Usage Guide -->
+    <section class="bg-white py-12">
+      <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-bold mb-8 text-center">Cara Penggunaan</h2>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Props -->
+          <div class="bg-neutral-50 p-6 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Props yang Tersedia</h3>
+            <div class="space-y-3 text-sm">
+              <div>
+                <code class="bg-white px-2 py-1 rounded">variant</code>
+                <span class="text-neutral-600">: 'default' | 'minimal' | 'extended'</span>
+              </div>
+              <div>
+                <code class="bg-white px-2 py-1 rounded">showNewsletter</code>
+                <span class="text-neutral-600">: boolean (default: true)</span>
+              </div>
+              <div>
+                <code class="bg-white px-2 py-1 rounded">showSocialLinks</code>
+                <span class="text-neutral-600">: boolean (default: true)</span>
+              </div>
+              <div>
+                <code class="bg-white px-2 py-1 rounded">showQuickLinks</code>
+                <span class="text-neutral-600">: boolean (default: true)</span>
+              </div>
+              <div>
+                <code class="bg-white px-2 py-1 rounded">showCompanyInfo</code>
+                <span class="text-neutral-600">: boolean (default: true)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Examples -->
+          <div class="bg-neutral-50 p-6 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Contoh Penggunaan</h3>
+            <div class="space-y-3 text-sm font-mono">
+              <div class="bg-white p-2 rounded">
+                <div class="text-neutral-500">// Footer lengkap</div>
+                <div>&lt;Footer variant="extended" /&gt;</div>
+              </div>
+              <div class="bg-white p-2 rounded">
+                <div class="text-neutral-500">// Footer sederhana</div>
+                <div>&lt;SimpleFooter /&gt;</div>
+              </div>
+              <div class="bg-white p-2 rounded">
+                <div class="text-neutral-500">// Footer minimal</div>
+                <div>&lt;MinimalFooter /&gt;</div>
+              </div>
+              <div class="bg-white p-2 rounded">
+                <div class="text-neutral-500">// Custom footer</div>
+                <div>&lt;Footer showNewsletter={false} /&gt;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

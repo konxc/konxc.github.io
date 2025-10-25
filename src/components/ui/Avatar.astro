@@ -1,0 +1,96 @@
+---
+// Avatar Component with API fallback
+export interface Props {
+  name: string;
+  email?: string;
+  size?: number;
+  class?: string;
+  src?: string;
+  fallbackType?: 'ui-avatars' | 'dicebear' | 'robohash' | 'gravatar' | 'placeholder' | 'picsum' | 'boring-avatars';
+  backgroundColor?: string;
+  textColor?: string;
+}
+
+const { 
+  name, 
+  email, 
+  size = 200, 
+  class: className = '',
+  src,
+  fallbackType = 'placeholder',
+  backgroundColor = 'random',
+  textColor = 'fff'
+} = Astro.props;
+
+// Generate fallback avatar URL
+function generateFallbackAvatar(name: string, email?: string): string {
+  const encodedName = encodeURIComponent(name);
+  const firstLetter = encodedName.charAt(0).toUpperCase();
+  
+  switch (fallbackType) {
+    case 'ui-avatars':
+      return `https://ui-avatars.com/api/?name=${encodedName}&size=${size}&background=${backgroundColor}&color=${textColor}&format=png`;
+    
+    case 'dicebear':
+      return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodedName}&size=${size}`;
+    
+    case 'robohash':
+      return `https://robohash.org/${encodedName}?set=set1&size=${size}x${size}`;
+    
+    case 'gravatar':
+      if (email) {
+        // Generate a simple hash for email (not MD5, but consistent)
+        const emailHash = email.toLowerCase().replace(/[^a-z0-9]/g, '');
+        return `https://www.gravatar.com/avatar/${emailHash}?d=identicon&s=${size}`;
+      }
+      return `https://ui-avatars.com/api/?name=${encodedName}&size=${size}&background=${backgroundColor}&color=${textColor}&format=png`;
+    
+    case 'placeholder':
+      // via.placeholder.com - Very reliable service
+      return `https://via.placeholder.com/${size}x${size}/0D8ABC/FFFFFF?text=${firstLetter}`;
+    
+    case 'picsum':
+      // Lorem Picsum - Random images, very reliable
+      const seed = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      return `https://picsum.photos/seed/${seed}/${size}/${size}`;
+    
+    case 'boring-avatars':
+      // Boring Avatars - Simple geometric avatars
+      return `https://source.boringavatars.com/marble/${size}/${encodedName}?colors=0D8ABC,FF6B6B,4ECDC4,45B7D1,96CEB4`;
+    
+    default:
+      // Default to placeholder service (most reliable)
+      return `https://via.placeholder.com/${size}x${size}/0D8ABC/FFFFFF?text=${firstLetter}`;
+  }
+}
+
+const fallbackUrl = generateFallbackAvatar(name, email);
+---
+
+<div class={`avatar-wrapper ${className}`}>
+  <img 
+    src={src || fallbackUrl} 
+    alt={name}
+    width={size}
+    height={size}
+    class="avatar-image"
+    loading="lazy"
+    onerror="this.onerror=null; this.src=this.dataset.fallback"
+    data-fallback={fallbackUrl}
+  />
+</div>
+
+<style>
+  @reference "@/styles/global.css";
+  .avatar-wrapper {
+    @apply inline-block;
+  }
+  
+  .avatar-image {
+    @apply rounded-full object-cover border-2 border-neutral-200;
+  }
+  
+  .dark .avatar-image {
+    @apply border-neutral-700;
+  }
+</style>

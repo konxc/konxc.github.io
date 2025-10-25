@@ -1,0 +1,974 @@
+---
+// Newsletter Section Component - Main Entry Point
+// Modular, reusable newsletter component with CRM integration ready
+
+export interface Props {
+  // Core variants
+  variant?: 'default' | 'compact' | 'sidebar';
+  
+  // Content customization
+  title?: string;
+  subtitle?: string;
+  placeholder?: string;
+  buttonText?: string;
+  className?: string;
+  
+  // CRM & Analytics ready
+  leadSource?: string;
+  campaignId?: string;
+  
+  // Advanced options
+  showDisclaimer?: boolean;
+  successMessage?: string;
+  errorMessage?: string;
+  
+  // API configuration
+  apiEndpoint?: string;
+  trackingEnabled?: boolean;
+}
+
+const {
+  variant = 'default',
+  title,
+  subtitle,
+  placeholder = 'Masukkan email Anda',
+  buttonText = 'Berlangganan',
+  className = '',
+  leadSource = 'newsletter',
+  campaignId,
+  showDisclaimer = true,
+  successMessage = '✓ Berhasil! Check email Anda untuk konfirmasi.',
+  errorMessage = '✗ Terjadi kesalahan. Silakan coba lagi.',
+  apiEndpoint = '/api/newsletter/subscribe',
+  trackingEnabled = true
+} = Astro.props;
+
+// Variant-specific configurations
+const variantConfig = {
+  default: {
+    title: title || 'Tetap Terhubung dengan Koneksi',
+    subtitle: subtitle || 'Dapatkan update terbaru tentang teknologi, tips bisnis, dan kesempatan kolaborasi.',
+    containerClass: 'newsletter-section-default',
+    contentClass: 'newsletter-content-default'
+  },
+  compact: {
+    title: title || 'Tetap Terhubung dengan Koneksi',
+    subtitle: subtitle || 'Dapatkan update terbaru tentang teknologi dan kesempatan kolaborasi.',
+    containerClass: 'newsletter-section-compact',
+    contentClass: 'newsletter-content-compact'
+  },
+  sidebar: {
+    title: title || '✨ Newsletter',
+    subtitle: subtitle || 'Jangan lewatkan artikel terbaru!',
+    containerClass: 'newsletter-section-sidebar',
+    contentClass: 'newsletter-content-sidebar'
+  }
+};
+
+const config = variantConfig[variant];
+---
+
+<section class={`newsletter-section ${config.containerClass} ${className}`}>
+  <div class="container">
+    <div class={config.contentClass}>
+      <!-- Newsletter Header -->
+      <div class="newsletter-header">
+        <h3 class="newsletter-title">{config.title}</h3>
+        <p class="newsletter-subtitle">{config.subtitle}</p>
+      </div>
+
+      <!-- Newsletter Form -->
+      <form 
+        class="newsletter-form" 
+        id="newsletter-form"
+        data-variant={variant}
+        data-lead-source={leadSource}
+        data-campaign-id={campaignId}
+        data-api-endpoint={apiEndpoint}
+        data-tracking-enabled={trackingEnabled}
+      >
+        <!-- Honeypot for spam protection -->
+        <input 
+          type="text" 
+          name="website" 
+          class="honeypot" 
+          tabindex="-1" 
+          autocomplete="off"
+          aria-hidden="true"
+        />
+        
+        <div class="form-group">
+          <div class="input-wrapper">
+            <input 
+              type="email" 
+              name="email"
+              placeholder={placeholder}
+              class="newsletter-input"
+              required
+              aria-label="Email address"
+              autocomplete="email"
+            />
+            <div class="input-validation" id="email-validation" aria-live="polite"></div>
+          </div>
+          
+          <button 
+            type="submit" 
+            class="newsletter-button"
+            aria-describedby="newsletter-status"
+          >
+            <span class="button-text">{buttonText}</span>
+            <span class="button-icon">
+              <svg class="icon-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+              <svg class="icon-loading hidden" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <svg class="icon-success hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        <!-- Status Messages -->
+        <div class="newsletter-status" id="newsletter-status" aria-live="polite">
+          <div class="status-success hidden" data-message={successMessage}></div>
+          <div class="status-error hidden" data-message={errorMessage}></div>
+        </div>
+
+        <!-- Disclaimer -->
+        {showDisclaimer && (
+          <p class="newsletter-disclaimer">
+            Dengan berlangganan, Anda menyetujui 
+            <a href="/privacy" class="disclaimer-link">Kebijakan Privasi</a> kami.
+          </p>
+        )}
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "@/styles/global.css";
+  
+  /* Base Newsletter Section */
+  .newsletter-section {
+    @apply relative overflow-hidden;
+  }
+  
+  /* Honeypot - Hidden spam protection */
+  .honeypot {
+    @apply absolute left-[-9999px] w-0 h-0 opacity-0;
+  }
+  
+  /* Default Variant - Premium Cream/Latte Style */
+  .newsletter-section-default {
+    @apply py-20 relative overflow-hidden;
+    background: linear-gradient(135deg, 
+      #fdfcfb 0%, 
+      #f8f5f1 25%, 
+      #f3ede6 50%, 
+      #efe7dc 75%, 
+      #ebe1d4 100%
+    );
+  }
+  
+  .newsletter-section-default::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 15% 85%, rgba(194, 154, 108, 0.08) 0%, transparent 60%),
+      radial-gradient(circle at 85% 15%, rgba(160, 126, 84, 0.06) 0%, transparent 60%),
+      radial-gradient(circle at 50% 50%, rgba(139, 110, 74, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  
+  .newsletter-section-default::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+    pointer-events: none;
+  }
+  
+  .newsletter-content-default {
+    @apply max-w-4xl mx-auto text-center relative z-10;
+  }
+  
+  .newsletter-section-default .newsletter-title {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold mb-4 tracking-tight;
+    background: linear-gradient(135deg, 
+      #3c2e26 0%, 
+      #5d4037 25%, 
+      #4a2c20 50%, 
+      #2d1810 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(60, 46, 38, 0.1);
+  }
+  
+  .newsletter-section-default .newsletter-subtitle {
+    @apply text-amber-900/80 mb-8 text-base md:text-lg leading-relaxed max-w-xl mx-auto font-medium;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  }
+  
+  .newsletter-section-default .newsletter-form {
+    @apply max-w-lg mx-auto;
+  }
+  
+  .newsletter-section-default .form-group {
+    @apply flex flex-col sm:flex-row gap-2 mb-6 items-center;
+  }
+  
+  .newsletter-section-default .newsletter-input {
+    @apply w-full flex-1 px-5 py-4 rounded-xl border-2 text-base text-amber-900 placeholder-amber-700/50 bg-gradient-to-br from-white/95 to-amber-50/90 backdrop-blur-sm transition-all duration-300 font-medium;
+    border-color: rgba(194, 154, 108, 0.2);
+    box-shadow: 
+      0 4px 12px rgba(194, 154, 108, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(194, 154, 108, 0.1);
+    min-height: 56px;
+  }
+  
+  .newsletter-section-default .newsletter-input:focus {
+    @apply outline-none ring-2;
+    border-color: rgba(160, 126, 84, 0.4);
+    ring-color: rgba(160, 126, 84, 0.3);
+    box-shadow: 
+      0 8px 24px rgba(194, 154, 108, 0.15),
+      0 0 0 3px rgba(160, 126, 84, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  
+  .newsletter-section-default .newsletter-button {
+    @apply px-8 py-4 text-white rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 focus:outline-none transform hover:scale-[1.02] active:scale-[0.98] text-base;
+    background: linear-gradient(135deg, 
+      #8b6914 0%, 
+      #a0751a 25%, 
+      #b8860b 50%, 
+      #cd9a1b 75%, 
+      #daa520 100%
+    );
+    box-shadow: 
+      0 6px 20px rgba(139, 105, 20, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    height: 56px;
+    min-width: 180px;
+  }
+  
+  .newsletter-section-default .newsletter-button:hover {
+    background: linear-gradient(135deg, 
+      #7a5c12 0%, 
+      #8f6818 25%, 
+      #a6790a 50%, 
+      #bb8919 75%, 
+      #c8971e 100%
+    );
+    box-shadow: 
+      0 8px 28px rgba(139, 105, 20, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  }
+  
+  .newsletter-section-default .newsletter-button:focus {
+    @apply ring-2;
+    ring-color: rgba(218, 165, 32, 0.4);
+    box-shadow: 
+      0 8px 28px rgba(139, 105, 20, 0.35),
+      0 0 0 3px rgba(218, 165, 32, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  
+  /* Compact Variant - Refined Compact Style */
+  .newsletter-section-compact {
+    @apply py-16 relative overflow-hidden;
+    background: linear-gradient(135deg, 
+      #fdfcfa 0%, 
+      #f9f6f2 30%, 
+      #f4f0ea 60%, 
+      #efebe3 100%
+    );
+  }
+  
+  .newsletter-section-compact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 25% 75%, rgba(180, 142, 96, 0.06) 0%, transparent 55%),
+      radial-gradient(circle at 75% 25%, rgba(160, 126, 84, 0.05) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  
+  .newsletter-section-compact::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+    pointer-events: none;
+  }
+  
+  .newsletter-content-compact {
+    @apply max-w-3xl mx-auto text-center relative z-10;
+  }
+  
+  .newsletter-section-compact .newsletter-title {
+    @apply text-xl md:text-2xl lg:text-3xl font-bold mb-3 tracking-tight;
+    background: linear-gradient(135deg, 
+      #3c2e26 0%, 
+      #5d4037 30%, 
+      #4a2c20 70%, 
+      #2d1810 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 1px 3px rgba(60, 46, 38, 0.1);
+  }
+  
+  .newsletter-section-compact .newsletter-subtitle {
+    @apply text-amber-900/75 mb-6 text-sm md:text-base leading-relaxed max-w-lg mx-auto font-medium;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+  }
+  
+  .newsletter-section-compact .newsletter-form {
+    @apply max-w-md mx-auto;
+  }
+  
+  .newsletter-section-compact .form-group {
+    @apply flex flex-col sm:flex-row gap-2 mb-4;
+  }
+  
+  .newsletter-section-compact .newsletter-input {
+    @apply w-full flex-1 px-4 py-3 rounded-lg border-2 text-amber-900 placeholder-amber-700/45 bg-gradient-to-br from-white/90 to-amber-50/80 backdrop-blur-sm text-sm md:text-base transition-all duration-300 font-medium;
+    border-color: rgba(194, 154, 108, 0.18);
+    box-shadow: 
+      0 3px 10px rgba(194, 154, 108, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 -1px 0 rgba(194, 154, 108, 0.08);
+    height: 48px;
+  }
+  
+  .newsletter-section-compact .newsletter-input:focus {
+    @apply outline-none ring-2;
+    border-color: rgba(160, 126, 84, 0.35);
+    ring-color: rgba(160, 126, 84, 0.25);
+    box-shadow: 
+      0 6px 18px rgba(194, 154, 108, 0.12),
+      0 0 0 3px rgba(160, 126, 84, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+  
+  .newsletter-section-compact .newsletter-button {
+    @apply px-6 py-3 text-white rounded-lg font-semibold text-sm md:text-base transition-all duration-300 focus:outline-none transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2;
+    background: linear-gradient(135deg, 
+      #8b6914 0%, 
+      #a0751a 30%, 
+      #b8860b 70%, 
+      #cd9a1b 100%
+    );
+    box-shadow: 
+      0 4px 16px rgba(139, 105, 20, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+    height: 48px;
+    min-width: 160px;
+  }
+  
+  .newsletter-section-compact .newsletter-button:hover {
+    background: linear-gradient(135deg, 
+      #7a5c12 0%, 
+      #8f6818 30%, 
+      #a6790a 70%, 
+      #bb8919 100%
+    );
+    box-shadow: 
+      0 6px 22px rgba(139, 105, 20, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+  }
+  
+  .newsletter-section-compact .newsletter-button:focus {
+    @apply ring-2;
+    ring-color: rgba(218, 165, 32, 0.35);
+    box-shadow: 
+      0 6px 22px rgba(139, 105, 20, 0.28),
+      0 0 0 3px rgba(218, 165, 32, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Sidebar Variant - Premium Card Style */
+  .newsletter-section-sidebar {
+    @apply relative overflow-hidden rounded-2xl border;
+    background: linear-gradient(135deg, 
+      #fefdfb 0%, 
+      #faf8f4 30%, 
+      #f6f2ed 70%, 
+      #f2ede6 100%
+    );
+    border-color: rgba(194, 154, 108, 0.15);
+    box-shadow: 
+      0 10px 25px rgba(194, 154, 108, 0.08),
+      0 4px 10px rgba(194, 154, 108, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  
+  .newsletter-section-sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 80% 20%, rgba(180, 142, 96, 0.04) 0%, transparent 55%),
+      radial-gradient(circle at 20% 80%, rgba(160, 126, 84, 0.03) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  
+  .newsletter-section-sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.06) 50%, transparent 100%);
+    pointer-events: none;
+  }
+  
+  .newsletter-content-sidebar {
+    @apply p-6 relative z-10;
+  }
+  
+  .newsletter-section-sidebar .newsletter-title {
+    @apply text-lg md:text-xl font-bold mb-3 tracking-tight;
+    background: linear-gradient(135deg, 
+      #3c2e26 0%, 
+      #5d4037 40%, 
+      #4a2c20 80%, 
+      #2d1810 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 1px 2px rgba(60, 46, 38, 0.08);
+  }
+  
+  .newsletter-section-sidebar .newsletter-subtitle {
+    @apply text-amber-900/70 mb-4 text-xs md:text-sm leading-relaxed font-medium;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+  }
+  
+  .newsletter-section-sidebar .form-group {
+    @apply space-y-2;
+  }
+  
+  .newsletter-section-sidebar .newsletter-input {
+    @apply w-full px-4 py-3 border-2 rounded-lg text-sm text-amber-900 placeholder-amber-700/40 bg-gradient-to-br from-white/85 to-amber-50/75 backdrop-blur-sm transition-all duration-300 font-medium;
+    border-color: rgba(194, 154, 108, 0.15);
+    box-shadow: 
+      0 2px 8px rgba(194, 154, 108, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -1px 0 rgba(194, 154, 108, 0.06);
+    height: 44px;
+  }
+  
+  .newsletter-section-sidebar .newsletter-input:focus {
+    @apply outline-none ring-2;
+    border-color: rgba(160, 126, 84, 0.3);
+    ring-color: rgba(160, 126, 84, 0.2);
+    box-shadow: 
+      0 4px 14px rgba(194, 154, 108, 0.1),
+      0 0 0 3px rgba(160, 126, 84, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+  
+  .newsletter-section-sidebar .newsletter-button {
+    @apply w-full px-4 py-3 text-white rounded-lg font-semibold text-sm transition-all duration-300 focus:outline-none transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2;
+    background: linear-gradient(135deg, 
+      #8b6914 0%, 
+      #a0751a 25%, 
+      #b8860b 50%, 
+      #cd9a1b 75%, 
+      #daa520 100%
+    );
+    box-shadow: 
+      0 3px 12px rgba(139, 105, 20, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+    height: 44px;
+  }
+  
+  .newsletter-section-sidebar .newsletter-button:hover {
+    background: linear-gradient(135deg, 
+      #7a5c12 0%, 
+      #8f6818 25%, 
+      #a6790a 50%, 
+      #bb8919 75%, 
+      #c8971e 100%
+    );
+    box-shadow: 
+      0 5px 18px rgba(139, 105, 20, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .newsletter-section-sidebar .newsletter-button:focus {
+    @apply ring-2;
+    ring-color: rgba(218, 165, 32, 0.3);
+    box-shadow: 
+      0 5px 18px rgba(139, 105, 20, 0.25),
+      0 0 0 3px rgba(218, 165, 32, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  
+  /* Common Form Elements */
+  .input-wrapper {
+    @apply relative flex-1 w-full;
+  }
+  
+  .input-validation {
+    @apply absolute top-full left-0 mt-1 text-xs;
+  }
+  
+  .newsletter-section-default .input-validation,
+  .newsletter-section-compact .input-validation,
+  .newsletter-section-sidebar .input-validation {
+    @apply text-red-600 font-medium;
+  }
+  
+  .button-icon {
+    @apply flex items-center justify-center w-4 h-4;
+  }
+  
+  .icon-arrow,
+  .icon-loading,
+  .icon-success {
+    @apply w-4 h-4 transition-all duration-200;
+  }
+  
+  .icon-loading {
+    @apply animate-spin;
+  }
+  
+  /* Status Messages */
+  .newsletter-status {
+    @apply text-sm mt-2;
+  }
+  
+  .status-success {
+    @apply text-emerald-700 font-semibold;
+  }
+  
+  .status-error {
+    @apply text-red-700 font-semibold;
+  }
+  
+  /* Disclaimer */
+  .newsletter-disclaimer {
+    @apply text-xs mt-3 opacity-80;
+  }
+  
+  .newsletter-section-default .newsletter-disclaimer,
+  .newsletter-section-compact .newsletter-disclaimer {
+    @apply text-amber-800/60;
+  }
+  
+  .newsletter-section-sidebar .newsletter-disclaimer {
+    @apply text-amber-800/50;
+  }
+  
+  .disclaimer-link {
+    @apply underline hover:no-underline transition-all duration-200;
+  }
+  
+  .newsletter-section-default .disclaimer-link,
+  .newsletter-section-compact .disclaimer-link {
+    @apply text-amber-800/70 hover:text-amber-800/90;
+  }
+  
+  .newsletter-section-sidebar .disclaimer-link {
+    @apply text-amber-700/70 hover:text-amber-700/90;
+  }
+  
+  /* Button States */
+  .newsletter-button:disabled {
+    @apply opacity-75 cursor-not-allowed;
+  }
+  
+  .newsletter-button.loading .icon-arrow {
+    @apply hidden;
+  }
+  
+  .newsletter-button.loading .icon-loading {
+    @apply block;
+  }
+  
+  .newsletter-button.success .icon-arrow,
+  .newsletter-button.success .icon-loading {
+    @apply hidden;
+  }
+  
+  .newsletter-button.success .icon-success {
+    @apply block;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 640px) {
+    .newsletter-section-default .form-group,
+    .newsletter-section-compact .form-group {
+      @apply flex-col gap-3 items-stretch;
+    }
+    
+    .newsletter-section-default .newsletter-button,
+    .newsletter-section-compact .newsletter-button {
+      @apply w-full justify-center;
+    }
+    
+    .newsletter-content-default,
+    .newsletter-content-compact {
+      @apply px-4;
+    }
+    
+    .newsletter-section-default .newsletter-form {
+      @apply max-w-sm mx-auto;
+    }
+    
+    .newsletter-section-compact .newsletter-form {
+      @apply max-w-xs mx-auto;
+    }
+    
+    .newsletter-section-default .newsletter-input,
+    .newsletter-section-compact .newsletter-input {
+      @apply text-base;
+    }
+    
+    .newsletter-section-default .newsletter-button,
+    .newsletter-section-compact .newsletter-button {
+      @apply text-base py-4;
+    }
+  }
+  
+  /* Utility Classes */
+  .hidden {
+    @apply hidden;
+  }
+  
+  .block {
+    @apply block;
+  }
+</style>
+
+<script>
+  // Newsletter Form Handler
+  class NewsletterForm {
+    private form: HTMLFormElement;
+    private emailInput: HTMLInputElement;
+    private submitButton: HTMLButtonElement;
+    private statusContainer: HTMLElement;
+    private validationContainer: HTMLElement;
+    
+    // Configuration
+    private config: {
+      variant: string;
+      leadSource: string;
+      campaignId?: string;
+      apiEndpoint: string;
+      trackingEnabled: boolean;
+    };
+    
+    // State
+    private isSubmitting = false;
+    private validationTimeout: ReturnType<typeof setTimeout> | null = null;
+    
+    constructor(formElement: HTMLFormElement) {
+      this.form = formElement;
+      this.emailInput = this.form.querySelector('.newsletter-input') as HTMLInputElement;
+      this.submitButton = this.form.querySelector('.newsletter-button') as HTMLButtonElement;
+      this.statusContainer = this.form.querySelector('.newsletter-status') as HTMLElement;
+      this.validationContainer = this.form.querySelector('.input-validation') as HTMLElement;
+      
+      // Get configuration from data attributes
+      this.config = {
+        variant: this.form.dataset.variant || 'default',
+        leadSource: this.form.dataset.leadSource || 'newsletter',
+        campaignId: this.form.dataset.campaignId,
+        apiEndpoint: this.form.dataset.apiEndpoint || '/api/newsletter/subscribe',
+        trackingEnabled: this.form.dataset.trackingEnabled === 'true'
+      };
+      
+      this.init();
+    }
+    
+    private init(): void {
+      this.bindEvents();
+      this.setupValidation();
+    }
+    
+    private bindEvents(): void {
+      // Form submission
+      this.form.addEventListener('submit', this.handleSubmit.bind(this));
+      
+      // Real-time email validation
+      this.emailInput.addEventListener('input', this.handleEmailInput.bind(this));
+      this.emailInput.addEventListener('blur', this.validateEmail.bind(this));
+      
+      // Accessibility improvements
+      this.emailInput.addEventListener('focus', this.clearValidation.bind(this));
+    }
+    
+    private setupValidation(): void {
+      // Add ARIA attributes for better accessibility
+      this.emailInput.setAttribute('aria-describedby', 'email-validation newsletter-status');
+    }
+    
+    private handleEmailInput(): void {
+      // Clear previous validation timeout
+      if (this.validationTimeout) {
+        clearTimeout(this.validationTimeout);
+      }
+      
+      // Debounce validation
+      this.validationTimeout = setTimeout(() => {
+        this.validateEmail();
+      }, 500);
+    }
+    
+    private validateEmail(): boolean {
+      const email = this.emailInput.value.trim();
+      
+      if (!email) {
+        this.clearValidation();
+        return false;
+      }
+      
+      // Basic email pattern validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        this.showValidationError('Format email tidak valid');
+        return false;
+      }
+      
+      // Check for disposable email domains (basic list)
+      const disposableDomains = [
+        '10minutemail.com', 'tempmail.org', 'guerrillamail.com',
+        'mailinator.com', 'throwaway.email', 'temp-mail.org'
+      ];
+      
+      const domain = email.split('@')[1]?.toLowerCase();
+      if (domain && disposableDomains.includes(domain)) {
+        this.showValidationError('Email sementara tidak diperbolehkan');
+        return false;
+      }
+      
+      this.showValidationSuccess();
+      return true;
+    }
+    
+    private showValidationError(message: string): void {
+      this.validationContainer.textContent = message;
+      this.validationContainer.className = 'input-validation text-red-500';
+      this.emailInput.setAttribute('aria-invalid', 'true');
+    }
+    
+    private showValidationSuccess(): void {
+      this.validationContainer.textContent = '✓ Email valid';
+      this.validationContainer.className = 'input-validation text-green-500';
+      this.emailInput.setAttribute('aria-invalid', 'false');
+    }
+    
+    private clearValidation(): void {
+      this.validationContainer.textContent = '';
+      this.validationContainer.className = 'input-validation';
+      this.emailInput.removeAttribute('aria-invalid');
+    }
+    
+    private async handleSubmit(e: Event): Promise<void> {
+      e.preventDefault();
+      
+      if (this.isSubmitting) return;
+      
+      // Validate email before submission
+      if (!this.validateEmail()) {
+        this.emailInput.focus();
+        return;
+      }
+      
+      // Check honeypot (spam protection)
+      const honeypot = this.form.querySelector('.honeypot') as HTMLInputElement;
+      if (honeypot && honeypot.value) {
+        // Silent fail for bots
+        this.showSuccess();
+        return;
+      }
+      
+      this.setLoadingState(true);
+      
+      try {
+        const formData = new FormData(this.form);
+        const email = formData.get('email') as string;
+        
+        // Prepare submission data
+        const submissionData = {
+          email: email.trim(),
+          leadSource: this.config.leadSource,
+          campaignId: this.config.campaignId,
+          variant: this.config.variant,
+          page: window.location.pathname,
+          timestamp: new Date().toISOString(),
+          userAgent: navigator.userAgent
+        };
+        
+        // Track attempt if analytics enabled
+        if (this.config.trackingEnabled) {
+          this.trackEvent('newsletter_attempt', submissionData);
+        }
+        
+        // Submit to API
+        const response = await fetch(this.config.apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(submissionData)
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          this.showSuccess();
+          
+          // Track success
+          if (this.config.trackingEnabled) {
+            this.trackEvent('newsletter_success', {
+              ...submissionData,
+              subscriptionId: result.id
+            });
+          }
+          
+          // Reset form after delay
+          setTimeout(() => {
+            this.resetForm();
+          }, 3000);
+          
+        } else {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+      } catch (error) {
+        console.error('Newsletter subscription error:', error);
+        this.showError();
+        
+        // Track error
+        if (this.config.trackingEnabled) {
+          this.trackEvent('newsletter_error', {
+            ...this.config,
+            error: error instanceof Error ? error.message : 'Unknown error'
+          });
+        }
+      } finally {
+        this.setLoadingState(false);
+      }
+    }
+    
+    private setLoadingState(loading: boolean): void {
+      this.isSubmitting = loading;
+      this.submitButton.disabled = loading;
+      
+      if (loading) {
+        this.submitButton.classList.add('loading');
+        this.submitButton.querySelector('.button-text')!.textContent = 'Mengirim...';
+      } else {
+        this.submitButton.classList.remove('loading');
+        this.submitButton.querySelector('.button-text')!.textContent = 
+          this.submitButton.dataset.originalText || 'Berlangganan';
+      }
+    }
+    
+    private showSuccess(): void {
+      this.submitButton.classList.add('success');
+      this.submitButton.querySelector('.button-text')!.textContent = 'Berhasil!';
+      
+      const successElement = this.statusContainer.querySelector('.status-success') as HTMLElement;
+      const message = successElement.dataset.message || 'Terima kasih! Check email Anda.';
+      successElement.textContent = message;
+      successElement.classList.remove('hidden');
+      
+      // Hide error if visible
+      const errorElement = this.statusContainer.querySelector('.status-error') as HTMLElement;
+      errorElement.classList.add('hidden');
+    }
+    
+    private showError(): void {
+      const errorElement = this.statusContainer.querySelector('.status-error') as HTMLElement;
+      const message = errorElement.dataset.message || 'Terjadi kesalahan. Silakan coba lagi.';
+      errorElement.textContent = message;
+      errorElement.classList.remove('hidden');
+      
+      // Hide success if visible
+      const successElement = this.statusContainer.querySelector('.status-success') as HTMLElement;
+      successElement.classList.add('hidden');
+    }
+    
+    private resetForm(): void {
+      this.form.reset();
+      this.clearValidation();
+      this.submitButton.classList.remove('success', 'loading');
+      this.submitButton.querySelector('.button-text')!.textContent = 'Berlangganan';
+      
+      // Hide all status messages
+      this.statusContainer.querySelectorAll('.status-success, .status-error')
+        .forEach(el => el.classList.add('hidden'));
+    }
+    
+    private trackEvent(eventName: string, data: any): void {
+      // Google Analytics tracking
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', eventName, {
+          event_category: 'newsletter',
+          event_label: data.leadSource,
+          custom_parameter_1: data.variant,
+          custom_parameter_2: data.campaignId
+        });
+      }
+      
+      // Custom analytics (placeholder for future implementation)
+      if (typeof window !== 'undefined' && (window as any).analytics) {
+        (window as any).analytics.track(eventName, data);
+      }
+      
+      // Console logging for development
+      console.log(`Newsletter Event: ${eventName}`, data);
+    }
+  }
+  
+  // Initialize newsletter forms when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const newsletterForms = document.querySelectorAll('.newsletter-form') as NodeListOf<HTMLFormElement>;
+    
+    newsletterForms.forEach(form => {
+      new NewsletterForm(form);
+    });
+  });
+</script>
