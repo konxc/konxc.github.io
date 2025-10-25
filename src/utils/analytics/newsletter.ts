@@ -386,7 +386,7 @@ export class NewsletterAnalytics {
   /**
    * Get recent events for debugging
    */
-  getRecentEvents(limit: number = 10): any[] {
+  getRecentEvents(limit = 10): any[] {
     const analytics = this.getStoredAnalytics();
     const events = analytics.events || [];
     return events.slice(-limit);

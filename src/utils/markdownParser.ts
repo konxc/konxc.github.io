@@ -260,7 +260,7 @@ export async function parseBlogPostComplete(post: CollectionEntry<'blog'>): Prom
 /**
  * Utility untuk format demo content
  */
-export function formatDemoContent(content: string, language: string = 'javascript'): string {
+export function formatDemoContent(content: string, language = 'javascript'): string {
   // Remove extra whitespace
   const trimmed = content.trim();
   

@@ -5,13 +5,24 @@ import typescriptParser from "@typescript-eslint/parser";
 export default [
   js.configs.recommended,
   {
-    files: ["**/*.ts", "**/*.tsx", "**/*.astro"],
+    files: ["src/**/*.ts", "src/**/*.tsx"],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
         project: "./tsconfig.json",
+      },
+      globals: {
+        console: "readonly",
+        process: "readonly",
+        Buffer: "readonly",
+        __dirname: "readonly",
+        __filename: "readonly",
+        global: "readonly",
+        module: "readonly",
+        require: "readonly",
+        exports: "readonly",
       },
     },
     plugins: {
@@ -21,7 +32,6 @@ export default [
       // TypeScript specific rules
       "@typescript-eslint/no-unused-vars": "error",
       "@typescript-eslint/no-explicit-any": "warn",
-      "@typescript-eslint/prefer-const": "error",
       "@typescript-eslint/no-inferrable-types": "error",
 
       // General code quality rules
@@ -33,10 +43,6 @@ export default [
       // Import/export rules
       "no-duplicate-imports": "error",
       "no-unused-expressions": "error",
-
-      // Astro specific rules
-      "astro/no-conflict-set-directives": "error",
-      "astro/no-unused-define-vars-in-style": "error",
     },
   },
   {
