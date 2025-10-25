@@ -8,17 +8,25 @@ import node from "@astrojs/node";
 
 import svelte from "@astrojs/svelte";
 
+import astroIcon from "astro-icon";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.konxc.space",
 
-  integrations: [sitemap(), svelte()],
-  
+  integrations: [
+    sitemap(),
+    svelte(),
+    astroIcon({
+      iconSets: ["heroicons"],
+    }),
+  ],
+
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
   },
 
   adapter: node({
-    mode: "standalone"
-  })
+    mode: "standalone",
+  }),
 });

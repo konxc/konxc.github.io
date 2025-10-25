@@ -1,0 +1,674 @@
+---
+import UnifiedLayout from '@layouts/UnifiedLayout.astro';
+
+const title = "Events & Networking | KonXC - PT Koneksi Jaringan Indonesia";
+const description = "Bergabunglah dengan event networking, workshop, dan seminar teknologi KonXC. Bangun koneksi, pelajari skill baru, dan kembangkan bisnis Anda bersama komunitas.";
+
+// Sample events data - in real implementation, this would come from a CMS or API
+const upcomingEvents = [
+  {
+    id: 1,
+    title: "Indonesia Innovation Forum #1",
+    subtitle: "Membangun Ekosistem Startup Indonesia",
+    date: "2024-11-15",
+    time: "19:00 - 21:00 WIB",
+    type: "Virtual Event",
+    category: "Forum",
+    location: "Zoom + Live Streaming",
+    price: "Gratis",
+    attendees: 150,
+    maxAttendees: 200,
+    image: "/images/events/innovation-forum-1.jpg",
+    description: "Forum diskusi bulanan dengan startup founders, investor, dan government officials tentang masa depan ekosistem startup Indonesia.",
+    speakers: [
+      { name: "Dr. Sarah Wijaya", role: "Deputy Minister", company: "Kemenkop UKM" },
+      { name: "Budi Santoso", role: "Managing Partner", company: "East Ventures" },
+      { name: "Lisa Chen", role: "Co-founder", company: "Gojek Alumni" }
+    ],
+    agenda: [
+      { time: "19:00-19:15", title: "Opening & Community Updates" },
+      { time: "19:15-19:45", title: "Keynote: Masa Depan Startup Indonesia" },
+      { time: "19:45-20:30", title: "Panel: Challenges & Opportunities" },
+      { time: "20:30-20:45", title: "Community Showcase" },
+      { time: "20:45-21:00", title: "Networking & Closing" }
+    ],
+    tags: ["startup", "innovation", "networking", "government", "vc"],
+    registrationUrl: "https://platform.konxc.space/events/innovation-forum-1",
+    featured: true
+  },
+  {
+    id: 2,
+    title: "UMKM Digital Transformation Workshop",
+    subtitle: "From Traditional to Digital: A Practical Guide",
+    date: "2024-11-22",
+    time: "14:00 - 17:00 WIB",
+    type: "Hybrid Event",
+    category: "Workshop",
+    location: "Jakarta + Online",
+    price: "Rp 150.000",
+    attendees: 45,
+    maxAttendees: 50,
+    image: "/images/events/umkm-workshop.jpg",
+    description: "Workshop hands-on untuk UMKM yang ingin bertransformasi digital. Pelajari strategi, tools, dan implementasi praktis.",
+    speakers: [
+      { name: "Ahmad Rizki", role: "Digital Transformation Consultant", company: "KonXC" },
+      { name: "Maya Sari", role: "UMKM Success Story", company: "Batik Nusantara" }
+    ],
+    agenda: [
+      { time: "14:00-14:30", title: "Registration & Welcome Coffee" },
+      { time: "14:30-15:30", title: "Digital Strategy for UMKM" },
+      { time: "15:30-15:45", title: "Break" },
+      { time: "15:45-16:30", title: "Hands-on: Setting Up Digital Presence" },
+      { time: "16:30-17:00", title: "Q&A & Networking" }
+    ],
+    tags: ["umkm", "digital-transformation", "workshop", "hands-on"],
+    registrationUrl: "https://platform.konxc.space/events/umkm-workshop",
+    featured: false
+  },
+  {
+    id: 3,
+    title: "Tech Talk: AI for Indonesian Businesses",
+    subtitle: "Practical AI Implementation for SMEs",
+    date: "2024-11-29",
+    time: "20:00 - 21:30 WIB",
+    type: "Virtual Event",
+    category: "Tech Talk",
+    location: "YouTube Live",
+    price: "Gratis",
+    attendees: 89,
+    maxAttendees: 500,
+    image: "/images/events/ai-tech-talk.jpg",
+    description: "Diskusi mendalam tentang implementasi AI yang praktis dan terjangkau untuk bisnis Indonesia.",
+    speakers: [
+      { name: "Dr. Andi Wijaya", role: "AI Researcher", company: "UI" },
+      { name: "Rini Kusuma", role: "CTO", company: "TechStartup" }
+    ],
+    agenda: [
+      { time: "20:00-20:10", title: "Introduction & Overview" },
+      { time: "20:10-20:40", title: "AI Trends & Opportunities" },
+      { time: "20:40-21:10", title: "Case Studies & Implementation" },
+      { time: "21:10-21:30", title: "Q&A Session" }
+    ],
+    tags: ["ai", "technology", "sme", "implementation"],
+    registrationUrl: "https://platform.konxc.space/events/ai-tech-talk",
+    featured: false
+  }
+];
+
+const pastEvents = [
+  {
+    id: 4,
+    title: "KonXC Community Launch",
+    date: "2024-10-25",
+    type: "Virtual Event",
+    attendees: 120,
+    image: "/images/events/community-launch.jpg",
+    description: "Peluncuran resmi komunitas KonXC dengan 120+ founding members.",
+    recordingUrl: "https://youtube.com/watch?v=example"
+  },
+  {
+    id: 5,
+    title: "Startup Funding 101",
+    date: "2024-10-18",
+    type: "Workshop",
+    attendees: 85,
+    image: "/images/events/funding-workshop.jpg",
+    description: "Workshop tentang strategi funding untuk startup Indonesia.",
+    recordingUrl: "https://youtube.com/watch?v=example"
+  }
+];
+
+const eventCategories = [
+  { name: "All Events", slug: "all", count: upcomingEvents.length + pastEvents.length },
+  { name: "Forum", slug: "forum", count: 1 },
+  { name: "Workshop", slug: "workshop", count: 2 },
+  { name: "Tech Talk", slug: "tech-talk", count: 1 },
+  { name: "Networking", slug: "networking", count: 0 }
+];
+---
+
+<UnifiedLayout 
+  title={title}
+  description={description}
+  headerVariant="default"
+  footerVariant="extended"
+>
+  <main class="min-h-screen bg-neutral-50">
+    
+    <!-- Hero Section -->
+    <section class="section bg-linear-to-br from-primary-50 to-secondary-50">
+      <div class="container">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-4xl lg:text-5xl font-bold mb-6">
+            Events & <span class="text-gradient">Networking</span>
+          </h1>
+          <p class="text-xl text-neutral-600 mb-8">
+            Bergabunglah dengan komunitas teknologi Indonesia. Bangun koneksi, 
+            pelajari skill baru, dan kembangkan bisnis Anda bersama kami.
+          </p>
+          
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 bg-white rounded-2xl p-6 shadow-lg border border-primary-100">
+            <div class="text-center">
+              <div class="text-2xl font-bold text-primary-600 mb-1">15+</div>
+              <div class="text-sm text-neutral-600">Events per Year</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-secondary-600 mb-1">500+</div>
+              <div class="text-sm text-neutral-600">Total Attendees</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-accent-600 mb-1">50+</div>
+              <div class="text-sm text-neutral-600">Expert Speakers</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-success-600 mb-1">100%</div>
+              <div class="text-sm text-neutral-600">Free Networking</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Event Categories Filter -->
+    <section class="py-8 bg-white border-b border-neutral-200">
+      <div class="container">
+        <div class="flex flex-wrap justify-center gap-4">
+          {eventCategories.map(category => (
+            <button 
+              class="px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary-100 bg-white text-neutral-600 border-2 border-neutral-200 hover:border-primary-300 hover:text-primary-600"
+              data-category={category.slug}
+            >
+              {category.name}
+              <span class="ml-2 text-xs bg-neutral-100 text-neutral-600 px-2 py-1 rounded-full">
+                {category.count}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="section">
+      <div class="container">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+            Upcoming <span class="text-gradient">Events</span>
+          </h2>
+          <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
+            Jangan lewatkan kesempatan untuk belajar, bernetworking, dan berkembang 
+            bersama komunitas teknologi Indonesia.
+          </p>
+        </div>
+
+        <div class="space-y-8">
+          {upcomingEvents.map(event => (
+            <div class={`${event.featured ? 'card-featured' : 'card'} overflow-hidden`} data-event-category={event.category.toLowerCase()}>
+              <div class="grid lg:grid-cols-3 gap-8">
+                
+                <!-- Event Image -->
+                <div class="lg:col-span-1">
+                  <div class="aspect-video bg-linear-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center">
+                    <div class="text-center">
+                      <div class="text-4xl mb-2">🎪</div>
+                      <div class="text-sm text-neutral-600">Event Image</div>
+                    </div>
+                  </div>
+                  
+                  {event.featured && (
+                    <div class="mt-4 text-center">
+                      <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                        ⭐ Featured Event
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <!-- Event Details -->
+                <div class="lg:col-span-2">
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium">
+                      {event.category}
+                    </span>
+                    <span class="px-3 py-1 bg-secondary-100 text-secondary-700 rounded-full text-sm font-medium">
+                      {event.type}
+                    </span>
+                    <span class="px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-sm font-medium">
+                      {event.price}
+                    </span>
+                  </div>
+
+                  <h3 class="text-2xl font-bold text-neutral-800 mb-2">
+                    {event.title}
+                  </h3>
+                  <p class="text-lg text-primary-600 font-medium mb-4">
+                    {event.subtitle}
+                  </p>
+                  <p class="text-neutral-600 mb-6">
+                    {event.description}
+                  </p>
+
+                  <!-- Event Meta -->
+                  <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="space-y-2">
+                      <div class="flex items-center text-neutral-600">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        {new Date(event.date).toLocaleDateString('id-ID', { 
+                          weekday: 'long', 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}
+                      </div>
+                      <div class="flex items-center text-neutral-600">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        {event.time}
+                      </div>
+                      <div class="flex items-center text-neutral-600">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        {event.location}
+                      </div>
+                    </div>
+                    <div class="space-y-2">
+                      <div class="flex items-center text-neutral-600">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        {event.attendees}/{event.maxAttendees} peserta
+                      </div>
+                      <div class="flex items-center text-neutral-600">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        {event.tags.slice(0, 3).join(', ')}
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Speakers -->
+                  {event.speakers && event.speakers.length > 0 && (
+                    <div class="mb-6">
+                      <h4 class="font-semibold text-neutral-800 mb-3">Speakers:</h4>
+                      <div class="flex flex-wrap gap-4">
+                        {event.speakers.map(speaker => (
+                          <div class="flex items-center bg-neutral-50 rounded-lg p-3">
+                            <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center mr-3">
+                              <span class="text-primary-600 font-semibold text-sm">
+                                {speaker.name.split(' ').map(n => n[0]).join('')}
+                              </span>
+                            </div>
+                            <div>
+                              <div class="font-medium text-neutral-800">{speaker.name}</div>
+                              <div class="text-sm text-neutral-600">{speaker.role}, {speaker.company}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <!-- Action Buttons -->
+                  <div class="flex flex-col sm:flex-row gap-4">
+                    <a 
+                      href={event.registrationUrl}
+                      target="_blank"
+                      class="btn-primary flex-1 text-center inline-flex items-center justify-center"
+                    >
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                      </svg>
+                      Daftar Sekarang
+                    </a>
+                    <button 
+                      class="btn-secondary flex-1 inline-flex items-center justify-center"
+                      data-agenda-toggle={`agenda-${event.id}`}
+                    >
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                      </svg>
+                      Lihat Agenda
+                    </button>
+                    <button 
+                      class="btn-outline inline-flex items-center justify-center"
+                      data-share-event={event.title}
+                      data-share-url={event.registrationUrl}
+                    >
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                      </svg>
+                      Share
+                    </button>
+                  </div>
+
+                  <!-- Collapsible Agenda -->
+                  <div id={`agenda-${event.id}`} class="hidden mt-6 bg-neutral-50 rounded-xl p-6">
+                    <h4 class="font-semibold text-neutral-800 mb-4">Event Agenda:</h4>
+                    <div class="space-y-3">
+                      {event.agenda.map(item => (
+                        <div class="flex items-start">
+                          <div class="bg-primary-100 text-primary-700 px-3 py-1 rounded-lg text-sm font-medium mr-4 shrink-0">
+                            {item.time}
+                          </div>
+                          <div class="text-neutral-700">{item.title}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Call to Action -->
+        <div class="text-center mt-12">
+          <div class="bg-linear-to-br from-primary-50 to-secondary-50 rounded-2xl p-8 border border-primary-100">
+            <h3 class="text-2xl font-bold text-neutral-800 mb-4">
+              Ingin Mengadakan Event Bersama?
+            </h3>
+            <p class="text-neutral-600 mb-6 max-w-2xl mx-auto">
+              Kami terbuka untuk kolaborasi event dengan komunitas, perusahaan, atau institusi 
+              yang memiliki visi sama untuk membangun Indonesia yang lebih baik.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="/contact" class="btn-primary inline-flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Propose Event
+              </a>
+              <a href="https://platform.konxc.space" target="_blank" class="btn-secondary inline-flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                Join Community
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Past Events -->
+    <section class="section bg-white">
+      <div class="container">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+            Past <span class="text-gradient">Events</span>
+          </h2>
+          <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
+            Lihat kembali event-event yang telah kami selenggarakan dan 
+            tonton recording untuk mendapatkan insights berharga.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {pastEvents.map(event => (
+            <div class="card">
+              <div class="aspect-video bg-linear-to-br from-neutral-100 to-primary-50 rounded-xl mb-4 flex items-center justify-center">
+                <div class="text-center">
+                  <div class="text-3xl mb-2">📹</div>
+                  <div class="text-sm text-neutral-600">Event Recording</div>
+                </div>
+              </div>
+              
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm font-medium">
+                  {event.type}
+                </span>
+                <span class="text-sm text-neutral-500">
+                  {new Date(event.date).toLocaleDateString('id-ID')}
+                </span>
+              </div>
+
+              <h3 class="text-xl font-bold text-neutral-800 mb-3">
+                {event.title}
+              </h3>
+              <p class="text-neutral-600 mb-4">
+                {event.description}
+              </p>
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center text-neutral-600">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                  <span class="text-sm">{event.attendees} peserta</span>
+                </div>
+                <a 
+                  href={event.recordingUrl}
+                  target="_blank"
+                  class="text-primary-600 hover:text-primary-700 font-medium text-sm flex items-center"
+                >
+                  Watch Recording
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="text-center mt-8">
+          <a href="https://youtube.com/@konxc" target="_blank" class="btn-outline inline-flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+            Lihat Semua Recording
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="section bg-linear-to-br from-primary-50 to-secondary-50">
+      <div class="container">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+            Jangan Lewatkan <span class="text-gradient">Event Terbaru</span>
+          </h2>
+          <p class="text-xl text-neutral-600 mb-8">
+            Subscribe newsletter kami untuk mendapatkan informasi event terbaru, 
+            early bird tickets, dan konten eksklusif lainnya.
+          </p>
+          
+          <div class="bg-white rounded-2xl p-8 shadow-lg border border-primary-100 max-w-2xl mx-auto">
+            <form class="flex flex-col sm:flex-row gap-4">
+              <input 
+                type="email" 
+                placeholder="Masukkan email Anda"
+                class="form-input flex-1"
+                required
+              >
+              <button type="submit" class="btn-primary whitespace-nowrap">
+                Subscribe
+              </button>
+            </form>
+            <p class="text-sm text-neutral-500 mt-4">
+              Dengan subscribe, Anda menyetujui <a href="/privacy-policy" class="text-primary-600 underline">Privacy Policy</a> kami.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</UnifiedLayout>
+
+  <!-- JavaScript for Interactive Features -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Agenda toggle functionality
+      const agendaButtons = document.querySelectorAll('[data-agenda-toggle]');
+      agendaButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          const target = e.currentTarget as HTMLElement;
+          const agendaId = target.getAttribute('data-agenda-toggle');
+          
+          if (agendaId) {
+            const agenda = document.getElementById(agendaId);
+            
+            if (agenda) {
+              const isHidden = agenda.classList.contains('hidden');
+              agenda.classList.toggle('hidden');
+              
+              // Update button text (simple approach)
+              const buttonText = isHidden ? 'Sembunyikan Agenda' : 'Lihat Agenda';
+              const textSpan = target.querySelector('span') || target.lastChild;
+              if (textSpan && textSpan.nodeType === Node.TEXT_NODE) {
+                textSpan.textContent = buttonText;
+              }
+            }
+          }
+        });
+      });
+
+      // Share functionality
+      const shareButtons = document.querySelectorAll('[data-share-event]');
+      shareButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          const target = e.currentTarget as HTMLElement;
+          const eventTitle = target.getAttribute('data-share-event');
+          const eventUrl = target.getAttribute('data-share-url');
+          
+          if (eventTitle && eventUrl) {
+            if (navigator.share) {
+              // Use native share API if available
+              navigator.share({
+                title: eventTitle,
+                text: `Bergabunglah dengan event: ${eventTitle}`,
+                url: eventUrl
+              }).catch(err => console.log('Error sharing:', err));
+            } else {
+              // Fallback: copy to clipboard
+              const shareText = `${eventTitle} - ${eventUrl}`;
+              if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                  // Show success message
+                  const originalText = target.innerHTML;
+                  target.innerHTML = `
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Copied!
+                  `;
+                  
+                  setTimeout(() => {
+                    target.innerHTML = originalText;
+                  }, 2000);
+                }).catch(err => {
+                  console.log('Error copying to clipboard:', err);
+                  alert(`Share this event: ${shareText}`);
+                });
+              } else {
+                alert(`Share this event: ${shareText}`);
+              }
+            }
+          }
+        });
+      });
+
+      // Category filtering
+      const categoryButtons = document.querySelectorAll('[data-category]');
+      const eventCards = document.querySelectorAll('[data-event-category]');
+
+      // Set initial active state for "All Events" button
+      if (categoryButtons.length > 0) {
+        const allEventsButton = Array.from(categoryButtons).find(btn => 
+          btn.getAttribute('data-category') === 'all'
+        );
+        if (allEventsButton) {
+          allEventsButton.classList.remove('bg-white', 'text-neutral-600', 'border-neutral-200');
+          allEventsButton.classList.add('bg-primary-500', 'text-white', 'border-primary-500');
+        }
+      }
+
+      categoryButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          const target = e.currentTarget as HTMLElement;
+          const category = target.getAttribute('data-category');
+          
+          // Update active button
+          categoryButtons.forEach(btn => {
+            btn.classList.remove('bg-primary-500', 'text-white', 'border-primary-500');
+            btn.classList.add('bg-white', 'text-neutral-600', 'border-neutral-200');
+          });
+          
+          target.classList.remove('bg-white', 'text-neutral-600', 'border-neutral-200');
+          target.classList.add('bg-primary-500', 'text-white', 'border-primary-500');
+
+          // Filter events with smooth animation
+          eventCards.forEach(card => {
+            const htmlCard = card as HTMLElement;
+            const eventCategory = card.getAttribute('data-event-category');
+            if (category === 'all' || eventCategory === category) {
+              htmlCard.style.display = 'block';
+              htmlCard.style.opacity = '0';
+              htmlCard.style.transform = 'translateY(20px)';
+              
+              // Animate in
+              setTimeout(() => {
+                htmlCard.style.transition = 'all 0.3s ease';
+                htmlCard.style.opacity = '1';
+                htmlCard.style.transform = 'translateY(0)';
+              }, 50);
+            } else {
+              htmlCard.style.transition = 'all 0.3s ease';
+              htmlCard.style.opacity = '0';
+              htmlCard.style.transform = 'translateY(-20px)';
+              
+              setTimeout(() => {
+                htmlCard.style.display = 'none';
+              }, 300);
+            }
+          });
+        });
+      });
+
+      // Newsletter form submission
+      const newsletterForm = document.querySelector('form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const form = e.currentTarget as HTMLFormElement;
+          const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
+          const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+          
+          if (emailInput && submitButton) {
+            const email = emailInput.value;
+            
+            // Show loading state
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.innerHTML = 'Subscribing...';
+            submitButton.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+              alert('Terima kasih! Kami akan mengirimkan update event terbaru ke email Anda.');
+              form.reset();
+              
+              // Reset button
+              submitButton.innerHTML = originalButtonText;
+              submitButton.disabled = false;
+            }, 1000);
+          }
+        });
+      }
+
+      // Add smooth scroll behavior for agenda sections
+      const agendaSections = document.querySelectorAll('[id^="agenda-"]');
+      agendaSections.forEach(section => {
+        const htmlSection = section as HTMLElement;
+        htmlSection.style.transition = 'all 0.3s ease';
+      });
+    });
+  </script>

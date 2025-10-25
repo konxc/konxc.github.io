@@ -31,6 +31,7 @@
     "@astrojs/svelte": "^7.2.0",
     "@tailwindcss/vite": "^4.1.16",
     "astro": "^5.14.8",
+    "astro-icon": "^1.1.5",
     "chart.js": "^4.5.1",
     "puppeteer": "^24.26.1",
     "svelte": "^5.41.4",
@@ -38,14 +39,14 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@iconify-json/heroicons": "^1.2.3",
     "@playwright/test": "^1.40.0",
     "@tailwindcss/typography": "^0.5.19",
     "playwright": "^1.40.0",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.7.1",
-    "sharp": "^0.34.4",
-    "yargs-parser": "^22.0.0"
+    "sharp": "^0.34.4"
   },
   "packageManager": "pnpm@10.19.0+sha512.c9fc7236e92adf5c8af42fd5bf1612df99c2ceb62f27047032f4720b33f8eacdde311865e91c411f2774f618d82f320808ecb51718bfa82c060c4ba7c76a32b8"
 }
