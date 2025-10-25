@@ -1,6 +1,7 @@
 ---
 // Header Component
 import Logo from '@components/ui/Logo.astro';
+import ThemeToggle from '@components/ui/ThemeToggle.astro';
 
 export interface Props {
   className?: string;
@@ -121,9 +122,7 @@ const serviceLinks = [
 
           <!-- Dark Mode Toggle -->
           {showDarkMode && (
-            <button class="dark-mode-toggle" aria-label="Toggle dark mode">
-              <i class="i-mdi-weather-sunny dark-mode-icon"></i>
-            </button>
+            <ThemeToggle size="md" variant="icon" />
           )}
 
           <!-- CTA Button -->
@@ -332,13 +331,6 @@ const serviceLinks = [
     @apply flex items-center gap-2 px-3 py-2 text-sm text-neutral-600 hover:bg-neutral-50 rounded cursor-pointer;
   }
 
-  .dark-mode-toggle {
-    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
-  }
-
-  .dark-mode-icon {
-    @apply text-lg;
-  }
 
   .cta-button {
     @apply hidden sm:flex items-center gap-2 bg-primary-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors hover:bg-primary-700;
@@ -584,34 +576,7 @@ const serviceLinks = [
       });
     });
 
-    // Dark mode toggle
-    const darkModeToggle = document.querySelector('.dark-mode-toggle');
-    
-    if (darkModeToggle) {
-      darkModeToggle.addEventListener('click', function(this: HTMLElement) {
-        document.documentElement.classList.toggle('dark');
-        
-        // Save preference
-        const isDark = document.documentElement.classList.contains('dark');
-        localStorage.setItem('darkMode', String(isDark));
-        
-        // Update icon
-        const icon = this.querySelector('.dark-mode-icon');
-        if (icon) {
-          icon.className = isDark ? 'i-mdi-weather-night dark-mode-icon' : 'i-mdi-weather-sunny dark-mode-icon';
-        }
-      });
-      
-      // Load saved preference
-      const savedDarkMode = localStorage.getItem('darkMode');
-      if (savedDarkMode === 'true') {
-        document.documentElement.classList.add('dark');
-        const icon = darkModeToggle.querySelector('.dark-mode-icon');
-        if (icon) {
-          icon.className = 'i-mdi-weather-night dark-mode-icon';
-        }
-      }
-    }
+    // Dark mode is now handled by ThemeToggle component
 
     // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
