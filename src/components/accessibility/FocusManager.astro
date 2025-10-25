@@ -1,0 +1,405 @@
+---
+// Focus Management Component
+// Handles focus trapping, restoration, and keyboard navigation
+---
+
+<script>
+  class FocusManager {
+    private static instance: FocusManager;
+    private focusableElements: string =
+      'a[href], button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])';
+    private lastFocusedElement: HTMLElement | null = null;
+    private trapStack: HTMLElement[] = [];
+
+    constructor() {
+      this.setupGlobalKeyboardHandlers();
+      this.enhanceExistingElements();
+    }
+
+    static getInstance(): FocusManager {
+      if (!FocusManager.instance) {
+        FocusManager.instance = new FocusManager();
+      }
+      return FocusManager.instance;
+    }
+
+    private setupGlobalKeyboardHandlers(): void {
+      document.addEventListener("keydown", (e) => {
+        // ESC key handling
+        if (e.key === "Escape") {
+          this.handleEscapeKey(e);
+        }
+
+        // Tab key handling for focus trapping
+        if (e.key === "Tab") {
+          this.handleTabKey(e);
+        }
+
+        // Arrow key navigation for menus and lists
+        if (
+          ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
+        ) {
+          this.handleArrowKeys(e);
+        }
+
+        // Enter and Space for button-like elements
+        if (e.key === "Enter" || e.key === " ") {
+          this.handleActivationKeys(e);
+        }
+      });
+
+      // Track focus changes
+      document.addEventListener("focusin", (e) => {
+        this.lastFocusedElement = e.target as HTMLElement;
+      });
+    }
+
+    private handleEscapeKey(e: KeyboardEvent): void {
+      const target = e.target as HTMLElement;
+
+      // Close dropdowns
+      const dropdown = target.closest('[aria-expanded="true"]') as HTMLElement;
+      if (dropdown) {
+        dropdown.setAttribute("aria-expanded", "false");
+        dropdown.focus();
+        e.preventDefault();
+      }
+
+      // Close modals
+      const modal = target.closest('[role="dialog"]');
+      if (modal) {
+        this.closeModal(modal as HTMLElement);
+        e.preventDefault();
+      }
+
+      // Exit focus trap
+      if (this.trapStack.length > 0) {
+        this.exitFocusTrap();
+        e.preventDefault();
+      }
+    }
+
+    private handleTabKey(e: KeyboardEvent): void {
+      if (this.trapStack.length === 0) return;
+
+      const currentTrap = this.trapStack[this.trapStack.length - 1];
+      const focusableElements = this.getFocusableElements(currentTrap);
+
+      if (focusableElements.length === 0) return;
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const currentElement = document.activeElement as HTMLElement;
+
+      if (e.shiftKey) {
+        // Shift + Tab (backward)
+        if (currentElement === firstElement) {
+          lastElement.focus();
+          e.preventDefault();
+        }
+      } else {
+        // Tab (forward)
+        if (currentElement === lastElement) {
+          firstElement.focus();
+          e.preventDefault();
+        }
+      }
+    }
+
+    private handleArrowKeys(e: KeyboardEvent): void {
+      const target = e.target as HTMLElement;
+
+      // Handle menu navigation
+      if (target.closest('[role="menu"], [role="menubar"]')) {
+        this.handleMenuNavigation(e, target);
+      }
+
+      // Handle tab navigation
+      if (target.closest('[role="tablist"]')) {
+        this.handleTabNavigation(e, target);
+      }
+
+      // Handle list navigation
+      if (target.closest('[role="listbox"], [role="grid"]')) {
+        this.handleListNavigation(e, target);
+      }
+    }
+
+    private handleActivationKeys(e: KeyboardEvent): void {
+      const target = e.target as HTMLElement;
+
+      // Handle button-like elements that aren't actual buttons
+      if (
+        target.getAttribute("role") === "button" &&
+        target.tagName !== "BUTTON"
+      ) {
+        if (e.key === "Enter" || e.key === " ") {
+          target.click();
+          e.preventDefault();
+        }
+      }
+
+      // Handle tab activation
+      if (target.getAttribute("role") === "tab") {
+        if (e.key === "Enter" || e.key === " ") {
+          target.click();
+          e.preventDefault();
+        }
+      }
+    }
+
+    private handleMenuNavigation(e: KeyboardEvent, target: HTMLElement): void {
+      const menu = target.closest(
+        '[role="menu"], [role="menubar"]'
+      ) as HTMLElement;
+      const items = Array.from(
+        menu.querySelectorAll('[role="menuitem"]')
+      ) as HTMLElement[];
+      const currentIndex = items.indexOf(target);
+
+      let nextIndex = currentIndex;
+
+      switch (e.key) {
+        case "ArrowDown":
+          nextIndex = (currentIndex + 1) % items.length;
+          break;
+        case "ArrowUp":
+          nextIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1;
+          break;
+        case "Home":
+          nextIndex = 0;
+          break;
+        case "End":
+          nextIndex = items.length - 1;
+          break;
+        default:
+          return;
+      }
+
+      items[nextIndex]?.focus();
+      e.preventDefault();
+    }
+
+    private handleTabNavigation(e: KeyboardEvent, target: HTMLElement): void {
+      const tablist = target.closest('[role="tablist"]') as HTMLElement;
+      const tabs = Array.from(
+        tablist.querySelectorAll('[role="tab"]')
+      ) as HTMLElement[];
+      const currentIndex = tabs.indexOf(target);
+
+      let nextIndex = currentIndex;
+
+      switch (e.key) {
+        case "ArrowLeft":
+          nextIndex = currentIndex === 0 ? tabs.length - 1 : currentIndex - 1;
+          break;
+        case "ArrowRight":
+          nextIndex = (currentIndex + 1) % tabs.length;
+          break;
+        case "Home":
+          nextIndex = 0;
+          break;
+        case "End":
+          nextIndex = tabs.length - 1;
+          break;
+        default:
+          return;
+      }
+
+      // Update tab selection
+      tabs.forEach((tab, index) => {
+        tab.setAttribute("aria-selected", String(index === nextIndex));
+        tab.setAttribute("tabindex", index === nextIndex ? "0" : "-1");
+      });
+
+      tabs[nextIndex]?.focus();
+      e.preventDefault();
+    }
+
+    private handleListNavigation(e: KeyboardEvent, target: HTMLElement): void {
+      const list = target.closest(
+        '[role="listbox"], [role="grid"]'
+      ) as HTMLElement;
+      const items = Array.from(
+        list.querySelectorAll('[role="option"], [role="gridcell"]')
+      ) as HTMLElement[];
+      const currentIndex = items.indexOf(target);
+
+      let nextIndex = currentIndex;
+
+      switch (e.key) {
+        case "ArrowDown":
+          nextIndex = (currentIndex + 1) % items.length;
+          break;
+        case "ArrowUp":
+          nextIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1;
+          break;
+        default:
+          return;
+      }
+
+      items[nextIndex]?.focus();
+      e.preventDefault();
+    }
+
+    public trapFocus(element: HTMLElement): void {
+      this.trapStack.push(element);
+      const focusableElements = this.getFocusableElements(element);
+      if (focusableElements.length > 0) {
+        focusableElements[0].focus();
+      }
+    }
+
+    public exitFocusTrap(): void {
+      this.trapStack.pop();
+      if (this.lastFocusedElement) {
+        this.lastFocusedElement.focus();
+      }
+    }
+
+    private closeModal(modal: HTMLElement): void {
+      modal.setAttribute("aria-hidden", "true");
+      modal.style.display = "none";
+      this.exitFocusTrap();
+    }
+
+    private getFocusableElements(container: HTMLElement): HTMLElement[] {
+      return Array.from(
+        container.querySelectorAll(this.focusableElements)
+      ).filter((el) => {
+        const element = el as HTMLElement;
+        return (
+          !element.hasAttribute("disabled") &&
+          element.offsetWidth > 0 &&
+          element.offsetHeight > 0 &&
+          getComputedStyle(element).visibility !== "hidden"
+        );
+      }) as HTMLElement[];
+    }
+
+    private enhanceExistingElements(): void {
+      // Add ARIA attributes to interactive elements that need them
+      document
+        .querySelectorAll("button:not([aria-label]):not([aria-labelledby])")
+        .forEach((button) => {
+          const text = button.textContent?.trim();
+          if (!text) {
+            console.warn("Button without accessible name found:", button);
+          }
+        });
+
+      // Enhance dropdown triggers
+      document
+        .querySelectorAll("[data-dropdown-trigger]")
+        .forEach((trigger) => {
+          if (!trigger.hasAttribute("aria-expanded")) {
+            trigger.setAttribute("aria-expanded", "false");
+          }
+          if (!trigger.hasAttribute("aria-haspopup")) {
+            trigger.setAttribute("aria-haspopup", "true");
+          }
+        });
+
+      // Enhance form inputs
+      document
+        .querySelectorAll("input:not([aria-label]):not([aria-labelledby])")
+        .forEach((input) => {
+          const label = document.querySelector(`label[for="${input.id}"]`);
+          if (!label && !input.hasAttribute("placeholder")) {
+            console.warn("Input without accessible name found:", input);
+          }
+        });
+    }
+
+    public announceToScreenReader(
+      message: string,
+      priority: "polite" | "assertive" = "polite"
+    ): void {
+      const announcer = document.createElement("div");
+      announcer.setAttribute("aria-live", priority);
+      announcer.setAttribute("aria-atomic", "true");
+      announcer.className = "sr-only";
+      announcer.textContent = message;
+
+      document.body.appendChild(announcer);
+
+      setTimeout(() => {
+        document.body.removeChild(announcer);
+      }, 1000);
+    }
+
+    public setFocusToElement(selector: string): void {
+      const element = document.querySelector(selector) as HTMLElement;
+      if (element) {
+        element.focus();
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  }
+
+  // Initialize Focus Manager
+  document.addEventListener("DOMContentLoaded", () => {
+    FocusManager.getInstance();
+  });
+
+  // Expose globally for other components
+  (window as any).FocusManager = FocusManager;
+</script>
+
+<style>
+  /* Screen reader only class */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Focus indicators */
+  *:focus {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+
+  /* High contrast focus for dark mode */
+  .dark *:focus {
+    outline-color: var(--color-primary-400);
+  }
+
+  /* Custom focus styles for specific elements */
+  button:focus,
+  a:focus,
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply ring-primary-500 ring-2 ring-offset-2 outline-none;
+  }
+
+  .dark button:focus,
+  .dark a:focus,
+  .dark input:focus,
+  .dark textarea:focus,
+  .dark select:focus {
+    @apply ring-primary-400 ring-offset-neutral-800;
+  }
+
+  /* Focus within for containers */
+  .nav-dropdown:focus-within .dropdown-menu,
+  .search-container:focus-within .search-dropdown {
+    @apply visible opacity-100;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

@@ -1,8 +1,8 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ site }) => {
   if (!site) {
-    throw new Error('Site URL is required for robots.txt generation');
+    throw new Error("Site URL is required for robots.txt generation");
   }
 
   const robotsTxt = `User-agent: *
@@ -41,8 +41,8 @@ Host: ${site.href}`;
 
   return new Response(robotsTxt, {
     headers: {
-      'Content-Type': 'text/plain',
-      'Cache-Control': 'public, max-age=86400'
-    }
+      "Content-Type": "text/plain",
+      "Cache-Control": "public, max-age=86400",
+    },
   });
 };

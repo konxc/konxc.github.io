@@ -102,12 +102,12 @@ const getRelatedArticles = (
 const relatedArticles = getRelatedArticles(post, 4);
 ---
 
-<BlogSlugLayout 
-  title={post.data.title} 
+<BlogSlugLayout
+  title={post.data.title}
   description={post.data.description}
   image={post.data.image}
   post={post}
-  keywords={post.data.tags?.join(', ')}
+  keywords={post.data.tags?.join(", ")}
   author={post.data.author}
 >
   <!-- Blog Post Header -->

@@ -39,8 +39,8 @@ const serviceLinks = [
 ];
 ---
 
-<header class={`header ${variant} ${className}`}>
-  <nav class="nav-container">
+<header class={`header ${variant} ${className}`} role="banner">
+  <nav class="nav-container" role="navigation" aria-label="Main navigation" id="navigation">
     <div class="container">
       <div class="nav-content">
         <!-- Logo -->
@@ -52,19 +52,25 @@ const serviceLinks = [
 
         <!-- Desktop Navigation -->
         <div class="nav-desktop">
-          <ul class="nav-links">
+          <ul class="nav-links" role="menubar">
             {navigationLinks.map(link => (
-              <li class="nav-item">
+              <li class="nav-item" role="none">
                 {link.name === 'Layanan' ? (
                   <div class="nav-dropdown">
-                    <button class="nav-link dropdown-trigger" aria-expanded="false">
+                    <button 
+                      class="nav-link dropdown-trigger" 
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      aria-controls="services-menu"
+                      role="menuitem"
+                    >
                       {link.name}
-                      <i class="i-mdi-chevron-down dropdown-icon"></i>
+                      <i class="i-mdi-chevron-down dropdown-icon" aria-hidden="true"></i>
                     </button>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu" id="services-menu" role="menu" aria-labelledby="services-trigger">
                       <div class="dropdown-content">
                         {serviceLinks.map(service => (
-                          <a href={service.href} class="dropdown-item">
+                          <a href={service.href} class="dropdown-item" role="menuitem">
                             <div class="dropdown-item-content">
                               <h4 class="dropdown-item-title">{service.name}</h4>
                               <p class="dropdown-item-description">{service.description}</p>
@@ -75,7 +81,7 @@ const serviceLinks = [
                     </div>
                   </div>
                 ) : (
-                  <a href={link.href} class="nav-link">
+                  <a href={link.href} class="nav-link" role="menuitem">
                     {link.name}
                   </a>
                 )}
@@ -89,20 +95,29 @@ const serviceLinks = [
           <!-- Search -->
           {showSearch && (
             <div class="search-container">
-              <button class="search-toggle" aria-label="Search">
-                <i class="i-mdi-magnify"></i>
+              <button 
+                class="search-toggle" 
+                aria-label="Toggle search"
+                aria-expanded="false"
+                aria-controls="search-dropdown"
+                aria-haspopup="true"
+              >
+                <i class="i-mdi-magnify" aria-hidden="true"></i>
               </button>
-              <div class="search-dropdown">
-                <form class="search-form">
+              <div class="search-dropdown" id="search-dropdown" role="search" aria-label="Search form">
+                <form class="search-form" role="search">
                   <div class="search-input-group">
+                    <label for="search-input" class="sr-only">Search articles and services</label>
                     <input 
                       type="search" 
+                      id="search-input"
                       placeholder="Cari artikel, layanan..." 
                       class="search-input"
-                      aria-label="Search"
+                      aria-label="Search articles and services"
+                      autocomplete="off"
                     />
-                    <button type="submit" class="search-submit">
-                      <i class="i-mdi-magnify"></i>
+                    <button type="submit" class="search-submit" aria-label="Submit search">
+                      <i class="i-mdi-magnify" aria-hidden="true"></i>
                     </button>
                   </div>
                 </form>
@@ -133,10 +148,16 @@ const serviceLinks = [
 
           <!-- Mobile Menu Toggle -->
           {showMobileMenu && (
-            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-              <span class="hamburger-line"></span>
-              <span class="hamburger-line"></span>
-              <span class="hamburger-line"></span>
+            <button 
+              class="mobile-menu-toggle" 
+              aria-label="Toggle mobile menu" 
+              aria-expanded="false"
+              aria-controls="mobile-menu"
+              aria-haspopup="true"
+            >
+              <span class="hamburger-line" aria-hidden="true"></span>
+              <span class="hamburger-line" aria-hidden="true"></span>
+              <span class="hamburger-line" aria-hidden="true"></span>
             </button>
           )}
         </div>
@@ -145,7 +166,7 @@ const serviceLinks = [
 
     <!-- Mobile Menu -->
     {showMobileMenu && (
-      <div class="mobile-menu">
+      <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
         <div class="mobile-menu-content">
           <div class="mobile-menu-header">
             <Logo size="sm" variant="default" />

@@ -1,0 +1,68 @@
+---
+// Skip Links Component for Accessibility
+// Provides keyboard navigation shortcuts to main content areas
+
+export interface Props {
+  links?: Array<{
+    href: string;
+    text: string;
+  }>;
+}
+
+const {
+  links = [
+    { href: "#main-content", text: "Skip to main content" },
+    { href: "#navigation", text: "Skip to navigation" },
+    { href: "#footer", text: "Skip to footer" },
+  ],
+} = Astro.props;
+---
+
+<div class="skip-links" aria-label="Skip navigation links">
+  {
+    links.map((link) => (
+      <a href={link.href} class="skip-link" tabindex="0">
+        {link.text}
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .skip-links {
+    position: fixed;
+    top: -100px;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    background: var(--dark-bg-primary);
+    padding: 0.5rem;
+    display: flex;
+    gap: 1rem;
+    transition: top 0.3s ease;
+  }
+
+  .skip-links:focus-within {
+    top: 0;
+  }
+
+  .skip-link {
+    @apply bg-primary-600 rounded-md px-4 py-2 text-sm font-medium text-white no-underline transition-colors;
+  }
+
+  .skip-link:hover,
+  .skip-link:focus {
+    @apply bg-primary-700 ring-offset-primary-600 ring-2 ring-white ring-offset-2 outline-none;
+  }
+
+  .skip-link:focus {
+    @apply relative z-10;
+  }
+
+  /* Ensure skip links are visible when focused */
+  .skip-link:focus {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+</style>
