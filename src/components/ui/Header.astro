@@ -1,46 +1,71 @@
 ---
 // Header Component
-import Logo from '@components/ui/Logo.astro';
-import ThemeToggle from '@components/ui/ThemeToggle.astro';
+import Logo from "@components/ui/Logo.astro";
+import ThemeToggle from "@components/ui/ThemeToggle.astro";
 
 export interface Props {
   className?: string;
-  variant?: 'default' | 'transparent' | 'minimal';
+  variant?: "default" | "transparent" | "minimal";
   showSearch?: boolean;
   showDarkMode?: boolean;
   showMobileMenu?: boolean;
 }
 
-const { 
-  className = '',
-  variant = 'default',
+const {
+  className = "",
+  variant = "default",
   showSearch = true,
   showDarkMode = true,
-  showMobileMenu = true
+  showMobileMenu = true,
 } = Astro.props;
 
 // Navigation links
 const navigationLinks = [
-  { name: 'Beranda', href: '/', current: false },
-  { name: 'Layanan', href: '/services', current: false },
-  { name: 'Blog', href: '/blog', current: false },
-  { name: 'Kontributor', href: '/contributors', current: false },
-  { name: 'Tentang', href: '/about', current: false },
-  { name: 'Kontak', href: '/contact', current: false }
+  { name: "Beranda", href: "/", current: false },
+  { name: "Layanan", href: "/services", current: false },
+  { name: "Blog", href: "/blog", current: false },
+  { name: "Kontributor", href: "/contributors", current: false },
+  { name: "Tentang", href: "/about", current: false },
+  { name: "Kontak", href: "/contact", current: false },
 ];
 
 // Service dropdown links
 const serviceLinks = [
-  { name: 'IT Support', href: '/services/it-support', description: 'Dukungan teknis 24/7' },
-  { name: 'Software Development', href: '/services/software-development', description: 'Pengembangan aplikasi custom' },
-  { name: 'Digital Branding', href: '/services/digital-branding', description: 'Strategi branding digital' },
-  { name: 'Retail Technology', href: '/services/retail-tech', description: 'Solusi teknologi retail' },
-  { name: 'Cloud & SaaS', href: '/services/cloud-saas', description: 'Layanan cloud dan SaaS' }
+  {
+    name: "IT Support",
+    href: "/services/it-support",
+    description: "Dukungan teknis 24/7",
+  },
+  {
+    name: "Software Development",
+    href: "/services/software-development",
+    description: "Pengembangan aplikasi custom",
+  },
+  {
+    name: "Digital Branding",
+    href: "/services/digital-branding",
+    description: "Strategi branding digital",
+  },
+  {
+    name: "Retail Technology",
+    href: "/services/retail-tech",
+    description: "Solusi teknologi retail",
+  },
+  {
+    name: "Cloud & SaaS",
+    href: "/services/cloud-saas",
+    description: "Layanan cloud dan SaaS",
+  },
 ];
 ---
 
 <header class={`header ${variant} ${className}`} role="banner">
-  <nav class="nav-container" role="navigation" aria-label="Main navigation" id="navigation">
+  <nav
+    class="nav-container"
+    role="navigation"
+    aria-label="Main navigation"
+    id="navigation"
+  >
     <div class="container">
       <div class="nav-content">
         <!-- Logo -->
@@ -53,92 +78,121 @@ const serviceLinks = [
         <!-- Desktop Navigation -->
         <div class="nav-desktop">
           <ul class="nav-links" role="menubar">
-            {navigationLinks.map(link => (
-              <li class="nav-item" role="none">
-                {link.name === 'Layanan' ? (
-                  <div class="nav-dropdown">
-                    <button 
-                      class="nav-link dropdown-trigger" 
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      aria-controls="services-menu"
-                      role="menuitem"
-                    >
-                      {link.name}
-                      <i class="i-mdi-chevron-down dropdown-icon" aria-hidden="true"></i>
-                    </button>
-                    <div class="dropdown-menu" id="services-menu" role="menu" aria-labelledby="services-trigger">
-                      <div class="dropdown-content">
-                        {serviceLinks.map(service => (
-                          <a href={service.href} class="dropdown-item" role="menuitem">
-                            <div class="dropdown-item-content">
-                              <h4 class="dropdown-item-title">{service.name}</h4>
-                              <p class="dropdown-item-description">{service.description}</p>
-                            </div>
-                          </a>
-                        ))}
+            {
+              navigationLinks.map((link) => (
+                <li class="nav-item" role="none">
+                  {link.name === "Layanan" ? (
+                    <div class="nav-dropdown">
+                      <button
+                        class="nav-link dropdown-trigger"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        aria-controls="services-menu"
+                        role="menuitem"
+                      >
+                        {link.name}
+                        <i
+                          class="i-mdi-chevron-down dropdown-icon"
+                          aria-hidden="true"
+                        />
+                      </button>
+                      <div
+                        class="dropdown-menu"
+                        id="services-menu"
+                        role="menu"
+                        aria-labelledby="services-trigger"
+                      >
+                        <div class="dropdown-content">
+                          {serviceLinks.map((service) => (
+                            <a
+                              href={service.href}
+                              class="dropdown-item"
+                              role="menuitem"
+                            >
+                              <div class="dropdown-item-content">
+                                <h4 class="dropdown-item-title">
+                                  {service.name}
+                                </h4>
+                                <p class="dropdown-item-description">
+                                  {service.description}
+                                </p>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ) : (
-                  <a href={link.href} class="nav-link" role="menuitem">
-                    {link.name}
-                  </a>
-                )}
-              </li>
-            ))}
+                  ) : (
+                    <a href={link.href} class="nav-link" role="menuitem">
+                      {link.name}
+                    </a>
+                  )}
+                </li>
+              ))
+            }
           </ul>
         </div>
 
         <!-- Right Side Actions -->
         <div class="nav-actions">
           <!-- Search -->
-          {showSearch && (
-            <div class="search-container">
-              <button 
-                class="search-toggle" 
-                aria-label="Toggle search"
-                aria-expanded="false"
-                aria-controls="search-dropdown"
-                aria-haspopup="true"
-              >
-                <i class="i-mdi-magnify" aria-hidden="true"></i>
-              </button>
-              <div class="search-dropdown" id="search-dropdown" role="search" aria-label="Search form">
-                <form class="search-form" role="search">
-                  <div class="search-input-group">
-                    <label for="search-input" class="sr-only">Search articles and services</label>
-                    <input 
-                      type="search" 
-                      id="search-input"
-                      placeholder="Cari artikel, layanan..." 
-                      class="search-input"
-                      aria-label="Search articles and services"
-                      autocomplete="off"
-                    />
-                    <button type="submit" class="search-submit" aria-label="Submit search">
-                      <i class="i-mdi-magnify" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </form>
-                <div class="search-suggestions">
-                  <div class="search-suggestion-item">
-                    <i class="i-mdi-clock-outline"></i>
-                    <span>Pencarian terbaru</span>
-                  </div>
-                  <div class="search-suggestion-item">
-                    <i class="i-mdi-trending-up"></i>
-                    <span>Artikel populer</span>
+          {
+            showSearch && (
+              <div class="search-container">
+                <button
+                  class="search-toggle"
+                  aria-label="Toggle search"
+                  aria-expanded="false"
+                  aria-controls="search-dropdown"
+                  aria-haspopup="true"
+                >
+                  <i class="i-mdi-magnify" aria-hidden="true" />
+                </button>
+                <div
+                  class="search-dropdown"
+                  id="search-dropdown"
+                  role="search"
+                  aria-label="Search form"
+                >
+                  <form class="search-form" role="search">
+                    <div class="search-input-group">
+                      <label for="search-input" class="sr-only">
+                        Search articles and services
+                      </label>
+                      <input
+                        type="search"
+                        id="search-input"
+                        placeholder="Cari artikel, layanan..."
+                        class="search-input"
+                        aria-label="Search articles and services"
+                        autocomplete="off"
+                      />
+                      <button
+                        type="submit"
+                        class="search-submit"
+                        aria-label="Submit search"
+                      >
+                        <i class="i-mdi-magnify" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </form>
+                  <div class="search-suggestions">
+                    <div class="search-suggestion-item">
+                      <i class="i-mdi-clock-outline" />
+                      <span>Pencarian terbaru</span>
+                    </div>
+                    <div class="search-suggestion-item">
+                      <i class="i-mdi-trending-up" />
+                      <span>Artikel populer</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )
+          }
 
           <!-- Dark Mode Toggle -->
-          {showDarkMode && (
-            <ThemeToggle size="md" variant="icon" />
-          )}
+          {showDarkMode && <ThemeToggle size="md" variant="icon" />}
 
           <!-- CTA Button -->
           <a href="/contact" class="cta-button">
@@ -147,89 +201,103 @@ const serviceLinks = [
           </a>
 
           <!-- Mobile Menu Toggle -->
-          {showMobileMenu && (
-            <button 
-              class="mobile-menu-toggle" 
-              aria-label="Toggle mobile menu" 
-              aria-expanded="false"
-              aria-controls="mobile-menu"
-              aria-haspopup="true"
-            >
-              <span class="hamburger-line" aria-hidden="true"></span>
-              <span class="hamburger-line" aria-hidden="true"></span>
-              <span class="hamburger-line" aria-hidden="true"></span>
-            </button>
-          )}
+          {
+            showMobileMenu && (
+              <button
+                class="mobile-menu-toggle"
+                aria-label="Toggle mobile menu"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
+                aria-haspopup="true"
+              >
+                <span class="hamburger-line" aria-hidden="true" />
+                <span class="hamburger-line" aria-hidden="true" />
+                <span class="hamburger-line" aria-hidden="true" />
+              </button>
+            )
+          }
         </div>
       </div>
     </div>
 
     <!-- Mobile Menu -->
-    {showMobileMenu && (
-      <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
-        <div class="mobile-menu-content">
-          <div class="mobile-menu-header">
-            <Logo size="sm" variant="default" />
-            <button class="mobile-menu-close" aria-label="Close mobile menu">
-              <i class="i-mdi-close"></i>
-            </button>
-          </div>
-          
-          <div class="mobile-menu-body">
-            <ul class="mobile-nav-links">
-              {navigationLinks.map(link => (
-                <li class="mobile-nav-item">
-                  {link.name === 'Layanan' ? (
-                    <div class="mobile-nav-dropdown">
-                      <button class="mobile-nav-link mobile-dropdown-trigger">
-                        {link.name}
-                        <i class="i-mdi-chevron-down"></i>
-                      </button>
-                      <div class="mobile-dropdown-content">
-                        {serviceLinks.map(service => (
-                          <a href={service.href} class="mobile-dropdown-item">
-                            <div class="mobile-dropdown-item-content">
-                              <h4 class="mobile-dropdown-item-title">{service.name}</h4>
-                              <p class="mobile-dropdown-item-description">{service.description}</p>
-                            </div>
-                          </a>
-                        ))}
+    {
+      showMobileMenu && (
+        <div
+          class="mobile-menu"
+          id="mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mobile-menu-title"
+        >
+          <div class="mobile-menu-content">
+            <div class="mobile-menu-header">
+              <Logo size="sm" variant="default" />
+              <button class="mobile-menu-close" aria-label="Close mobile menu">
+                <i class="i-mdi-close" />
+              </button>
+            </div>
+
+            <div class="mobile-menu-body">
+              <ul class="mobile-nav-links">
+                {navigationLinks.map((link) => (
+                  <li class="mobile-nav-item">
+                    {link.name === "Layanan" ? (
+                      <div class="mobile-nav-dropdown">
+                        <button class="mobile-nav-link mobile-dropdown-trigger">
+                          {link.name}
+                          <i class="i-mdi-chevron-down" />
+                        </button>
+                        <div class="mobile-dropdown-content">
+                          {serviceLinks.map((service) => (
+                            <a href={service.href} class="mobile-dropdown-item">
+                              <div class="mobile-dropdown-item-content">
+                                <h4 class="mobile-dropdown-item-title">
+                                  {service.name}
+                                </h4>
+                                <p class="mobile-dropdown-item-description">
+                                  {service.description}
+                                </p>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <a href={link.href} class="mobile-nav-link">
-                      {link.name}
-                    </a>
-                  )}
-                </li>
-              ))}
-            </ul>
-            
-            <div class="mobile-menu-actions">
-              <a href="/contact" class="mobile-cta-button">
-                <span>Hubungi Kami</span>
-                <i class="i-mdi-arrow-right"></i>
-              </a>
+                    ) : (
+                      <a href={link.href} class="mobile-nav-link">
+                        {link.name}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+
+              <div class="mobile-menu-actions">
+                <a href="/contact" class="mobile-cta-button">
+                  <span>Hubungi Kami</span>
+                  <i class="i-mdi-arrow-right" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    )}
+      )
+    }
   </nav>
 </header>
 
 <style>
   @reference "@/styles/global.css";
   .header {
-    @apply bg-white border-b border-neutral-200 sticky top-0 z-50;
+    @apply sticky top-0 z-50 border-b border-neutral-200 bg-white;
   }
-  
+
   .header.transparent {
-    @apply bg-transparent border-transparent;
+    @apply border-transparent bg-transparent;
   }
-  
+
   .header.minimal {
-    @apply bg-neutral-50 border-neutral-100;
+    @apply border-neutral-100 bg-neutral-50;
   }
 
   .nav-container {
@@ -237,7 +305,7 @@ const serviceLinks = [
   }
 
   .nav-content {
-    @apply flex items-center justify-between h-16 lg:h-20;
+    @apply flex h-16 items-center justify-between lg:h-20;
   }
 
   .nav-brand {
@@ -249,7 +317,7 @@ const serviceLinks = [
   }
 
   .nav-desktop {
-    @apply hidden lg:flex flex-1 justify-center;
+    @apply hidden flex-1 justify-center lg:flex;
   }
 
   .nav-links {
@@ -261,7 +329,7 @@ const serviceLinks = [
   }
 
   .nav-link {
-    @apply text-neutral-700 hover:text-primary-600 transition-colors font-medium text-sm;
+    @apply hover:text-primary-600 text-sm font-medium text-neutral-700 transition-colors;
   }
 
   .nav-dropdown {
@@ -281,19 +349,19 @@ const serviceLinks = [
   }
 
   .dropdown-menu {
-    @apply absolute top-full left-0 mt-2 w-80 opacity-0 invisible transition-all duration-200;
+    @apply invisible absolute top-full left-0 mt-2 w-80 opacity-0 transition-all duration-200;
   }
 
   .dropdown-trigger[aria-expanded="true"] + .dropdown-menu {
-    @apply opacity-100 visible;
+    @apply visible opacity-100;
   }
 
   .dropdown-content {
-    @apply bg-white rounded-lg shadow-lg border border-neutral-200 p-2;
+    @apply rounded-lg border border-neutral-200 bg-white p-2 shadow-lg;
   }
 
   .dropdown-item {
-    @apply block p-3 rounded-md hover:bg-neutral-50 transition-colors;
+    @apply block rounded-md p-3 transition-colors hover:bg-neutral-50;
   }
 
   .dropdown-item-content {
@@ -301,7 +369,7 @@ const serviceLinks = [
   }
 
   .dropdown-item-title {
-    @apply font-semibold text-neutral-900 text-sm;
+    @apply text-sm font-semibold text-neutral-900;
   }
 
   .dropdown-item-description {
@@ -317,19 +385,19 @@ const serviceLinks = [
   }
 
   .search-toggle {
-    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+    @apply hover:text-primary-600 p-2 text-neutral-600 transition-colors;
   }
 
   .search-dropdown {
-    @apply absolute top-full right-0 mt-2 w-80 opacity-0 invisible transition-all duration-200;
+    @apply invisible absolute top-full right-0 mt-2 w-80 opacity-0 transition-all duration-200;
   }
 
   .search-toggle[aria-expanded="true"] + .search-dropdown {
-    @apply opacity-100 visible;
+    @apply visible opacity-100;
   }
 
   .search-form {
-    @apply bg-white rounded-lg shadow-lg border border-neutral-200 p-2;
+    @apply rounded-lg border border-neutral-200 bg-white p-2 shadow-lg;
   }
 
   .search-input-group {
@@ -337,11 +405,11 @@ const serviceLinks = [
   }
 
   .search-input {
-    @apply flex-1 px-3 py-2 text-sm border-0 outline-none;
+    @apply flex-1 border-0 px-3 py-2 text-sm outline-none;
   }
 
   .search-submit {
-    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+    @apply hover:text-primary-600 p-2 text-neutral-600 transition-colors;
   }
 
   .search-suggestions {
@@ -349,24 +417,23 @@ const serviceLinks = [
   }
 
   .search-suggestion-item {
-    @apply flex items-center gap-2 px-3 py-2 text-sm text-neutral-600 hover:bg-neutral-50 rounded cursor-pointer;
+    @apply flex cursor-pointer items-center gap-2 rounded px-3 py-2 text-sm text-neutral-600 hover:bg-neutral-50;
   }
 
-
   .cta-button {
-    @apply hidden sm:flex items-center gap-2 bg-primary-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors hover:bg-primary-700;
+    @apply bg-primary-600 hover:bg-primary-700 hidden items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors sm:flex;
   }
 
   .mobile-menu-toggle {
-    @apply lg:hidden p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+    @apply hover:text-primary-600 p-2 text-neutral-600 transition-colors lg:hidden;
   }
 
   .hamburger-line {
-    @apply block w-5 h-0.5 bg-current mb-1 last:mb-0 transition-all duration-200;
+    @apply mb-1 block h-0.5 w-5 bg-current transition-all duration-200 last:mb-0;
   }
 
   .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(1) {
-    @apply rotate-45 translate-y-1.5;
+    @apply translate-y-1.5 rotate-45;
   }
 
   .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(2) {
@@ -374,27 +441,27 @@ const serviceLinks = [
   }
 
   .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(3) {
-    @apply -rotate-45 -translate-y-1.5;
+    @apply -translate-y-1.5 -rotate-45;
   }
 
   .mobile-menu {
-    @apply fixed inset-0 z-50 lg:hidden opacity-0 invisible transition-all duration-300;
+    @apply invisible fixed inset-0 z-50 opacity-0 transition-all duration-300 lg:hidden;
   }
 
   .mobile-menu.active {
-    @apply opacity-100 visible;
+    @apply visible opacity-100;
   }
 
   .mobile-menu-content {
-    @apply bg-white h-full flex flex-col;
+    @apply flex h-full flex-col bg-white;
   }
 
   .mobile-menu-header {
-    @apply flex items-center justify-between p-4 border-b border-neutral-200;
+    @apply flex items-center justify-between border-b border-neutral-200 p-4;
   }
 
   .mobile-menu-close {
-    @apply p-2 text-neutral-600 hover:text-primary-600 transition-colors;
+    @apply hover:text-primary-600 p-2 text-neutral-600 transition-colors;
   }
 
   .mobile-menu-body {
@@ -410,7 +477,7 @@ const serviceLinks = [
   }
 
   .mobile-nav-link {
-    @apply block py-4 text-neutral-700 hover:text-primary-600 transition-colors font-medium;
+    @apply hover:text-primary-600 block py-4 font-medium text-neutral-700 transition-colors;
   }
 
   .mobile-nav-dropdown {
@@ -418,11 +485,11 @@ const serviceLinks = [
   }
 
   .mobile-dropdown-trigger {
-    @apply flex items-center justify-between w-full;
+    @apply flex w-full items-center justify-between;
   }
 
   .mobile-dropdown-content {
-    @apply pl-4 space-y-2;
+    @apply space-y-2 pl-4;
   }
 
   .mobile-dropdown-item {
@@ -434,7 +501,7 @@ const serviceLinks = [
   }
 
   .mobile-dropdown-item-title {
-    @apply font-semibold text-neutral-900 text-sm;
+    @apply text-sm font-semibold text-neutral-900;
   }
 
   .mobile-dropdown-item-description {
@@ -446,28 +513,28 @@ const serviceLinks = [
   }
 
   .mobile-cta-button {
-    @apply flex items-center justify-center gap-2 bg-primary-600 text-white px-4 py-3 rounded-lg font-medium transition-colors hover:bg-primary-700;
+    @apply bg-primary-600 hover:bg-primary-700 flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white transition-colors;
   }
 
   /* Dark mode styles */
   .dark .header {
-    @apply bg-neutral-900 border-neutral-700;
+    @apply border-neutral-700 bg-neutral-900;
   }
 
   .dark .header.transparent {
-    @apply bg-transparent border-transparent;
+    @apply border-transparent bg-transparent;
   }
 
   .dark .header.minimal {
-    @apply bg-neutral-800 border-neutral-700;
+    @apply border-neutral-700 bg-neutral-800;
   }
 
   .dark .nav-link {
-    @apply text-neutral-300 hover:text-primary-400;
+    @apply hover:text-primary-400 text-neutral-300;
   }
 
   .dark .dropdown-content {
-    @apply bg-neutral-800 border-neutral-700;
+    @apply border-neutral-700 bg-neutral-800;
   }
 
   .dark .dropdown-item {
@@ -483,7 +550,7 @@ const serviceLinks = [
   }
 
   .dark .search-form {
-    @apply bg-neutral-800 border-neutral-700;
+    @apply border-neutral-700 bg-neutral-800;
   }
 
   .dark .search-input {
@@ -503,7 +570,7 @@ const serviceLinks = [
   }
 
   .dark .mobile-nav-link {
-    @apply text-neutral-300 hover:text-primary-400;
+    @apply hover:text-primary-400 text-neutral-300;
   }
 
   .dark .mobile-nav-item {
@@ -521,78 +588,80 @@ const serviceLinks = [
 
 <script>
   // Header functionality
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener("DOMContentLoaded", function () {
     // Mobile menu toggle
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const mobileMenuClose = document.querySelector('.mobile-menu-close');
+    const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+    const mobileMenu = document.querySelector(".mobile-menu");
+    const mobileMenuClose = document.querySelector(".mobile-menu-close");
 
     if (mobileMenuToggle && mobileMenu) {
-      mobileMenuToggle.addEventListener('click', function(this: HTMLElement) {
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', String(!isExpanded));
-        mobileMenu.classList.toggle('active');
+      mobileMenuToggle.addEventListener("click", function (this: HTMLElement) {
+        const isExpanded = this.getAttribute("aria-expanded") === "true";
+        this.setAttribute("aria-expanded", String(!isExpanded));
+        mobileMenu.classList.toggle("active");
       });
     }
 
     if (mobileMenuClose && mobileMenu) {
-      mobileMenuClose.addEventListener('click', function() {
-        mobileMenuToggle?.setAttribute('aria-expanded', 'false');
-        mobileMenu.classList.remove('active');
+      mobileMenuClose.addEventListener("click", function () {
+        mobileMenuToggle?.setAttribute("aria-expanded", "false");
+        mobileMenu.classList.remove("active");
       });
     }
 
     // Search toggle
-    const searchToggle = document.querySelector('.search-toggle');
-    const searchDropdown = document.querySelector('.search-dropdown');
+    const searchToggle = document.querySelector(".search-toggle");
+    const searchDropdown = document.querySelector(".search-dropdown");
 
     if (searchToggle && searchDropdown) {
-      searchToggle.addEventListener('click', function(this: HTMLElement) {
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', String(!isExpanded));
-        searchDropdown.classList.toggle('opacity-100');
-        searchDropdown.classList.toggle('visible');
+      searchToggle.addEventListener("click", function (this: HTMLElement) {
+        const isExpanded = this.getAttribute("aria-expanded") === "true";
+        this.setAttribute("aria-expanded", String(!isExpanded));
+        searchDropdown.classList.toggle("opacity-100");
+        searchDropdown.classList.toggle("visible");
       });
     }
 
     // Dropdown menus
-    const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
-    
-    dropdownTriggers.forEach(trigger => {
-      trigger.addEventListener('click', function(this: HTMLElement, e: Event) {
+    const dropdownTriggers = document.querySelectorAll(".dropdown-trigger");
+
+    dropdownTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", function (this: HTMLElement, e: Event) {
         e.preventDefault();
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-        
+        const isExpanded = this.getAttribute("aria-expanded") === "true";
+
         // Close all other dropdowns
-        dropdownTriggers.forEach(otherTrigger => {
+        dropdownTriggers.forEach((otherTrigger) => {
           if (otherTrigger !== this) {
-            otherTrigger.setAttribute('aria-expanded', 'false');
+            otherTrigger.setAttribute("aria-expanded", "false");
             const otherMenu = otherTrigger.nextElementSibling;
             if (otherMenu) {
-              otherMenu.classList.remove('opacity-100', 'visible');
+              otherMenu.classList.remove("opacity-100", "visible");
             }
           }
         });
-        
+
         // Toggle current dropdown
-        this.setAttribute('aria-expanded', String(!isExpanded));
+        this.setAttribute("aria-expanded", String(!isExpanded));
         const menu = this.nextElementSibling;
         if (menu) {
-          menu.classList.toggle('opacity-100');
-          menu.classList.toggle('visible');
+          menu.classList.toggle("opacity-100");
+          menu.classList.toggle("visible");
         }
       });
     });
 
     // Mobile dropdown menus
-    const mobileDropdownTriggers = document.querySelectorAll('.mobile-dropdown-trigger');
-    
-    mobileDropdownTriggers.forEach(trigger => {
-      trigger.addEventListener('click', function(this: HTMLElement, e: Event) {
+    const mobileDropdownTriggers = document.querySelectorAll(
+      ".mobile-dropdown-trigger"
+    );
+
+    mobileDropdownTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", function (this: HTMLElement, e: Event) {
         e.preventDefault();
         const content = this.nextElementSibling;
         if (content) {
-          content.classList.toggle('hidden');
+          content.classList.toggle("hidden");
         }
       });
     });
@@ -600,32 +669,32 @@ const serviceLinks = [
     // Dark mode is now handled by ThemeToggle component
 
     // Close dropdowns when clicking outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener("click", function (e) {
       const target = e.target as HTMLElement;
-      if (!target?.closest('.nav-dropdown')) {
-        dropdownTriggers.forEach(trigger => {
-          trigger.setAttribute('aria-expanded', 'false');
+      if (!target?.closest(".nav-dropdown")) {
+        dropdownTriggers.forEach((trigger) => {
+          trigger.setAttribute("aria-expanded", "false");
           const menu = trigger.nextElementSibling;
           if (menu) {
-            menu.classList.remove('opacity-100', 'visible');
+            menu.classList.remove("opacity-100", "visible");
           }
         });
       }
-      
-      if (!target?.closest('.search-container')) {
+
+      if (!target?.closest(".search-container")) {
         if (searchToggle && searchDropdown) {
-          searchToggle.setAttribute('aria-expanded', 'false');
-          searchDropdown.classList.remove('opacity-100', 'visible');
+          searchToggle.setAttribute("aria-expanded", "false");
+          searchDropdown.classList.remove("opacity-100", "visible");
         }
       }
     });
 
     // Search functionality
-    const searchForm = document.querySelector('.search-form');
-    const searchInput = document.querySelector('.search-input');
-    
+    const searchForm = document.querySelector(".search-form");
+    const searchInput = document.querySelector(".search-input");
+
     if (searchForm && searchInput) {
-      searchForm.addEventListener('submit', function(e) {
+      searchForm.addEventListener("submit", function (e) {
         e.preventDefault();
         const query = (searchInput as HTMLInputElement).value.trim();
         if (query) {
