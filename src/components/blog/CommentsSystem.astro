@@ -668,18 +668,7 @@ const mockComments = [
   }
 
   .comment-form-container {
-    @apply mb-8 p-6 rounded-2xl border;
-    background: linear-gradient(135deg, 
-      #faf9f7 0%, 
-      #f5f3f0 30%, 
-      #f0ede8 70%, 
-      #ebe7e0 100%
-    );
-    border-color: rgba(148, 163, 184, 0.15);
-    box-shadow: 
-      0 8px 20px rgba(148, 163, 184, 0.06),
-      0 3px 8px rgba(148, 163, 184, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    @apply mb-8 cream-container;
   }
 
   .comment-form {
@@ -691,28 +680,12 @@ const mockComments = [
   }
 
   .form-label {
-    @apply block text-sm font-medium text-slate-700 mb-2;
+    @apply block text-sm font-medium cream-text-primary mb-2;
   }
 
   .form-input,
   .form-textarea {
-    @apply w-full px-4 py-3 border-2 rounded-lg text-slate-700 placeholder-slate-400 bg-gradient-to-br from-white/95 to-stone-50/90 backdrop-blur-sm transition-all duration-300 font-medium;
-    border-color: rgba(148, 163, 184, 0.2);
-    box-shadow: 
-      0 3px 10px rgba(148, 163, 184, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      inset 0 -1px 0 rgba(148, 163, 184, 0.08);
-  }
-
-  .form-input:focus,
-  .form-textarea:focus {
-    @apply outline-none ring-2;
-    border-color: rgba(107, 114, 128, 0.35);
-    ring-color: rgba(107, 114, 128, 0.25);
-    box-shadow: 
-      0 6px 18px rgba(148, 163, 184, 0.12),
-      0 0 0 3px rgba(107, 114, 128, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    @apply cream-input placeholder-elegant;
   }
 
   .form-textarea {
@@ -720,7 +693,7 @@ const mockComments = [
   }
 
   .char-counter {
-    @apply text-xs text-slate-500 text-right font-medium;
+    @apply text-xs cream-text-muted text-right font-medium;
   }
 
   .char-counter .over-limit {
