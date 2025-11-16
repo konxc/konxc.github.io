@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerbang Pilihan Layanan Digital</title>
+    <!-- Memuat Tailwind CSS CDN untuk styling yang responsif dan cepat -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Memuat Font Inter dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Menggunakan Lucide Icons untuk ikon yang bersih dan modern -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Mengatur font default Inter dan styling dasar */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9; /* Latar belakang abu-abu muda */
+        }
+        /* Custom CSS untuk efek transisi halus pada kartu layanan */
+        .service-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+        /* Efek hover: sedikit naik dan bayangan yang lebih kuat */
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px -5px rgba(100, 116, 139, 0.2), 0 10px 10px -5px rgba(100, 116, 139, 0.04);
+        }
+        /* Styling untuk modal (popup) */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 50; /* Pastikan modal di atas konten lain */
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Header / Hero Section -->
+    <header class="bg-white py-12 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <!-- Judul utama yang berorientasi solusi -->
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">
+                Temukan Solusi Digital Sempurna untuk Bisnis Anda
+            </h1>
+            <!-- Subtitle yang menjelaskan tujuan halaman -->
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Pilih layanan yang paling sesuai dengan kebutuhan dan tahap pertumbuhan perusahaan Anda. Klik untuk detail!
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content: Daftar Layanan -->
+    <main class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Grid Layanan: Responsif (1 kolom di mobile, 3 kolom di desktop) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kartu Layanan 1: Pengembangan Web & Aplikasi -->
+                <div class="service-card bg-white p-6 rounded-xl shadow-xl border border-gray-100 cursor-pointer" onclick="openModal('Pengembangan Web & Aplikasi', 'Buat website atau aplikasi seluler yang cepat, aman, dan berorientasi konversi. Kami menggunakan teknologi terkini (React, Angular, dsb.) untuk memastikan performa maksimal. Layanan ini cocok untuk startup, e-commerce, atau perusahaan yang membutuhkan sistem kustom.', 'code', 'Mulai Proyek Web')">
+                    <!-- Ikon yang representatif -->
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+                        <i data-lucide="code" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Pengembangan Web & Aplikasi</h3>
+                    <p class="text-gray-500 text-sm mb-4">Membangun platform digital kustom dari nol hingga siap diluncurkan.</p>
+                    <!-- CTA yang spesifik -->
+                    <span class="inline-flex items-center text-indigo-600 font-semibold text-sm hover:text-indigo-800">
+                        Lihat Detail &rarr;
+                    </span>
+                </div>
+
+                <!-- Kartu Layanan 2: Strategi Digital & Pemasaran -->
+                <div class="service-card bg-white p-6 rounded-xl shadow-xl border border-gray-100 cursor-pointer" onclick="openModal('Strategi Digital & Pemasaran', 'Kami bantu merumuskan dan mengimplementasikan strategi pemasaran digital yang efektif (SEO, SEM, Social Media, Content Marketing). Tingkatkan visibilitas dan jangkauan audiens Anda.', 'megaphone', 'Konsultasi Strategi Gratis')">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-100 text-green-600 mb-4">
+                        <i data-lucide="megaphone" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Strategi Digital & Pemasaran</h3>
+                    <p class="text-gray-500 text-sm mb-4">Rencanakan, luncurkan, dan optimalkan kampanye pemasaran digital Anda.</p>
+                    <span class="inline-flex items-center text-green-600 font-semibold text-sm hover:text-green-800">
+                        Lihat Detail &rarr;
+                    </span>
+                </div>
+
+                <!-- Kartu Layanan 3: Desain UX/UI & Branding -->
+                <div class="service-card bg-white p-6 rounded-xl shadow-xl border border-gray-100 cursor-pointer" onclick="openModal('Desain UX/UI & Branding', 'Menciptakan identitas visual merek (logo, warna, gaya) dan merancang antarmuka pengguna (UI) yang intuitif dan pengalaman pengguna (UX) yang menyenangkan.', 'palette', 'Lihat Portofolio Desain')">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-pink-100 text-pink-600 mb-4">
+                        <i data-lucide="palette" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Desain UX/UI & Branding</h3>
+                    <p class="text-gray-500 text-sm mb-4">Fokus pada estetika, kemudahan penggunaan, dan konsistensi merek.</p>
+                    <span class="inline-flex items-center text-pink-600 font-semibold text-sm hover:text-pink-800">
+                        Lihat Detail &rarr;
+                    </span>
+                </div>
+
+                <!-- Kartu Layanan 4: Otomatisasi & Integrasi Sistem -->
+                <div class="service-card bg-white p-6 rounded-xl shadow-xl border border-gray-100 cursor-pointer" onclick="openModal('Otomatisasi & Integrasi Sistem', 'Mengintegrasikan berbagai sistem (CRM, ERP, database) dan mengotomatisasi alur kerja untuk meningkatkan efisiensi operasional.', 'settings', 'Ajukan Permintaan Otomatisasi')">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 text-yellow-600 mb-4">
+                        <i data-lucide="settings" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Otomatisasi & Integrasi Sistem</h3>
+                    <p class="text-gray-500 text-sm mb-4">Membuat proses bisnis berjalan mulus tanpa intervensi manual yang berlebihan.</p>
+                    <span class="inline-flex items-center text-yellow-600 font-semibold text-sm hover:text-yellow-800">
+                        Lihat Detail &rarr;
+                    </span>
+                </div>
+
+                <!-- Kartu Layanan 5: Konsultasi Teknologi (Tech Audit) -->
+                <div class="service-card bg-white p-6 rounded-xl shadow-xl border border-gray-100 cursor-pointer" onclick="openModal('Konsultasi Teknologi (Tech Audit)', 'Analisis mendalam terhadap infrastruktur, keamanan, dan efisiensi teknologi yang Anda gunakan saat ini. Dapatkan rekomendasi untuk perbaikan dan skalabilitas.', 'clipboard-check', 'Jadwalkan Audit')">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-cyan-100 text-cyan-600 mb-4">
+                        <i data-lucide="clipboard-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Konsultasi Teknologi</h3>
+                    <p class="text-gray-500 text-sm mb-4">Audit independen untuk memastikan pondasi teknologi Anda kuat dan *future-proof*.</p>
+                    <span class="inline-flex items-center text-cyan-600 font-semibold text-sm hover:text-cyan-800">
+                        Lihat Detail &rarr;
+                    </span>
+                </div>
+
+                <!-- Kartu Layanan 6: Managed Services & Support -->
+                <div class="service-card bg-white p-6 rounded-xl shadow-xl border border-gray-100 cursor-pointer" onclick="openModal('Managed Services & Support', 'Dukungan teknis 24/7 dan pemeliharaan proaktif untuk semua produk digital Anda. Fokus pada bisnis Anda, biarkan kami yang mengurus teknisnya.', 'life-buoy', 'Ajukan Kontrak Layanan')">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-red-100 text-red-600 mb-4">
+                        <i data-lucide="life-buoy" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Managed Services & Support</h3>
+                    <p class="text-gray-500 text-sm mb-4">Pemeliharaan, pembaruan, dan dukungan teknis berkelanjutan.</p>
+                    <span class="inline-flex items-center text-red-600 font-semibold text-sm hover:text-red-800">
+                        Lihat Detail &rarr;
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Quick Contact Button (Contoh CTA Sekunder) -->
+    <a href="#" class="fixed bottom-6 right-6 p-4 bg-indigo-600 text-white rounded-full shadow-2xl hover:bg-indigo-700 transition duration-300 transform hover:scale-105" aria-label="Hubungi Kami Sekarang">
+        <i data-lucide="message-square" class="w-6 h-6"></i>
+    </a>
+
+    <!-- Modal (Pop-up) untuk Detail Layanan -->
+    <div id="service-modal" class="modal fixed inset-0 hidden items-center justify-center p-4" onclick="closeModal(event)">
+        <div class="bg-white rounded-xl shadow-3xl max-w-lg w-full p-8 relative transform transition-all duration-300" onclick="event.stopPropagation()">
+            <!-- Tombol Tutup -->
+            <button class="absolute top-4 right-4 text-gray-400 hover:text-gray-600" onclick="closeModal()">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <!-- Isi Modal -->
+            <div class="text-center mb-6">
+                <!-- Ikon Dinamis -->
+                <div id="modal-icon-container" class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+                    <!-- Ikon akan diinject di sini -->
+                </div>
+                <h2 id="modal-title" class="text-2xl font-bold text-gray-900 mb-2">Judul Layanan</h2>
+                <p id="modal-description" class="text-gray-600">Deskripsi rinci layanan ada di sini.</p>
+            </div>
+
+            <div class="mt-6 border-t pt-4">
+                <p class="text-sm font-semibold text-gray-500 uppercase mb-2">Informasi Cepat</p>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-2 text-indigo-500"></i> Waktu Pengerjaan: 4-12 Minggu</li>
+                    <li class="flex items-center"><i data-lucide="users" class="w-4 h-4 mr-2 text-indigo-500"></i> Cocok Untuk: Startup & Skala Menengah</li>
+                    <li class="flex items-center"><i data-lucide="shield-check" class="w-4 h-4 mr-2 text-indigo-500"></i> Garansi: 6 Bulan Pemeliharaan</li>
+                </ul>
+            </div>
+
+            <!-- CTA Utama di Modal -->
+            <div class="mt-8">
+                <a href="#" id="modal-cta" class="w-full block text-center py-3 rounded-lg bg-indigo-600 text-white font-bold text-lg hover:bg-indigo-700 transition duration-300">
+                    Mulai Konsultasi
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript untuk Fungsionalitas Interaktif -->
+    <script>
+        // Menginisialisasi ikon Lucide setelah elemen dimuat
+        document.addEventListener('DOMContentLoaded', (event) => {
+            lucide.createIcons();
+        });
+
+        // Mengambil elemen modal
+        const modal = document.getElementById('service-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDescription = document.getElementById('modal-description');
+        const modalIconContainer = document.getElementById('modal-icon-container');
+        const modalCta = document.getElementById('modal-cta');
+
+        /**
+         * Fungsi untuk membuka modal dengan detail layanan
+         * @param {string} title - Judul layanan
+         * @param {string} description - Deskripsi rinci layanan
+         * @param {string} iconName - Nama ikon Lucide (misalnya: 'code', 'megaphone')
+         * @param {string} ctaText - Teks untuk tombol CTA
+         */
+        function openModal(title, description, iconName, ctaText) {
+            // Mengisi konten modal
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+            modalCta.textContent = ctaText;
+
+            // Mengganti ikon
+            modalIconContainer.innerHTML = `<i data-lucide="${iconName}" class="w-8 h-8"></i>`;
+            lucide.createIcons(); // Memuat ulang ikon setelah konten diubah
+            
+            // Menampilkan modal
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Mengunci scroll body saat modal terbuka
+            document.body.style.overflow = 'hidden';
+
+            // Menyesuaikan warna latar belakang dan ikon
+            let bgColor, textColor;
+            switch (iconName) {
+                case 'code':
+                    bgColor = 'bg-indigo-100'; textColor = 'text-indigo-600';
+                    modalCta.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                    modalCta.classList.remove('bg-green-600', 'hover:bg-green-700', 'bg-pink-600', 'hover:bg-pink-700');
+                    break;
+                case 'megaphone':
+                    bgColor = 'bg-green-100'; textColor = 'text-green-600';
+                    modalCta.classList.add('bg-green-600', 'hover:bg-green-700');
+                    modalCta.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'bg-pink-600', 'hover:bg-pink-700');
+                    break;
+                case 'palette':
+                    bgColor = 'bg-pink-100'; textColor = 'text-pink-600';
+                    modalCta.classList.add('bg-pink-600', 'hover:bg-pink-700');
+                    modalCta.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'bg-green-600', 'hover:bg-green-700');
+                    break;
+                default:
+                    bgColor = 'bg-gray-100'; textColor = 'text-gray-600';
+                    modalCta.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+            }
+            // Reset dan terapkan kelas warna
+            modalIconContainer.className = `mx-auto flex items-center justify-center h-16 w-16 rounded-full mb-4 ${bgColor} ${textColor}`;
+            
+            // Update warna list item di modal
+            document.querySelectorAll('#service-modal .text-indigo-500').forEach(el => {
+                el.classList.remove('text-indigo-500', 'text-green-500', 'text-pink-500');
+                el.classList.add(textColor.replace('600', '500')); // Menggunakan 500 shade untuk ikon kecil
+            });
+        }
+
+        /**
+         * Fungsi untuk menutup modal
+         * @param {Event} event - Event klik (opsional, untuk deteksi klik di luar)
+         */
+        function closeModal(event) {
+            // Pastikan hanya menutup jika diklik di luar modal atau tombol tutup
+            if (!event || event.target === modal) {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Mengaktifkan kembali scroll body
+            }
+        }
+    </script>
+
+</body>
+</html>
