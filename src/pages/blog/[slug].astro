@@ -923,69 +923,8 @@ const relatedArticles = getRelatedArticles(post, 4);
 </style>
 
 <script>
-  // Sidebar functionality
+  // Sidebar quick actions
   document.addEventListener("DOMContentLoaded", function () {
-    // Reading progress tracking
-    let startTime = Date.now();
-    let readingProgress = 0;
-    let wordCount = 0;
-
-    // Calculate word count
-    const content = document.querySelector(".blog-content");
-    if (content) {
-      const text = content.textContent || "";
-      wordCount = text.split(/\s+/).filter((word) => word.length > 0).length;
-      const wordCountEl = document.getElementById("word-count");
-      if (wordCountEl) {
-        wordCountEl.textContent = wordCount.toLocaleString();
-      }
-    }
-
-    // Reading progress tracking
-    function updateReadingProgress() {
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      const docHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = Math.round((scrollTop / docHeight) * 100);
-
-      readingProgress = Math.min(scrollPercent, 100);
-
-      // Update progress bar
-      const progressBar = document.getElementById("reading-progress-bar");
-      const progressText = document.getElementById("reading-progress-text");
-
-      if (progressBar) {
-        progressBar.style.width = readingProgress + "%";
-      }
-
-      if (progressText) {
-        progressText.textContent = readingProgress + "%";
-      }
-
-      // Update reading time
-      const elapsedTime = Math.round((Date.now() - startTime) / 60000); // minutes
-      const readingTimeElement = document.querySelector("[data-reading-time]");
-      const estimatedReadingTime = readingTimeElement
-        ? parseInt(readingTimeElement.textContent || "5")
-        : 5;
-      const remainingTime = Math.max(0, estimatedReadingTime - elapsedTime);
-
-      const timeElapsedEl = document.getElementById("reading-time-elapsed");
-      const timeRemainingEl = document.getElementById("reading-time-remaining");
-
-      if (timeElapsedEl) {
-        timeElapsedEl.textContent = elapsedTime + " min";
-      }
-
-      if (timeRemainingEl) {
-        timeRemainingEl.textContent = "Estimasi: " + remainingTime + " min";
-      }
-    }
-
-    // Scroll event listener
-    window.addEventListener("scroll", updateReadingProgress);
-
     // Quick actions
     const scrollToTopBtn = document.getElementById("scroll-to-top");
     if (scrollToTopBtn) {
@@ -1006,25 +945,6 @@ const relatedArticles = getRelatedArticles(post, 4);
       });
     }
 
-    const toggleDarkModeBtn = document.getElementById("toggle-dark-mode");
-    if (toggleDarkModeBtn) {
-      toggleDarkModeBtn.addEventListener("click", function () {
-        document.documentElement.classList.toggle("dark");
-        const isDark = document.documentElement.classList.contains("dark");
-        this.textContent = isDark ? "☀️ Mode Terang" : "🌙 Mode Gelap";
-
-        // Save preference
-        localStorage.setItem("darkMode", isDark.toString());
-      });
-
-      // Load saved preference
-      const savedDarkMode = localStorage.getItem("darkMode") === "true";
-      if (savedDarkMode) {
-        document.documentElement.classList.add("dark");
-        toggleDarkModeBtn.textContent = "☀️ Mode Terang";
-      }
-    }
-
     const printArticleBtn = document.getElementById("print-article");
     if (printArticleBtn) {
       printArticleBtn.addEventListener("click", function () {
@@ -1032,38 +952,7 @@ const relatedArticles = getRelatedArticles(post, 4);
       });
     }
 
-    // Newsletter signup
-    const newsletterForm = document.querySelector(".sidebar-widget:last-child");
-    if (newsletterForm) {
-      const emailInput = newsletterForm.querySelector(
-        'input[type="email"]',
-      ) as HTMLInputElement;
-      const submitButton = newsletterForm.querySelector(
-        "button",
-      ) as HTMLButtonElement;
-
-      if (submitButton && emailInput) {
-        submitButton.addEventListener("click", function (e) {
-          e.preventDefault();
-          const email = emailInput.value;
-
-          if (email) {
-            // Show success message
-            const originalText = submitButton.textContent;
-            submitButton.textContent = "✓ Terkirim!";
-            submitButton.classList.add("bg-green-500", "text-white");
-
-            setTimeout(() => {
-              submitButton.textContent = originalText;
-              submitButton.classList.remove("bg-green-500", "text-white");
-              emailInput.value = "";
-            }, 2000);
-          }
-        });
-      }
-    }
-
-    // Initialize reading progress
-    updateReadingProgress();
+    // Note: reading progress, dark mode, and newsletter behavior
+    // are handled by their respective components.
   });
 </script>
