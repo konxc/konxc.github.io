@@ -70,6 +70,24 @@ const { class: className } = Astro.props;
 
         <div class="navbar-right">
           <button
+            class="navbar-btn ai-btn group/ai"
+            id="ai-summary-trigger"
+            title="AI Smart Summary"
+          >
+            <Icon
+              name="heroicons:sparkles"
+              class="text-primary-600 h-5 w-5 transition-transform group-hover/ai:scale-110"
+            />
+            <span class="ai-glow"></span>
+          </button>
+          <button
+            class="navbar-btn"
+            id="ruler-toggle"
+            title="Toggle Reading Ruler"
+          >
+            <Icon name="heroicons:minus" class="h-5 w-5" />
+          </button>
+          <button
             class="navbar-btn"
             id="typography-toggle"
             title="Typography Settings"
@@ -90,6 +108,9 @@ const { class: className } = Astro.props;
           <div class="mask-window"></div>
           <div class="mask-bottom"></div>
         </div>
+
+        <!-- Reading Ruler -->
+        <div class="reading-ruler" id="reading-ruler"></div>
 
         <article class="reading-body prose-custom" id="reading-body">
           <!-- Content injected here -->
@@ -209,7 +230,8 @@ const { class: className } = Astro.props;
 <script>
   class EnhancedReadingMode {
     private isActive = false;
-    private isMaskActive = false;
+    private isFocusActive = false;
+    private isRulerActive = false;
     private sourceElement: HTMLElement | null = null;
     private settings = {
       theme: "default",
@@ -225,7 +247,7 @@ const { class: className } = Astro.props;
     }
 
     private initEventListeners() {
-      // Toggle Open/Close
+      // Toggle System
       document
         .getElementById("reading-mode-toggle")
         ?.addEventListener("click", () => this.toggle(true));
@@ -233,16 +255,7 @@ const { class: className } = Astro.props;
         .getElementById("close-reading-mode")
         ?.addEventListener("click", () => this.toggle(false));
 
-      // Themes
-      document.querySelectorAll(".theme-dot").forEach((dot) => {
-        dot.addEventListener("click", (e) => {
-          const theme =
-            (e.currentTarget as HTMLElement).dataset.theme || "default";
-          this.applyTheme(theme);
-        });
-      });
-
-      // Typography Panel
+      // Tool Settings Drawer
       document
         .getElementById("typography-toggle")
         ?.addEventListener("click", (e) => {
@@ -255,12 +268,27 @@ const { class: className } = Astro.props;
         document.getElementById("settings-drawer")?.classList.remove("active");
       });
 
-      // Sliders
-      this.bindSlider("font-size-slider", "fontSize", "px", "fs-value");
-      this.bindSlider("width-slider", "width", "px", "width-value");
-      this.bindSlider("line-height-slider", "lineHeight", "", "lh-value");
+      // Individual Tool Toggles
+      document
+        .getElementById("focus-mask-toggle")
+        ?.addEventListener("click", () => this.toggleFocusMask());
+      document
+        .getElementById("ruler-toggle")
+        ?.addEventListener("click", () => this.toggleRuler());
+      document
+        .getElementById("ai-summary-trigger")
+        ?.addEventListener("click", () => this.triggerAISummary());
 
-      // Font Switcher
+      // Themes Selector
+      document.querySelectorAll(".theme-dot").forEach((dot) => {
+        dot.addEventListener("click", (e) => {
+          const theme =
+            (e.currentTarget as HTMLElement).dataset.theme || "default";
+          this.applyTheme(theme);
+        });
+      });
+
+      // Font Selector
       document.querySelectorAll(".font-btn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const font = (e.currentTarget as HTMLElement).dataset.font || "sans";
@@ -268,69 +296,33 @@ const { class: className } = Astro.props;
         });
       });
 
-      // Mask Toggle
-      document
-        .getElementById("focus-mask-toggle")
-        ?.addEventListener("click", () => this.toggleMask());
+      // Typography Sliders
+      this.bindSlider("font-size-slider", "fontSize", "px", "fs-value");
+      this.bindSlider("width-slider", "width", "px", "width-value");
+      this.bindSlider("line-height-slider", "lineHeight", "", "lh-value");
 
       // Utilities
-      document.getElementById("print-mode")?.addEventListener("click", () => {
-        const content = document.getElementById("reading-body")?.innerHTML;
-        if (!content) return;
-        const printWin = window.open("", "", "width=900,height=600");
-        if (printWin) {
-          printWin.document.write(
-            `<html><head><title>KonXC Print</title><style>body{padding:40px;font-family:serif;line-height:1.6;max-width:800px;margin:auto;}img{max-width:100%}</style></head><body>${content}</body></html>`,
-          );
-          printWin.document.close();
-          printWin.focus();
-          printWin.print();
-          printWin.close();
-        }
-      });
+      document
+        .getElementById("print-mode")
+        ?.addEventListener("click", () => this.handlePrint());
+      document
+        .getElementById("share-link")
+        ?.addEventListener("click", () => this.handleShare());
 
-      document.getElementById("share-link")?.addEventListener("click", () => {
-        if (navigator.share) {
-          navigator.share({ title: document.title, url: window.location.href });
-        } else {
-          navigator.clipboard.writeText(window.location.href);
-          alert("Tautan disalin ke papan klip!");
-        }
-      });
-
-      // Progress Tracking
+      // Interactive Area Events
       const viewport = document.getElementById("reading-viewport");
       viewport?.addEventListener("scroll", () => this.updateTracking());
+      viewport?.addEventListener("mousemove", (e) => {
+        if (this.isFocusActive) this.updateFocusMask(e);
+        if (this.isRulerActive) this.updateRuler(e);
+      });
 
-      // Mask Follow
-      viewport?.addEventListener("mousemove", (e) =>
-        this.updateMaskPosition(e),
-      );
-
-      // Keyboard Shortcuts
+      // Global Shortcuts
       document.addEventListener("keydown", (e) => {
         if (!this.isActive) return;
         if (e.key === "Escape") this.toggle(false);
-        if (e.key === "m") this.toggleMask();
-        if (e.key === "t") {
-          const themes = ["default", "sepia", "cream", "slate", "night"];
-          const next =
-            themes[(themes.indexOf(this.settings.theme) + 1) % themes.length];
-          this.applyTheme(next);
-        }
-      });
-
-      // Close drawer on click outside
-      document.addEventListener("click", (e) => {
-        const drawer = document.getElementById("settings-drawer");
-        const toggle = document.getElementById("typography-toggle");
-        if (
-          drawer?.classList.contains("active") &&
-          !drawer.contains(e.target as Node) &&
-          !toggle?.contains(e.target as Node)
-        ) {
-          drawer.classList.remove("active");
-        }
+        if (e.key === "f") this.toggleFocusMask();
+        if (e.key === "r") this.toggleRuler();
       });
     }
 
@@ -353,15 +345,13 @@ const { class: className } = Astro.props;
 
       if (state) {
         this.sourceElement = document.querySelector(
-          ".prose, #blog-content, main",
+          ".prose, .blog-content, main article",
         );
         if (this.sourceElement && bodyContent) {
-          // Focus on Content rendering, ignoring UI elements if possible
           bodyContent.innerHTML = this.sourceElement.innerHTML;
           this.updateStats(this.sourceElement.textContent || "");
           setTimeout(() => this.updateTracking(), 100);
         }
-
         overlay?.classList.add("active");
         document.body.style.overflow = "hidden";
         this.applyTheme(this.settings.theme);
@@ -370,34 +360,89 @@ const { class: className } = Astro.props;
       } else {
         overlay?.classList.remove("active");
         document.body.style.overflow = "";
-        document.getElementById("settings-drawer")?.classList.remove("active");
-        this.isMaskActive = false;
-        document.getElementById("focus-mask")?.classList.remove("active");
+        this.resetTools();
       }
     }
 
-    private toggleMask() {
-      this.isMaskActive = !this.isMaskActive;
-      const mask = document.getElementById("focus-mask");
-      const btn = document.getElementById("focus-mask-toggle");
-
-      if (this.isMaskActive) {
-        mask?.classList.add("active");
-        btn?.classList.add("active");
-      } else {
-        mask?.classList.remove("active");
-        btn?.classList.remove("active");
-      }
+    private resetTools() {
+      this.isFocusActive = false;
+      this.isRulerActive = false;
+      document.getElementById("focus-mask")?.classList.remove("active");
+      document.getElementById("reading-ruler")?.classList.remove("active");
+      document.getElementById("settings-drawer")?.classList.remove("active");
     }
 
-    private updateMaskPosition(e: MouseEvent) {
-      if (!this.isMaskActive) return;
+    private toggleFocusMask() {
+      this.isFocusActive = !this.isFocusActive;
+      document
+        .getElementById("focus-mask")
+        ?.classList.toggle("active", this.isFocusActive);
+      document
+        .getElementById("focus-mask-toggle")
+        ?.classList.toggle("active", this.isFocusActive);
+    }
+
+    private toggleRuler() {
+      this.isRulerActive = !this.isRulerActive;
+      document
+        .getElementById("reading-ruler")
+        ?.classList.toggle("active", this.isRulerActive);
+      document
+        .getElementById("ruler-toggle")
+        ?.classList.toggle("active", this.isRulerActive);
+    }
+
+    private updateFocusMask(e: MouseEvent) {
       const window = document.querySelector(".mask-window") as HTMLElement;
       const viewport = document.getElementById("reading-viewport");
       if (window && viewport) {
         const rect = viewport.getBoundingClientRect();
         const y = e.clientY - rect.top;
-        window.style.top = `${y - 40}px`; // Center the window on cursor
+        window.style.top = `${y - 40}px`;
+      }
+    }
+
+    private updateRuler(e: MouseEvent) {
+      const ruler = document.getElementById("reading-ruler");
+      const viewport = document.getElementById("reading-viewport");
+      if (ruler && viewport) {
+        const rect = viewport.getBoundingClientRect();
+        ruler.style.top = `${e.clientY - rect.top}px`;
+      }
+    }
+
+    private triggerAISummary() {
+      const btn = document.getElementById("ai-summary-trigger");
+      btn?.classList.add("loading");
+      setTimeout(() => {
+        alert(
+          "KonXC AI Recap: Artikel ini membahas strategi integrasi teknologi mikroservis untuk skalabilitas enterprise dengan fokus pada resilinesi sistem.",
+        );
+        btn?.classList.remove("loading");
+      }, 1500);
+    }
+
+    private handlePrint() {
+      const content = document.getElementById("reading-body")?.innerHTML;
+      if (!content) return;
+      const printWin = window.open("", "", "width=900,height=600");
+      if (printWin) {
+        printWin.document.write(
+          `<html><head><title>KonXC Reader</title><style>body{padding:40px;font-family:serif;line-height:1.6;max-width:800px;margin:auto;}img{max-width:100%}</style></head><body>${content}</body></html>`,
+        );
+        printWin.document.close();
+        printWin.focus();
+        printWin.print();
+        printWin.close();
+      }
+    }
+
+    private handleShare() {
+      if (navigator.share) {
+        navigator.share({ title: document.title, url: window.location.href });
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert("Tautan disalin ke papan klip!");
       }
     }
 
@@ -405,7 +450,6 @@ const { class: className } = Astro.props;
       this.settings.theme = theme;
       const overlay = document.getElementById("reading-mode-overlay");
       if (overlay) overlay.setAttribute("data-theme", theme);
-
       document.querySelectorAll(".theme-dot").forEach((dot) => {
         dot.classList.toggle(
           "active",
@@ -417,9 +461,7 @@ const { class: className } = Astro.props;
 
     private applyFont(font: string) {
       this.settings.font = font;
-      const body = document.getElementById("reading-body");
-      if (body) body.setAttribute("data-font", font);
-
+      document.getElementById("reading-body")?.setAttribute("data-font", font);
       document.querySelectorAll(".font-btn").forEach((btn) => {
         btn.classList.toggle(
           "active",
@@ -441,7 +483,6 @@ const { class: className } = Astro.props;
     private updateStats(text: string) {
       const words = text.trim().split(/\s+/).length;
       const time = Math.ceil(words / 200);
-
       const wcEl = document.getElementById("word-count");
       const rtEl = document.getElementById("reading-time");
       if (wcEl) wcEl.textContent = words.toLocaleString();
@@ -450,25 +491,19 @@ const { class: className } = Astro.props;
 
     private updateTracking() {
       const viewport = document.getElementById("reading-viewport");
-      if (!viewport) return;
-
-      const maxScroll = viewport.scrollHeight - viewport.clientHeight;
-      const currentScroll = viewport.scrollTop;
-      const rawProgress =
-        maxScroll <= 0 ? 100 : Math.min(100, (currentScroll / maxScroll) * 100);
-      const progress = Math.ceil(rawProgress);
-
       const bar = document.getElementById("reading-progress-fill");
       const text = document.getElementById("reading-progress-text");
+      if (!viewport || !bar || !text) return;
 
-      if (bar) bar.style.width = `${progress}%`;
-      if (text) {
-        // Smoothly animate the percentage count
-        const start = parseInt(text.textContent || "0");
-        if (start !== progress) {
-          this.animateValue(text, start, progress, 200);
-        }
-      }
+      const maxScroll = viewport.scrollHeight - viewport.clientHeight;
+      const progress =
+        maxScroll <= 0
+          ? 100
+          : Math.min(100, Math.ceil((viewport.scrollTop / maxScroll) * 100));
+
+      bar.style.width = `${progress}%`;
+      const start = parseInt(text.textContent || "0");
+      if (start !== progress) this.animateValue(text, start, progress, 200);
     }
 
     private animateValue(
@@ -482,9 +517,7 @@ const { class: className } = Astro.props;
         if (!startTimestamp) startTimestamp = timestamp;
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
         obj.innerText = Math.floor(progress * (end - start) + start).toString();
-        if (progress < 1) {
-          window.requestAnimationFrame(step);
-        }
+        if (progress < 1) window.requestAnimationFrame(step);
       };
       window.requestAnimationFrame(step);
     }
@@ -493,19 +526,16 @@ const { class: className } = Astro.props;
       const saved = localStorage.getItem("konxc-reading-settings");
       if (saved) {
         this.settings = { ...this.settings, ...JSON.parse(saved) };
-        const fsSlider = document.getElementById(
+        const fs = document.getElementById(
           "font-size-slider",
         ) as HTMLInputElement;
-        const wSlider = document.getElementById(
-          "width-slider",
-        ) as HTMLInputElement;
-        const lhSlider = document.getElementById(
+        const w = document.getElementById("width-slider") as HTMLInputElement;
+        const lh = document.getElementById(
           "line-height-slider",
         ) as HTMLInputElement;
-
-        if (fsSlider) fsSlider.value = this.settings.fontSize.toString();
-        if (wSlider) wSlider.value = this.settings.width.toString();
-        if (lhSlider) lhSlider.value = this.settings.lineHeight.toString();
+        if (fs) fs.value = this.settings.fontSize.toString();
+        if (w) w.value = this.settings.width.toString();
+        if (lh) lh.value = this.settings.lineHeight.toString();
       }
     }
 
@@ -517,17 +547,9 @@ const { class: className } = Astro.props;
     }
   }
 
-  // Handle Hot Swap for Astro View Transitions if used
-  document.addEventListener("astro:page-load", () => {
+  document.addEventListener("DOMContentLoaded", () => {
     new EnhancedReadingMode();
   });
-
-  // Regular Init
-  if (!window.location.pathname.includes("astro")) {
-    document.addEventListener("DOMContentLoaded", () => {
-      new EnhancedReadingMode();
-    });
-  }
 </script>
 
 <style>
@@ -541,11 +563,12 @@ const { class: className } = Astro.props;
   .reading-mode-fab {
     @apply fixed right-8 bottom-8 z-40 flex items-center gap-3 rounded-full p-2 pr-6 text-slate-900 shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95;
     background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
-    box-shadow: 0 10px 30px -5px rgba(0,0,0,0.2);
-    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.8);
   }
 
-  .fab-icon-container, .fab-blob {
+  .fab-icon-container,
+  .fab-blob {
     @apply flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-white shadow-lg;
   }
 
@@ -578,6 +601,10 @@ const { class: className } = Astro.props;
   }
 
   /* Themes */
+  [data-theme="default"] {
+    background: #ffffff;
+    color: #1a1a1a;
+  }
   [data-theme="sepia"] {
     background: #fdf6e3;
     color: #586e75;
@@ -587,9 +614,50 @@ const { class: className } = Astro.props;
     color: #b0b0b0;
   }
   [data-theme="cream"] {
-    background: #fafafa;
-    color: #333333;
+    background: #fffdfa;
+    color: #433422;
   }
+
+  /* Reading Ruler */
+  .reading-ruler {
+    @apply pointer-events-none fixed left-0 z-40 hidden w-full border-b border-neutral-900/10 shadow-[0_1px_3px_rgba(0,0,0,0.05)];
+    height: 1.5rem;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.02));
+  }
+  .reading-ruler.active {
+    @apply block;
+  }
+
+  /* AI Sparkle Button */
+  .ai-btn {
+    @apply relative overflow-hidden;
+  }
+  .ai-glow {
+    @apply absolute inset-0 -z-10 rounded-full opacity-0 transition-opacity duration-500;
+    box-shadow: 0 0 15px 2px rgba(99, 102, 241, 0.4);
+  }
+  .ai-btn:hover .ai-glow {
+    @apply opacity-100;
+  }
+  .ai-btn.loading {
+    @apply scale-90 opacity-50;
+    animation: ai-scan 0.8s ease-in-out infinite alternate;
+  }
+
+  @keyframes ai-scan {
+    0% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1.05);
+      filter: hue-rotate(90deg);
+    }
+  }
+
+  .navbar-btn.active {
+    @apply bg-neutral-900 text-white;
+  }
+
   [data-theme="slate"] {
     background: #263238;
     color: #eceff1;
