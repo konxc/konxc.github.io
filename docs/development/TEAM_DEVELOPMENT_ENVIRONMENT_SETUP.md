@@ -9,6 +9,7 @@ This guide provides step-by-step instructions for setting up a consistent develo
 ## 🎯 **OBJECTIVES**
 
 ### **Primary Goals:**
+
 - **Consistent Environment** - Same tools and configurations for all team members
 - **Quality Assurance** - Automated quality gates and standards
 - **Team Collaboration** - Shared standards and practices
@@ -16,6 +17,7 @@ This guide provides step-by-step instructions for setting up a consistent develo
 - **Professional Standards** - Enterprise-level development workflow
 
 ### **Success Criteria:**
+
 - **Setup Time**: < 30 minutes for new team members
 - **Consistency**: 100% identical development environment
 - **Quality Gates**: Automated checks and standards
@@ -28,6 +30,7 @@ This guide provides step-by-step instructions for setting up a consistent develo
 ### **Core Development Tools:**
 
 #### **1. Node.js & Package Manager**
+
 ```bash
 # Required versions:
 - Node.js: 18.x or higher
@@ -36,6 +39,7 @@ This guide provides step-by-step instructions for setting up a consistent develo
 ```
 
 #### **2. Code Editor**
+
 ```bash
 # Recommended editors:
 - VS Code (recommended)
@@ -45,6 +49,7 @@ This guide provides step-by-step instructions for setting up a consistent develo
 ```
 
 #### **3. Git & Version Control**
+
 ```bash
 # Required tools:
 - Git: 2.30 or higher
@@ -55,6 +60,7 @@ This guide provides step-by-step instructions for setting up a consistent develo
 ### **Project Dependencies:**
 
 #### **1. Development Dependencies**
+
 ```bash
 # Core tools:
 pnpm add -D eslint @eslint/js typescript-eslint
@@ -68,6 +74,7 @@ pnpm add -D lighthouse @axe-core/cli rollup-plugin-visualizer
 ```
 
 #### **2. Runtime Dependencies**
+
 ```bash
 # Project dependencies:
 pnpm add astro @astrojs/node @astrojs/tailwind
@@ -82,6 +89,7 @@ pnpm add tailwindcss @tailwindcss/typography
 ### **Phase 1: Environment Setup**
 
 #### **Step 1: Install Node.js**
+
 ```bash
 # Check Node.js version:
 node --version  # Should be 18.x or higher
@@ -91,6 +99,7 @@ node --version  # Should be 18.x or higher
 ```
 
 #### **Step 2: Install pnpm**
+
 ```bash
 # Install pnpm globally:
 npm install -g pnpm
@@ -100,6 +109,7 @@ pnpm --version  # Should be 8.x or higher
 ```
 
 #### **Step 3: Clone Repository**
+
 ```bash
 # Clone the project:
 git clone https://github.com/konxc/konxc.github.io.git
@@ -112,6 +122,7 @@ pnpm install
 ### **Phase 2: IDE Configuration**
 
 #### **Step 1: Install VS Code Extensions**
+
 ```bash
 # Required extensions:
 - ESLint (ms-vscode.vscode-eslint)
@@ -122,6 +133,7 @@ pnpm install
 ```
 
 #### **Step 2: Configure VS Code Settings**
+
 ```json
 // .vscode/settings.json
 {
@@ -129,17 +141,14 @@ pnpm install
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "eslint.validate": [
-    "javascript",
-    "typescript",
-    "astro"
-  ],
+  "eslint.validate": ["javascript", "typescript", "astro"],
   "prettier.requireConfig": true,
   "typescript.preferences.importModuleSpecifier": "relative"
 }
 ```
 
 #### **Step 3: Configure Workspace Settings**
+
 ```json
 // .vscode/extensions.json
 {
@@ -156,6 +165,7 @@ pnpm install
 ### **Phase 3: Tool Configuration**
 
 #### **Step 1: Verify ESLint Configuration**
+
 ```bash
 # Test ESLint:
 pnpm run lint
@@ -165,6 +175,7 @@ pnpm run lint
 ```
 
 #### **Step 2: Verify Prettier Configuration**
+
 ```bash
 # Test Prettier:
 pnpm run format:check
@@ -174,6 +185,7 @@ pnpm run format:check
 ```
 
 #### **Step 3: Verify Build Process**
+
 ```bash
 # Test build:
 pnpm run build
@@ -185,6 +197,7 @@ pnpm run build
 ### **Phase 4: Quality Gates Setup**
 
 #### **Step 1: Configure Git Hooks**
+
 ```bash
 # Make scripts executable:
 chmod +x scripts/enhanced-pre-commit.sh
@@ -198,6 +211,7 @@ pnpm run pre-push:enhanced
 ```
 
 #### **Step 2: Verify Quality Gates**
+
 ```bash
 # Test complete quality check:
 pnpm run check:all
@@ -213,24 +227,28 @@ pnpm run check:all
 ### **Environment Verification:**
 
 #### **✅ Node.js & Package Manager**
+
 - [ ] Node.js 18.x+ installed
 - [ ] pnpm 8.x+ installed
 - [ ] Dependencies installed successfully
 - [ ] Package scripts working
 
 #### **✅ IDE Configuration**
+
 - [ ] VS Code extensions installed
 - [ ] Workspace settings configured
 - [ ] Format on save enabled
 - [ ] ESLint integration working
 
 #### **✅ Tool Configuration**
+
 - [ ] ESLint analysis working (445 issues detected)
 - [ ] Prettier formatting working
 - [ ] TypeScript checking working
 - [ ] Build process successful
 
 #### **✅ Quality Gates**
+
 - [ ] Pre-commit hooks working
 - [ ] Pre-push hooks working
 - [ ] Complete quality check working
@@ -239,18 +257,21 @@ pnpm run check:all
 ### **Functionality Verification:**
 
 #### **✅ Code Quality**
+
 - [ ] ESLint detects code quality issues
 - [ ] Prettier formats code consistently
 - [ ] TypeScript type checking working
 - [ ] Import organization working
 
 #### **✅ Performance Tools**
+
 - [ ] Lighthouse CLI installed and working
 - [ ] Bundle analyzer configured
 - [ ] Performance audit scripts working
 - [ ] Accessibility testing ready
 
 #### **✅ Development Workflow**
+
 - [ ] Git hooks prevent low-quality commits
 - [ ] Automated formatting on save
 - [ ] Real-time quality feedback
@@ -263,6 +284,7 @@ pnpm run check:all
 ### **Code Quality Standards:**
 
 #### **1. ESLint Compliance**
+
 ```bash
 # Required: Fix all ESLint errors before committing
 pnpm run lint:fix  # Auto-fix available issues
@@ -270,6 +292,7 @@ pnpm run lint:fix  # Auto-fix available issues
 ```
 
 #### **2. Prettier Compliance**
+
 ```bash
 # Required: 100% Prettier compliance
 pnpm run format    # Auto-format all files
@@ -277,6 +300,7 @@ pnpm run format:check  # Verify compliance
 ```
 
 #### **3. TypeScript Standards**
+
 ```bash
 # Required: Strict TypeScript compliance
 pnpm run astro check  # Type checking
@@ -286,6 +310,7 @@ pnpm run astro check  # Type checking
 ### **Development Workflow:**
 
 #### **1. Pre-commit Process**
+
 ```bash
 # Required workflow before every commit:
 1. pnpm run format          # Format code
@@ -296,6 +321,7 @@ pnpm run astro check  # Type checking
 ```
 
 #### **2. Pre-push Process**
+
 ```bash
 # Required workflow before every push:
 1. pnpm run check:all       # Complete quality check
@@ -304,6 +330,7 @@ pnpm run astro check  # Type checking
 ```
 
 #### **3. Pull Request Process**
+
 ```bash
 # Required checks before PR:
 1. All quality gates passing
@@ -319,6 +346,7 @@ pnpm run astro check  # Type checking
 ### **New Team Member Checklist:**
 
 #### **Day 1: Environment Setup**
+
 - [ ] Install Node.js and pnpm
 - [ ] Clone repository and install dependencies
 - [ ] Configure VS Code with required extensions
@@ -326,6 +354,7 @@ pnpm run astro check  # Type checking
 - [ ] Complete verification checklist
 
 #### **Day 2: Tool Familiarization**
+
 - [ ] Run ESLint analysis and understand results
 - [ ] Practice with Prettier formatting
 - [ ] Test build process and quality gates
@@ -333,6 +362,7 @@ pnpm run astro check  # Type checking
 - [ ] Complete first commit with quality gates
 
 #### **Day 3: Workflow Integration**
+
 - [ ] Practice pre-commit and pre-push workflows
 - [ ] Understand performance and accessibility tools
 - [ ] Review documentation and best practices
@@ -342,6 +372,7 @@ pnpm run astro check  # Type checking
 ### **Mentor Responsibilities:**
 
 #### **Technical Guidance**
+
 - Verify environment setup
 - Explain tool configurations
 - Demonstrate workflows
@@ -349,6 +380,7 @@ pnpm run astro check  # Type checking
 - Provide ongoing support
 
 #### **Process Guidance**
+
 - Explain team standards
 - Review quality requirements
 - Demonstrate best practices
@@ -362,6 +394,7 @@ pnpm run astro check  # Type checking
 ### **Common Setup Issues:**
 
 #### **1. Node.js Version Issues**
+
 ```bash
 # Problem: Wrong Node.js version
 # Solution: Update to Node.js 18.x+
@@ -375,6 +408,7 @@ node --version
 ```
 
 #### **2. Package Manager Issues**
+
 ```bash
 # Problem: pnpm not found
 # Solution: Install pnpm globally
@@ -385,6 +419,7 @@ pnpm --version
 ```
 
 #### **3. ESLint Configuration Issues**
+
 ```bash
 # Problem: ESLint not working
 # Solution: Check configuration and dependencies
@@ -395,6 +430,7 @@ pnpm install
 ```
 
 #### **4. Prettier Integration Issues**
+
 ```bash
 # Problem: Prettier conflicts with ESLint
 # Solution: Ensure eslint-config-prettier is installed
@@ -404,6 +440,7 @@ pnpm add -D eslint-config-prettier
 ```
 
 #### **5. Build Process Issues**
+
 ```bash
 # Problem: Build failing
 # Solution: Check all dependencies installed
@@ -416,6 +453,7 @@ pnpm run build
 ### **IDE-Specific Issues:**
 
 #### **VS Code Issues**
+
 ```bash
 # Problem: Extensions not working
 # Solution: Reload VS Code window
@@ -427,6 +465,7 @@ pnpm run build
 ```
 
 #### **Other Editors**
+
 ```bash
 # For other editors, ensure:
 - ESLint extension installed
@@ -442,16 +481,19 @@ pnpm run build
 ### **Team Performance Metrics:**
 
 #### **1. Setup Efficiency**
+
 - **Target**: < 30 minutes for complete setup
 - **Measurement**: Time from clone to first successful commit
 - **Improvement**: Streamline documentation and automation
 
 #### **2. Code Quality**
+
 - **Target**: 0 ESLint errors, 100% Prettier compliance
 - **Measurement**: Automated quality checks
 - **Improvement**: Regular training and best practices
 
 #### **3. Development Velocity**
+
 - **Target**: Faster development cycles
 - **Measurement**: Time from feature start to completion
 - **Improvement**: Efficient tooling and automation
@@ -459,12 +501,14 @@ pnpm run build
 ### **Continuous Improvement:**
 
 #### **Regular Reviews**
+
 - **Weekly**: Review setup process and documentation
 - **Monthly**: Evaluate tool effectiveness and updates
 - **Quarterly**: Assess team productivity and satisfaction
 - **Annually**: Major tool evaluation and upgrades
 
 #### **Feedback Collection**
+
 - **New Member Feedback**: Onboarding experience
 - **Tool Effectiveness**: Daily usage feedback
 - **Process Improvement**: Workflow optimization suggestions
@@ -475,18 +519,21 @@ pnpm run build
 ## 🎯 **SUCCESS METRICS**
 
 ### **Technical Success:**
+
 - ✅ **Consistent Environment**: 100% identical setup across team
 - ✅ **Quality Gates**: Automated checks functioning
 - ✅ **Tool Integration**: All tools working together
 - ✅ **Performance**: Fast setup and development cycles
 
 ### **Team Success:**
+
 - ✅ **Onboarding Efficiency**: < 30 minutes setup time
 - ✅ **Code Quality**: Consistent high-quality code
 - ✅ **Collaboration**: Smooth team coordination
 - ✅ **Productivity**: Improved development efficiency
 
 ### **Project Success:**
+
 - ✅ **Maintainable Codebase**: Clean, consistent code
 - ✅ **Professional Standards**: Enterprise-level quality
 - ✅ **Scalable Process**: Process works for team growth
@@ -497,18 +544,21 @@ pnpm run build
 ## 🔄 **MAINTENANCE & UPDATES**
 
 ### **Regular Maintenance:**
+
 - **Weekly**: Review and update documentation
 - **Monthly**: Check for tool updates and improvements
 - **Quarterly**: Evaluate team feedback and process optimization
 - **Annually**: Major tool evaluation and migration planning
 
 ### **Tool Updates:**
+
 - **ESLint**: Regular rule updates and new features
 - **Prettier**: Formatting improvements and new language support
 - **TypeScript**: Type system enhancements
 - **Astro**: Framework updates and new features
 
 ### **Process Evolution:**
+
 - **Workflow Optimization**: Streamline development processes
 - **Quality Standards**: Refine and improve standards
 - **Team Training**: Continuous education and best practices

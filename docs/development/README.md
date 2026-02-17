@@ -10,13 +10,13 @@ This section contains all development-related documentation including coding sta
 
 Established standards for consistent, maintainable code across the project.
 
-| Document                                                           | Purpose                                              | Status    |
-| ------------------------------------------------------------------ | ---------------------------------------------------- | --------- |
-| [CODING_STANDARDS_PRETTIER.md](./CODING_STANDARDS_PRETTIER.md)     | Prettier configuration and code formatting standards | ✅ Active |
-| [DEVELOPMENT_STANDARDS.md](./DEVELOPMENT_STANDARDS.md)             | General development guidelines and best practices    | ✅ Active |
-| [PATH_ALIASES_BEST_PRACTICES.md](./PATH_ALIASES_BEST_PRACTICES.md) | Import path conventions and alias usage              | ✅ Active |
-| [UNDERSCORE_STRATEGY_GUIDE.md](./UNDERSCORE_STRATEGY_GUIDE.md)     | Strategy for managing unused variables with underscore | ✅ Active |
-| [CLEAN_DEVELOPMENT_ENVIRONMENT.md](./CLEAN_DEVELOPMENT_ENVIRONMENT.md) | Clean development environment standards and practices | ✅ Active |
+| Document                                                               | Purpose                                                | Status    |
+| ---------------------------------------------------------------------- | ------------------------------------------------------ | --------- |
+| [CODING_STANDARDS_PRETTIER.md](./CODING_STANDARDS_PRETTIER.md)         | Prettier configuration and code formatting standards   | ✅ Active |
+| [DEVELOPMENT_STANDARDS.md](./DEVELOPMENT_STANDARDS.md)                 | General development guidelines and best practices      | ✅ Active |
+| [PATH_ALIASES_BEST_PRACTICES.md](./PATH_ALIASES_BEST_PRACTICES.md)     | Import path conventions and alias usage                | ✅ Active |
+| [UNDERSCORE_STRATEGY_GUIDE.md](./UNDERSCORE_STRATEGY_GUIDE.md)         | Strategy for managing unused variables with underscore | ✅ Active |
+| [CLEAN_DEVELOPMENT_ENVIRONMENT.md](./CLEAN_DEVELOPMENT_ENVIRONMENT.md) | Clean development environment standards and practices  | ✅ Active |
 
 ### **🔄 Workflow & Collaboration**
 
@@ -39,12 +39,14 @@ Setup guides and configuration documentation for development environment.
 
 Advanced development tools, code quality systems, and testing frameworks.
 
-| Document                                                                      | Purpose                                | Status    |
-| ----------------------------------------------------------------------------- | -------------------------------------- | --------- |
-| [ADVANCED_DEVELOPMENT_TOOLS_SETUP.md](./ADVANCED_DEVELOPMENT_TOOLS_SETUP.md) | Advanced development tools configuration | ✅ Active |
-| [CODE_QUALITY_SYSTEM.md](./CODE_QUALITY_SYSTEM.md)                           | Comprehensive code quality system      | ✅ Active |
-| [ESLINT_VS_PRETTIER_GUIDE.md](./ESLINT_VS_PRETTIER_GUIDE.md)                 | ESLint and Prettier integration guide  | ✅ Active |
-| [TEAM_DEVELOPMENT_ENVIRONMENT_SETUP.md](./TEAM_DEVELOPMENT_ENVIRONMENT_SETUP.md) | Team development environment setup     | ✅ Active |
+| Document                                                                         | Purpose                                                    | Status    |
+| -------------------------------------------------------------------------------- | ---------------------------------------------------------- | --------- |
+| [ADVANCED_DEVELOPMENT_TOOLS_SETUP.md](./ADVANCED_DEVELOPMENT_TOOLS_SETUP.md)     | Advanced development tools configuration                   | ✅ Active |
+| [CODE_QUALITY_SYSTEM.md](./CODE_QUALITY_SYSTEM.md)                               | Comprehensive code quality system                          | ✅ Active |
+| [ESLINT_VS_PRETTIER_GUIDE.md](./ESLINT_VS_PRETTIER_GUIDE.md)                     | ESLint and Prettier integration guide                      | ✅ Active |
+| [TEAM_DEVELOPMENT_ENVIRONMENT_SETUP.md](./TEAM_DEVELOPMENT_ENVIRONMENT_SETUP.md) | Team development environment setup                         | ✅ Active |
+| [TOOLCHAIN_ALIGNMENT_GUIDE.md](./TOOLCHAIN_ALIGNMENT_GUIDE.md)                   | Understanding TypeScript, ESLint, Prettier alignment       | ✅ Active |
+| [LANGUAGE_COMPARISON.md](./LANGUAGE_COMPARISON.md)                               | Rust vs OCaml/ReScript vs JavaScript/TypeScript comparison | ✅ Active |
 
 ### **🔧 TypeScript & Error Resolution**
 
@@ -105,7 +107,7 @@ import Header from "../../components/ui/Header.astro";
 const {
   postSlug,
   variant = "default",
-  postTitle: _postTitle = "",           // Unused but preserved
+  postTitle: _postTitle = "", // Unused but preserved
   showReadingTime: _showReadingTime = true, // Unused but preserved
 } = Astro.props;
 
@@ -113,8 +115,8 @@ const {
 const {
   postSlug,
   variant = "default",
-  postTitle = "",           // Unused - ESLint error
-  showReadingTime = true,   // Unused - ESLint error
+  postTitle = "", // Unused - ESLint error
+  showReadingTime = true, // Unused - ESLint error
 } = Astro.props;
 ```
 
