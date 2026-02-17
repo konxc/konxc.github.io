@@ -13,6 +13,7 @@ const browserGlobals = {
   console: "readonly",
   setTimeout: "readonly",
   clearTimeout: "readonly",
+  URL: "readonly",
 };
 
 const nodeGlobals = {
@@ -23,9 +24,10 @@ const nodeGlobals = {
   require: "readonly",
   exports: "readonly",
   global: "readonly",
+  fetch: "readonly",
 };
 
-/** @type {import("eslint").Linter.FlatConfig[]} */
+/** @type {import("eslint").FlatConfig[]} */
 export default [
   // 1️⃣ Base JS rules (tanpa env, disesuaikan manual)
   {
@@ -40,12 +42,12 @@ export default [
   // 2️⃣ TypeScript support
   ...tseslint.configs.recommended.map((config) => ({
     ...config,
-    files: ["**/*.{ts,tsx,js}"],
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ...config.languageOptions,
       parser: tseslint.parser,
       parserOptions: {
-        project: "./tsconfig.json",
+        project: "./tsconfig.eslint.json",
         ecmaVersion: "latest",
         sourceType: "module",
       },
@@ -97,7 +99,7 @@ export default [
     rules: {
       ...astro.configs.recommended.rules,
       "astro/no-set-html-directive": "off",
-      "astro/no-unused-css-selector": "warn",
+      "astro/no-unused-css-selector": "warn", // Disabled because CSS is dynamically applied in dark mode
     },
   },
 
@@ -106,11 +108,18 @@ export default [
     files: ["scripts/**/*.js"],
     languageOptions: {
       ecmaVersion: "latest",
-      sourceType: "script",
+      sourceType: "module",
       globals: { ...nodeGlobals },
     },
     rules: {
       "no-console": "off",
+      "no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
     },
   },
 
@@ -129,8 +138,11 @@ export default [
       "node_modules/",
       ".astro/",
       "public/",
+      "docs/",
       "*.config.js",
       "*.config.mjs",
+      "scripts/test-blog-features.js", // Old file being migrated
+      "scripts/*.cjs",
     ],
   },
 

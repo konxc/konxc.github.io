@@ -1,2 +1,6 @@
 onlyBuiltDependencies:
+  - "@tailwindcss/oxide"
   - chromedriver
+  - esbuild
+  - puppeteer
+  - sharp
