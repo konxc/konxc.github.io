@@ -158,24 +158,30 @@ const categories = [
     private filterByCategory(category: string): void {
       this.currentCategory = category;
 
+      const activeCategory = this.currentCategory;
+
       // Update active button
       this.filterButtons?.forEach((button) => {
-        button.classList.toggle("active", button.dataset.category === category);
+        button.classList.toggle(
+          "active",
+          button.dataset.category === activeCategory,
+        );
       });
 
       // Filter posts
-      const filteredPosts = this.getFilteredPosts(category);
+      const filteredPosts = this.getFilteredPosts(activeCategory);
 
       // Update results text
-      this.updateResultsText(category, filteredPosts.length);
+      this.updateResultsText(activeCategory, filteredPosts.length);
 
       // Show/hide clear button
       if (this.clearBtn) {
-        this.clearBtn.style.display = category === "all" ? "none" : "block";
+        this.clearBtn.style.display =
+          activeCategory === "all" ? "none" : "block";
       }
 
       // Trigger custom event for other components
-      this.dispatchFilterEvent(category, filteredPosts);
+      this.dispatchFilterEvent(activeCategory, filteredPosts);
     }
 
     private getFilteredPosts(category: string): any[] {

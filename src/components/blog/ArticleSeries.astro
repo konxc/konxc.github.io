@@ -193,6 +193,10 @@ const hasSeries = currentSeries.length > 0;
       this.seriesElement = document.querySelector(".article-series");
       this.progressBar = document.querySelector(".progress-fill");
 
+      if (this.seriesElement) {
+        this.seriesElement.dataset.seriesName = this.getSeriesName();
+      }
+
       // Get current post index from data attributes
       const currentPost = document.querySelector(".series-post.current");
       if (currentPost) {
@@ -220,6 +224,10 @@ const hasSeries = currentSeries.length > 0;
       if (this.currentPostIndex >= 0 && this.totalPosts > 0) {
         const progress = ((this.currentPostIndex + 1) / this.totalPosts) * 100;
 
+        if (this.progressBar) {
+          this.progressBar.style.width = `${progress}%`;
+        }
+
         // Track progress milestone
         this.trackEvent("series_progress", {
           series_name: this.getSeriesName(),
@@ -238,6 +246,7 @@ const hasSeries = currentSeries.length > 0;
         series_name: this.getSeriesName(),
         from_post: this.currentPostIndex + 1,
         to_post: postTitle,
+        to_url: postUrl,
         navigation_type: "click",
       });
     }
@@ -308,7 +317,7 @@ const hasSeries = currentSeries.length > 0;
 <style>
   @reference "@/styles/global.css";
   .article-series {
-    @apply from-primary-50 to-secondary-50 border-primary-200 mb-8 rounded-2xl border bg-gradient-to-br p-6 shadow-lg;
+    @apply from-primary-50 to-secondary-50 border-primary-200 mb-8 rounded-2xl border bg-linear-to-br p-6 shadow-lg;
   }
 
   .series-header {
@@ -336,7 +345,7 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .progress-fill {
-    @apply from-primary-500 to-secondary-500 h-full bg-gradient-to-r transition-all duration-500 ease-out;
+    @apply from-primary-500 to-secondary-500 h-full bg-linear-to-r transition-all duration-500 ease-out;
   }
 
   .progress-text {
@@ -364,7 +373,7 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .post-number {
-    @apply bg-primary-500 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold text-white;
+    @apply bg-primary-500 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white;
   }
 
   .series-post.completed .post-number {
@@ -372,7 +381,7 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .series-post.current .post-number {
-    @apply from-primary-500 to-secondary-500 bg-gradient-to-r;
+    @apply from-primary-500 to-secondary-500 bg-linear-to-r;
   }
 
   .completed-icon {

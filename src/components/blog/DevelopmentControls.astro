@@ -62,7 +62,6 @@
   function isDevelopmentEnvironment() {
     // Check Vite environment variables (most reliable)
     const isViteDev = import.meta.env.DEV; // true in development, false in production/preview
-    const isViteProd = import.meta.env.PROD; // true in production/preview, false in development
     const mode = import.meta.env.MODE; // 'development', 'production', or custom
 
     // Primary check: Vite environment variables
@@ -121,7 +120,6 @@
   function isPreviewMode() {
     // Check Vite environment variables first
     const isViteProd = import.meta.env.PROD; // true in production/preview
-    const mode = import.meta.env.MODE; // 'development', 'production', or custom
 
     // If we're in production mode but on localhost, it's likely preview
     const isLocalhost =
@@ -141,11 +139,6 @@
     const isServingDist =
       document.querySelector('script[src*="/_astro/"]') !== null ||
       document.querySelector('link[href*="/_astro/"]') !== null;
-
-    // Check for production build indicators
-    const hasProductionBuild =
-      document.querySelector('meta[name="generator"][content*="Astro"]') !==
-      null;
 
     // Check if we're on localhost:4321 but it's preview mode
     const isLocalhost4321 =

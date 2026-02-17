@@ -28,7 +28,9 @@ const {
   className = "",
 } = Astro.props;
 
-const newsletterId = `newsletter-section-${Math.random().toString(36).substr(2, 9)}`;
+const newsletterId = `newsletter-section-${Math.random()
+  .toString(36)
+  .slice(2, 11)}`;
 ---
 
 <section class={`newsletter-section ${variant} ${size} ${className}`}>

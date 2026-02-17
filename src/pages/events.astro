@@ -644,8 +644,12 @@ const eventCategories = [
           const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
           
           if (emailInput && submitButton) {
-            const email = emailInput.value;
-            
+            const email = emailInput.value.trim();
+            if (!email) {
+              alert('Mohon isi email terlebih dahulu.');
+              return;
+            }
+ 
             // Show loading state
             const originalButtonText = submitButton.innerHTML;
             submitButton.innerHTML = 'Subscribing...';

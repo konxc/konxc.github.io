@@ -85,8 +85,6 @@ const fallbackUrl = generateFallbackAvatar(name, email);
     height={size}
     class="avatar-image"
     loading="lazy"
-    onerror="this.onerror=null; this.src=this.dataset.fallback"
-    data-fallback={fallbackUrl}
   />
 </div>
 

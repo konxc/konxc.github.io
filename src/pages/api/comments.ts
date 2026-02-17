@@ -116,7 +116,7 @@ export async function POST({ request }: { request: Request }) {
 
     // Create new comment object
     const newComment = {
-      id: `comment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      id: `comment_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
       postSlug,
       author: author.trim(),
       email: email.trim().toLowerCase(),

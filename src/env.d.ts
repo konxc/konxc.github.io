@@ -20,6 +20,8 @@ declare global {
     // Fuse.js may be loaded via CDN in some pages/components
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Fuse?: any;
+    toggleDarkMode?: () => void;
+    initializeDarkMode?: () => void;
   }
 
   // Fuse.js global constructor (when loaded via CDN)

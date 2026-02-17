@@ -72,13 +72,12 @@ export async function parseBlogPost(
   try {
     // ✅ Use post.data instead of post.frontmatter
     const frontmatter = post.data;
-    const body = post.body;
 
     if (!frontmatter) {
       throw new Error(`Frontmatter is undefined for post: ${post.slug}`);
     }
 
-    const { Content } = await post.render();
+    await post.render();
 
     // Get raw content untuk parsing demos
     const rawContent = post.body;

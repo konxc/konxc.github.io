@@ -155,6 +155,9 @@ const {
     }
 
     private async subscribeToNewsletter(email: string): Promise<void> {
+      if (!email || !email.includes("@")) {
+        throw new Error("Invalid email address");
+      }
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -238,6 +241,7 @@ const {
           event_category: "engagement",
           event_label: "newsletter_signup",
           value: 1,
+          email_domain: email.split("@")[1] || "",
         });
       }
     }

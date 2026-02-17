@@ -491,7 +491,6 @@ const { class: className } = Astro.props;
 
       const rect = contentArea.getBoundingClientRect();
       const scrollTop = window.pageYOffset;
-      const windowHeight = window.innerHeight;
 
       const contentTop = rect.top + scrollTop;
       const contentHeight = rect.height;
@@ -528,6 +527,8 @@ const { class: className } = Astro.props;
         document.body.classList.remove("focus-mode");
       }
 
+      this.saveSettings();
+
       this.trackEvent("focus_mode_toggled", {
         enabled: this.settings.focusMode,
       });
@@ -544,6 +545,8 @@ const { class: className } = Astro.props;
         btn?.classList.remove("active");
         document.body.classList.remove("night-mode");
       }
+
+      this.saveSettings();
 
       this.trackEvent("night_mode_toggled", {
         enabled: this.settings.nightMode,
@@ -571,6 +574,7 @@ const { class: className } = Astro.props;
       contentArea.style.fontSize = `${fontSize}px`;
       contentArea.style.lineHeight = lineHeight.toString();
       contentArea.style.maxWidth = `${maxWidth}px`;
+      this.saveSettings();
     }
 
     private getFontFamily(family: string): string {
@@ -595,27 +599,31 @@ const { class: className } = Astro.props;
 
     private printArticle(): void {
       const contentArea = document.getElementById("reading-content");
-      if (contentArea) {
-        const printWindow = window.open("", "_blank");
-        if (printWindow) {
-          printWindow.document.write(`
-            <html>
-              <head>
-                <title>Print Article</title>
-                <style>
-  @reference "@/styles/global.css";
-                  body { font-family: ${this.getFontFamily(this.settings.typography.fontFamily)}; font-size: ${this.settings.typography.fontSize}px; line-height: ${this.settings.typography.lineHeight}; max-width: ${this.settings.typography.maxWidth}px; margin: 0 auto; padding: 20px; }
-                </style>
-              </head>
-              <body>
-                ${contentArea.innerHTML}
-              </body>
-            </html>
-          `);
-          printWindow.document.close();
-          printWindow.print();
+      if (!contentArea) return;
+
+      const printWindow = window.open("", "_blank");
+      if (!printWindow) return;
+
+      const doc = printWindow.document;
+      doc.title = "Print Article";
+
+      const style = doc.createElement("style");
+      style.textContent = `
+        body {
+          font-family: ${this.getFontFamily(
+            this.settings.typography.fontFamily,
+          )};
+          font-size: ${this.settings.typography.fontSize}px;
+          line-height: ${this.settings.typography.lineHeight};
+          max-width: ${this.settings.typography.maxWidth}px;
+          margin: 0 auto;
+          padding: 20px;
         }
-      }
+      `;
+
+      doc.head.appendChild(style);
+      doc.body.innerHTML = contentArea.innerHTML;
+      printWindow.print();
     }
 
     private shareArticle(): void {
@@ -681,104 +689,8 @@ const { class: className } = Astro.props;
     }
   }
 
-  // Enhanced development environment detection using Vite env
-  function isDevelopmentEnvironment(): boolean {
-    // Check Vite environment variables (most reliable)
-    const isViteDev = import.meta.env.DEV; // true in development, false in production/preview
-    const isViteProd = import.meta.env.PROD; // true in production/preview, false in development
-    const mode = import.meta.env.MODE; // 'development', 'production', or custom
-
-    // Primary check: Vite environment variables
-    if (isViteDev && mode === "development") {
-      return true;
-    }
-
-    // Fallback: Check for Node adapter specific indicators
-    const hostname = window.location.hostname;
-    const port = window.location.port;
-    const protocol = window.location.protocol;
-
-    // Check for localhost variations
-    const isLocalhost =
-      hostname === "localhost" ||
-      hostname === "127.0.0.1" ||
-      hostname === "0.0.0.0" ||
-      hostname.startsWith("192.168.") ||
-      hostname.startsWith("10.0.");
-
-    // Check for development ports (but NOT preview mode)
-    const isDevPort = port === "4321" && !isPreviewMode(); // Astro dev server (not preview)
-
-    // Check for other development ports
-    const isOtherDevPort =
-      port === "3000" || // Common dev port
-      port === "8080" || // Common dev port
-      port === "5173" || // Vite dev server
-      port === "4173"; // Vite preview
-
-    // Check for development protocol
-    const isDevProtocol =
-      protocol === "http:" && (isLocalhost || isDevPort || isOtherDevPort);
-
-    // Check for development URL patterns
-    const isDevUrl =
-      window.location.href.includes("localhost") ||
-      window.location.href.includes("127.0.0.1") ||
-      window.location.href.includes("dev.") ||
-      window.location.href.includes("staging.") ||
-      window.location.href.includes("test.");
-
-    // Check for development environment variables (if available)
-    const hasDevFlag =
-      window.location.search.includes("dev=true") ||
-      window.location.search.includes("debug=true") ||
-      localStorage.getItem("dev-mode") === "true";
-
-    // Check if it's actually development mode (not preview)
-    const isActualDev = isDevProtocol || isDevUrl || hasDevFlag;
-
-    return isActualDev && !isPreviewMode();
-  }
-
-  // Detect if we're in preview mode using Vite env
-  function isPreviewMode(): boolean {
-    // Check Vite environment variables first
-    const isViteProd = import.meta.env.PROD; // true in production/preview
-    const mode = import.meta.env.MODE; // 'development', 'production', or custom
-
-    // If we're in production mode but on localhost, it's likely preview
-    const isLocalhost =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1";
-
-    if (isViteProd && isLocalhost) {
-      return true;
-    }
-
-    // Fallback: Check for Astro preview mode indicators
-    const hasPreviewIndicator =
-      window.location.search.includes("preview=true") ||
-      localStorage.getItem("preview-mode") === "true";
-
-    // Check if we're serving from dist/ directory (preview mode)
-    const isServingDist =
-      document.querySelector('script[src*="/_astro/"]') !== null ||
-      document.querySelector('link[href*="/_astro/"]') !== null;
-
-    // Check for production build indicators
-    const hasProductionBuild =
-      document.querySelector('meta[name="generator"][content*="Astro"]') !==
-      null;
-
-    // Check if we're on localhost:4321 but it's preview mode
-    const isLocalhost4321 =
-      window.location.hostname === "localhost" &&
-      window.location.port === "4321";
-    const isPreviewOnLocalhost =
-      isLocalhost4321 && (hasPreviewIndicator || isServingDist);
-
-    return isPreviewOnLocalhost || hasPreviewIndicator;
-  }
+  // Preview mode detection is not needed for ReadingMode currently,
+  // but can be reintroduced here in the future if required.
 
   // Initialize reading mode when DOM is ready
   function initReadingMode(): void {

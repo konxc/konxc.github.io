@@ -343,15 +343,17 @@ const topSkills = Object.entries(skillDistribution)
 
     private animateStats(): void {
       // Animate stat numbers on scroll
+      if (!this.statsElement) return;
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             this.animateNumber(entry.target as HTMLElement);
           }
         });
-      });
+      }, { root: this.statsElement });
 
-      document.querySelectorAll(".stat-number").forEach((stat) => {
+      this.statsElement.querySelectorAll(".stat-number").forEach((stat) => {
         observer.observe(stat);
       });
     }

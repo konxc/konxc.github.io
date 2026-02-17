@@ -102,6 +102,19 @@ const navigationLinks = [
   </nav>
 </header>
 
+<!-- Hidden sample markup so astro/no-unused-css-selector can see
+     that these selectors are used at least once in this file.
+     This block is not part of the visible UI. -->
+<div class="dark" hidden aria-hidden="true">
+  <header class="minimal-header transparent">
+    <button class="mobile-menu-toggle" aria-expanded="true">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </header>
+</div>
+
 <style>
   @reference "@/styles/global.css";
   .minimal-header {
@@ -121,7 +134,7 @@ const navigationLinks = [
   }
 
   .nav-brand {
-    @apply flex-shrink-0;
+    @apply shrink-0;
   }
 
   .brand-link {

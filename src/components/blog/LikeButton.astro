@@ -21,7 +21,9 @@ const {
 } = Astro.props;
 
 // Generate unique ID for this like button instance
-const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2, 9)}`;
+const buttonId = `like-button-${postSlug}-${Math.random()
+  .toString(36)
+  .slice(2, 11)}`;
 ---
 
 <div
@@ -220,7 +222,7 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
 
   /* Card variant */
   .like-button-container.card {
-    @apply rounded-xl border border-red-100 bg-gradient-to-r from-red-50 to-pink-50 p-6;
+    @apply rounded-xl border border-red-100 bg-linear-to-r from-red-50 to-pink-50 p-6;
   }
 
   .like-button-container.card .like-question {
@@ -286,7 +288,7 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
   }
 
   .dark .like-button-container.card {
-    @apply border-red-800 bg-gradient-to-r from-red-900 to-pink-900;
+    @apply border-red-800 bg-linear-to-r from-red-900 to-pink-900;
   }
 
   /* Mobile responsive */

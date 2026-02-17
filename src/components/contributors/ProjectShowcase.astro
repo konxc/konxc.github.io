@@ -392,8 +392,12 @@ const statuses = ["all", "active", "completed", "archived"];
 
     private initializeElements(): void {
       this.showcaseElement = document.querySelector(".project-showcase");
-      this.filterButtons = document.querySelectorAll(".filter-btn");
-      this.projectCards = document.querySelectorAll(".project-card");
+      if (!this.showcaseElement) return;
+
+      this.filterButtons =
+        this.showcaseElement.querySelectorAll<HTMLButtonElement>(".filter-btn");
+      this.projectCards =
+        this.showcaseElement.querySelectorAll<HTMLElement>(".project-card");
     }
 
     private setupEventListeners(): void {
@@ -588,7 +592,7 @@ const statuses = ["all", "active", "completed", "archived"];
   }
 
   .project-card {
-    @apply rounded-xl border border-neutral-200 bg-gradient-to-br from-neutral-50 to-neutral-100 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+    @apply rounded-xl border border-neutral-200 bg-linear-to-br from-neutral-50 to-neutral-100 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
   }
 
   .project-card.featured {
@@ -600,7 +604,7 @@ const statuses = ["all", "active", "completed", "archived"];
   }
 
   .project-icon {
-    @apply flex-shrink-0 text-2xl;
+    @apply shrink-0 text-2xl;
   }
 
   .project-info {

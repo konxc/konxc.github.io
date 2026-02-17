@@ -20,7 +20,9 @@ const {
   className = "",
 } = Astro.props;
 
-const containerId = `auto-like-container-${postSlug}-${Math.random().toString(36).substr(2, 9)}`;
+const containerId = `auto-like-container-${postSlug}-${Math.random()
+  .toString(36)
+  .slice(2, 11)}`;
 ---
 
 <div id={containerId} class={`auto-like-container ${className}`}>
@@ -38,7 +40,7 @@ const containerId = `auto-like-container-${postSlug}-${Math.random().toString(36
   }
 
   .auto-like-container .inline-like-container.card {
-    @apply rounded-lg border border-red-100 bg-gradient-to-r from-red-50 to-pink-50 p-4;
+    @apply rounded-lg border border-red-100 bg-linear-to-r from-red-50 to-pink-50 p-4;
   }
 
   .auto-like-container .inline-like-container.minimal {
@@ -47,13 +49,13 @@ const containerId = `auto-like-container-${postSlug}-${Math.random().toString(36
 
   /* Dark mode support */
   .dark .auto-like-container .inline-like-container.card {
-    @apply border-red-800 bg-gradient-to-r from-red-900 to-pink-900;
+    @apply border-red-800 bg-linear-to-r from-red-900 to-pink-900;
   }
 </style>
 
 <script
+  is:inline
   define:vars={{
-    containerId,
     contentSelector,
     insertFrequency,
     postSlug,
@@ -64,7 +66,8 @@ const containerId = `auto-like-container-${postSlug}-${Math.random().toString(36
 >
   // Auto Inline Like Button Functionality
   function initializeAutoInlineLikeButtons() {
-    const container = document.getElementById(containerId);
+    const container =
+      document.querySelector<HTMLElement>(".auto-like-container");
     if (!container) return;
 
     const contentElement = document.querySelector(contentSelector);

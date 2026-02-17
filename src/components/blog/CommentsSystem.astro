@@ -305,8 +305,32 @@ const mockComments = [
         console.log('Comments API not available, using mock data');
         this.comments = this.getMockComments();
       }
-      
+
+      this.applyCommentsSettings();
       this.renderComments();
+    }
+
+    private applyCommentsSettings(): void {
+      // Enforce maximum comments limit
+      if (this.comments.length > this.maxComments) {
+        this.comments = this.comments.slice(0, this.maxComments);
+      }
+
+      // Apply basic moderation flag by filtering pending comments if required
+      if (this.moderationRequired) {
+        this.comments = this.comments.filter(
+          (comment) => comment.status !== 'pending'
+        );
+      }
+
+      // Optionally hide reply UI when replies are disabled
+      if (!this.allowReplies) {
+        document
+          .querySelectorAll('.comment-reply-button')
+          .forEach((btn) => {
+            (btn as HTMLElement).style.display = 'none';
+          });
+      }
     }
 
     private getMockComments(): any[] {

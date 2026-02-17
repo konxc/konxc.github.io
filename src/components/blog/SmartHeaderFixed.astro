@@ -209,9 +209,7 @@ import Header from "@components/ui/Header.astro";
       document.querySelector<HTMLElement>(".section.bg-gradient-to-br") ||
       document.querySelector<HTMLElement>("section:first-of-type");
 
-    let lastScrollY = window.scrollY;
     let ticking = false;
-    let isScrollingDown = false;
 
     // 🎯 CONFIGURATION: Adjust hide threshold here
     // Options:
@@ -225,11 +223,6 @@ import Header from "@components/ui/Header.astro";
     // Function to update header visibility with smooth animations
     function updateHeaderVisibility() {
       const currentScrollY = window.scrollY;
-      const scrollDelta = currentScrollY - lastScrollY;
-
-      // Determine scroll direction
-      isScrollingDown = scrollDelta > 0;
-
       if (!blogPostHeader) {
         // Fallback: Hide header if no blog post header found
         // Header should NOT appear in other sections
@@ -286,8 +279,6 @@ import Header from "@components/ui/Header.astro";
       } else {
         blogPostHeader.classList.remove("approaching-threshold");
       }
-
-      lastScrollY = currentScrollY;
       ticking = false;
     }
 

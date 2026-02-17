@@ -295,7 +295,7 @@ const getArticleUrl = (article: Article) => {
         const links = card.querySelectorAll('a');
         
         // Add keyboard navigation between links within card
-        links.forEach((link, index) => {
+        links.forEach((link) => {
           link.addEventListener('keydown', (e) => {
             if (e.key === 'Tab') {
               // Custom tab handling if needed

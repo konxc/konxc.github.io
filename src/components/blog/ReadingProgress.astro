@@ -17,18 +17,15 @@
     const articleRect = article.getBoundingClientRect();
     const articleTop = articleRect.top + window.pageYOffset;
     const articleHeight = articleRect.height;
-    const windowHeight = window.innerHeight;
     const scrollTop = window.pageYOffset;
 
     // Calculate how much of the article is visible
-    const articleBottom = articleTop + articleHeight;
     const viewportTop = scrollTop;
-    const viewportBottom = scrollTop + windowHeight;
 
     // Calculate progress based on how much content has been scrolled through
     let progress = 0;
 
-    if (viewportTop >= articleTop) {
+    if (viewportTop >= articleTop && articleHeight > 0) {
       // Article is in view, calculate progress
       const scrolledThrough = Math.min(viewportTop - articleTop, articleHeight);
       progress = Math.min(scrolledThrough / articleHeight, 1);
@@ -99,7 +96,7 @@
   }
 
   .progress-bar {
-    @apply from-primary-500 to-secondary-500 h-full bg-gradient-to-r transition-all duration-300 ease-out;
+    @apply from-primary-500 to-secondary-500 h-full bg-linear-to-r transition-all duration-300 ease-out;
     width: 0%;
     position: relative;
     border-radius: inherit;

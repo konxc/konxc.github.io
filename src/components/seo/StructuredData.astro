@@ -160,14 +160,21 @@ switch (type) {
 ---
 
 {Object.keys(structuredData).length > 0 && (
-  <script type="application/ld+json" set:html={JSON.stringify(structuredData, null, 2)} />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData, null, 2)}
+  />
 )}
 
 <!-- Additional SEO structured data for blog posts -->
 {type === 'article' && post && (
   <>
     <!-- Article structured data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       "headline": post.data.title,
@@ -188,10 +195,14 @@ switch (type) {
       "isAccessibleForFree": true,
       "copyrightHolder": organizationData,
       "copyrightYear": new Date(post.data.publishDate).getFullYear()
-    }, null, 2)} />
+    }, null, 2)}
+    />
 
     <!-- Breadcrumb for blog post -->
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
@@ -214,19 +225,29 @@ switch (type) {
           "item": url
         }
       ]
-    }, null, 2)} />
+    }, null, 2)}
+    />
   </>
 )}
 
 <!-- Website structured data for all pages -->
 {type !== 'article' && (
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": siteName,
-    "url": "https://konxc.space",
-    "description": "Solusi teknologi terintegrasi untuk UMKM hingga Enterprise.",
-    "publisher": organizationData,
-    "inLanguage": "id-ID"
-  }, null, 2)} />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": siteName,
+        "url": "https://konxc.space",
+        "description":
+          "Solusi teknologi terintegrasi untuk UMKM hingga Enterprise.",
+        "publisher": organizationData,
+        "inLanguage": "id-ID",
+      },
+      null,
+      2,
+    )}
+  />
 )}

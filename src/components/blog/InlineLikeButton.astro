@@ -16,7 +16,9 @@ const {
   className = "",
 } = Astro.props;
 
-const buttonId = `inline-like-${postSlug}-${Math.random().toString(36).substr(2, 9)}`;
+const buttonId = `inline-like-${postSlug}-${Math.random()
+  .toString(36)
+  .slice(2, 11)}`;
 ---
 
 <div class={`inline-like-container ${position} ${variant} ${className}`}>
@@ -176,7 +178,7 @@ const buttonId = `inline-like-${postSlug}-${Math.random().toString(36).substr(2,
   }
 
   .inline-like-container.card {
-    @apply rounded-lg border border-red-100 bg-gradient-to-r from-red-50 to-pink-50 p-4;
+    @apply rounded-lg border border-red-100 bg-linear-to-r from-red-50 to-pink-50 p-4;
   }
 
   .inline-like-container.card .inline-like-question {
@@ -234,7 +236,7 @@ const buttonId = `inline-like-${postSlug}-${Math.random().toString(36).substr(2,
   }
 
   .dark .inline-like-container.card {
-    @apply border-red-800 bg-gradient-to-r from-red-900 to-pink-900;
+    @apply border-red-800 bg-linear-to-r from-red-900 to-pink-900;
   }
 
   /* Mobile responsive */

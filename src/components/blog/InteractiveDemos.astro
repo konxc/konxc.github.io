@@ -338,7 +338,8 @@ import Card from '@components/ui/Card.astro';`,
     private tabs: NodeListOf<HTMLButtonElement> | null = null;
     private panels: NodeListOf<HTMLElement> | null = null;
     private activeTab: string = "";
-    private colorPalette: any = null;
+    // Reserved for future palette caching if needed
+    // private colorPalette: any = null;
 
     constructor() {
       this.initializeTabs();
@@ -530,13 +531,55 @@ import Card from '@components/ui/Card.astro';`,
     }
 
     private lightenColor(color: string, amount: number): string {
-      // Simple color lightening (in production, use a proper color library)
-      return color; // Placeholder
+      // Simple color lightening by blending towards white
+      const factor = Math.min(Math.max(amount, 0), 1);
+      return this.adjustColor(color, factor);
     }
 
     private darkenColor(color: string, amount: number): string {
-      // Simple color darkening (in production, use a proper color library)
-      return color; // Placeholder
+      // Simple color darkening by blending towards black
+      const factor = -Math.min(Math.max(amount, 0), 1);
+      return this.adjustColor(color, factor);
+    }
+
+    private adjustColor(color: string, amount: number): string {
+      // Very small utility to adjust a hex color brightness
+      if (!color.startsWith("#") || (color.length !== 7 && color.length !== 4)) {
+        return color;
+      }
+
+      const expandHex = (hex: string) =>
+        hex.length === 4
+          ? `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`
+          : hex;
+
+      const normalized = expandHex(color);
+      const num = parseInt(normalized.slice(1), 16);
+      let r = (num >> 16) & 0xff;
+      let g = (num >> 8) & 0xff;
+      let b = num & 0xff;
+
+      const adjust = (channel: number) =>
+        Math.max(
+          0,
+          Math.min(
+            255,
+            amount >= 0
+              ? channel + (255 - channel) * amount
+              : channel * (1 + amount),
+          ),
+        );
+
+      r = adjust(r);
+      g = adjust(g);
+      b = adjust(b);
+
+      const toHex = (channel: number) =>
+        channel.toString(16).padStart(2, "0");
+
+      return `#${toHex(Math.round(r))}${toHex(Math.round(g))}${toHex(
+        Math.round(b),
+      )}`;
     }
 
     private updateGeneratedCSS(palette: string[], type: string): void {
@@ -611,13 +654,7 @@ import Card from '@components/ui/Card.astro';`,
       try {
         await navigator.clipboard.writeText(text);
       } catch (err) {
-        // Fallback for older browsers
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
+        console.error("InteractiveDemos: Failed to copy text", err);
       }
     }
 

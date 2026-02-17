@@ -165,7 +165,9 @@ const {
     private startTimeTracking(): void {
       this.timeInterval = window.setInterval(() => {
         if (this.isActive) {
-          this.timeOnPage += 1;
+          this.timeOnPage = Math.floor(
+            (Date.now() - this.startTime) / 1000,
+          );
           this.trackEvent("time_update", {
             post_slug: this.postSlug,
             time_on_page: this.timeOnPage,
@@ -287,6 +289,7 @@ const {
         post_slug: this.postSlug,
         time_on_page: this.timeOnPage,
         reading_progress: this.readingProgress,
+        last_activity: this.lastActivity,
       });
     }
 
@@ -296,6 +299,7 @@ const {
         post_slug: this.postSlug,
         time_on_page: this.timeOnPage,
         reading_progress: this.readingProgress,
+        last_activity: this.lastActivity,
       });
     }
 
