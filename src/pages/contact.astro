@@ -1,0 +1,473 @@
+---
+import ExtendedLayout from "@layouts/ExtendedLayout.astro";
+import { Icon } from "astro-icon/components";
+
+const contactInfo = {
+    address: "Jakarta, Indonesia",
+    phone: "+62 882 00795 2010",
+    email: "hello@konxc.space",
+    whatsapp: "https://wa.me/62882007952010",
+    workingHours: "Senin - Jumat: 09:00 - 18:00 WIB",
+    socials: [
+        {
+            name: "GitHub",
+            icon: "simple-icons:github",
+            href: "https://github.com/konxc",
+        },
+        {
+            name: "LinkedIn",
+            icon: "simple-icons:linkedin",
+            href: "https://linkedin.com/company/konxc",
+        },
+        {
+            name: "Twitter",
+            icon: "simple-icons:x",
+            href: "https://twitter.com/konxc",
+        },
+        {
+            name: "Instagram",
+            icon: "simple-icons:instagram",
+            href: "https://instagram.com/konxc.id",
+        },
+    ],
+};
+
+const faqs = [
+    {
+        question: "Berapa lama waktu respon untuk setiap konsultasi?",
+        answer: "Kami biasanya merespons dalam waktu 24 jam kerja. Untuk pertanyaan mendesak, Anda dapat menghubungi kami melalui WhatsApp.",
+    },
+    {
+        question: "Apakah KonXC melayani project di luar Jakarta?",
+        answer: "Ya, kami melayani project dari seluruh Indonesia secara remote. Untuk layanan infrastruktur fisik, kami memiliki tim yang dapat dikirim ke lokasi tertentu.",
+    },
+    {
+        question: "Bagaimana cara menjadi kontributor di KonXC?",
+        answer: "Anda dapat melihat halaman kontributor kami atau mengirimkan pesan melalui form di bawah ini dengan subjek 'Kontributor'.",
+    },
+];
+---
+
+<ExtendedLayout
+    title="Hubungi Kami - KonXC | Solusi Teknologi Terintegrasi"
+    description="Hubungi tim KonXC untuk konsultasi teknologi, software development, branding digital, atau kolaborasi lainnya. Kami siap membantu bisnis Anda tumbuh."
+    footerVariant="default"
+>
+    <!-- Hero Section -->
+    <section
+        class="relative overflow-hidden bg-white pt-24 pb-16 lg:pt-32 lg:pb-24"
+    >
+        <div class="absolute inset-0 z-0">
+            <div
+                class="bg-primary-100/30 absolute top-0 left-1/4 h-64 w-64 rounded-full blur-3xl"
+            >
+            </div>
+            <div
+                class="bg-secondary-100/30 absolute right-1/4 bottom-0 h-64 w-64 rounded-full blur-3xl"
+            >
+            </div>
+        </div>
+
+        <div class="relative z-10 container">
+            <div class="mx-auto max-w-3xl text-center">
+                <h1
+                    class="mb-6 text-4xl font-bold tracking-tight text-neutral-900 md:text-5xl lg:text-6xl"
+                >
+                    Mari Membangun <br />
+                    <span
+                        class="from-primary-600 to-secondary-600 bg-linear-to-r bg-clip-text text-transparent"
+                        >Masa Depan Digital</span
+                    > Bersama
+                </h1>
+                <p class="text-xl leading-relaxed text-neutral-600">
+                    Punya pertanyaan tentang layanan kami, ingin berkolaborasi,
+                    atau sekadar ingin menyapa? Tim kami siap mendengarkan
+                    aspirasi Anda.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form & Info -->
+    <section class="bg-neutral-50 py-16 lg:py-24">
+        <div class="container">
+            <div class="grid gap-12 lg:grid-cols-2 lg:items-start">
+                <!-- Contact Information -->
+                <div class="space-y-12">
+                    <div>
+                        <h2 class="mb-8 text-3xl font-bold text-neutral-900">
+                            Informasi Kontak
+                        </h2>
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="bg-primary-100 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                                >
+                                    <Icon
+                                        name="heroicons:map-pin"
+                                        class="h-6 w-6"
+                                    />
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-neutral-900">
+                                        Kantor Kami
+                                    </h3>
+                                    <p class="text-neutral-600">
+                                        {contactInfo.address}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="bg-primary-100 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                                >
+                                    <Icon
+                                        name="heroicons:envelope"
+                                        class="h-6 w-6"
+                                    />
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-neutral-900">
+                                        Email
+                                    </h3>
+                                    <a
+                                        href={`mailto:${contactInfo.email}`}
+                                        class="hover:text-primary-600 text-neutral-600 transition-colors"
+                                    >
+                                        {contactInfo.email}
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="bg-primary-100 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                                >
+                                    <Icon
+                                        name="heroicons:phone"
+                                        class="h-6 w-6"
+                                    />
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-neutral-900">
+                                        Telepon / WhatsApp
+                                    </h3>
+                                    <a
+                                        href={contactInfo.whatsapp}
+                                        target="_blank"
+                                        class="hover:text-primary-600 text-neutral-600 transition-colors"
+                                    >
+                                        {contactInfo.phone}
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="bg-primary-100 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                                >
+                                    <Icon
+                                        name="heroicons:clock"
+                                        class="h-6 w-6"
+                                    />
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-neutral-900">
+                                        Jam Kerja
+                                    </h3>
+                                    <p class="text-neutral-600">
+                                        {contactInfo.workingHours}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="mb-6 text-xl font-bold text-neutral-900">
+                            Ikuti Kami
+                        </h3>
+                        <div class="flex gap-4">
+                            {
+                                contactInfo.socials.map((social) => (
+                                    <a
+                                        href={social.href}
+                                        target="_blank"
+                                        aria-label={social.name}
+                                        class="hover:bg-primary-600 hover:border-primary-600 flex h-12 w-12 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-600 shadow-sm transition-all hover:text-white"
+                                    >
+                                        <Icon
+                                            name={social.icon}
+                                            class="h-6 w-6"
+                                        />
+                                    </a>
+                                ))
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div
+                    class="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm lg:p-12"
+                >
+                    <h2 class="mb-6 text-2xl font-bold text-neutral-900">
+                        Kirim Pesan
+                    </h2>
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid gap-6 sm:grid-cols-2">
+                            <div class="space-y-2">
+                                <label
+                                    for="first_name"
+                                    class="text-sm font-semibold text-neutral-700"
+                                    >Nama Depan</label
+                                >
+                                <input
+                                    type="text"
+                                    id="first_name"
+                                    name="first_name"
+                                    required
+                                    class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 transition-all outline-none focus:bg-white focus:ring-4"
+                                    placeholder="John"
+                                />
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    for="last_name"
+                                    class="text-sm font-semibold text-neutral-700"
+                                    >Nama Belakang</label
+                                >
+                                <input
+                                    type="text"
+                                    id="last_name"
+                                    name="last_name"
+                                    class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 transition-all outline-none focus:bg-white focus:ring-4"
+                                    placeholder="Doe"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                for="email"
+                                class="text-sm font-semibold text-neutral-700"
+                                >Email Bisnis</label
+                            >
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                required
+                                class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 transition-all outline-none focus:bg-white focus:ring-4"
+                                placeholder="email@perusahaan.com"
+                            />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                for="subject"
+                                class="text-sm font-semibold text-neutral-700"
+                                >Subjek</label
+                            >
+                            <select
+                                id="subject"
+                                name="subject"
+                                class="focus:border-primary-500 focus:ring-primary-500/10 w-full appearance-none rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 transition-all outline-none focus:bg-white focus:ring-4"
+                            >
+                                <option value="consultation"
+                                    >Konsultasi Layanan</option
+                                >
+                                <option value="collaboration"
+                                    >Kerjasama / Partnership</option
+                                >
+                                <option value="contributor"
+                                    >Menjadi Kontributor</option
+                                >
+                                <option value="other"
+                                    >Tanya Sesuatu yang Lain</option
+                                >
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                for="message"
+                                class="text-sm font-semibold text-neutral-700"
+                                >Pesan Anda</label
+                            >
+                            <textarea
+                                id="message"
+                                name="message"
+                                rows="5"
+                                required
+                                class="focus:border-primary-500 focus:ring-primary-500/10 w-full resize-none rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 transition-all outline-none focus:bg-white focus:ring-4"
+                                placeholder="Ceritakan tentang project Anda atau pertanyaan Anda..."
+                            ></textarea>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="group bg-primary-600 hover:bg-primary-700 relative w-full overflow-hidden rounded-xl px-6 py-4 font-bold text-white shadow-lg transition-all active:scale-95"
+                        >
+                            <div
+                                class="relative z-10 flex items-center justify-center gap-2"
+                            >
+                                <span>Kirim Pesan Sekarang</span>
+                                <Icon
+                                    name="heroicons:paper-airplane"
+                                    class="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                                />
+                            </div>
+                            <div
+                                class="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 group-hover:translate-x-full"
+                            >
+                            </div>
+                        </button>
+                        <p class="text-center text-xs text-neutral-500">
+                            Dengan mengirimkan form ini, Anda menyetujui <a
+                                href="/privacy-policy"
+                                class="hover:text-primary-600 underline"
+                                >Kebijakan Privasi</a
+                            > kami.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="bg-white py-16 lg:py-24">
+        <div class="container">
+            <div class="mb-16 text-center">
+                <h2 class="mb-4 text-3xl font-bold text-neutral-900">
+                    Pertanyaan yang Sering Diajukan
+                </h2>
+                <p class="text-lg text-neutral-600">
+                    Cari jawaban cepat untuk pertanyaan umum Anda
+                </p>
+            </div>
+
+            <div class="mx-auto max-w-3xl space-y-4">
+                {
+                    faqs.map((faq, index) => (
+                        <details
+                            class="group rounded-2xl border border-neutral-200 bg-white shadow-sm transition-all duration-300"
+                            open={index === 0}
+                        >
+                            <summary class="flex cursor-pointer list-none items-center justify-between p-6 outline-none">
+                                <h3 class="pr-6 text-lg font-bold text-neutral-900">
+                                    {faq.question}
+                                </h3>
+                                <div class="group-open:bg-primary-600 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors group-open:text-white">
+                                    <Icon
+                                        name="heroicons:chevron-down"
+                                        class="h-5 w-5 transition-transform group-open:rotate-180"
+                                    />
+                                </div>
+                            </summary>
+                            <div class="px-6 pb-6 leading-relaxed text-neutral-600">
+                                {faq.answer}
+                            </div>
+                        </details>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="bg-neutral-900 py-16 text-white lg:py-24">
+        <div class="container text-center">
+            <h2
+                class="mb-8 bg-linear-to-r from-neutral-50 to-neutral-400 bg-clip-text text-3xl font-bold text-neutral-900 text-transparent lg:text-4xl"
+            >
+                Siap bertransformasi ke level berikutnya?
+            </h2>
+            <p class="mx-auto mb-10 max-w-2xl text-lg text-neutral-400">
+                Kunjungi blog kami untuk wawasan teknologi terbaru atau lihat
+                kontribusi tim kami untuk ekosistem digital Indonesia.
+            </p>
+            <div class="flex flex-col justify-center gap-4 sm:flex-row">
+                <a
+                    href="/blog"
+                    class="inline-flex items-center justify-center rounded-xl bg-white px-8 py-4 font-bold text-neutral-900 transition-all hover:bg-neutral-100 active:scale-95"
+                >
+                    Baca Blog
+                </a>
+                <a
+                    href="/contributors"
+                    class="inline-flex items-center justify-center rounded-xl border border-neutral-700 bg-transparent px-8 py-4 font-bold text-white transition-all hover:bg-neutral-800 active:scale-95"
+                >
+                    Lihat Kontributor
+                </a>
+            </div>
+        </div>
+    </section>
+</ExtendedLayout>
+
+<style>
+    /* Custom form styles */
+    select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-position: right 1rem center;
+        background-repeat: no-repeat;
+        background-size: 1.25rem;
+    }
+
+    summary::-webkit-details-marker {
+        display: none;
+    }
+</style>
+
+<script>
+    // WhatsApp form handling
+    const form = document.getElementById("contact-form") as HTMLFormElement;
+    if (form) {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            // Construct WhatsApp message
+            const phoneNumber = "62882007952010"; // International format
+            const fullName =
+                `${data.first_name} ${data.last_name || ""}`.trim();
+            const subjectMap: Record<string, string> = {
+                consultation: "Konsultasi Layanan",
+                collaboration: "Kerjasama / Partnership",
+                contributor: "Menjadi Kontributor",
+                other: "Tanya Sesuatu yang Lain",
+            };
+
+            const subject =
+                subjectMap[data.subject as string] || (data.subject as string);
+
+            const message = `*Nama:* ${fullName}\n*Email:* ${data.email}\n*Subjek:* ${subject}\n\n*Pesan:*\n${data.message}`;
+
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+                "Halo KonXC, saya ingin bertanya:\n\n" + message,
+            )}`;
+
+            // Open WhatsApp
+            window.open(whatsappUrl, "_blank");
+
+            // Feedback UI
+            const button = form.querySelector('button[type="submit"]');
+            if (button) {
+                const originalContent = button.innerHTML;
+                button.innerHTML = "<span>Mengarahkan ke WhatsApp...</span>";
+                button.classList.remove("bg-primary-600");
+                button.classList.add("bg-green-600");
+
+                setTimeout(() => {
+                    button.innerHTML = originalContent;
+                    button.classList.remove("bg-green-600");
+                    button.classList.add("bg-primary-600");
+                    form.reset();
+                }, 3000);
+            }
+        });
+    }
+</script>
