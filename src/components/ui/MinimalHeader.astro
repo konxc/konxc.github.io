@@ -282,37 +282,51 @@ const navigationLinks = [
       });
     }
 
-    // Dark mode toggle
+    // Dark mode toggle (delegates to global toggle when available)
     const darkModeToggle =
       document.querySelector<HTMLButtonElement>(".dark-mode-toggle");
 
-    if (darkModeToggle) {
-      darkModeToggle.addEventListener("click", () => {
-        document.documentElement.classList.toggle("dark");
+    function updateDarkModeIcon(button: HTMLButtonElement) {
+      const isDark = document.documentElement.classList.contains("dark");
+      const icon =
+        button.querySelector<HTMLElement>(".dark-mode-icon");
+      if (icon) {
+        icon.className = isDark
+          ? "i-mdi-weather-night dark-mode-icon"
+          : "i-mdi-weather-sunny dark-mode-icon";
+      }
+    }
 
-        // Save preference
+    function toggleDarkModeFromHeader() {
+      const globalAny = window as any;
+
+      if (typeof globalAny.toggleDarkMode === "function") {
+        globalAny.toggleDarkMode();
+      } else {
+        document.documentElement.classList.toggle("dark");
         const isDark = document.documentElement.classList.contains("dark");
         localStorage.setItem("darkMode", String(isDark));
+      }
 
-        // Update icon
-        const icon =
-          darkModeToggle.querySelector<HTMLElement>(".dark-mode-icon");
-        if (icon) {
-          icon.className = isDark
-            ? "i-mdi-weather-night dark-mode-icon"
-            : "i-mdi-weather-sunny dark-mode-icon";
-        }
-      });
+      if (darkModeToggle) {
+        updateDarkModeIcon(darkModeToggle);
+      }
+    }
 
-      // Load saved preference
+    if (darkModeToggle) {
+      darkModeToggle.addEventListener("click", toggleDarkModeFromHeader);
+
+      // Apply saved preference if any (in case global toggle hasn't run yet)
       const savedDarkMode = localStorage.getItem("darkMode");
       if (savedDarkMode === "true") {
         document.documentElement.classList.add("dark");
-        const icon = darkModeToggle.querySelector(".dark-mode-icon");
-        if (icon) {
-          icon.className = "i-mdi-weather-night dark-mode-icon";
-        }
       }
+      updateDarkModeIcon(darkModeToggle);
+
+      // Keep icon in sync with global dark mode events
+      window.addEventListener("darkModeToggle", () => {
+        updateDarkModeIcon(darkModeToggle);
+      });
     }
   });
 </script>
