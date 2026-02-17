@@ -35,7 +35,7 @@ const CONFIG = {
 let sharp;
 try {
   sharp = (await import("sharp")).default;
-} catch (error) {
+} catch (_error) {
   console.error("❌ Sharp not found. Please install it first:");
   console.error("npm install sharp");
   process.exit(1);
@@ -53,7 +53,7 @@ function getFileSize(filePath) {
   try {
     const stats = fs.statSync(filePath);
     return (stats.size / 1024).toFixed(2); // KB
-  } catch (error) {
+  } catch (_error) {
     return "0";
   }
 }

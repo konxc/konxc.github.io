@@ -210,8 +210,8 @@ class CSSClassesAnalyzer {
     try {
       await this.runBuild();
       await this.analyzeCSSFiles();
-      const analysis = await this.checkTOCClasses();
-      const report = await this.generateReport();
+      const _analysis = await this.checkTOCClasses();
+      const _report = await this.generateReport();
 
       console.log("\n🎯 Summary:");
       if (this.missingClasses.length === 0) {

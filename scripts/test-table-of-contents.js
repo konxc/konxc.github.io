@@ -1,5 +1,3 @@
-import path from "path";
-
 import puppeteer from "puppeteer";
 
 class TableOfContentsTester {

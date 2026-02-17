@@ -6,7 +6,7 @@
  */
 
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { dirname } from 'path';
 
 import puppeteer from 'puppeteer';
 
@@ -14,13 +14,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 class BlogFeaturesTester {
-  private browser: any;
-  private page: any;
-  private baseUrl: string;
-  private testResults: any[] = [];
+  browser = null;
+  page = null;
+  baseUrl = "http://localhost:4321";
+  testResults = [];
 
   constructor() {
-    this.baseUrl = 'http://localhost:4321';
   }
 
   async initialize() {
@@ -245,7 +244,7 @@ class BlogFeaturesTester {
     }
   }
 
-  recordTest(testName: string, passed: boolean, details: string) {
+  recordTest(testName, passed, details) {
     this.testResults.push({
       test: testName,
       passed,

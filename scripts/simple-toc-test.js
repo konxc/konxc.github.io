@@ -227,7 +227,7 @@ class SimpleTOCTester {
           fullPage: true,
         });
         console.log("📸 Error screenshot saved as toc-error-screenshot.png");
-      } catch (screenshotError) {
+      } catch (_screenshotError) {
         console.log("❌ Could not take error screenshot");
       }
     }

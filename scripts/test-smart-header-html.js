@@ -120,7 +120,7 @@ async function checkDevServer() {
       console.log("❌ Dev server not responding");
       return false;
     }
-  } catch (error) {
+  } catch (_error) {
     console.log("❌ Dev server not running");
     console.log("📝 Please run: pnpm run dev");
     return false;
