@@ -1,7 +1,7 @@
 // Newsletter Analytics Utilities
 // Handles tracking, conversion events, and CRM integration
 
-export interface NewsletterEvent {
+export interface NewsletterEventBase {
   email?: string;
   leadSource: string;
   campaignId?: string;
@@ -13,7 +13,7 @@ export interface NewsletterEvent {
   userId?: string;
 }
 
-export interface ConversionData extends NewsletterEvent {
+export interface ConversionData extends NewsletterEventBase {
   subscriptionId?: string;
   conversionValue?: number;
   attribution?: AttributionData;
@@ -36,6 +36,8 @@ export class NewsletterAnalytics {
   private debugMode: boolean;
   private sessionId: string;
 
+  private static readonly STORAGE_KEY = "newsletter_analytics";
+
   constructor(
     options: { trackingEnabled?: boolean; debugMode?: boolean } = {},
   ) {
@@ -47,10 +49,10 @@ export class NewsletterAnalytics {
   /**
    * Track newsletter form impression
    */
-  trackImpression(data: Omit<NewsletterEvent, "timestamp">): void {
+  trackImpression(data: Omit<NewsletterEventBase, "timestamp">): void {
     if (!this.trackingEnabled) return;
 
-    const eventData: NewsletterEvent = {
+    const eventData: NewsletterEventBase = {
       ...data,
       timestamp: new Date().toISOString(),
       sessionId: this.sessionId,
@@ -63,12 +65,12 @@ export class NewsletterAnalytics {
    * Track user engagement with form (focus, input)
    */
   trackEngagement(
-    data: Omit<NewsletterEvent, "timestamp">,
+    data: Omit<NewsletterEventBase, "timestamp">,
     engagementType: "focus" | "input" | "validation",
   ): void {
     if (!this.trackingEnabled) return;
 
-    const eventData: NewsletterEvent = {
+    const eventData: NewsletterEventBase = {
       ...data,
       timestamp: new Date().toISOString(),
       sessionId: this.sessionId,
@@ -80,10 +82,10 @@ export class NewsletterAnalytics {
   /**
    * Track subscription attempt
    */
-  trackAttempt(data: Omit<NewsletterEvent, "timestamp">): void {
+  trackAttempt(data: Omit<NewsletterEventBase, "timestamp">): void {
     if (!this.trackingEnabled) return;
 
-    const eventData: NewsletterEvent = {
+    const eventData: NewsletterEventBase = {
       ...data,
       timestamp: new Date().toISOString(),
       sessionId: this.sessionId,
@@ -100,6 +102,9 @@ export class NewsletterAnalytics {
 
     const conversionData: ConversionData = {
       ...data,
+      leadSource: data.leadSource,
+      variant: data.variant,
+      page: data.page,
       timestamp: new Date().toISOString(),
       sessionId: this.sessionId,
       attribution: this.getAttributionData(),
@@ -112,10 +117,13 @@ export class NewsletterAnalytics {
   /**
    * Track subscription error
    */
-  trackError(data: Omit<NewsletterEvent, "timestamp">, error: string): void {
+  trackError(
+    data: Omit<NewsletterEventBase, "timestamp">,
+    error: string,
+  ): void {
     if (!this.trackingEnabled) return;
 
-    const eventData = {
+    const eventData: NewsletterEventBase & { error: string } = {
       ...data,
       timestamp: new Date().toISOString(),
       sessionId: this.sessionId,
@@ -128,7 +136,7 @@ export class NewsletterAnalytics {
   /**
    * Send event to multiple analytics providers
    */
-  private sendEvent(eventName: string, data: any): void {
+  private sendEvent(eventName: string, data: NewsletterEventBase): void {
     // Google Analytics 4
     this.sendToGoogleAnalytics(eventName, data);
 
@@ -147,7 +155,10 @@ export class NewsletterAnalytics {
   /**
    * Send to Google Analytics 4
    */
-  private sendToGoogleAnalytics(eventName: string, data: any): void {
+  private sendToGoogleAnalytics(
+    eventName: string,
+    data: NewsletterEventBase,
+  ): void {
     if (typeof gtag === "undefined") return;
 
     try {
@@ -167,7 +178,10 @@ export class NewsletterAnalytics {
   /**
    * Send to custom analytics system
    */
-  private sendToCustomAnalytics(eventName: string, data: any): void {
+  private sendToCustomAnalytics(
+    eventName: string,
+    data: NewsletterEventBase,
+  ): void {
     try {
       // Store in localStorage for now (replace with real analytics later)
       const analyticsData = this.getStoredAnalytics();
@@ -188,7 +202,7 @@ export class NewsletterAnalytics {
       }
 
       localStorage.setItem(
-        "newsletter_analytics",
+        NewsletterAnalytics.STORAGE_KEY,
         JSON.stringify(analyticsData),
       );
 
@@ -206,7 +220,7 @@ export class NewsletterAnalytics {
   /**
    * Send to CRM system (future implementation)
    */
-  private sendToCRM(eventName: string, data: any): void {
+  private sendToCRM(eventName: string, data: NewsletterEventBase): void {
     // Placeholder for future CRM integration
     if (eventName === "newsletter_success") {
       // This will be implemented when CRM API is ready
@@ -223,7 +237,7 @@ export class NewsletterAnalytics {
   /**
    * Calculate lead score based on engagement
    */
-  private calculateLeadScore(data: any): number {
+  private calculateLeadScore(data: NewsletterEventBase): number {
     let score = 10; // Base score
 
     // Source scoring
@@ -360,7 +374,10 @@ export class NewsletterAnalytics {
       }
 
       // Store updated metrics
-      localStorage.setItem("newsletter_analytics", JSON.stringify(metrics));
+      localStorage.setItem(
+        NewsletterAnalytics.STORAGE_KEY,
+        JSON.stringify(metrics),
+      );
     } catch (error) {
       console.warn("Failed to update conversion metrics:", error);
     }
@@ -369,9 +386,18 @@ export class NewsletterAnalytics {
   /**
    * Get stored analytics data
    */
-  private getStoredAnalytics(): any {
+  private getStoredAnalytics(): {
+    conversions?: {
+      total: number;
+      bySource: Record<string, number>;
+      byVariant: Record<string, number>;
+      byCampaign: Record<string, number>;
+    };
+    events?: Array<Record<string, unknown>>;
+    [key: string]: unknown;
+  } {
     try {
-      const stored = localStorage.getItem("newsletter_analytics");
+      const stored = localStorage.getItem(NewsletterAnalytics.STORAGE_KEY);
       return stored ? JSON.parse(stored) : {};
     } catch {
       return {};
@@ -388,14 +414,14 @@ export class NewsletterAnalytics {
   /**
    * Get conversion metrics for reporting
    */
-  getConversionMetrics(): any {
+  getConversionMetrics(): Record<string, unknown> {
     return this.getStoredAnalytics().conversions || {};
   }
 
   /**
    * Get recent events for debugging
    */
-  getRecentEvents(limit = 10): any[] {
+  getRecentEvents(limit = 10): Record<string, unknown>[] {
     const analytics = this.getStoredAnalytics();
     const events = analytics.events || [];
     return events.slice(-limit);
@@ -405,7 +431,7 @@ export class NewsletterAnalytics {
    * Clear analytics data (for testing/privacy)
    */
   clearData(): void {
-    localStorage.removeItem("newsletter_analytics");
+    localStorage.removeItem(NewsletterAnalytics.STORAGE_KEY);
     sessionStorage.removeItem("session_start");
     sessionStorage.removeItem("landing_page");
     sessionStorage.removeItem("page_views");
