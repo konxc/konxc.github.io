@@ -1,806 +1,795 @@
 ---
-// Smart Blog Testing Suite - Toggleable Development Tool
+// Smart Blog Testing Suite - Premium Development & QA Overhaul
+import { Icon } from "astro-icon/components";
 ---
 
-<div class="testing-toggle" id="testing-toggle-original">
+<div class="blog-suite-wrapper" id="blog-suite-wrapper">
+  <!-- Trigger FAB -->
   <button
-    id="testing-toggle-btn"
-    class="testing-toggle-btn"
-    title="Toggle Blog Testing Suite"
+    id="suite-trigger"
+    class="suite-fab group"
+    aria-label="Toggle Blog Test Suite"
   >
-    🧪
+    <div class="fab-blob">
+      <Icon
+        name="heroicons:beaker"
+        class="h-6 w-6 transition-transform group-hover:rotate-12"
+      />
+    </div>
+    <span class="fab-label">Lab Suite</span>
   </button>
-</div>
 
-<div class="testing-suite" id="testing-suite" style="display: none;">
-  <div class="testing-header">
-    <div class="flex items-center justify-between">
-      <div>
-        <h2 class="mb-2 text-2xl font-bold">🧪 Blog Features Testing Suite</h2>
-        <p class="text-neutral-600">
-          Development mode - Testing semua fitur blog KonXC
-        </p>
-      </div>
-      <button
-        id="close-testing-btn"
-        class="close-btn"
-        title="Close Testing Suite"
-      >
-        ✕
-      </button>
-    </div>
-  </div>
-
-  <div class="testing-grid">
-    <!-- Table of Contents Test -->
-    <div class="test-card" id="toc-test">
-      <h3 class="mb-3 text-lg font-semibold">📋 Table of Contents Test</h3>
-      <div class="test-status" id="toc-status">⏳ Ready to test</div>
-      <div class="test-details" id="toc-details"></div>
-      <button class="test-btn" id="test-toc-btn">Test TOC</button>
-    </div>
-
-    <!-- Reading Progress Test -->
-    <div class="test-card" id="progress-test">
-      <h3 class="mb-3 text-lg font-semibold">📊 Reading Progress Test</h3>
-      <div class="test-status" id="progress-status">⏳ Ready to test</div>
-      <div class="test-details" id="progress-details"></div>
-      <button class="test-btn" id="test-progress-btn">Test Progress</button>
-    </div>
-
-    <!-- Social Sharing Test -->
-    <div class="test-card" id="social-test">
-      <h3 class="mb-3 text-lg font-semibold">📤 Social Sharing Test</h3>
-      <div class="test-status" id="social-status">⏳ Ready to test</div>
-      <div class="test-details" id="social-details"></div>
-      <button class="test-btn" id="test-social-btn">Test Social</button>
-    </div>
-
-    <!-- Dark Mode Test -->
-    <div class="test-card" id="darkmode-test">
-      <h3 class="mb-3 text-lg font-semibold">🌙 Dark Mode Test</h3>
-      <div class="test-status" id="darkmode-status">⏳ Ready to test</div>
-      <div class="test-details" id="darkmode-details"></div>
-      <button class="test-btn" id="test-darkmode-btn">Test Dark Mode</button>
-    </div>
-
-    <!-- Overall Test -->
-    <div class="test-card test-card-full">
-      <h3 class="mb-3 text-lg font-semibold">🎯 Overall Test Results</h3>
-      <div class="test-summary" id="test-summary">
-        <div class="summary-item">
-          <span class="summary-label">Total Tests:</span>
-          <span class="summary-value" id="total-tests">0</span>
+  <!-- Main Suite Interface -->
+  <div class="suite-overlay" id="suite-overlay">
+    <div class="suite-window">
+      <!-- Sidebar Navigation -->
+      <aside class="suite-sidebar">
+        <div class="sidebar-brand">
+          <Icon name="heroicons:bolt" class="text-primary-600 h-8 w-8" />
+          <div class="brand-text">
+            <h2>KonXC Lab</h2>
+            <span>v2.4.0 Stable</span>
+          </div>
         </div>
-        <div class="summary-item">
-          <span class="summary-label">Passed:</span>
-          <span class="summary-value passed" id="passed-tests">0</span>
+
+        <nav class="suite-nav">
+          <button class="nav-item active" data-tab="overview">
+            <Icon name="heroicons:squares-2x2" class="h-5 w-5" />
+            <span>Overview</span>
+          </button>
+          <button class="nav-item" data-tab="ux-ui">
+            <Icon name="heroicons:paint-brush" class="h-5 w-5" />
+            <span>UX & UI Health</span>
+          </button>
+          <button class="nav-item" data-tab="performance">
+            <Icon name="heroicons:cpu-chip" class="h-5 w-5" />
+            <span>Performance</span>
+          </button>
+          <button class="nav-item" data-tab="seo">
+            <Icon name="heroicons:globe-alt" class="h-5 w-5" />
+            <span>SEO & Meta</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button id="run-automated" class="run-btn">
+            <Icon name="heroicons:play" class="h-4 w-4" />
+            <span>Run Diagnostics</span>
+          </button>
         </div>
-        <div class="summary-item">
-          <span class="summary-label">Failed:</span>
-          <span class="summary-value failed" id="failed-tests">0</span>
+      </aside>
+
+      <!-- Content Area -->
+      <main class="suite-main">
+        <header class="suite-header">
+          <div class="header-info">
+            <h1 id="tab-title">Diagnostics Overview</h1>
+            <p id="tab-desc">
+              Pantau kesehatan komponen blog dan fungsionalitas interaktif
+              secara sistematis.
+            </p>
+          </div>
+          <button id="close-suite" class="close-puck">
+            <Icon name="heroicons:x-mark" class="h-5 w-5" />
+          </button>
+        </header>
+
+        <!-- Dynamic Panels -->
+        <div class="panels-container scrollbar-hide">
+          <!-- Overview Panel -->
+          <section class="suite-panel active" id="panel-overview">
+            <div class="summary-grid">
+              <div class="stat-card">
+                <label>Overall Health</label>
+                <div class="stat-value" id="overall-health">--%</div>
+                <div class="stat-trend positive">Stable</div>
+              </div>
+              <div class="stat-card">
+                <label>Tests Run</label>
+                <div class="stat-value" id="total-runs">0</div>
+                <div class="stat-trend" id="last-run">No records</div>
+              </div>
+              <div class="stat-card">
+                <label>Passed</label>
+                <div class="stat-value text-green-600" id="total-passed">0</div>
+              </div>
+              <div class="stat-card">
+                <label>Failed</label>
+                <div class="stat-value text-red-600" id="total-failed">0</div>
+              </div>
+            </div>
+
+            <div class="diagnostic-list" id="global-log">
+              <!-- Logs will be prepended here dynamically -->
+            </div>
+          </section>
+
+          <!-- UX & UI Panel -->
+          <section class="suite-panel" id="panel-ux-ui">
+            <div class="test-group">
+              <div class="test-row" data-test="reading-mode">
+                <div class="test-meta">
+                  <h4>Reading Mode System</h4>
+                  <p>
+                    Verifikasi keberadaan overlay, tema, dan laci pengaturan.
+                  </p>
+                </div>
+                <div class="test-action">
+                  <span class="status-pill idle">Idle</span>
+                  <button class="mini-run"
+                    ><Icon
+                      name="heroicons:arrow-path"
+                      class="h-4 w-4"
+                    /></button
+                  >
+                </div>
+              </div>
+              <div class="test-row" data-test="focus-mask">
+                <div class="test-meta">
+                  <h4>Focus Mask Feature</h4>
+                  <p>Deteksi elemen dimmer dan jendela fokus mata.</p>
+                </div>
+                <div class="test-action">
+                  <span class="status-pill idle">Idle</span>
+                  <button class="mini-run"
+                    ><Icon
+                      name="heroicons:arrow-path"
+                      class="h-4 w-4"
+                    /></button
+                  >
+                </div>
+              </div>
+              <div class="test-row" data-test="typography-engine">
+                <div class="test-meta">
+                  <h4>Typography Engine</h4>
+                  <p>Validasi slider ukuran teks dan ganti jenis huruf.</p>
+                </div>
+                <div class="test-action">
+                  <span class="status-pill idle">Idle</span>
+                  <button class="mini-run"
+                    ><Icon
+                      name="heroicons:arrow-path"
+                      class="h-4 w-4"
+                    /></button
+                  >
+                </div>
+              </div>
+              <div class="test-row" data-test="toc-integrity">
+                <div class="test-meta">
+                  <h4>TOC Integrity</h4>
+                  <p>Validasi heading extraction dan link hashtag.</p>
+                </div>
+                <div class="test-action">
+                  <span class="status-pill idle">Idle</span>
+                  <button class="mini-run"
+                    ><Icon
+                      name="heroicons:arrow-path"
+                      class="h-4 w-4"
+                    /></button
+                  >
+                </div>
+              </div>
+              <div class="test-row" data-test="social-share">
+                <div class="test-meta">
+                  <h4>Social Connectivity</h4>
+                  <p>
+                    Pemeriksaan URL share dan fungsionalitas copy-to-clipboard.
+                  </p>
+                </div>
+                <div class="test-action">
+                  <span class="status-pill idle">Idle</span>
+                  <button class="mini-run"
+                    ><Icon
+                      name="heroicons:arrow-path"
+                      class="h-4 w-4"
+                    /></button
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Performance Panel -->
+          <section class="suite-panel" id="panel-performance">
+            <div class="test-group">
+              <div class="test-row" data-test="img-optimization">
+                <div class="test-meta">
+                  <h4>Asset Optimization</h4>
+                  <p>Deteksi format WebP dan Lazy Loading pada gambar.</p>
+                </div>
+                <div class="test-action">
+                  <span class="status-pill idle">Idle</span>
+                  <button class="mini-run"
+                    ><Icon
+                      name="heroicons:arrow-path"
+                      class="h-4 w-4"
+                    /></button
+                  >
+                </div>
+              </div>
+              <div class="test-row" data-test="js-payload">
+                <div class="test-meta">
+                  <h4>Interactive Load</h4>
+                  <p>
+                    Pemeriksaan script hydration dan custom elements payload.
+                  </p>
+                </div>
+                <div class="test-action">
+                  <span class="status-pill idle">Idle</span>
+                  <button class="mini-run"
+                    ><Icon
+                      name="heroicons:arrow-path"
+                      class="h-4 w-4"
+                    /></button
+                  >
+                </div>
+              </div>
+              <div class="test-row" data-test="dark-mode-system">
+                <div class="test-meta">
+                  <h4>Dark Mode Core</h4>
+                  <p>
+                    Verifikasi toggle mode gelap sistem dan class persistence.
+                  </p>
+                </div>
+                <div class="test-action">
+                  <span class="status-pill idle">Idle</span>
+                  <button class="mini-run"
+                    ><Icon
+                      name="heroicons:arrow-path"
+                      class="h-4 w-4"
+                    /></button
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SEO Panel -->
+          <section class="suite-panel" id="panel-seo">
+            <div class="test-group">
+              <div class="test-row" data-test="meta-integrity">
+                <div class="test-meta">
+                  <h4>Metadata Check</h4>
+                  <p>Validasi Title, Description, dan OG Tags.</p>
+                </div>
+                <div class="test-action">
+                  <span class="status-pill idle">Idle</span>
+                  <button class="mini-run"
+                    ><Icon
+                      name="heroicons:arrow-path"
+                      class="h-4 w-4"
+                    /></button
+                  >
+                </div>
+              </div>
+              <div class="test-row" data-test="semantic-structure">
+                <div class="test-meta">
+                  <h4>Semantic HTML</h4>
+                  <p>Cek penggunaan tag article, main, dan h1 tunggal.</p>
+                </div>
+                <div class="test-action">
+                  <span class="status-pill idle">Idle</span>
+                  <button class="mini-run"
+                    ><Icon
+                      name="heroicons:arrow-path"
+                      class="h-4 w-4"
+                    /></button
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-        <div class="summary-item">
-          <span class="summary-label">Success Rate:</span>
-          <span class="summary-value" id="success-rate">0%</span>
-        </div>
-      </div>
-      <button class="test-btn test-btn-primary" id="run-all-tests-btn"
-        >🚀 Run All Tests</button
-      >
+      </main>
     </div>
   </div>
 </div>
 
 <script>
-  // Test Results Storage
-  const testResults = {
-    toc: { passed: 0, failed: 0, total: 0 },
-    progress: { passed: 0, failed: 0, total: 0 },
-    social: { passed: 0, failed: 0, total: 0 },
-    darkmode: { passed: 0, failed: 0, total: 0 },
-  };
+  class BlogLabSuite {
+    private isActive = false;
+    private logData: { passed: number; failed: number } = {
+      passed: 0,
+      failed: 0,
+    };
 
-  // Utility Functions
-  function updateTestStatus(
-    testId: string,
-    status: string,
-    details: string = "",
-  ): void {
-    const statusEl = document.getElementById(`${testId}-status`);
-    const detailsEl = document.getElementById(`${testId}-details`);
-
-    if (statusEl) statusEl.textContent = status;
-    if (detailsEl) detailsEl.innerHTML = details;
-  }
-
-  function updateSummary(): void {
-    const total = Object.values(testResults).reduce(
-      (sum, test) => sum + test.total,
-      0,
-    );
-    const passed = Object.values(testResults).reduce(
-      (sum, test) => sum + test.passed,
-      0,
-    );
-    const failed = Object.values(testResults).reduce(
-      (sum, test) => sum + test.failed,
-      0,
-    );
-    const successRate = total > 0 ? Math.round((passed / total) * 100) : 0;
-
-    const totalEl = document.getElementById("total-tests");
-    const passedEl = document.getElementById("passed-tests");
-    const failedEl = document.getElementById("failed-tests");
-    const rateEl = document.getElementById("success-rate");
-
-    if (totalEl) totalEl.textContent = total.toString();
-    if (passedEl) passedEl.textContent = passed.toString();
-    if (failedEl) failedEl.textContent = failed.toString();
-    if (rateEl) rateEl.textContent = `${successRate}%`;
-  }
-
-  // Table of Contents Tests
-  function testTOC() {
-    updateTestStatus("toc", "🔄 Testing TOC...");
-
-    const tests = [
-      {
-        name: "TOC Container Exists",
-        test: () => document.getElementById("toc-nav") !== null,
-      },
-      {
-        name: "TOC Has Headings",
-        test: () => {
-          const headings = document.querySelectorAll(
-            ".prose h2, .prose h3, .prose h4, .blog-content h2, .blog-content h3, .blog-content h4",
-          );
-          return headings.length > 0;
-        },
-      },
-      {
-        name: "TOC Links Generated",
-        test: () => {
-          const tocLinks = document.querySelectorAll(".toc-link");
-          return tocLinks.length > 0;
-        },
-      },
-      {
-        name: "TOC Links Have Correct Href",
-        test: () => {
-          const tocLinks = document.querySelectorAll(".toc-link");
-          return Array.from(tocLinks).every((link) => {
-            const anchor = link as HTMLAnchorElement;
-            return anchor.href.includes("#heading-");
-          });
-        },
-      },
-      {
-        name: "TOC Toggle Button Works",
-        test: () => {
-          const toggleBtn = document.getElementById(
-            "toc-toggle-btn",
-          ) as HTMLButtonElement;
-          if (!toggleBtn) return false;
-
-          const tocNav = document.getElementById("toc-nav");
-          if (!tocNav) return false;
-
-          // TOC should be expanded by default
-          const initialExpanded = tocNav.classList.contains("expanded");
-          if (!initialExpanded) return false;
-
-          // Test toggle functionality
-          toggleBtn.click();
-          const afterClick = tocNav.classList.contains("expanded");
-          toggleBtn.click(); // Reset to expanded
-
-          return initialExpanded !== afterClick;
-        },
-      },
-    ];
-
-    let passed = 0;
-    let failed = 0;
-    let details = "";
-
-    tests.forEach((test) => {
-      try {
-        const result = test.test();
-        if (result) {
-          passed++;
-          details += `<div class="test-item passed">✅ ${test.name}</div>`;
-        } else {
-          failed++;
-          details += `<div class="test-item failed">❌ ${test.name}</div>`;
-        }
-      } catch (error) {
-        failed++;
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        details += `<div class="test-item failed">❌ ${test.name} - Error: ${errorMessage}</div>`;
-      }
-    });
-
-    testResults.toc = { passed, failed, total: tests.length };
-    updateTestStatus(
-      "toc",
-      passed === tests.length
-        ? "✅ All Tests Passed"
-        : `⚠️ ${passed}/${tests.length} Tests Passed`,
-      details,
-    );
-    updateSummary();
-  }
-
-  // Reading Progress Tests
-  function testProgress() {
-    updateTestStatus("progress", "🔄 Testing Progress Bar...");
-
-    const tests = [
-      {
-        name: "Progress Bar Element Exists",
-        test: () => document.getElementById("reading-progress-bar") !== null,
-      },
-      {
-        name: "Progress Bar Has Correct Classes",
-        test: () => {
-          const progressBar = document.getElementById("reading-progress-bar");
-          return progressBar && progressBar.classList.contains("progress-bar");
-        },
-      },
-      {
-        name: "Progress Bar Initial Width",
-        test: () => {
-          const progressBar = document.getElementById("reading-progress-bar");
-          return progressBar && progressBar.style.width === "0%";
-        },
-      },
-      {
-        name: "Progress Bar Responsive",
-        test: () => {
-          const progressBar = document.getElementById("reading-progress-bar");
-          const container = progressBar?.parentElement;
-          return container && container.classList.contains("reading-progress");
-        },
-      },
-    ];
-
-    let passed = 0;
-    let failed = 0;
-    let details = "";
-
-    tests.forEach((test) => {
-      try {
-        const result = test.test();
-        if (result) {
-          passed++;
-          details += `<div class="test-item passed">✅ ${test.name}</div>`;
-        } else {
-          failed++;
-          details += `<div class="test-item failed">❌ ${test.name}</div>`;
-        }
-      } catch (error) {
-        failed++;
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        details += `<div class="test-item failed">❌ ${test.name} - Error: ${errorMessage}</div>`;
-      }
-    });
-
-    testResults.progress = { passed, failed, total: tests.length };
-    updateTestStatus(
-      "progress",
-      passed === tests.length
-        ? "✅ All Tests Passed"
-        : `⚠️ ${passed}/${tests.length} Tests Passed`,
-      details,
-    );
-    updateSummary();
-  }
-
-  // Social Sharing Tests
-  function testSocial() {
-    updateTestStatus("social", "🔄 Testing Social Sharing...");
-
-    const tests = [
-      {
-        name: "Social Share Container Exists",
-        test: () => document.querySelector(".social-share") !== null,
-      },
-      {
-        name: "Twitter Share Button",
-        test: () => {
-          const twitterBtn = document.querySelector(
-            ".social-share-btn.twitter",
-          ) as HTMLAnchorElement;
-          return twitterBtn && twitterBtn.href.includes("twitter.com");
-        },
-      },
-      {
-        name: "LinkedIn Share Button",
-        test: () => {
-          const linkedinBtn = document.querySelector(
-            ".social-share-btn.linkedin",
-          ) as HTMLAnchorElement;
-          return linkedinBtn && linkedinBtn.href.includes("linkedin.com");
-        },
-      },
-      {
-        name: "Facebook Share Button",
-        test: () => {
-          const facebookBtn = document.querySelector(
-            ".social-share-btn.facebook",
-          ) as HTMLAnchorElement;
-          return facebookBtn && facebookBtn.href.includes("facebook.com");
-        },
-      },
-      {
-        name: "WhatsApp Share Button",
-        test: () => {
-          const whatsappBtn = document.querySelector(
-            ".social-share-btn.whatsapp",
-          ) as HTMLAnchorElement;
-          return whatsappBtn && whatsappBtn.href.includes("wa.me");
-        },
-      },
-      {
-        name: "Copy Link Button",
-        test: () => {
-          const copyBtn = document.querySelector(
-            ".social-share-btn.copy-link",
-          ) as HTMLButtonElement;
-          return copyBtn && copyBtn.onclick !== null;
-        },
-      },
-    ];
-
-    let passed = 0;
-    let failed = 0;
-    let details = "";
-
-    tests.forEach((test) => {
-      try {
-        const result = test.test();
-        if (result) {
-          passed++;
-          details += `<div class="test-item passed">✅ ${test.name}</div>`;
-        } else {
-          failed++;
-          details += `<div class="test-item failed">❌ ${test.name}</div>`;
-        }
-      } catch (error) {
-        failed++;
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        details += `<div class="test-item failed">❌ ${test.name} - Error: ${errorMessage}</div>`;
-      }
-    });
-
-    testResults.social = { passed, failed, total: tests.length };
-    updateTestStatus(
-      "social",
-      passed === tests.length
-        ? "✅ All Tests Passed"
-        : `⚠️ ${passed}/${tests.length} Tests Passed`,
-      details,
-    );
-    updateSummary();
-  }
-
-  // Dark Mode Tests
-  function testDarkMode() {
-    updateTestStatus("darkmode", "🔄 Testing Dark Mode...");
-
-    const tests = [
-      {
-        name: "Dark Mode Toggle Exists",
-        test: () => document.querySelector(".dark-mode-toggle") !== null,
-      },
-      {
-        name: "Toggle Button Has Icons",
-        test: () => {
-          const toggle = document.querySelector(".dark-mode-toggle");
-          const sunIcon = toggle?.querySelector(".sun-icon");
-          const moonIcon = toggle?.querySelector(".moon-icon");
-          return sunIcon && moonIcon;
-        },
-      },
-      {
-        name: "Toggle Button Clickable",
-        test: () => {
-          const toggle = document.querySelector(
-            ".dark-mode-toggle",
-          ) as HTMLButtonElement;
-          return toggle && toggle.onclick !== null;
-        },
-      },
-      {
-        name: "Dark Mode Classes Work",
-        test: () => {
-          const html = document.documentElement;
-          const initialDark = html.classList.contains("dark");
-
-          // Toggle dark mode
-          html.classList.toggle("dark");
-          const afterToggle = html.classList.contains("dark");
-
-          // Reset to initial state
-          if (initialDark) {
-            html.classList.add("dark");
-          } else {
-            html.classList.remove("dark");
-          }
-
-          return initialDark !== afterToggle;
-        },
-      },
-    ];
-
-    let passed = 0;
-    let failed = 0;
-    let details = "";
-
-    tests.forEach((test) => {
-      try {
-        const result = test.test();
-        if (result) {
-          passed++;
-          details += `<div class="test-item passed">✅ ${test.name}</div>`;
-        } else {
-          failed++;
-          details += `<div class="test-item failed">❌ ${test.name}</div>`;
-        }
-      } catch (error) {
-        failed++;
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        details += `<div class="test-item failed">❌ ${test.name} - Error: ${errorMessage}</div>`;
-      }
-    });
-
-    testResults.darkmode = { passed, failed, total: tests.length };
-    updateTestStatus(
-      "darkmode",
-      passed === tests.length
-        ? "✅ All Tests Passed"
-        : `⚠️ ${passed}/${tests.length} Tests Passed`,
-      details,
-    );
-    updateSummary();
-  }
-
-  // Run All Tests
-  function runAllTests() {
-    updateTestStatus("toc", "⏳ Waiting...");
-    updateTestStatus("progress", "⏳ Waiting...");
-    updateTestStatus("social", "⏳ Waiting...");
-    updateTestStatus("darkmode", "⏳ Waiting...");
-
-    // Run tests with slight delays to avoid conflicts
-    setTimeout(() => testTOC(), 100);
-    setTimeout(() => testProgress(), 200);
-    setTimeout(() => testSocial(), 300);
-    setTimeout(() => testDarkMode(), 400);
-  }
-
-  // Toggle Testing Suite
-  function toggleTestingSuite() {
-    const suite = document.getElementById("testing-suite");
-    const toggleBtn = document.getElementById("testing-toggle-btn");
-    if (!suite || !toggleBtn) return;
-
-    if (suite.style.display === "none") {
-      suite.style.display = "block";
-      toggleBtn.classList.add("active");
-      // Auto-run tests when opened
-      setTimeout(runAllTests, 500);
-    } else {
-      suite.style.display = "none";
-      toggleBtn.classList.remove("active");
+    constructor() {
+      this.initUI();
     }
-  }
 
-  // Close Testing Suite
-  function closeTestingSuite() {
-    const suite = document.getElementById("testing-suite");
-    const toggleBtn = document.getElementById("testing-toggle-btn");
-    if (!suite || !toggleBtn) return;
+    private initUI() {
+      const trigger = document.getElementById("suite-trigger");
+      const overlay = document.getElementById("suite-overlay");
+      const closer = document.getElementById("close-suite");
 
-    suite.style.display = "none";
-    toggleBtn.classList.remove("active");
-  }
+      trigger?.addEventListener("click", () => this.toggle(true));
+      closer?.addEventListener("click", () => this.toggle(false));
 
-  // Event Listeners
-  function setupEventListeners() {
-    document
-      .getElementById("testing-toggle-btn")
-      ?.addEventListener("click", toggleTestingSuite);
-    document
-      .getElementById("close-testing-btn")
-      ?.addEventListener("click", closeTestingSuite);
-    document.getElementById("test-toc-btn")?.addEventListener("click", testTOC);
-    document
-      .getElementById("test-progress-btn")
-      ?.addEventListener("click", testProgress);
-    document
-      .getElementById("test-social-btn")
-      ?.addEventListener("click", testSocial);
-    document
-      .getElementById("test-darkmode-btn")
-      ?.addEventListener("click", testDarkMode);
-    document
-      .getElementById("run-all-tests-btn")
-      ?.addEventListener("click", runAllTests);
-  }
+      // Tab Switching
+      const navItems = document.querySelectorAll(".nav-item");
+      navItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          const target = (e.currentTarget as HTMLElement).dataset.tab;
+          this.switchTab(target || "overview");
+        });
+      });
 
-  // Initialize when DOM is ready
-  function init() {
-    setupEventListeners();
+      // Run Controls
+      document
+        .getElementById("run-automated")
+        ?.addEventListener("click", () => this.runFullDiagnostics());
 
-    // Show testing toggle only in development mode
-    const isDev = isDevelopmentEnvironment();
-    const isPreview = isPreviewMode();
+      // Individual runs
+      document.querySelectorAll(".mini-run").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const testKey = (e.currentTarget as HTMLElement)
+            .closest(".test-row")
+            ?.getAttribute("data-test");
+          if (testKey) this.runOne(testKey);
+        });
+      });
+    }
 
-    // Debug Vite environment variables
-    console.log("🔍 Environment Detection:", {
-      "import.meta.env.DEV": import.meta.env.DEV,
-      "import.meta.env.PROD": import.meta.env.PROD,
-      "import.meta.env.MODE": import.meta.env.MODE,
-      isDevelopment: isDev,
-      isPreview: isPreview,
-      hostname: window.location.hostname,
-      port: window.location.port,
-    });
+    private toggle(state: boolean) {
+      const overlay = document.getElementById("suite-overlay");
+      overlay?.classList.toggle("active", state);
+      this.isActive = state;
 
-    if (!isDev) {
-      document.querySelector(".testing-toggle")?.remove();
-      if (isPreview) {
-        console.log(
-          "🚫 Testing suite hidden - Preview mode detected (production build)",
+      if (state && this.logData.passed === 0 && this.logData.failed === 0) {
+        this.runBootSequence();
+      }
+    }
+
+    private async runBootSequence() {
+      const bootMsgs = [
+        "Initializing KonXC Lab Core...",
+        "Loading diagnostic modules [UX, PERF, SEO]...",
+        "Handshaking with DOM articles...",
+        "System Ready. Welcome, Engineer."
+      ];
+
+      for (const msg of bootMsgs) {
+        this.log(msg, "info");
+        await new Promise(r => setTimeout(r, 150));
+      }
+    }
+
+    private switchTab(tabId: string) {
+      // Nav Update
+      document.querySelectorAll(".nav-item").forEach((btn) => {
+        btn.classList.toggle(
+          "active",
+          (btn as HTMLElement).dataset.tab === tabId,
         );
-      } else {
-        console.log(
-          "🚫 Testing suite hidden - Production environment detected",
-        );
+      });
+
+      // Panel Update
+      document.querySelectorAll(".suite-panel").forEach((panel) => {
+        panel.classList.toggle("active", panel.id === `panel-${tabId}`);
+      });
+
+      // Header Update
+      const titles: any = {
+        overview: [
+          "Diagnostics Overview",
+          "Pantau kesehatan komponen blog secara sistematis.",
+        ],
+        "ux-ui": [
+          "UX & UI Integrity",
+          "Verifikasi elemen interaktif dan visual blog.",
+        ],
+        performance: [
+          "Performance Audit",
+          "Analisis optimalisasi aset dan payload JS.",
+        ],
+        seo: [
+          "SEO & Meta Validation",
+          "Validasi tag meta dan struktur data untuk search engine.",
+        ],
+      };
+
+      const titleEl = document.getElementById("tab-title");
+      const descEl = document.getElementById("tab-desc");
+      if (titleEl && titles[tabId]) titleEl.textContent = titles[tabId][0];
+      if (descEl && titles[tabId]) descEl.textContent = titles[tabId][1];
+    }
+
+    private async runFullDiagnostics() {
+      this.log("Memulai diagnosa sistem lengkap...", "info");
+      this.logData = { passed: 0, failed: 0 };
+
+      const tests = [
+        "reading-mode",
+        "focus-mask",
+        "typography-engine",
+        "toc-integrity",
+        "social-share",
+        "img-optimization",
+        "dark-mode-system",
+        "meta-integrity",
+        "semantic-structure",
+      ];
+
+      for (const test of tests) {
+        await this.runOne(test);
+        await new Promise((r) => setTimeout(r, 400));
       }
-    } else {
-      console.log(
-        "✅ Testing suite available - Development environment detected",
-      );
 
-      // Check if DevelopmentControls is available
-      setTimeout(() => {
-        const devControls = document.getElementById("development-controls");
-        if (devControls && devControls.style.display !== "none") {
-          // Hide original toggle when DevelopmentControls is active
-          const originalToggle = document.getElementById(
-            "testing-toggle-original",
+      this.updateGlobalSummary();
+      this.log("Diagnosa selesai.", "success");
+    }
+
+    private async runOne(key: string) {
+      const row = document.querySelector(`[data-test="${key}"]`);
+      const pill = row?.querySelector(".status-pill");
+      if (pill) {
+        pill.className = "status-pill processing";
+        pill.textContent = "Running";
+      }
+
+      let result = false;
+      let message = "";
+
+      // Logic Router
+      switch (key) {
+        case "reading-mode":
+          result = !!document.querySelector(".reading-mode-system");
+          message = result
+            ? "System terdeteksi."
+            : "System tidak ditemukan dalam DOM.";
+          break;
+        case "focus-mask":
+          result = !!document.getElementById("focus-mask");
+          message = result
+            ? "Elemen mask terdeteksi."
+            : "Mask tidak ditemukan.";
+          break;
+        case "typography-engine":
+          const slider = document.getElementById("font-size-slider");
+          const fontBtns = document.querySelectorAll(".font-btn");
+          result = !!slider && fontBtns.length > 0;
+          message = result
+            ? "Kontrol tipografi aktif."
+            : "Slider atau tombol font hilang.";
+          break;
+        case "toc-integrity":
+          const links = document.querySelectorAll(".toc-link");
+          result = links.length > 0;
+          message = result
+            ? `${links.length} anchor terdeteksi.`
+            : "TOC link tidak ditemukan.";
+          break;
+        case "social-share":
+          result = !!document.querySelector(".social-share");
+          message = "Container share divalidasi.";
+          break;
+        case "img-optimization":
+          const imgs = document.querySelectorAll("img");
+          const nonWebp = Array.from(imgs).filter(
+            (i) =>
+              i.src &&
+              !i.src.includes(".webp") &&
+              !i.src.includes(".svg") &&
+              !i.src.includes("data:image"),
           );
-          if (originalToggle) {
-            originalToggle.style.display = "none";
-            console.log(
-              "🔄 Original testing toggle hidden - DevelopmentControls active",
-            );
-          }
-        }
-      }, 100);
+          result = nonWebp.length === 0;
+          message = result
+            ? "Semua gambar teroptimalisasi."
+            : `${nonWebp.length} gambar bukan WebP.`;
+          break;
+        case "dark-mode-system":
+          result = !!document.querySelector(".dark-mode-toggle");
+          message = result ? "Toggle mode gelap tersedia." : "Toggle missing.";
+          break;
+        case "meta-integrity":
+          const title = !!document.title;
+          const desc = !!document.querySelector('meta[name="description"]');
+          result = title && desc;
+          message = result
+            ? "SEO Meta dasar lengkap."
+            : "Meta Title atau Description hilang.";
+          break;
+        case "semantic-structure":
+          const article = !!document.querySelector("article");
+          const main = !!document.querySelector("main");
+          const h1Count = document.querySelectorAll("h1").length;
+          result = article && main && h1Count === 1;
+          message = result
+            ? "Struktur semantik valid."
+            : `Issue: Article(${article}), Main(${main}), H1(${h1Count})`;
+          break;
+      }
+
+      if (pill) {
+        pill.className = `status-pill ${result ? "pass" : "fail"}`;
+        pill.textContent = result ? "Passed" : "Failed";
+      }
+
+      this.log(`${key}: ${message}`, result ? "success" : "error");
+
+      if (result) this.logData.passed++;
+      else this.logData.failed++;
+
+      this.updateGlobalSummary();
+    }
+
+    private log(msg: string, type: "info" | "success" | "error") {
+      const logger = document.getElementById("global-log");
+      if (!logger) return;
+
+      const div = document.createElement("div");
+      div.className = `log-entry ${type}`;
+      div.innerHTML = `<span>${new Date().toLocaleTimeString()}</span> &nbsp; ${msg}`;
+      logger.prepend(div);
+    }
+
+    private updateGlobalSummary() {
+      const total = this.logData.passed + this.logData.failed;
+      const targetRate = total > 0 ? Math.round((this.logData.passed / total) * 100) : 0;
+      
+      const hEl = document.getElementById("overall-health");
+      const pEl = document.getElementById("total-passed");
+      const fEl = document.getElementById("total-failed");
+      const tEl = document.getElementById("total-runs");
+
+      if (hEl) this.animateCounter(hEl, targetRate, "%");
+      if (pEl) this.animateCounter(pEl, this.logData.passed);
+      if (fEl) this.animateCounter(fEl, this.logData.failed);
+      if (tEl) {
+          this.animateCounter(tEl, total);
+          const trendEl = tEl.nextElementSibling as HTMLElement;
+          if (trendEl && total > 0) trendEl.textContent = "Records found";
+      }
+    }
+
+    private animateCounter(el: HTMLElement, end: number, suffix: string = "") {
+        const currentText = el.textContent || "0";
+        // Strip everything except numbers to get a clean start point
+        const start = parseInt(currentText.replace(/[^0-9]/g, "")) || 0;
+        const range = end - start;
+        const duration = 800;
+        let startTimestamp: number | null = null;
+        
+        const step = (timestamp: number) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const val = Math.floor(progress * range + start);
+            el.textContent = `${val}${suffix}`;
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
     }
   }
 
-  // Enhanced development environment detection using Vite env
-  function isDevelopmentEnvironment() {
-    // Check Vite environment variables (most reliable)
-    const isViteDev = import.meta.env.DEV; // true in development, false in production/preview
-    const mode = import.meta.env.MODE; // 'development', 'production', or custom
-
-    // Primary check: Vite environment variables
-    if (isViteDev && mode === "development") {
-      return true;
-    }
-
-    // Fallback: Check for Node adapter specific indicators
-    const hostname = window.location.hostname;
-    const port = window.location.port;
-    const protocol = window.location.protocol;
-
-    // Check for localhost variations
-    const isLocalhost =
-      hostname === "localhost" ||
-      hostname === "127.0.0.1" ||
-      hostname === "0.0.0.0" ||
-      hostname.startsWith("192.168.") ||
-      hostname.startsWith("10.0.");
-
-    // Check for development ports (but NOT preview mode)
-    const isDevPort = port === "4321" && !isPreviewMode(); // Astro dev server (not preview)
-
-    // Check for other development ports
-    const isOtherDevPort =
-      port === "3000" || // Common dev port
-      port === "8080" || // Common dev port
-      port === "5173" || // Vite dev server
-      port === "4173"; // Vite preview
-
-    // Check for development protocol
-    const isDevProtocol =
-      protocol === "http:" && (isLocalhost || isDevPort || isOtherDevPort);
-
-    // Check for development URL patterns
-    const isDevUrl =
-      window.location.href.includes("localhost") ||
-      window.location.href.includes("127.0.0.1") ||
-      window.location.href.includes("dev.") ||
-      window.location.href.includes("staging.") ||
-      window.location.href.includes("test.");
-
-    // Check for development environment variables (if available)
-    const hasDevFlag =
-      window.location.search.includes("dev=true") ||
-      window.location.search.includes("debug=true") ||
-      localStorage.getItem("dev-mode") === "true";
-
-    // Check if it's actually development mode (not preview)
-    const isActualDev = isDevProtocol || isDevUrl || hasDevFlag;
-
-    return isActualDev && !isPreviewMode();
-  }
-
-  // Detect if we're in preview mode using Vite env
-  function isPreviewMode() {
-    // Check Vite environment variables first
-    const isViteProd = import.meta.env.PROD; // true in production/preview
-
-    // If we're in production mode but on localhost, it's likely preview
-    const isLocalhost =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1";
-
-    if (isViteProd && isLocalhost) {
-      return true;
-    }
-
-    // Fallback: Check for Astro preview mode indicators
-    const hasPreviewIndicator =
-      window.location.search.includes("preview=true") ||
-      localStorage.getItem("preview-mode") === "true";
-
-    // Check if we're serving from dist/ directory (preview mode)
-    const isServingDist =
-      document.querySelector('script[src*="/_astro/"]') !== null ||
-      document.querySelector('link[href*="/_astro/"]') !== null;
-
-    // Check if we're on localhost:4321 but it's preview mode
-    const isLocalhost4321 =
-      window.location.hostname === "localhost" &&
-      window.location.port === "4321";
-    const isPreviewOnLocalhost =
-      isLocalhost4321 && (hasPreviewIndicator || isServingDist);
-
-    return isPreviewOnLocalhost || hasPreviewIndicator;
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+  // Auto Init only in DEV/PREVIEW
+  if (import.meta.env.DEV || window.location.hostname === "localhost") {
+    document.addEventListener("DOMContentLoaded", () => {
+      new BlogLabSuite();
+    });
   } else {
-    init();
+    document.getElementById("blog-suite-wrapper")?.remove();
   }
 </script>
 
 <style>
   @reference "@/styles/global.css";
-  .testing-toggle {
-    @apply fixed right-6 bottom-6 z-50;
-    /* Position below reading mode button */
-    bottom: 5.5rem; /* 88px - below reading mode button */
+
+  .blog-suite-wrapper {
+    --accent: oklch(0.627 0.265 303.9);
   }
 
-  .testing-toggle-btn {
-    @apply bg-primary-500 hover:bg-primary-600 flex h-12 w-12 items-center justify-center rounded-full text-xl text-white shadow-lg transition-all duration-300;
+  /* FAB Styles - Unified with Reading Mode */
+  .suite-fab {
+    @apply fixed right-8 bottom-22 z-40 flex items-center gap-3 rounded-full bg-neutral-900/90 p-2 pr-6 text-white shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fab-breathe 4s ease-in-out infinite;
   }
 
-  .testing-toggle-btn.active {
-    @apply bg-secondary-500;
+  @keyframes fab-breathe {
+      0%, 100% { box-shadow: 0 10px 30px -5px rgba(0,0,0,0.4); }
+      50% { box-shadow: 0 10px 40px 5px rgba(255, 255, 255, 0.2); }
   }
 
-  .testing-suite {
-    @apply fixed top-4 right-4 bottom-4 left-4 z-50 overflow-y-auto rounded-2xl border border-neutral-200 bg-white shadow-2xl;
-    max-height: calc(100vh - 2rem);
+  .fab-blob {
+    @apply flex h-8 w-8 items-center justify-center rounded-full shadow-inner text-slate-700;
+    background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+    border: 1px solid rgba(255,255,255,0.8);
   }
 
-  .testing-header {
-    @apply border-b border-neutral-200 p-6;
+  .fab-label {
+    @apply text-[11px] font-bold tracking-wider uppercase opacity-90;
   }
 
-  .close-btn {
-    @apply flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors hover:bg-neutral-200 hover:text-neutral-800;
+  /* Overlay */
+  .suite-overlay {
+    @apply pointer-events-none fixed inset-0 z-100 flex items-center justify-center p-4 opacity-0 transition-all duration-500;
+  }
+  .suite-overlay.active {
+    @apply pointer-events-auto opacity-100;
+    backdrop-filter: blur(10px) brightness(0.8);
   }
 
-  .testing-grid {
-    @apply grid gap-6 p-6 md:grid-cols-2;
+  /* Window - Spring Entry */
+  .suite-window {
+    @apply flex h-full max-h-[85vh] w-full max-w-6xl scale-95 overflow-hidden rounded-[2rem] bg-neutral-50 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-500;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  .suite-overlay.active .suite-window {
+    @apply scale-100;
   }
 
-  .test-card {
-    @apply rounded-xl border border-neutral-200 bg-linear-to-br from-neutral-50 to-neutral-100 p-6;
+  /* Sidebar */
+  .suite-sidebar {
+    @apply flex w-72 flex-col border-r border-black/5 bg-white p-8;
   }
 
-  .test-card-full {
-    @apply from-primary-50 to-secondary-50 bg-linear-to-br md:col-span-2;
+  .sidebar-brand {
+    @apply mb-12 flex items-center gap-4;
+  }
+  .brand-text h2 {
+    @apply text-lg font-black tracking-tight;
+  }
+  .brand-text span {
+    @apply text-[10px] font-bold tracking-widest uppercase opacity-40;
   }
 
-  .test-status {
-    @apply mb-3 text-lg font-medium;
+  .suite-nav {
+    @apply flex flex-1 flex-col gap-2;
+  }
+  .nav-item {
+    @apply flex items-center gap-4 rounded-xl p-4 text-sm font-bold transition-all hover:bg-black/5;
+  }
+  .nav-item.active {
+    @apply bg-primary-50 text-primary-600;
   }
 
-  .test-details {
-    @apply mb-4 max-h-32 overflow-y-auto;
+  .run-btn {
+    @apply bg-primary-600 flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-sm font-black text-white transition-all hover:brightness-110 active:scale-95;
   }
 
-  .test-item {
-    @apply mb-1 rounded px-2 py-1 text-sm;
+  /* Main Area */
+  .suite-main {
+    @apply flex flex-1 flex-col overflow-hidden;
   }
 
-  .test-item.passed {
-    @apply bg-green-100 text-green-800;
+  .suite-header {
+    @apply flex items-center justify-between border-b border-black/5 bg-white p-8;
+  }
+  .header-info h1 {
+    @apply text-2xl font-black tracking-tight;
+  }
+  .header-info p {
+    @apply text-sm opacity-50;
   }
 
-  .test-item.failed {
-    @apply bg-red-100 text-red-800;
+  .close-puck {
+    @apply rounded-full bg-black/5 p-2 transition-all hover:bg-black/10;
   }
 
-  .test-btn {
-    @apply bg-primary-500 hover:bg-primary-600 rounded-lg px-4 py-2 font-medium text-white transition-colors;
+  /* Panels */
+  .panels-container {
+    @apply flex-1 overflow-y-auto p-8;
+  }
+  .suite-panel {
+    @apply hidden flex-col gap-6;
+  }
+  .suite-panel.active {
+    @apply flex;
+    animation: suite-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .test-btn-primary {
-    @apply from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 bg-linear-to-r;
-  }
-
-  .test-summary {
-    @apply mb-6 grid grid-cols-2 gap-4 md:grid-cols-4;
-  }
-
-  .summary-item {
-    @apply text-center;
-  }
-
-  .summary-label {
-    @apply mb-1 block text-sm text-neutral-600;
-  }
-
-  .summary-value {
-    @apply text-2xl font-bold text-neutral-800;
-  }
-
-  .summary-value.passed {
-    @apply text-green-600;
-  }
-
-  .summary-value.failed {
-    @apply text-red-600;
-  }
-
-  /* Dark mode styles */
-  .dark .testing-suite {
-    @apply border-neutral-700 bg-neutral-800;
-  }
-
-  .dark .test-card {
-    @apply border-neutral-600 bg-neutral-700;
-  }
-
-  .dark .test-card-full {
-    @apply from-primary-900 to-secondary-900 bg-linear-to-br;
-  }
-
-  /* Mobile responsive */
-  @media (max-width: 768px) {
-    .testing-suite {
-      @apply top-2 right-2 bottom-2 left-2;
+  @keyframes suite-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
     }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-    .testing-grid {
-      @apply grid-cols-1 gap-4 p-4;
+  /* Summary Grid */
+  .summary-grid {
+    @apply grid grid-cols-4 gap-4;
+  }
+  .stat-card {
+    @apply rounded-3xl border border-black/5 bg-white p-6;
+  }
+  .stat-card label {
+    @apply block text-[10px] font-bold tracking-widest uppercase opacity-40;
+  }
+  .stat-card .stat-value {
+    @apply mt-1 text-3xl font-black;
+  }
+
+  /* Diagnostic List */
+  .diagnostic-list {
+    @apply mt-6 flex flex-col gap-2 rounded-3xl border border-black/5 bg-neutral-900 p-6 font-mono text-xs text-neutral-400;
+  }
+  .log-entry {
+    @apply flex items-start gap-3 border-l-2 border-transparent pl-3;
+  }
+  .log-entry.success {
+    @apply border-green-500 text-green-400;
+  }
+  .log-entry.error {
+    @apply border-red-500 text-red-300;
+  }
+  .log-entry.info {
+    @apply border-blue-500 text-blue-300;
+  }
+
+  /* Test Rows */
+  .test-group {
+    @apply flex flex-col gap-2;
+  }
+  .test-row {
+    @apply flex items-center justify-between rounded-3xl border border-black/5 bg-white p-6 transition-all hover:border-black/10;
+  }
+  .test-meta h4 {
+    @apply font-bold;
+  }
+  .test-meta p {
+    @apply text-xs opacity-50;
+  }
+
+  .test-action {
+    @apply flex items-center gap-4;
+  }
+  .status-pill {
+    @apply rounded-full px-4 py-1.5 text-[10px] font-black tracking-wider uppercase;
+  }
+  .status-pill.idle {
+    @apply bg-neutral-100 text-neutral-400;
+  }
+  .status-pill.pass {
+    @apply bg-green-100 text-green-600;
+  }
+  .status-pill.fail {
+    @apply bg-red-100 text-red-600;
+  }
+  .status-pill.processing {
+    @apply bg-blue-100 text-blue-600;
+    animation: pill-scanning 1.5s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @keyframes pill-scanning {
+      0% { opacity: 0.6; transform: scale(0.95); }
+      50% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0.6; transform: scale(0.95); }
+  }
+
+  .status-pill.processing::after {
+      content: '';
+      @apply absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent;
+      animation: scan-shimmer 1s infinite;
+  }
+
+  @keyframes scan-shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+  }
+
+  .mini-run {
+    @apply rounded-full bg-black/5 p-2 transition-all hover:bg-black/10;
+  }
+
+  @media (max-width: 1024px) {
+    .suite-window {
+      @apply flex-col;
+    }
+    .suite-sidebar {
+      @apply w-full border-r-0 border-b pb-4;
+    }
+    .summary-grid {
+      @apply grid-cols-2;
     }
   }
 </style>
