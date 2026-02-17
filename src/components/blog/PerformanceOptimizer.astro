@@ -9,14 +9,7 @@ export interface Props {
   enableCompression?: boolean;
 }
 
-const {
-  class: className,
-  enableImageOptimization = true,
-  enableLazyLoading = true,
-  enablePreloading = true,
-  enableCaching = true,
-  enableCompression = true,
-} = Astro.props;
+const { class: className } = Astro.props;
 ---
 
 <div class={`performance-optimizer ${className || ""}`}>
@@ -341,7 +334,7 @@ const {
       try {
         const cache = await caches.open("api-cache");
         const response = await cache.match(url);
-        return response;
+        return response ?? null;
       } catch {
         return null;
       }
@@ -375,9 +368,11 @@ const {
       window.addEventListener("scroll", optimizeScroll, { passive: true });
 
       // Optimize resize performance
-      let resizeTimeout: number;
+      let resizeTimeout: ReturnType<typeof setTimeout> | undefined;
       window.addEventListener("resize", () => {
-        clearTimeout(resizeTimeout);
+        if (resizeTimeout !== undefined) {
+          clearTimeout(resizeTimeout);
+        }
         resizeTimeout = setTimeout(() => {
           this.handleResize();
         }, 250);
@@ -434,18 +429,19 @@ const {
     }
 
     private lazyLoadInViewport(): void {
-      const lazyImages = document.querySelectorAll("img[data-src]");
+      const lazyImages =
+        document.querySelectorAll<HTMLImageElement>("img[data-src]");
       lazyImages.forEach((img) => {
         const rect = img.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
-          this.loadImage(img as HTMLImageElement);
+          this.loadImage(img);
         }
       });
     }
 
     private recalculateLayouts(): void {
       // Trigger layout recalculation for responsive elements
-      const responsiveElements = document.querySelectorAll(
+      const responsiveElements = document.querySelectorAll<HTMLElement>(
         ".responsive-element",
       );
       responsiveElements.forEach((element) => {
@@ -455,7 +451,8 @@ const {
     }
 
     private updateResponsiveImages(): void {
-      const responsiveImages = document.querySelectorAll("img[data-srcset]");
+      const responsiveImages =
+        document.querySelectorAll<HTMLImageElement>("img[data-srcset]");
       responsiveImages.forEach((img) => {
         const srcset = img.getAttribute("data-srcset");
         if (srcset) {
@@ -488,7 +485,8 @@ const {
       new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry) => {
-          this.trackMetric("FID", entry.processingStart - entry.startTime);
+          const e = entry as PerformanceEventTiming;
+          this.trackMetric("FID", e.processingStart - e.startTime);
         });
       }).observe({ entryTypes: ["first-input"] });
 
@@ -497,8 +495,12 @@ const {
       new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry) => {
-          if (!entry.hadRecentInput) {
-            clsValue += entry.value;
+          const e = entry as PerformanceEntry & {
+            hadRecentInput?: boolean;
+            value?: number;
+          };
+          if (!e.hadRecentInput) {
+            clsValue += e.value ?? 0;
           }
         });
         this.trackMetric("CLS", clsValue);
@@ -506,7 +508,9 @@ const {
     }
 
     private monitorResourceLoading(): void {
-      const resources = performance.getEntriesByType("resource");
+      const resources = performance.getEntriesByType(
+        "resource",
+      ) as PerformanceResourceTiming[];
       resources.forEach((resource) => {
         const loadTime = resource.responseEnd - resource.requestStart;
         this.trackMetric("ResourceLoadTime", loadTime, {

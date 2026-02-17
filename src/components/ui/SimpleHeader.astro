@@ -145,7 +145,7 @@ const navigationLinks = [
   }
 
   .nav-brand {
-    @apply flex-shrink-0;
+    @apply shrink-0;
   }
 
   .brand-link {
@@ -288,40 +288,46 @@ const navigationLinks = [
 
 <script>
   // Simple header functionality
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", () => {
     // Mobile menu toggle
-    const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
-    const mobileMenu = document.querySelector(".mobile-menu");
-    const mobileMenuClose = document.querySelector(".mobile-menu-close");
+    const mobileMenuToggle = document.querySelector<HTMLButtonElement>(
+      ".mobile-menu-toggle",
+    );
+    const mobileMenu = document.querySelector<HTMLElement>(".mobile-menu");
+    const mobileMenuClose =
+      document.querySelector<HTMLButtonElement>(".mobile-menu-close");
 
     if (mobileMenuToggle && mobileMenu) {
-      mobileMenuToggle.addEventListener("click", function () {
-        const isExpanded = this.getAttribute("aria-expanded") === "true";
-        this.setAttribute("aria-expanded", !isExpanded);
+      mobileMenuToggle.addEventListener("click", () => {
+        const isExpanded =
+          mobileMenuToggle.getAttribute("aria-expanded") === "true";
+        mobileMenuToggle.setAttribute("aria-expanded", String(!isExpanded));
         mobileMenu.classList.toggle("active");
       });
     }
 
     if (mobileMenuClose && mobileMenu) {
-      mobileMenuClose.addEventListener("click", function () {
+      mobileMenuClose.addEventListener("click", () => {
         mobileMenuToggle?.setAttribute("aria-expanded", "false");
         mobileMenu.classList.remove("active");
       });
     }
 
     // Dark mode toggle
-    const darkModeToggle = document.querySelector(".dark-mode-toggle");
+    const darkModeToggle =
+      document.querySelector<HTMLButtonElement>(".dark-mode-toggle");
 
     if (darkModeToggle) {
-      darkModeToggle.addEventListener("click", function () {
+      darkModeToggle.addEventListener("click", () => {
         document.documentElement.classList.toggle("dark");
 
         // Save preference
         const isDark = document.documentElement.classList.contains("dark");
-        localStorage.setItem("darkMode", isDark);
+        localStorage.setItem("darkMode", String(isDark));
 
         // Update icon
-        const icon = this.querySelector(".dark-mode-icon");
+        const icon =
+          darkModeToggle.querySelector<HTMLElement>(".dark-mode-icon");
         if (icon) {
           icon.className = isDark
             ? "i-mdi-weather-night dark-mode-icon"

@@ -47,13 +47,15 @@ const socialLinks = [
 
 <footer class={`simple-footer ${className}`}>
   {showNewsletter && (
-    <!-- Newsletter Section -->
-    <NewsletterSection 
-      variant="compact"
-      leadSource="simple-footer"
-      campaignId="website-simple-footer"
-      trackingEnabled={true}
-    />
+    <>
+      <!-- Newsletter Section -->
+      <NewsletterSection 
+        variant="compact"
+        leadSource="simple-footer"
+        campaignId="website-simple-footer"
+        trackingEnabled={true}
+      />
+    </>
   )}
 
   <!-- Main Footer -->

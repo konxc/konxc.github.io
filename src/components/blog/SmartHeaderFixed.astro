@@ -8,7 +8,6 @@ import Header from "@components/ui/Header.astro";
   <Header
     variant="default"
     showSearch={false}
-    showDarkMode={true}
     showMobileMenu={true}
     className="smart-header-content"
   />
@@ -201,12 +200,14 @@ import Header from "@components/ui/Header.astro";
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const header = document.getElementById("smart-header");
+    if (!header) return;
+    const headerEl = header;
 
     // Find blog post header section (the first section with gradient background)
     const blogPostHeader =
-      document.querySelector(".section.bg-linear-to-br") ||
-      document.querySelector(".section.bg-gradient-to-br") ||
-      document.querySelector("section:first-of-type");
+      document.querySelector<HTMLElement>(".section.bg-linear-to-br") ||
+      document.querySelector<HTMLElement>(".section.bg-gradient-to-br") ||
+      document.querySelector<HTMLElement>("section:first-of-type");
 
     let lastScrollY = window.scrollY;
     let ticking = false;
@@ -273,7 +274,7 @@ import Header from "@components/ui/Header.astro";
 
       // Optional: Add visual feedback for blog post header
       const progress = Math.min(currentScrollY / blogPostHeaderHeight, 1);
-      blogPostHeader.style.setProperty("--scroll-progress", progress);
+      blogPostHeader.style.setProperty("--scroll-progress", String(progress));
 
       // 🎯 CONFIGURATION: Visual feedback threshold
       // When to show "approaching threshold" visual feedback
@@ -292,50 +293,50 @@ import Header from "@components/ui/Header.astro";
 
     // Smooth show animation
     function showHeader(addScrolledClass = true) {
-      if (header.classList.contains("hidden")) {
+      if (headerEl.classList.contains("hidden")) {
         console.log("🎬 Starting show animation...");
 
         // Remove hidden class and add showing class for animation
-        header.classList.remove("hidden", "hiding");
-        header.classList.add("showing");
+        headerEl.classList.remove("hidden", "hiding");
+        headerEl.classList.add("showing");
 
         // Add scrolled class if needed
         if (addScrolledClass) {
-          header.classList.add("scrolled");
+          headerEl.classList.add("scrolled");
         } else {
-          header.classList.remove("scrolled");
+          headerEl.classList.remove("scrolled");
         }
 
         // Remove showing class after animation completes
         setTimeout(() => {
-          header.classList.remove("showing");
+          headerEl.classList.remove("showing");
           console.log("✅ Show animation completed");
         }, 500);
       } else {
         // Just update scrolled class if already visible
         if (addScrolledClass) {
-          header.classList.add("scrolled");
+          headerEl.classList.add("scrolled");
         } else {
-          header.classList.remove("scrolled");
+          headerEl.classList.remove("scrolled");
         }
       }
     }
 
     // Smooth hide animation
     function hideHeader() {
-      if (!header.classList.contains("hidden")) {
+      if (!headerEl.classList.contains("hidden")) {
         console.log("🎬 Starting hide animation...");
 
         // Remove any existing animation classes
-        header.classList.remove("showing");
+        headerEl.classList.remove("showing");
 
         // Add hiding class for animation
-        header.classList.add("hiding");
+        headerEl.classList.add("hiding");
 
         // Wait for animation to complete before adding hidden class
         setTimeout(() => {
-          header.classList.add("hidden");
-          header.classList.remove("hiding", "scrolled");
+          headerEl.classList.add("hidden");
+          headerEl.classList.remove("hiding", "scrolled");
           console.log("✅ Hide animation completed");
         }, 300); // Match animation duration (300ms)
       }
@@ -357,7 +358,7 @@ import Header from "@components/ui/Header.astro";
 
     // Debug logging
     console.log("SmartHeader initialized:", {
-      header: header ? "found" : "not found",
+      header: headerEl ? "found" : "not found",
       blogPostHeader: blogPostHeader ? "found" : "not found",
       blogPostHeaderHeight: blogPostHeader
         ? blogPostHeader.offsetHeight

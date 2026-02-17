@@ -468,10 +468,12 @@ const statuses = ["all", "active", "completed", "archived"];
     }
 
     private updateSectionVisibility(): void {
-      const featuredSection = document.querySelector(
+      const featuredSection = document.querySelector<HTMLElement>(
         ".featured-projects-section",
       );
-      const otherSection = document.querySelector(".other-projects-section");
+      const otherSection = document.querySelector<HTMLElement>(
+        ".other-projects-section",
+      );
 
       const visibleFeatured =
         document.querySelectorAll(

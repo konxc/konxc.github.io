@@ -8,12 +8,7 @@ export interface Props {
   className?: string;
 }
 
-const {
-  size = "md",
-  variant = "button",
-  position = "static",
-  className = "",
-} = Astro.props;
+const { size = "md", variant = "button", className = "" } = Astro.props;
 
 const sizeClasses = {
   sm: "w-8 h-8",

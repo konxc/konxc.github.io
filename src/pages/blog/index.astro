@@ -1,21 +1,23 @@
 ---
-import UnifiedLayout from '@layouts/UnifiedLayout.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
-import BlogHero from '@components/blog/BlogHero.astro';
-import FeaturedPost from '@components/blog/FeaturedPost.astro';
-import PostsGrid from '@components/blog/PostsGrid.astro';
-import NewsletterSignup from '@components/blog/NewsletterSignup.astro';
-import ContentRecommendations from '@components/contributors/ContentRecommendations.astro';
+import UnifiedLayout from "@layouts/UnifiedLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import BlogHero from "@components/blog/BlogHero.astro";
+import PostsGrid from "@components/blog/PostsGrid.astro";
 
-const posts = await getCollection('blog');
-const sortedPosts = posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
-  b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+const posts = await getCollection("blog");
+const sortedPosts = posts.sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
 );
-const featuredPost = sortedPosts.find((post: CollectionEntry<'blog'>) => post.data.featured) || sortedPosts[0];
-const otherPosts = sortedPosts.filter((post: CollectionEntry<'blog'>) => post.slug !== featuredPost?.slug);
+const featuredPost =
+  sortedPosts.find((post: CollectionEntry<"blog">) => post.data.featured) ||
+  sortedPosts[0];
+const otherPosts = sortedPosts.filter(
+  (post: CollectionEntry<"blog">) => post.slug !== featuredPost?.slug,
+);
 ---
 
-<UnifiedLayout 
+<UnifiedLayout
   title="Blog KonXC - Insights, Tutorials & Success Stories"
   description="Artikel teknologi, tips bisnis, dan studi kasus dari tim KonXC. Pelajari cara mengoptimalkan teknologi untuk pertumbuhan bisnis Anda."
   headerVariant="default"
@@ -27,26 +29,30 @@ const otherPosts = sortedPosts.filter((post: CollectionEntry<'blog'>) => post.sl
   <!-- All Posts -->
   <PostsGrid posts={otherPosts} />
 
-    <!-- Featured Post -->
-    <!-- {featuredPost && (
+  <!-- Featured Post -->
+  <!-- {featuredPost && (
       <FeaturedPost post={featuredPost} />
     )} -->
 </UnifiedLayout>
 
 <!-- Posts data for search fallback -->
-<script id="posts-data" type="application/json">
-  {JSON.stringify(sortedPosts.map(post => ({
-    title: post.data.title,
-    description: post.data.description,
-    tags: post.data.tags,
-    category: post.data.category,
-    slug: post.slug,
-    publishDate: post.data.publishDate,
-    readingTime: post.data.readingTime,
-    author: post.data.author,
-    featured: post.data.featured,
-    views: post.data.views || 0,
-    series: post.data.series,
-    seriesOrder: post.data.seriesOrder || 0
-  })))}
-</script>
+<script
+  id="posts-data"
+  type="application/json"
+  set:html={JSON.stringify(
+    sortedPosts.map((post) => ({
+      title: post.data.title,
+      description: post.data.description,
+      tags: post.data.tags,
+      category: post.data.category,
+      slug: post.slug,
+      publishDate: post.data.publishDate,
+      readingTime: post.data.readingTime,
+      author: post.data.author,
+      featured: post.data.featured,
+      views: post.data.views || 0,
+      series: post.data.series,
+      seriesOrder: post.data.seriesOrder || 0,
+    })),
+  )}
+/>

@@ -94,13 +94,15 @@ const contactInfo = {
 
 <footer class={`footer ${variant} ${className}`}>
   {variant === 'extended' && showNewsletter && (
-    <!-- Newsletter Section -->
-    <NewsletterSection 
-      variant="default"
-      leadSource="footer"
-      campaignId="website-footer"
-      trackingEnabled={true}
-    />
+    <>
+      <!-- Newsletter Section -->
+      <NewsletterSection 
+        variant="default"
+        leadSource="footer"
+        campaignId="website-footer"
+        trackingEnabled={true}
+      />
+    </>
   )}
 
   <!-- Main Footer Content -->

@@ -68,7 +68,7 @@ const { class: className } = Astro.props;
     private clearBtn: HTMLButtonElement | null = null;
     private closeBtn: HTMLButtonElement | null = null;
     private posts: any[] = [];
-    private searchTimeout: number | null = null;
+    private searchTimeout: ReturnType<typeof setTimeout> | null = null;
 
     constructor() {
       this.initializeElements();

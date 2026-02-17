@@ -488,6 +488,7 @@
   function toggleTestingSuite() {
     const suite = document.getElementById("testing-suite");
     const toggleBtn = document.getElementById("testing-toggle-btn");
+    if (!suite || !toggleBtn) return;
 
     if (suite.style.display === "none") {
       suite.style.display = "block";
@@ -504,6 +505,7 @@
   function closeTestingSuite() {
     const suite = document.getElementById("testing-suite");
     const toggleBtn = document.getElementById("testing-toggle-btn");
+    if (!suite || !toggleBtn) return;
 
     suite.style.display = "none";
     toggleBtn.classList.remove("active");

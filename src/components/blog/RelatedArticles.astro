@@ -70,7 +70,7 @@ const getArticleUrl = (article: Article) => {
       <h2 class="text-2xl md:text-3xl font-bold text-neutral-800 mb-2">
         {title}
       </h2>
-      <div class="w-16 h-1 bg-gradient-to-r from-primary-500 to-primary-600 mx-auto rounded-full"></div>
+      <div class="w-16 h-1 bg-linear-to-r from-primary-500 to-primary-600 mx-auto rounded-full"></div>
     </div>
     
     <!-- Articles Grid -->
@@ -113,15 +113,17 @@ const getArticleUrl = (article: Article) => {
         ))}
       </div>
     ) : (
-      <!-- Empty State -->
-      <div class="empty-state">
-        <div class="empty-icon">
-          <svg class="w-12 h-12 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
+      <>
+        <!-- Empty State -->
+        <div class="empty-state">
+          <div class="empty-icon">
+            <svg class="w-12 h-12 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <p class="empty-text">Belum ada artikel terkait yang tersedia.</p>
         </div>
-        <p class="empty-text">Belum ada artikel terkait yang tersedia.</p>
-      </div>
+      </>
     )}
   </div>
 </section>
@@ -131,7 +133,7 @@ const getArticleUrl = (article: Article) => {
   
   /* Related Articles Section */
   .related-articles {
-    @apply py-12 bg-gradient-to-br from-neutral-50 to-neutral-100;
+    @apply py-12 bg-linear-to-br from-neutral-50 to-neutral-100;
   }
   
   /* Article Card */

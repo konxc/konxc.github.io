@@ -76,8 +76,6 @@ import Card from '@components/ui/Card.astro';`,
     },
   ],
 } = Astro.props;
-
-const activeTabId = `tab-${demos[0]?.id || "default"}`;
 ---
 
 <div class={`interactive-demos-tabbed ${className || ""}`}>
@@ -681,7 +679,7 @@ const activeTabId = `tab-${demos[0]?.id || "default"}`;
   }
 
   .demos-header {
-    @apply flex-shrink-0;
+    @apply shrink-0;
   }
 
   .demos-title {
@@ -694,7 +692,7 @@ const activeTabId = `tab-${demos[0]?.id || "default"}`;
 
   /* Tab Navigation */
   .tabs-navigation {
-    @apply flex flex-wrap gap-2 lg:flex-shrink-0;
+    @apply flex flex-wrap gap-2 lg:shrink-0;
   }
 
   .tab-badge {
@@ -859,7 +857,7 @@ const activeTabId = `tab-${demos[0]?.id || "default"}`;
   }
 
   .interactive-btn {
-    @apply from-primary-500 to-secondary-500 relative overflow-hidden rounded-lg bg-gradient-to-r px-8 py-4 text-lg font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:transform hover:shadow-lg;
+    @apply from-primary-500 to-secondary-500 relative overflow-hidden rounded-lg bg-linear-to-r px-8 py-4 text-lg font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:transform hover:shadow-lg;
   }
 
   .btn-effect {

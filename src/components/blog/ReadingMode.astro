@@ -8,13 +8,7 @@ export interface Props {
   enableProgressTracking?: boolean;
 }
 
-const {
-  class: className,
-  enableFocusMode = true,
-  enableNightMode = true,
-  enableTypography = true,
-  enableProgressTracking = true,
-} = Astro.props;
+const { class: className } = Astro.props;
 ---
 
 <div class={`reading-mode ${className || ""}`}>

@@ -178,16 +178,16 @@ const {
 
 <script>
   class AdvancedSearch {
-    private searchInput: HTMLInputElement;
-    private sortSelect: HTMLSelectElement;
-    private filtersPanel: HTMLElement;
-    private toggleFiltersBtn: HTMLButtonElement;
-    private clearSearchBtn: HTMLButtonElement;
-    private clearFiltersBtn: HTMLButtonElement;
-    private closeFiltersBtn: HTMLButtonElement;
-    private applyFiltersBtn: HTMLButtonElement;
-    private searchResults: HTMLElement;
-    private searchStats: HTMLElement;
+    private searchInput!: HTMLInputElement;
+    private sortSelect!: HTMLSelectElement;
+    private filtersPanel!: HTMLElement;
+    private toggleFiltersBtn!: HTMLButtonElement;
+    private clearSearchBtn!: HTMLButtonElement;
+    private clearFiltersBtn!: HTMLButtonElement;
+    private closeFiltersBtn!: HTMLButtonElement;
+    private applyFiltersBtn!: HTMLButtonElement;
+    private searchResults!: HTMLElement;
+    private searchStats!: HTMLElement;
     
     private allPosts: any[] = [];
     private filteredPosts: any[] = [];
@@ -433,7 +433,7 @@ const {
           });
           
           const fuseResults = fuse.search(this.searchQuery);
-          results = fuseResults.map(result => result.item);
+          results = fuseResults.map((result: any) => result.item);
         } else {
           // Fallback to simple search
           const query = this.searchQuery.toLowerCase();
@@ -582,9 +582,11 @@ const {
     }
 
     private debounce<T extends (...args: any[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
-      let timeout: number;
+      let timeout: ReturnType<typeof setTimeout> | undefined;
       return (...args: Parameters<T>) => {
-        clearTimeout(timeout);
+        if (timeout !== undefined) {
+          clearTimeout(timeout);
+        }
         timeout = setTimeout(() => func.apply(this, args), wait);
       };
     }

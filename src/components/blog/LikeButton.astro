@@ -316,14 +316,16 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
 <script>
   // Like Button Functionality
   function initializeLikeButton() {
-    const likeButton = document.getElementById("${buttonId}");
+    const likeButton = document.getElementById(
+      "${buttonId}",
+    ) as HTMLButtonElement | null;
     if (!likeButton) return;
 
-    const postSlug = likeButton.dataset.postSlug;
-    const countElement = likeButton.querySelector(".like-count");
+    const postSlug = likeButton.dataset.postSlug || "";
+    const countElement = likeButton.querySelector<HTMLElement>(".like-count");
     const feedbackElement = likeButton
       .closest(".like-button-wrapper")
-      .querySelector(".like-feedback");
+      ?.querySelector<HTMLElement>(".like-feedback");
 
     // Load saved state
     const savedState = localStorage.getItem(`like-${postSlug}`);
@@ -333,8 +335,8 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
         likeButton.classList.add("liked");
       }
       if (countElement) {
-        countElement.textContent = count;
-        countElement.dataset.count = count;
+        countElement.textContent = String(count);
+        countElement.dataset.count = String(count);
       }
     }
 
@@ -350,8 +352,8 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
       const newCount = currentCount + 1;
 
       if (countElement) {
-        countElement.textContent = newCount;
-        countElement.dataset.count = newCount;
+        countElement.textContent = String(newCount);
+        countElement.dataset.count = String(newCount);
       }
 
       // Save to localStorage
@@ -366,7 +368,7 @@ const buttonId = `like-button-${postSlug}-${Math.random().toString(36).substr(2,
       // Show feedback
       if (feedbackElement) {
         feedbackElement.classList.add("show");
-        setTimeout(() => {
+        window.setTimeout(() => {
           feedbackElement.classList.remove("show");
         }, 2000);
       }

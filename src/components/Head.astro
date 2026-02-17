@@ -2,6 +2,9 @@
 import StructuredData from "@components/seo/StructuredData.astro";
 import type { CollectionEntry } from "astro:content";
 
+// Type declaration for URL global
+declare const URL: typeof globalThis.URL;
+
 export interface Props {
   title: string;
   description?: string;

@@ -123,10 +123,12 @@ const displayTags = sortedTags.slice(0, maxTags);
     }
 
     private showAllTags(): void {
-      if (!this.tagsContainer || !this.showMoreBtn) return;
+      const tagsContainer = this.tagsContainer;
+      const showMoreBtn = this.showMoreBtn;
+      if (!tagsContainer || !showMoreBtn) return;
 
       // Clear current tags
-      this.tagsContainer.innerHTML = "";
+      tagsContainer.innerHTML = "";
 
       // Add all tags
       this.allTags.forEach(([tag, count]) => {
@@ -145,18 +147,20 @@ const displayTags = sortedTags.slice(0, maxTags);
           <span class="tag-count">(${count})</span>
         `;
 
-        this.tagsContainer.appendChild(tagElement);
+        tagsContainer.appendChild(tagElement);
       });
 
       // Update button text
-      this.showMoreBtn.textContent = "Tampilkan Lebih Sedikit";
+      showMoreBtn.textContent = "Tampilkan Lebih Sedikit";
     }
 
     private showLimitedTags(): void {
-      if (!this.tagsContainer || !this.showMoreBtn) return;
+      const tagsContainer = this.tagsContainer;
+      const showMoreBtn = this.showMoreBtn;
+      if (!tagsContainer || !showMoreBtn) return;
 
       // Clear current tags
-      this.tagsContainer.innerHTML = "";
+      tagsContainer.innerHTML = "";
 
       // Add limited tags
       this.displayedTags.forEach(([tag, count]) => {
@@ -175,11 +179,11 @@ const displayTags = sortedTags.slice(0, maxTags);
           <span class="tag-count">(${count})</span>
         `;
 
-        this.tagsContainer.appendChild(tagElement);
+        tagsContainer.appendChild(tagElement);
       });
 
       // Update button text
-      this.showMoreBtn.textContent = `Lihat Semua Topik (${this.allTags.length})`;
+      showMoreBtn.textContent = `Lihat Semua Topik (${this.allTags.length})`;
     }
   }
 

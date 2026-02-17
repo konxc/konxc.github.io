@@ -9,12 +9,7 @@ export interface Props {
   className?: string;
 }
 
-const {
-  postTitle = "",
-  postContent = "",
-  postUrl = "",
-  className = "",
-} = Astro.props;
+const { className = "" } = Astro.props;
 ---
 
 <div class={`copy-page-menu ${className}`}>

@@ -1,13 +1,11 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BlogSlugLayout from "@layouts/BlogSlugLayout.astro";
-import Card from "@components/ui/Card.astro";
 import SocialShare from "@components/blog/SocialShare.astro";
 import ReadingProgress from "@components/blog/ReadingProgress.astro";
 import TableOfContents from "@components/blog/TableOfContents.astro";
 import DarkModeToggle from "@components/blog/DarkModeToggle.astro";
 import SmartBlogTestingSuite from "@components/blog/SmartBlogTestingSuite.astro";
-import PopularPosts from "@components/blog/PopularPosts.astro";
 import ReadingAnalytics from "@components/blog/ReadingAnalytics.astro";
 import ArticleSeries from "@components/blog/ArticleSeries.astro";
 import CommentsSystem from "@components/blog/CommentsSystem.astro";
@@ -15,13 +13,11 @@ import InteractiveDemos from "@components/blog/InteractiveDemos.astro";
 import ReadingMode from "@components/blog/ReadingMode.astro";
 import PerformanceOptimizer from "@components/blog/PerformanceOptimizer.astro";
 import CopyPageMenu from "@components/blog/CopyPageMenu.astro";
-import ContentRecommendations from "@components/contributors/ContentRecommendations.astro";
-import ArticleLikeSection from "@components/blog/ArticleLikeSection.astro";
-import NewsletterSignup from "@components/blog/NewsletterSignup.astro";
-import NewsletterSection from "@components/blog/NewsletterSection.astro";
-import CodeBlockEnhancer from "@components/blog/CodeBlockEnhancer.astro";
 import ArticleStats from "@components/blog/ArticleStats.astro";
 import RelatedArticles from "@components/blog/RelatedArticles.astro";
+
+// Type declaration for URL global
+declare const URL: typeof globalThis.URL;
 
 export const prerender = true;
 

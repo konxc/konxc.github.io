@@ -15,7 +15,6 @@ export interface Props {
   headerVariant?: "default" | "transparent" | "minimal";
   footerVariant?: "default" | "minimal" | "extended";
   showSearch?: boolean;
-  showDarkMode?: boolean;
 }
 
 const {
@@ -26,7 +25,6 @@ const {
   headerVariant = "default",
   footerVariant = "extended",
   showSearch = true,
-  showDarkMode = true,
 } = Astro.props;
 ---
 
@@ -40,11 +38,7 @@ const {
 <SkipLinks />
 <FocusManager />
 
-<Header
-  variant={headerVariant}
-  showSearch={showSearch}
-  showDarkMode={showDarkMode}
-/>
+<Header variant={headerVariant} showSearch={showSearch} />
 
 <main id="main-content" role="main">
   <slot />

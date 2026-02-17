@@ -11,10 +11,8 @@ export interface Props {
 
 const {
   postSlug,
-  postTitle = "",
   variant = "default",
   showSocialShare = true,
-  showReadingTime = true,
   className = "",
 } = Astro.props;
 
@@ -325,7 +323,7 @@ const sectionId = `article-like-section-${postSlug}`;
 
   /* Variants */
   .article-like-section.card {
-    @apply rounded-2xl border border-red-100 bg-gradient-to-r from-red-50 to-pink-50 p-8;
+    @apply rounded-2xl border border-red-100 bg-linear-to-r from-red-50 to-pink-50 p-8;
   }
 
   .article-like-section.card .article-like-title {
@@ -337,7 +335,7 @@ const sectionId = `article-like-section-${postSlug}`;
   }
 
   .article-like-section.gradient {
-    @apply rounded-2xl bg-gradient-to-br from-red-500 via-pink-500 to-purple-500 p-8 text-white;
+    @apply rounded-2xl bg-linear-to-br from-red-500 via-pink-500 to-purple-500 p-8 text-white;
   }
 
   .article-like-section.gradient .article-like-title {
@@ -431,7 +429,7 @@ const sectionId = `article-like-section-${postSlug}`;
   }
 
   .dark .article-like-section.card {
-    @apply border-red-800 bg-gradient-to-r from-red-900 to-pink-900;
+    @apply border-red-800 bg-linear-to-r from-red-900 to-pink-900;
   }
 
   /* Mobile responsive */
@@ -484,13 +482,22 @@ const sectionId = `article-like-section-${postSlug}`;
     const section = document.getElementById("${sectionId}");
     if (!section) return;
 
-    const likeButton = section.querySelector(".article-like-button");
-    const countElement = likeButton.querySelector(".article-like-count");
-    const feedbackElement = section.querySelector(".article-like-feedback");
+    const likeButton = section.querySelector<HTMLButtonElement>(
+      ".article-like-button",
+    );
+    if (!likeButton) return;
+
+    const postSlug = likeButton.dataset.postSlug || "";
+    const countElement = likeButton.querySelector<HTMLElement>(
+      ".article-like-count",
+    );
+    const feedbackElement = section.querySelector<HTMLElement>(
+      ".article-like-feedback",
+    );
     const statsElements = {
-      readingTime: section.querySelector("[data-reading-time]"),
-      likeCount: section.querySelector("[data-like-count]"),
-      shareCount: section.querySelector("[data-share-count]"),
+      readingTime: section.querySelector<HTMLElement>("[data-reading-time]"),
+      likeCount: section.querySelector<HTMLElement>("[data-like-count]"),
+      shareCount: section.querySelector<HTMLElement>("[data-share-count]"),
     };
 
     // Load saved state
@@ -501,11 +508,11 @@ const sectionId = `article-like-section-${postSlug}`;
         likeButton.classList.add("liked");
       }
       if (countElement) {
-        countElement.textContent = count;
-        countElement.dataset.count = count;
+        countElement.textContent = String(count);
+        countElement.dataset.count = String(count);
       }
       if (statsElements.likeCount) {
-        statsElements.likeCount.textContent = count;
+        statsElements.likeCount.textContent = String(count);
       }
     }
 
@@ -516,12 +523,12 @@ const sectionId = `article-like-section-${postSlug}`;
       const wordsPerMinute = 200;
       const wordCount = text.split(/\s+/).length;
       const readingTime = Math.ceil(wordCount / wordsPerMinute);
-      statsElements.readingTime.textContent = readingTime;
+      statsElements.readingTime.textContent = String(readingTime);
     }
 
     // Handle like button click
     likeButton.addEventListener("click", async () => {
-      if (likeButton.classList.add("liked")) return;
+      if (likeButton.classList.contains("liked")) return;
 
       // Add liked class immediately for better UX
       likeButton.classList.add("liked");
@@ -531,12 +538,12 @@ const sectionId = `article-like-section-${postSlug}`;
       const newCount = currentCount + 1;
 
       if (countElement) {
-        countElement.textContent = newCount;
-        countElement.dataset.count = newCount;
+        countElement.textContent = String(newCount);
+        countElement.dataset.count = String(newCount);
       }
 
       if (statsElements.likeCount) {
-        statsElements.likeCount.textContent = newCount;
+        statsElements.likeCount.textContent = String(newCount);
       }
 
       // Save to localStorage
@@ -551,7 +558,7 @@ const sectionId = `article-like-section-${postSlug}`;
       // Show feedback
       if (feedbackElement) {
         feedbackElement.classList.add("show");
-        setTimeout(() => {
+        window.setTimeout(() => {
           feedbackElement.classList.remove("show");
         }, 3000);
       }
@@ -583,10 +590,12 @@ const sectionId = `article-like-section-${postSlug}`;
     });
 
     // Handle social share buttons
-    const socialButtons = section.querySelectorAll(".article-social-button");
+    const socialButtons = section.querySelectorAll<HTMLButtonElement>(
+      ".article-social-button",
+    );
     socialButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        const platform = button.dataset.platform;
+        const platform = button.dataset.platform || "";
         const url = window.location.href;
         const title = document.title;
 
@@ -596,7 +605,7 @@ const sectionId = `article-like-section-${postSlug}`;
             const originalText = button.innerHTML;
             button.innerHTML =
               '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/></svg>';
-            setTimeout(() => {
+            window.setTimeout(() => {
               button.innerHTML = originalText;
             }, 2000);
           });
@@ -627,7 +636,7 @@ const sectionId = `article-like-section-${postSlug}`;
           const currentShareCount = parseInt(
             statsElements.shareCount.textContent || "0",
           );
-          statsElements.shareCount.textContent = currentShareCount + 1;
+          statsElements.shareCount.textContent = String(currentShareCount + 1);
         }
 
         // Send analytics event

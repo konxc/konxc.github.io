@@ -1,10 +1,14 @@
 ---
 // Dark Mode Toggle Component
+// Specifically designed for blog post sidebar
+
+// This is a client-side interactive component
+// Logic is handled in the <script> tag below
 ---
 
 <button
   class="dark-mode-toggle"
-  onclick="toggleDarkMode()"
+  onclick="window.toggleDarkMode()"
   aria-label="Toggle dark mode"
   id="dark-mode-toggle"
 >
@@ -26,7 +30,8 @@
   </svg>
 </button>
 
-<script>
+<script define:vars={{}}>
+  // Toggle dark mode function
   function toggleDarkMode() {
     const html = document.documentElement;
     const toggle = document.getElementById("dark-mode-toggle");
@@ -51,6 +56,7 @@
     );
   }
 
+  // Initialize dark mode
   function initializeDarkMode() {
     const html = document.documentElement;
     const toggle = document.getElementById("dark-mode-toggle");
@@ -88,10 +94,11 @@
       });
   }
 
-  // Initialize on DOM ready
-  document.addEventListener("DOMContentLoaded", initializeDarkMode);
+  // Make function available globally
+  window.toggleDarkMode = toggleDarkMode;
+  window.initializeDarkMode = initializeDarkMode;
 
-  // Also initialize immediately in case DOM is already ready
+  // Initialize on DOM ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initializeDarkMode);
   } else {

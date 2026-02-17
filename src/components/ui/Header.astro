@@ -1,13 +1,11 @@
 ---
 // Header Component
 import Logo from "@components/ui/Logo.astro";
-import ThemeToggle from "@components/ui/ThemeToggle.astro";
 
 export interface Props {
   className?: string;
   variant?: "default" | "transparent" | "minimal";
   showSearch?: boolean;
-  showDarkMode?: boolean;
   showMobileMenu?: boolean;
 }
 
@@ -15,7 +13,6 @@ const {
   className = "",
   variant = "default",
   showSearch = true,
-  showDarkMode = true,
   showMobileMenu = true,
 } = Astro.props;
 
@@ -190,9 +187,6 @@ const serviceLinks = [
               </div>
             )
           }
-
-          <!-- Dark Mode Toggle -->
-          {showDarkMode && <ThemeToggle size="md" variant="icon" />}
 
           <!-- CTA Button -->
           <a href="/contact" class="cta-button">
@@ -665,8 +659,6 @@ const serviceLinks = [
         }
       });
     });
-
-    // Dark mode is now handled by ThemeToggle component
 
     // Close dropdowns when clicking outside
     document.addEventListener("click", function (e) {

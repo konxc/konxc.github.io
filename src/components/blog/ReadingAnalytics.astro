@@ -17,13 +17,22 @@ const {
 } = Astro.props;
 ---
 
-<div class={`reading-analytics ${className || ""}`} data-post-slug={postSlug}>
+<div
+  class={`reading-analytics ${className || ""}`}
+  data-post-slug={postSlug}
+  data-track-progress={trackProgress}
+  data-track-time={trackTime}
+  data-track-scroll={trackScroll}
+>
   <!-- Analytics data will be tracked automatically -->
 </div>
 
 <script>
   class ReadingAnalytics {
     private postSlug: string;
+    private trackProgress: boolean;
+    private trackTime: boolean;
+    private trackScroll: boolean;
     private startTime: number;
     private lastActivity: number;
     private readingProgress: number = 0;
@@ -36,6 +45,10 @@ const {
 
     constructor() {
       this.postSlug = this.getPostSlug();
+      const flags = this.getTrackingFlags();
+      this.trackProgress = flags.trackProgress;
+      this.trackTime = flags.trackTime;
+      this.trackScroll = flags.trackScroll;
       this.startTime = Date.now();
       this.lastActivity = Date.now();
 
@@ -50,6 +63,25 @@ const {
         window.location.pathname.split("/").pop() ||
         ""
       );
+    }
+
+    private getTrackingFlags(): {
+      trackProgress: boolean;
+      trackTime: boolean;
+      trackScroll: boolean;
+    } {
+      const analyticsElement = document.querySelector(".reading-analytics");
+      const readBool = (attr: string, defaultValue: boolean) => {
+        const v = analyticsElement?.getAttribute(attr);
+        if (v === null) return defaultValue;
+        return v !== "false";
+      };
+
+      return {
+        trackProgress: readBool("data-track-progress", true),
+        trackTime: readBool("data-track-time", true),
+        trackScroll: readBool("data-track-scroll", true),
+      };
     }
 
     private initializeTracking(): void {
@@ -125,13 +157,13 @@ const {
     }
 
     private startProgressTracking(): void {
-      this.progressInterval = setInterval(() => {
+      this.progressInterval = window.setInterval(() => {
         this.updateReadingProgress();
       }, 1000); // Update every second
     }
 
     private startTimeTracking(): void {
-      this.timeInterval = setInterval(() => {
+      this.timeInterval = window.setInterval(() => {
         if (this.isActive) {
           this.timeOnPage += 1;
           this.trackEvent("time_update", {
@@ -240,11 +272,11 @@ const {
 
       // Clear existing timeout
       if (this.activityTimeout) {
-        clearTimeout(this.activityTimeout);
+        window.clearTimeout(this.activityTimeout);
       }
 
       // Set new timeout for inactivity
-      this.activityTimeout = setTimeout(() => {
+      this.activityTimeout = window.setTimeout(() => {
         this.pauseTracking();
       }, 30000); // 30 seconds of inactivity
     }
@@ -313,9 +345,9 @@ const {
     }
 
     public destroy(): void {
-      if (this.progressInterval) clearInterval(this.progressInterval);
-      if (this.timeInterval) clearInterval(this.timeInterval);
-      if (this.activityTimeout) clearTimeout(this.activityTimeout);
+      if (this.progressInterval) window.clearInterval(this.progressInterval);
+      if (this.timeInterval) window.clearInterval(this.timeInterval);
+      if (this.activityTimeout) window.clearTimeout(this.activityTimeout);
     }
   }
 

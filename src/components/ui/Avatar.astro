@@ -56,12 +56,13 @@ function generateFallbackAvatar(name: string, email?: string): string {
       // via.placeholder.com - Very reliable service
       return `https://via.placeholder.com/${size}x${size}/0D8ABC/FFFFFF?text=${firstLetter}`;
 
-    case "picsum":
+    case "picsum": {
       // Lorem Picsum - Random images, very reliable
       const seed = name
         .split("")
         .reduce((acc, char) => acc + char.charCodeAt(0), 0);
       return `https://picsum.photos/seed/${seed}/${size}/${size}`;
+    }
 
     case "boring-avatars":
       // Boring Avatars - Simple geometric avatars
