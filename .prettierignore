@@ -3,14 +3,30 @@ node_modules/
 .pnpm-store/
 
 # Build outputs
+.astro/
+.output/
 dist/
 build/
-.astro/
+
+# Testing
+test-results/
+playwright-report/
+
+# Documentation
+docs/
+
+# Public assets
+public/
+
 
 # Environment files
 .env
 .env.local
 .env.production
+
+# Config files
+*.config.js
+*.config.mjs
 
 # Logs
 *.log
@@ -85,3 +101,25 @@ public/
 # Documentation that should maintain specific formatting
 CHANGELOG.md
 LICENSE
+
+# Markdown content files  
+*.md
+src/content/**/*.md
+
+# Scripts
+scripts/*.cjs
+scripts/test-blog-features.js
+scripts/test-final-phase-features.js
+
+# Problematic Astro components (will be fixed manually)
+src/components/blog/AdvancedSearch.astro
+src/components/blog/CommentsSystem.astro
+src/components/blog/PostsGrid.astro
+src/components/blog/RelatedArticles.astro
+src/components/contributors/ContributorStats.astro
+src/components/contributors/WriterCard.astro
+src/components/seo/StructuredData.astro
+src/components/ui/Footer.astro
+src/components/ui/OptimizedLogo.astro
+src/components/ui/SimpleFooter.astro
+src/pages/events.astro
