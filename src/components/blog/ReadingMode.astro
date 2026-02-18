@@ -589,11 +589,33 @@ const { class: className } = Astro.props;
   }
 
   .reading-progress-track {
-    @apply absolute top-0 left-0 z-100 h-1.5 w-full bg-black/5;
+    @apply fixed top-0 left-0 z-100 h-1 w-full bg-white/10 backdrop-blur-xs;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .reading-progress-bar {
-    @apply bg-primary-600 h-full w-0 shadow-[0_0_10px_rgba(37,99,235,0.5)] transition-all duration-150;
+    @apply relative h-full w-0 transition-all duration-200;
+    background: linear-gradient(90deg, #3b82f6 0%, #2563eb 50%, #8b5cf6 100%);
+    background-size: 200% 100%;
+    animation: shimmer-progress 4s linear infinite;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+  }
+
+  .reading-progress-bar::after {
+    content: "";
+    @apply absolute top-0 right-0 h-full w-2 blur-[2px];
+    background: white;
+    box-shadow: 0 0 10px 2px white;
+    opacity: 0.9;
+  }
+
+  @keyframes shimmer-progress {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
   }
 
   .reading-shell {
