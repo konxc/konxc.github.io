@@ -11,6 +11,7 @@ export interface Props {
   canonical?: string;
   headerVariant?: "default" | "transparent" | "minimal";
   footerVariant?: "default" | "minimal" | "extended";
+  showNewsletter?: boolean;
 }
 
 const {
@@ -20,20 +21,27 @@ const {
   canonical,
   headerVariant = "default",
   footerVariant = "extended",
+  showNewsletter = true,
 } = Astro.props;
 ---
 
-<Head
-  title={title}
-  description={description}
-  image={image}
-  canonical={canonical}
-/>
+<!doctype html>
+<html lang="id">
+  <head>
+    <Head
+      title={title}
+      description={description}
+      image={image}
+      canonical={canonical}
+    />
+  </head>
+  <body>
+    <Header variant={headerVariant} />
 
-<Header variant={headerVariant} />
+    <main>
+      <slot />
+    </main>
 
-<main>
-  <slot />
-</main>
-
-<Footer variant={footerVariant} />
+    <Footer variant={footerVariant} showNewsletter={showNewsletter} />
+  </body>
+</html>

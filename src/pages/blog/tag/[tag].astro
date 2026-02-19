@@ -1,0 +1,55 @@
+---
+import UnifiedLayout from "@layouts/UnifiedLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import PostsGrid from "@components/blog/PostsGrid.astro";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog");
+    const uniqueTags = [...new Set(posts.flatMap((post) => post.data.tags))];
+
+    return uniqueTags.map((tag) => {
+        const filteredPosts = posts.filter((post) =>
+            post.data.tags.includes(tag),
+        );
+        return {
+            params: { tag },
+            props: { posts: filteredPosts, tag },
+        };
+    });
+}
+
+const { tag, posts } = Astro.props;
+const sortedPosts = posts.sort(
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+        b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+---
+
+<UnifiedLayout
+    title={`Artikel dengan Tag: ${tag} - Blog KonXC`}
+    description={`Kumpulan artikel blog KonXC dengan topik ${tag}. Pelajari wawasan terbaru seputar ${tag}.`}
+    headerVariant="default"
+    footerVariant="extended"
+>
+    <section class="bg-neutral-50 py-16">
+        <div class="container">
+            <div class="mx-auto max-w-4xl text-center">
+                <span
+                    class="text-primary-600 mb-2 block text-sm font-bold tracking-wider uppercase"
+                >
+                    Topik
+                </span>
+                <h1
+                    class="mb-4 text-4xl font-bold text-neutral-900 md:text-5xl"
+                >
+                    #{tag}
+                </h1>
+                <p class="text-lg text-neutral-600">
+                    Menampilkan {posts.length} artikel tentang {tag}
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <PostsGrid posts={sortedPosts} showFilters={false} />
+</UnifiedLayout>

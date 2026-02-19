@@ -1,0 +1,57 @@
+---
+import CommentsSystem from "./CommentsSystem.astro";
+
+export interface Props {
+    postSlug: string;
+}
+
+const { postSlug } = Astro.props;
+---
+
+<section class="comments-section" id="blog-comments">
+    <div class="container max-w-4xl">
+        <div class="comments-wrapper">
+            <!-- Section Header - Now more compact and modern -->
+            <div class="comments-intro">
+                <div class="mb-4 flex items-center gap-3">
+                    <span
+                        class="to-primary-500/20 h-px flex-1 bg-linear-to-r from-transparent via-neutral-200"
+                    ></span>
+                    <h2
+                        class="text-3xl font-black tracking-tight text-neutral-800 italic dark:text-neutral-100"
+                    >
+                        Discussion
+                    </h2>
+                    <span
+                        class="to-primary-500/20 h-px flex-1 bg-linear-to-l from-transparent via-neutral-200"
+                    ></span>
+                </div>
+            </div>
+
+            <!-- Comments Component -->
+            <div class="comments-main">
+                <CommentsSystem postSlug={postSlug} />
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @reference "@/styles/global.css";
+
+    .comments-section {
+        @apply relative bg-transparent py-12;
+    }
+
+    .comments-wrapper {
+        @apply relative z-10;
+    }
+
+    .comments-intro {
+        @apply mb-8 text-center;
+    }
+
+    .comments-main {
+        @apply transition-all duration-500;
+    }
+</style>

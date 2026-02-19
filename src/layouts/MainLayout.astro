@@ -23,17 +23,23 @@ const {
 } = Astro.props;
 ---
 
-<Head
-  title={title}
-  description={description}
-  image={image}
-  canonical={canonical}
-/>
+<!doctype html>
+<html lang="id">
+  <head>
+    <Head
+      title={title}
+      description={description}
+      image={image}
+      canonical={canonical}
+    />
+  </head>
+  <body>
+    <SimpleHeader variant={headerVariant} />
 
-<SimpleHeader variant={headerVariant} />
+    <main>
+      <slot />
+    </main>
 
-<main>
-  <slot />
-</main>
-
-{footerVariant !== "none" && <SimpleFooter />}
+    {footerVariant !== "none" && <SimpleFooter />}
+  </body>
+</html>

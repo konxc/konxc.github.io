@@ -1,16 +1,19 @@
 ---
-// Reading Mode Component - Premium Immersive Overhaul V2
+/**
+ * Reading Mode Component - Enhanced Modular Version
+ * High-end immersive reading experience with focus tools and typography controls.
+ */
 import { Icon } from "astro-icon/components";
 
 export interface Props {
-  class?: string;
+  className?: string;
 }
 
-const { class: className } = Astro.props;
+const { className = "" } = Astro.props;
 ---
 
-<div class={`reading-mode-system ${className || ""}`}>
-  <!-- Reading Mode Toggle Button - Floating Action Button Style -->
+<div class={`reading-mode-system ${className}`}>
+  <!-- Reading Mode Toggle (FAB) -->
   <button
     class="reading-mode-fab group"
     id="reading-mode-toggle"
@@ -25,110 +28,137 @@ const { class: className } = Astro.props;
     <span class="fab-text">Mode Baca</span>
   </button>
 
-  <!-- Immersive Reading Overlay -->
+  <!-- Immersive Overlay -->
   <div
     class="reading-immersive-overlay"
     id="reading-mode-overlay"
     data-theme="default"
   >
-    <!-- Top Progress Bar -->
+    <!-- Premium Progress Indicator - Fixed to top of viewport -->
     <div class="reading-progress-track">
       <div class="reading-progress-bar" id="reading-progress-fill"></div>
     </div>
 
-    <!-- Interface Shell -->
     <div class="reading-shell">
-      <!-- Universal Header -->
+      <!-- 1. NAVIGATION TOOLBAR -->
       <header class="reading-navbar">
         <div class="navbar-left">
-          <button
-            class="navbar-btn"
-            id="close-reading-mode"
-            aria-label="Exit Reading Mode"
-          >
-            <Icon name="heroicons:x-mark" class="h-6 w-6" />
-            <span class="hidden sm:inline">Keluar</span>
-          </button>
+          <div class="flex items-center gap-4">
+            <button
+              class="navbar-btn"
+              id="back-to-top"
+              aria-label="Back to Top"
+              title="Back to Top"
+            >
+              <Icon name="heroicons:arrow-up" class="h-6 w-6" />
+              <span class="hidden sm:inline">Atas</span>
+            </button>
+            <button
+              class="navbar-btn"
+              id="close-reading-mode"
+              aria-label="Exit Reading Mode"
+            >
+              <Icon name="heroicons:x-mark" class="h-6 w-6" />
+              <span class="hidden sm:inline">Keluar</span>
+            </button>
+          </div>
         </div>
 
         <div class="navbar-center">
-          <div class="theme-selector">
-            <button
-              class="theme-dot default active"
-              data-theme="default"
-              title="Default"></button>
-            <button class="theme-dot sepia" data-theme="sepia" title="Sepia"
-            ></button>
-            <button class="theme-dot cream" data-theme="cream" title="Cream"
-            ></button>
-            <button class="theme-dot slate" data-theme="slate" title="Slate"
-            ></button>
-            <button class="theme-dot night" data-theme="night" title="Night"
-            ></button>
+          <div class="flex items-center gap-4">
+            <button class="navbar-btn" id="font-size-toggle" title="Font Size">
+              <Icon name="heroicons:magnifying-glass-plus" class="h-5 w-5" />
+            </button>
+            <div class="theme-selector">
+              {
+                ["default", "sepia", "cream", "slate", "night"].map((t) => (
+                  <button
+                    class={`theme-dot ${t} ${t === "default" ? "active" : ""}`}
+                    data-theme={t}
+                    title={t.charAt(0).toUpperCase() + t.slice(1)}
+                  />
+                ))
+              }
+            </div>
           </div>
         </div>
 
         <div class="navbar-right">
-          <button
-            class="navbar-btn ai-btn group/ai"
-            id="ai-summary-trigger"
-            title="AI Smart Summary"
-          >
-            <Icon
-              name="heroicons:sparkles"
-              class="text-primary-600 h-5 w-5 transition-transform group-hover/ai:scale-110"
-            />
-            <span class="ai-glow"></span>
-          </button>
-          <button
-            class="navbar-btn"
-            id="ruler-toggle"
-            title="Toggle Reading Ruler"
-          >
-            <Icon name="heroicons:minus" class="h-5 w-5" />
-          </button>
-          <button
-            class="navbar-btn"
-            id="typography-toggle"
-            title="Typography Settings"
-          >
-            <Icon name="heroicons:language" class="h-5 w-5" />
-          </button>
-          <button class="navbar-btn" id="focus-mask-toggle" title="Focus Mask">
-            <Icon name="heroicons:eye-slash" class="h-5 w-5" />
-          </button>
+          <div class="flex items-center gap-4">
+            <button
+              class="navbar-btn ai-btn group/ai"
+              id="ai-summary-trigger"
+              title="AI Smart Summary"
+            >
+              <Icon
+                name="heroicons:sparkles"
+                class="text-primary-600 h-5 w-5 transition-transform group-hover/ai:scale-110"
+              />
+              <span class="ai-glow"></span>
+            </button>
+            <button
+              class="navbar-btn"
+              id="ruler-toggle"
+              title="Toggle Reading Ruler"
+            >
+              <Icon name="heroicons:minus" class="h-5 w-5" />
+            </button>
+            <button
+              class="navbar-btn"
+              id="typography-toggle"
+              title="Typography Settings"
+            >
+              <Icon name="heroicons:language" class="h-5 w-5" />
+            </button>
+            <button
+              class="navbar-btn"
+              id="line-height-toggle"
+              title="Line Height"
+            >
+              <Icon name="heroicons:bars-3" class="h-5 w-5" />
+            </button>
+            <button
+              class="navbar-btn"
+              id="focus-mask-toggle"
+              title="Focus Mask"
+            >
+              <Icon name="heroicons:eye-slash" class="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </header>
 
-      <!-- Main Reading Area -->
+      <!-- 2. READING VIEWPORT -->
       <main class="reading-viewport scrollbar-hide" id="reading-viewport">
-        <!-- Focus Mask (The rest is dimmed) -->
+        <!-- Overlay Tools -->
         <div class="focus-mask" id="focus-mask">
           <div class="mask-top"></div>
           <div class="mask-window"></div>
           <div class="mask-bottom"></div>
         </div>
-
-        <!-- Reading Ruler -->
         <div class="reading-ruler" id="reading-ruler"></div>
 
-        <article class="reading-body prose-custom" id="reading-body">
-          <!-- Content injected here -->
+        <!-- Content Area -->
+        <article
+          class="reading-body blog-content prose prose-lg prose-neutral dark:prose-invert max-w-none"
+          id="reading-body"
+        >
+          <!-- Content injected via JS -->
         </article>
       </main>
 
-      <!-- Bottom Status Bar -->
+      <!-- 3. STATUS FOOTER -->
       <footer class="reading-status-bar">
         <div class="status-left">
           <span class="status-pill">
             <Icon
               name="heroicons:chat-bubble-bottom-center-text"
-              class="mr-1 h-3 w-3"
+              class="mr-1.5 h-3.5 w-3.5"
             />
             <span id="word-count">0</span> kata
           </span>
           <span class="status-pill">
-            <Icon name="heroicons:clock" class="mr-1 h-3 w-3" />
+            <Icon name="heroicons:clock" class="mr-1.5 h-3.5 w-3.5" />
             <span id="reading-time">0</span> menit
           </span>
         </div>
@@ -142,7 +172,7 @@ const { class: className } = Astro.props;
       </footer>
     </div>
 
-    <!-- Side Settings Panel -->
+    <!-- 4. TYPOGRAPHY DRAWER -->
     <aside class="settings-drawer" id="settings-drawer">
       <div class="drawer-header">
         <h3>Pengaturan Visual</h3>
@@ -152,7 +182,6 @@ const { class: className } = Astro.props;
       </div>
 
       <div class="drawer-content">
-        <!-- Font Selection -->
         <section class="settings-group">
           <label>Jenis Huruf</label>
           <div class="font-grid">
@@ -162,7 +191,6 @@ const { class: className } = Astro.props;
           </div>
         </section>
 
-        <!-- Size Sliders -->
         <section class="settings-group">
           <div class="mb-2 flex items-center justify-between">
             <label>Ukuran Teks</label>
@@ -210,7 +238,6 @@ const { class: className } = Astro.props;
           />
         </section>
 
-        <!-- Extra Controls -->
         <div class="divider"></div>
         <div class="extra-actions">
           <button class="action-tile" id="print-mode">
@@ -232,7 +259,6 @@ const { class: className } = Astro.props;
     private isActive = false;
     private isFocusActive = false;
     private isRulerActive = false;
-    private sourceElement: HTMLElement | null = null;
     private settings = {
       theme: "default",
       font: "sans",
@@ -241,45 +267,83 @@ const { class: className } = Astro.props;
       lineHeight: 1.6,
     };
 
+    // Cached elements
+    private el: Record<string, HTMLElement | null> = {};
+
     constructor() {
+      this.cacheElements();
       this.loadSettings();
       this.initEventListeners();
+      this.updateTracking();
+    }
+
+    private cacheElements() {
+      const ids = [
+        "reading-mode-toggle",
+        "close-reading-mode",
+        "reading-mode-overlay",
+        "reading-viewport",
+        "reading-body",
+        "reading-progress-fill",
+        "reading-progress-text",
+        "settings-drawer",
+        "typography-toggle",
+        "close-drawer",
+        "focus-mask",
+        "focus-mask-toggle",
+        "reading-ruler",
+        "ruler-toggle",
+        "ai-summary-trigger",
+        "word-count",
+        "reading-time",
+        "back-to-top",
+        "font-size-toggle",
+        "line-height-toggle",
+      ];
+      ids.forEach((id) => {
+        this.el[id] = document.getElementById(id);
+      });
     }
 
     private initEventListeners() {
-      // Toggle System
-      document
-        .getElementById("reading-mode-toggle")
-        ?.addEventListener("click", () => this.toggle(true));
-      document
-        .getElementById("close-reading-mode")
-        ?.addEventListener("click", () => this.toggle(false));
+      this.el["reading-mode-toggle"]?.addEventListener("click", () =>
+        this.toggle(true),
+      );
+      this.el["close-reading-mode"]?.addEventListener("click", () =>
+        this.toggle(false),
+      );
 
-      // Tool Settings Drawer
-      document
-        .getElementById("typography-toggle")
-        ?.addEventListener("click", (e) => {
-          e.stopPropagation();
-          document
-            .getElementById("settings-drawer")
-            ?.classList.toggle("active");
-        });
-      document.getElementById("close-drawer")?.addEventListener("click", () => {
-        document.getElementById("settings-drawer")?.classList.remove("active");
+      this.el["typography-toggle"]?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        this.el["settings-drawer"]?.classList.toggle("active");
       });
 
-      // Individual Tool Toggles
-      document
-        .getElementById("focus-mask-toggle")
-        ?.addEventListener("click", () => this.toggleFocusMask());
-      document
-        .getElementById("ruler-toggle")
-        ?.addEventListener("click", () => this.toggleRuler());
-      document
-        .getElementById("ai-summary-trigger")
-        ?.addEventListener("click", () => this.triggerAISummary());
+      this.el["close-drawer"]?.addEventListener("click", () => {
+        this.el["settings-drawer"]?.classList.remove("active");
+      });
 
-      // Themes Selector
+      this.el["focus-mask-toggle"]?.addEventListener("click", () =>
+        this.toggleFocusMask(),
+      );
+      this.el["ruler-toggle"]?.addEventListener("click", () =>
+        this.toggleRuler(),
+      );
+      this.el["ai-summary-trigger"]?.addEventListener("click", () =>
+        this.triggerAISummary(),
+      );
+
+      // New toolbar buttons
+      this.el["back-to-top"]?.addEventListener("click", () =>
+        this.el["reading-viewport"]?.scrollTo({ top: 0, behavior: "smooth" }),
+      );
+      this.el["font-size-toggle"]?.addEventListener("click", () =>
+        this.adjustFontSize(this.settings.fontSize < 28 ? 2 : -2),
+      );
+      this.el["line-height-toggle"]?.addEventListener("click", () =>
+        this.adjustLineHeight(this.settings.lineHeight < 2.4 ? 0.2 : -0.2),
+      );
+
+      // Theme dots
       document.querySelectorAll(".theme-dot").forEach((dot) => {
         dot.addEventListener("click", (e) => {
           const theme =
@@ -288,15 +352,15 @@ const { class: className } = Astro.props;
         });
       });
 
-      // Font Selector
+      // Font buttons
       document.querySelectorAll(".font-btn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
-          const font = (e.currentTarget as HTMLElement).dataset.font || "sans";
+          const font = (btn as HTMLElement).dataset.font || "sans";
           this.applyFont(font);
         });
       });
 
-      // Typography Sliders
+      // Sliders
       this.bindSlider("font-size-slider", "fontSize", "px", "fs-value");
       this.bindSlider("width-slider", "width", "px", "width-value");
       this.bindSlider("line-height-slider", "lineHeight", "", "lh-value");
@@ -309,12 +373,19 @@ const { class: className } = Astro.props;
         .getElementById("share-link")
         ?.addEventListener("click", () => this.handleShare());
 
-      // Interactive Area Events
-      const viewport = document.getElementById("reading-viewport");
-      viewport?.addEventListener("scroll", () => this.updateTracking());
-      viewport?.addEventListener("mousemove", (e) => {
-        if (this.isFocusActive) this.updateFocusMask(e);
-        if (this.isRulerActive) this.updateRuler(e);
+      // Viewport Events
+      this.el["reading-viewport"]?.addEventListener("scroll", () =>
+        this.updateTracking(),
+      );
+
+      // Global Tracking (for main page scroll)
+      window.addEventListener("scroll", () => {
+        if (!this.isActive) this.updateTracking();
+      });
+
+      this.el["reading-viewport"]?.addEventListener("mousemove", (e) => {
+        if (this.isFocusActive) this.updateFocusMask(e as MouseEvent);
+        if (this.isRulerActive) this.updateRuler(e as MouseEvent);
       });
 
       // Global Shortcuts
@@ -338,73 +409,119 @@ const { class: className } = Astro.props;
       });
     }
 
+    private adjustFontSize(delta: number) {
+      const newSize = Math.min(
+        28,
+        Math.max(14, this.settings.fontSize + delta),
+      );
+      this.settings.fontSize = newSize;
+      const slider = document.getElementById(
+        "font-size-slider",
+      ) as HTMLInputElement;
+      if (slider) slider.value = newSize.toString();
+      const display = document.getElementById("fs-value");
+      if (display) display.textContent = `${newSize}px`;
+      this.applyTypography();
+      this.saveSettings();
+    }
+
+    private adjustLineHeight(delta: number) {
+      const newHeight = parseFloat(
+        Math.min(2.4, Math.max(1.2, this.settings.lineHeight + delta))
+          .toFixed(1)
+          .toString(),
+      );
+      this.settings.lineHeight = newHeight;
+      const slider = document.getElementById(
+        "line-height-slider",
+      ) as HTMLInputElement;
+      if (slider) slider.value = newHeight.toString();
+      const display = document.getElementById("lh-value");
+      if (display) display.textContent = newHeight.toString();
+      this.applyTypography();
+      this.saveSettings();
+    }
+
     private toggle(state: boolean) {
       this.isActive = state;
-      const overlay = document.getElementById("reading-mode-overlay");
-      const bodyContent = document.getElementById("reading-body");
+      const overlay = this.el["reading-mode-overlay"];
+      const body = this.el["reading-body"];
 
       if (state) {
-        this.sourceElement = document.querySelector(
+        const source = document.querySelector(
           ".prose, .blog-content, main article",
         );
-        if (this.sourceElement && bodyContent) {
-          bodyContent.innerHTML = this.sourceElement.innerHTML;
-          this.updateStats(this.sourceElement.textContent || "");
+        if (source && body) {
+          // Clone source to avoid mutating the original DOM
+          const clone = source.cloneNode(true) as HTMLElement;
+
+          // Remove redundant components in reading mode
+          const toRemove = clone.querySelectorAll(
+            ".reading-progress, .social-share, .interactive-demo-helper",
+          );
+          toRemove.forEach((el) => el.remove());
+
+          body.innerHTML = clone.innerHTML;
+          this.updateStats(source.textContent || "");
           setTimeout(() => this.updateTracking(), 100);
         }
         overlay?.classList.add("active");
         document.body.style.overflow = "hidden";
-        this.applyTheme(this.settings.theme);
-        this.applyFont(this.settings.font);
-        this.applyTypography();
+        // Hide Lab FAB if exists
+        document.getElementById("konxc-lab-suite")?.classList.add("hidden");
+        this.applyAllSettings();
       } else {
         overlay?.classList.remove("active");
         document.body.style.overflow = "";
+        // Show Lab FAB if dev mode
+        document.getElementById("konxc-lab-suite")?.classList.remove("hidden");
         this.resetTools();
       }
+    }
+
+    private applyAllSettings() {
+      this.applyTheme(this.settings.theme);
+      this.applyFont(this.settings.font);
+      this.applyTypography();
     }
 
     private resetTools() {
       this.isFocusActive = false;
       this.isRulerActive = false;
-      document.getElementById("focus-mask")?.classList.remove("active");
-      document.getElementById("reading-ruler")?.classList.remove("active");
-      document.getElementById("settings-drawer")?.classList.remove("active");
+      this.el["focus-mask"]?.classList.remove("active");
+      this.el["reading-ruler"]?.classList.remove("active");
+      this.el["settings-drawer"]?.classList.remove("active");
     }
 
     private toggleFocusMask() {
       this.isFocusActive = !this.isFocusActive;
-      document
-        .getElementById("focus-mask")
-        ?.classList.toggle("active", this.isFocusActive);
-      document
-        .getElementById("focus-mask-toggle")
-        ?.classList.toggle("active", this.isFocusActive);
+      this.el["focus-mask"]?.classList.toggle("active", this.isFocusActive);
+      this.el["focus-mask-toggle"]?.classList.toggle(
+        "active",
+        this.isFocusActive,
+      );
     }
 
     private toggleRuler() {
       this.isRulerActive = !this.isRulerActive;
-      document
-        .getElementById("reading-ruler")
-        ?.classList.toggle("active", this.isRulerActive);
-      document
-        .getElementById("ruler-toggle")
-        ?.classList.toggle("active", this.isRulerActive);
+      this.el["reading-ruler"]?.classList.toggle("active", this.isRulerActive);
+      this.el["ruler-toggle"]?.classList.toggle("active", this.isRulerActive);
     }
 
     private updateFocusMask(e: MouseEvent) {
-      const window = document.querySelector(".mask-window") as HTMLElement;
-      const viewport = document.getElementById("reading-viewport");
-      if (window && viewport) {
+      const windowTarget = document.querySelector(
+        ".mask-window",
+      ) as HTMLElement;
+      const viewport = this.el["reading-viewport"];
+      if (windowTarget && viewport) {
         const rect = viewport.getBoundingClientRect();
-        const y = e.clientY - rect.top;
-        window.style.top = `${y - 40}px`;
+        windowTarget.style.top = `${e.clientY - rect.top - 40}px`;
       }
     }
 
     private updateRuler(e: MouseEvent) {
-      const ruler = document.getElementById("reading-ruler");
-      const viewport = document.getElementById("reading-viewport");
+      const ruler = this.el["reading-ruler"];
+      const viewport = this.el["reading-viewport"];
       if (ruler && viewport) {
         const rect = viewport.getBoundingClientRect();
         ruler.style.top = `${e.clientY - rect.top}px`;
@@ -412,28 +529,32 @@ const { class: className } = Astro.props;
     }
 
     private triggerAISummary() {
-      const btn = document.getElementById("ai-summary-trigger");
+      const btn = this.el["ai-summary-trigger"];
       btn?.classList.add("loading");
       setTimeout(() => {
         alert(
-          "KonXC AI Recap: Artikel ini membahas strategi integrasi teknologi mikroservis untuk skalabilitas enterprise dengan fokus pada resilinesi sistem.",
+          "KonXC AI Recap: Artikel ini membahas strategi integratif optimasi performa web melalui modularitas komponen dan efisiensi script client-side.",
         );
         btn?.classList.remove("loading");
       }, 1500);
     }
 
     private handlePrint() {
-      const content = document.getElementById("reading-body")?.innerHTML;
+      const content = this.el["reading-body"]?.innerHTML;
       if (!content) return;
-      const printWin = window.open("", "", "width=900,height=600");
-      if (printWin) {
-        printWin.document.write(
-          `<html><head><title>KonXC Reader</title><style>body{padding:40px;font-family:serif;line-height:1.6;max-width:800px;margin:auto;}img{max-width:100%}</style></head><body>${content}</body></html>`,
-        );
-        printWin.document.close();
-        printWin.focus();
-        printWin.print();
-        printWin.close();
+      const win = window.open("", "", "width=900,height=600");
+      if (win) {
+        win.document.write(`
+          <html><head><title>KonXC Reader</title>
+          <style>body{padding:60px;font-family:serif;line-height:1.6;max-width:800px;margin:auto;}img{max-width:100%}</style>
+          </head><body>${content}</body></html>
+        `);
+        win.document.close();
+        win.focus();
+        setTimeout(() => {
+          win.print();
+          win.close();
+        }, 250);
       }
     }
 
@@ -448,8 +569,7 @@ const { class: className } = Astro.props;
 
     private applyTheme(theme: string) {
       this.settings.theme = theme;
-      const overlay = document.getElementById("reading-mode-overlay");
-      if (overlay) overlay.setAttribute("data-theme", theme);
+      this.el["reading-mode-overlay"]?.setAttribute("data-theme", theme);
       document.querySelectorAll(".theme-dot").forEach((dot) => {
         dot.classList.toggle(
           "active",
@@ -461,7 +581,7 @@ const { class: className } = Astro.props;
 
     private applyFont(font: string) {
       this.settings.font = font;
-      document.getElementById("reading-body")?.setAttribute("data-font", font);
+      this.el["reading-body"]?.setAttribute("data-font", font);
       document.querySelectorAll(".font-btn").forEach((btn) => {
         btn.classList.toggle(
           "active",
@@ -472,7 +592,7 @@ const { class: className } = Astro.props;
     }
 
     private applyTypography() {
-      const body = document.getElementById("reading-body");
+      const body = this.el["reading-body"];
       if (body) {
         body.style.fontSize = `${this.settings.fontSize}px`;
         body.style.maxWidth = `${this.settings.width}px`;
@@ -483,27 +603,42 @@ const { class: className } = Astro.props;
     private updateStats(text: string) {
       const words = text.trim().split(/\s+/).length;
       const time = Math.ceil(words / 200);
-      const wcEl = document.getElementById("word-count");
-      const rtEl = document.getElementById("reading-time");
-      if (wcEl) wcEl.textContent = words.toLocaleString();
-      if (rtEl) rtEl.textContent = time.toString();
+      if (this.el["word-count"])
+        this.el["word-count"].textContent = words.toLocaleString();
+      if (this.el["reading-time"])
+        this.el["reading-time"].textContent = time.toString();
     }
 
     private updateTracking() {
-      const viewport = document.getElementById("reading-viewport");
-      const bar = document.getElementById("reading-progress-fill");
-      const text = document.getElementById("reading-progress-text");
-      if (!viewport || !bar || !text) return;
+      const isReading = this.isActive;
+      const viewport = isReading ? this.el["reading-viewport"] : null;
+      const text = this.el["reading-progress-text"];
 
-      const maxScroll = viewport.scrollHeight - viewport.clientHeight;
-      const progress =
-        maxScroll <= 0
-          ? 100
-          : Math.min(100, Math.ceil((viewport.scrollTop / maxScroll) * 100));
+      let progress = 0;
+      if (isReading && viewport) {
+        const maxScroll = viewport.scrollHeight - viewport.clientHeight;
+        progress =
+          maxScroll <= 0
+            ? 100
+            : Math.min(100, Math.ceil((viewport.scrollTop / maxScroll) * 100));
+      } else {
+        const winScroll = document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        progress =
+          height <= 0
+            ? 100
+            : Math.min(100, Math.ceil((winScroll / height) * 100));
+      }
 
-      bar.style.width = `${progress}%`;
-      const start = parseInt(text.textContent || "0");
-      if (start !== progress) this.animateValue(text, start, progress, 200);
+      const bar = this.el["reading-progress-fill"];
+      if (bar) bar.style.width = `${progress}%`;
+
+      if (text && isReading) {
+        const start = parseInt(text.textContent || "0");
+        if (start !== progress) this.animateValue(text, start, progress, 200);
+      }
     }
 
     private animateValue(
@@ -559,7 +694,7 @@ const { class: className } = Astro.props;
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* FAB Button */
+  /* 1. FAB Style */
   .reading-mode-fab {
     @apply fixed right-8 bottom-8 z-40 flex items-center gap-3 rounded-full p-2 pr-6 text-slate-900 shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95;
     background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
@@ -567,21 +702,18 @@ const { class: className } = Astro.props;
     border: 1px solid rgba(255, 255, 255, 0.8);
   }
 
-  .fab-icon-container,
-  .fab-blob {
+  .fab-icon-container {
     @apply flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-white shadow-lg;
   }
 
-  .fab-text,
-  .fab-label {
+  .fab-text {
     @apply text-[11px] font-bold tracking-wider uppercase opacity-90;
   }
 
-  /* Overlay System - Spring Animation */
+  /* 2. Overlay & Shell */
   .reading-immersive-overlay {
-    @apply pointer-events-none fixed inset-0 z-50 flex scale-105 flex-col opacity-0 transition-all duration-700;
+    @apply pointer-events-none fixed inset-0 z-[1100] flex scale-105 flex-col bg-white opacity-0 transition-all duration-700;
     transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
-    background: #ffffff;
   }
 
   .reading-immersive-overlay.active {
@@ -589,24 +721,21 @@ const { class: className } = Astro.props;
   }
 
   .reading-progress-track {
-    @apply fixed top-0 left-0 z-100 h-1 w-full bg-white/10 backdrop-blur-xs;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    @apply fixed top-0 left-0 z-[2000] h-1.5 w-full bg-black/10 backdrop-blur-md;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   .reading-progress-bar {
-    @apply relative h-full w-0 transition-all duration-200;
-    background: linear-gradient(90deg, #3b82f6 0%, #2563eb 50%, #8b5cf6 100%);
+    @apply relative h-full w-0 shadow-[0_0_20px_rgba(59,130,246,0.8)] transition-all duration-300;
+    background: linear-gradient(90deg, #3b82f6 0%, #6366f1 50%, #a855f7 100%);
     background-size: 200% 100%;
     animation: shimmer-progress 4s linear infinite;
-    box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
   }
 
   .reading-progress-bar::after {
     content: "";
-    @apply absolute top-0 right-0 h-full w-2 blur-[2px];
-    background: white;
+    @apply absolute top-0 right-0 h-full w-2 bg-white opacity-90 blur-[2px];
     box-shadow: 0 0 10px 2px white;
-    opacity: 0.9;
   }
 
   @keyframes shimmer-progress {
@@ -622,115 +751,32 @@ const { class: className } = Astro.props;
     @apply relative flex h-full flex-col;
   }
 
-  /* Themes */
-  [data-theme="default"] {
-    background: #ffffff;
-    color: #1a1a1a;
-  }
-  [data-theme="sepia"] {
-    background: #fdf6e3;
-    color: #586e75;
-  }
-  [data-theme="night"] {
-    background: #121212;
-    color: #b0b0b0;
-  }
-  [data-theme="cream"] {
-    background: #fffdfa;
-    color: #433422;
-  }
-
-  /* Reading Ruler */
-  .reading-ruler {
-    @apply pointer-events-none fixed left-0 z-40 hidden w-full border-b border-neutral-900/10 shadow-[0_1px_3px_rgba(0,0,0,0.05)];
-    height: 1.5rem;
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.02));
-  }
-  .reading-ruler.active {
-    @apply block;
-  }
-
-  /* AI Sparkle Button */
-  .ai-btn {
-    @apply relative overflow-hidden;
-  }
-  .ai-glow {
-    @apply absolute inset-0 -z-10 rounded-full opacity-0 transition-opacity duration-500;
-    box-shadow: 0 0 15px 2px rgba(99, 102, 241, 0.4);
-  }
-  .ai-btn:hover .ai-glow {
-    @apply opacity-100;
-  }
-  .ai-btn.loading {
-    @apply scale-90 opacity-50;
-    animation: ai-scan 0.8s ease-in-out infinite alternate;
-  }
-
-  @keyframes ai-scan {
-    0% {
-      transform: scale(0.9);
-    }
-    100% {
-      transform: scale(1.05);
-      filter: hue-rotate(90deg);
-    }
-  }
-
-  .navbar-btn.active {
-    @apply bg-neutral-900 text-white;
-  }
-
-  [data-theme="slate"] {
-    background: #263238;
-    color: #eceff1;
-  }
-
-  [data-theme="sepia"] .prose-custom :global(strong) {
-    color: #859900;
-  }
-  [data-theme="night"] .prose-custom :global(strong) {
-    color: #ffffff;
-  }
-
-  /* Navbar */
+  /* 3. Toolbar & Navbar */
   .reading-navbar {
-    @apply flex items-center justify-between border-b border-black/5 px-8 py-5 backdrop-blur-3xl;
-    background: rgba(255, 255, 255, 0.7);
-  }
-
-  [data-theme="night"] .reading-navbar,
-  [data-theme="slate"] .reading-navbar {
-    background: rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.1);
+    @apply flex items-center justify-between border-b border-black/5 px-10 py-4 backdrop-blur-3xl;
+    background: rgba(255, 255, 255, 0.85);
   }
 
   .navbar-btn {
     @apply flex items-center gap-3 rounded-2xl p-2 px-5 text-sm font-bold transition-all hover:bg-black/5 active:scale-95;
   }
-
   .navbar-btn.active {
-    @apply bg-primary-600 text-white shadow-lg;
+    @apply bg-primary-600 text-white shadow-md;
   }
 
   .theme-selector {
     @apply flex items-center gap-4 rounded-2xl bg-black/5 p-2 px-4 shadow-inner;
   }
-
   .theme-dot {
     @apply h-6 w-6 cursor-pointer rounded-full border-4 border-transparent shadow-sm transition-all hover:scale-150 active:scale-95;
   }
-
-  .theme-dot:hover {
-    box-shadow: 0 0 15px currentColor;
-  }
-
   .theme-dot.active {
     @apply border-primary-600 scale-125;
   }
 
   .theme-dot.default {
     background: #ffffff;
-    border: 1px solid #ddd;
+    border-color: #eee;
   }
   .theme-dot.sepia {
     background: #fdf6e3;
@@ -745,186 +791,210 @@ const { class: className } = Astro.props;
     background: #121212;
   }
 
-  /* Viewport */
+  /* 4. Reading Viewport */
   .reading-viewport {
-    @apply relative flex-1 overflow-y-auto px-6 py-20 transition-all duration-300;
-    scroll-behavior: smooth;
+    @apply relative flex-1 overflow-y-auto scroll-smooth px-6 py-24 transition-all duration-300;
   }
 
   .reading-body {
-    @apply mx-auto transition-all duration-500;
+    @apply mx-auto max-w-4xl leading-relaxed transition-all duration-500;
+    font-size: 1.125rem;
   }
 
-  /* Fonts */
+  /* Professional Blog Content Typography Integration */
+  :global(.blog-content) {
+    @apply text-inherit antialiased;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: inherit; /* Controlled by settings */
+  }
+
+  :global(.blog-content h1),
+  :global(.blog-content h2),
+  :global(.blog-content h3),
+  :global(.blog-content h4) {
+    @apply font-bold tracking-tight text-slate-900 dark:text-white;
+    font-family: var(--font-heading);
+    line-height: 1.3;
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem !important;
+  }
+
+  :global(.blog-content h1) {
+    @apply mt-0 text-4xl lg:text-5xl;
+  }
+  :global(.blog-content h2) {
+    @apply text-3xl lg:text-4xl;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: 0.75rem;
+  }
+  :global(.blog-content h3) {
+    @apply text-2xl lg:text-3xl;
+  }
+
+  :global(.blog-content p) {
+    @apply mb-8 leading-relaxed opacity-90;
+  }
+  :global(.blog-content p:first-of-type) {
+    @apply mb-10 text-2xl font-medium text-slate-800 opacity-100 dark:text-slate-100;
+  }
+
+  :global(.blog-content ul),
+  :global(.blog-content ol) {
+    @apply mb-6 pl-8;
+  }
+  :global(.blog-content li) {
+    @apply mb-1 pl-3;
+  }
+  :global(.blog-content ul li) {
+    @apply list-disc;
+  }
+  :global(.blog-content ol li) {
+    @apply list-decimal;
+  }
+
+  :global(.blog-content blockquote) {
+    @apply border-primary-500 my-8 rounded-r-2xl border-l-4 bg-black/5 px-8 py-6 italic;
+    font-size: 1.25rem;
+  }
+
+  :global(.blog-content pre) {
+    @apply mt-0 mb-8 overflow-x-auto rounded-2xl bg-neutral-900 p-6 text-sm text-neutral-200 shadow-xl;
+  }
+
+  :global(.blog-content img) {
+    @apply my-10 h-auto w-full rounded-2xl shadow-2xl;
+  }
+
   .reading-body[data-font="serif"] {
     font-family: "Georgia", "Merriweather", serif;
-    font-weight: 300;
   }
   .reading-body[data-font="mono"] {
     font-family: "JetBrains Mono", "Fira Code", monospace;
   }
   .reading-body[data-font="sans"] {
-    font-family: "Outfit", "Inter", system-ui, sans-serif;
+    font-family: "Outfit", "Inter", sans-serif;
   }
 
-  /* Focus Mask */
+  /* Tools: Focus Mask & Ruler */
   .focus-mask {
     @apply pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-500;
   }
   .focus-mask.active {
     @apply opacity-100;
   }
-
   .mask-window {
-    @apply absolute right-0 left-0 h-24 transition-all duration-150;
-    box-shadow: 0 0 0 100vh rgba(0, 0, 0, 0.8);
+    @apply absolute inset-x-0 h-24 shadow-[0_0_0_100vh_rgba(0,0,0,0.8)] transition-all duration-150;
   }
 
-  [data-theme="night"] .mask-window {
-    box-shadow: 0 0 0 100vh rgba(0, 0, 0, 0.95);
+  .reading-ruler {
+    @apply pointer-events-none fixed left-0 z-40 hidden h-6 w-full border-b border-neutral-900/10 bg-gradient-to-b from-transparent to-black/5 shadow-sm;
+  }
+  .reading-ruler.active {
+    @apply block;
   }
 
-  /* Status Bar */
+  /* 5. Status Footer */
   .reading-status-bar {
     @apply flex items-center justify-between border-t border-black/5 px-8 py-4 backdrop-blur-3xl;
     background: rgba(255, 255, 255, 0.7);
-  }
-
-  [data-theme="night"] .reading-status-bar,
-  [data-theme="slate"] .reading-status-bar {
-    background: rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.1);
   }
 
   .status-pill {
     @apply flex items-center rounded-xl bg-black/5 px-5 py-2 text-[10px] font-bold tracking-widest uppercase opacity-80;
   }
 
-  .progress-percentage {
-    @apply text-xl font-black tracking-tight;
-    font-family: "Outfit", sans-serif;
-  }
-
-  /* Settings Drawer - Bouncy Slide */
+  /* 6. Settings Drawer */
   .settings-drawer {
-    @apply fixed top-0 right-0 bottom-0 z-100 w-85 translate-x-full bg-white/90 shadow-2xl backdrop-blur-2xl transition-transform duration-500;
-    transition-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    @apply shadow-4xl fixed top-0 right-0 bottom-0 z-101 w-80 translate-x-full border-l border-black/5 bg-white transition-transform duration-500;
   }
-
   .settings-drawer.active {
     @apply translate-x-0;
   }
 
-  [data-theme="night"] .settings-drawer,
-  [data-theme="slate"] .settings-drawer {
-    @apply bg-neutral-900/90 text-white;
-  }
-
   .drawer-header {
-    @apply flex items-center justify-between border-b border-black/5 p-8;
+    @apply flex items-center justify-between border-b border-black/5 p-6;
   }
-
   .drawer-header h3 {
-    @apply text-xs font-black tracking-[0.2em] uppercase opacity-40;
+    @apply text-sm font-black tracking-tight uppercase;
   }
 
   .drawer-content {
-    @apply h-full overflow-y-auto p-8 pb-32;
+    @apply space-y-8 p-6;
   }
 
-  .settings-group {
-    @apply mb-10;
-  }
   .settings-group label {
-    @apply mb-4 block text-[10px] font-black tracking-widest uppercase opacity-60;
+    @apply mb-3 block text-[10px] font-bold tracking-widest uppercase opacity-40;
   }
 
   .font-grid {
-    @apply grid grid-cols-3 gap-3;
+    @apply grid grid-cols-3 gap-2;
   }
   .font-btn {
-    @apply rounded-2xl bg-black/5 py-3 text-xs font-bold transition-all hover:bg-black/10;
+    @apply rounded-xl border border-black/5 py-3 text-sm font-bold transition-all hover:bg-black/5;
   }
   .font-btn.active {
-    @apply bg-neutral-900 text-white shadow-xl;
-  }
-
-  [data-theme="night"] .font-btn {
-    @apply bg-white/5;
-  }
-  [data-theme="night"] .font-btn.active {
-    @apply bg-white text-black;
-  }
-
-  .value-tag {
-    @apply bg-primary-100 text-primary-700 rounded-full px-3 py-1 text-[10px] font-black uppercase;
+    @apply border-primary-600 bg-primary-50 text-primary-600;
   }
 
   .range-input {
-    @apply h-1.5 w-full appearance-none rounded-full bg-black/10 outline-none;
+    @apply h-1.5 w-full cursor-pointer appearance-none rounded-full bg-black/5;
   }
   .range-input::-webkit-slider-thumb {
-    @apply bg-primary-600 h-6 w-6 cursor-pointer appearance-none rounded-full border-4 border-white shadow-lg transition-transform hover:scale-125;
+    @apply bg-primary-600 h-4 w-4 appearance-none rounded-full shadow-lg;
   }
 
-  .divider {
-    @apply my-10 h-px w-full bg-black/5;
+  .value-tag {
+    @apply rounded-lg bg-black/5 px-2 py-1 text-[10px] font-bold;
   }
 
-  .extra-actions {
-    @apply grid grid-cols-2 gap-4;
-  }
   .action-tile {
-    @apply flex flex-col items-center gap-3 rounded-2xl border border-black/5 p-5 transition-all hover:border-black/10 hover:bg-black/5;
+    @apply flex w-full items-center gap-4 rounded-2xl border border-black/5 p-4 text-sm font-bold transition-all hover:border-black/10 hover:bg-black/5;
   }
 
-  /* Custom Prose */
-  .prose-custom {
-    @apply leading-relaxed antialiased;
+  /* Themes Overrides */
+  [data-theme="night"] {
+    background: #121212;
+    color: #b0b0b0;
   }
-  .prose-custom :global(h1) {
-    @apply mb-10 text-5xl leading-tight font-black tracking-tight;
+  [data-theme="sepia"] {
+    background: #fdf6e3;
+    color: #586e75;
   }
-  .prose-custom :global(h2) {
-    @apply mt-16 mb-8 text-4xl font-bold tracking-tight;
+  [data-theme="slate"] {
+    background: #263238;
+    color: #eceff1;
   }
-  .prose-custom :global(p) {
-    @apply mb-8;
-  }
-  .prose-custom :global(img) {
-    @apply my-16 h-auto max-w-full rounded-[2.5rem] shadow-2xl;
-  }
-  .prose-custom :global(blockquote) {
-    @apply border-primary-500 my-16 border-l-8 pl-10 text-2xl font-light italic opacity-90;
-  }
-  .prose-custom :global(pre) {
-    @apply my-10 overflow-x-auto rounded-3xl bg-neutral-900 p-8 text-white;
+  [data-theme="cream"] {
+    background: #fffdfa;
+    color: #433422;
   }
 
-  @media (max-width: 640px) {
-    .reading-mode-fab {
-      @apply right-6 bottom-6 pr-4;
+  [data-theme="night"] .reading-navbar,
+  [data-theme="night"] .reading-status-bar,
+  [data-theme="slate"] .reading-navbar,
+  [data-theme="slate"] .reading-status-bar {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  [data-theme="night"] .mask-window {
+    shadow: [0_0_0_100vh_rgba(0, 0, 0, 0.9)];
+  }
+
+  /* AI Pulse */
+  .ai-btn.loading {
+    animation: ai-scan 1s infinite alternate;
+    filter: hue-rotate(45deg);
+  }
+  @keyframes ai-scan {
+    from {
+      opacity: 0.7;
+      transform: scale(0.95);
     }
-    .fab-text {
-      @apply hidden;
-    }
-    .reading-navbar {
-      @apply px-4 py-4;
-    }
-    .navbar-btn span {
-      @apply hidden;
-    }
-    .theme-selector {
-      @apply gap-2 p-1.5;
-    }
-    .theme-dot {
-      @apply h-5 w-5;
-    }
-    .settings-drawer {
-      @apply w-full;
-    }
-    .prose-custom :global(h1) {
-      @apply text-3xl;
+    to {
+      opacity: 1;
+      transform: scale(1.05);
     }
   }
 </style>

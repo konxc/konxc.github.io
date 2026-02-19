@@ -1,0 +1,53 @@
+---
+import CopyPageMenu from "./CopyPageMenu.astro";
+import DarkModeToggle from "./DarkModeToggle.astro";
+import TableOfContents from "./TableOfContents.astro";
+import ArticleStats from "./ArticleStats.astro";
+import ReadingProgress from "./ReadingProgress.astro";
+import { type CollectionEntry } from "astro:content";
+
+export interface Props {
+    post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+---
+
+<div class="sticky-sidebar space-y-4">
+    <ReadingProgress />
+    <div class="flex items-center justify-between gap-2">
+        <CopyPageMenu />
+        <DarkModeToggle />
+    </div>
+
+    <!-- Table of Contents -->
+    <TableOfContents />
+
+    <!-- Article Stats -->
+    <ArticleStats
+        readingTime={post.data.readingTime || 5}
+        wordCount={0}
+        views={0}
+        publishDate={post.data.publishDate}
+    />
+</div>
+
+<style>
+    @reference "@/styles/global.css";
+
+    .sticky-sidebar {
+        @apply sticky top-24;
+    }
+
+    /* Optional: Custom scrollbar for sidebar if content is long */
+    .sticky-sidebar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .sticky-sidebar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .sticky-sidebar::-webkit-scrollbar-thumb {
+        background: #e5e7eb;
+        border-radius: 2px;
+    }
+</style>

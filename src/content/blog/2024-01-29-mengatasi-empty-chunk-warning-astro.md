@@ -3,21 +3,11 @@ title: "Mengatasi Warning Build di Astro: Dari OCD Developer Hingga Solusi Prakt
 description: "Kisah developer OCD yang tidak tahan melihat warning build, dan solusi praktis untuk empty chunk dan SVG warning di Astro"
 publishDate: 2024-01-29
 author: "Sandikodev"
-category: "tutorial"
-tags:
-  [
-    "astro",
-    "javascript",
-    "warning",
-    "frontend",
-    "web-development",
-    "optimization",
-    "svg",
-    "build",
-  ]
+category: "frontend"
+tags: ["astro-build", "optimization-tips", "build-warnings", "frontend-performance"]
 featured: true
 readingTime: 7
-image: "/blog/astro-warnings-fix.jpg"
+coverImage: "/images/blog/astro-build-final.png"
 ---
 
 # Mengatasi Warning Build di Astro: Dari OCD Developer Hingga Solusi Praktis

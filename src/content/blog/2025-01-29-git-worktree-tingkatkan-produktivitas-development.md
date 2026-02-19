@@ -3,40 +3,67 @@ title: "Git Worktree: Tingkatkan Produktivitas Development Tanpa Mengganggu Work
 description: "Panduan praktis untuk developer yang ingin bekerja lebih efisien dengan multiple branch secara parallel tanpa kelelahan mental akibat switching branch berulang-ulang. Pelajari cara menggunakan Git Worktree untuk membuat standar prosedur kerja yang jelas dan profesional."
 publishDate: 2025-01-29
 author: "Tim Koneksi"
-category: "tutorial"
-tags:
-  [
-    "git",
-    "development-tools",
-    "productivity",
-    "best-practices",
-    "workflow",
-    "version-control",
-  ]
+category: "career"
+tags: ["developer-productivity", "git-mastery", "workflow-efficiency", "professional-coding"]
 featured: true
 readingTime: 12
-coverImage: "/blog/git-worktree-hero.jpg"
+coverImage: "/images/blog/git-worktree.png"
 interactiveDemos:
-  [
-    {
-      id: "worktree-vs-checkout",
-      type: "visual",
-      title: "Perbandingan Git Checkout vs Git Worktree",
-      description: "Visualisasi interaktif perbedaan antara git checkout tradisional dengan git worktree",
-      icon: "📊",
-      featured: true,
-      metadata: { tags: ["comparison", "visualization"] },
-    },
-    {
-      id: "worktree-commands",
-      type: "code",
-      title: "Git Worktree Commands Cheat Sheet",
-      description: "Kumpulan perintah Git Worktree yang sering digunakan dalam development",
-      icon: "💻",
-      featured: true,
-      metadata: { tags: ["commands", "cheatsheet"], language: "bash" },
-    },
-  ]
+  - id: "worktree-vs-checkout"
+    type: "visual"
+    title: "Perbandingan Git Checkout vs Git Worktree"
+    description: "Visualisasi interaktif perbedaan antara git checkout tradisional dengan git worktree"
+    content: |
+      # Perbandingan Efisiensi Workflow
+      - Zero Switching Overhead: Pindah antar fitur secepat pindah folder aplikasi.
+      - Better Context Retention: Tidak perlu mengingat 'apa yang tadi sedang saya kerjakan?' karena state working directory tetap terjaga.
+      - Parallel Tasks: Memungkinkan menjalankan build/test pada satu branch sambil tetap coding di branch lain.
+      - Clean Stash: Tidak perlu lagi menggunakan 'git stash' berulang kali yang berisiko konflik saat pop.
+    featured: true
+  - id: "worktree-commands"
+    type: "code"
+    title: "Git Worktree Commands Cheat Sheet"
+    description: "Kumpulan perintah Git Worktree yang sering digunakan dalam development"
+    language: "bash"
+    content: |
+      # ============================================
+      # Git Worktree Commands Cheat Sheet
+      # ============================================
+
+      # 1. CREATE WORKTREE
+      # Create new branch + worktree
+      git worktree add <path> -b <branch-name>
+
+      # Create worktree from existing branch
+      git worktree add <path> <existing-branch>
+
+      # Example:
+      git worktree add ../learning-feature -b feature/new-login
+      git worktree add ../learning-hotfix hotfix/critical-bug
+
+
+      # 2. LIST WORKTREES
+      # Show all active worktrees
+      git worktree list
+
+      # Show detailed info
+      git worktree list --porcelain
+
+
+      # 3. REMOVE WORKTREE
+      # Remove worktree (safely)
+      git worktree remove <path>
+
+      # Force remove
+      git worktree remove --force <path>
+
+      # Clean up deleted worktrees
+      git worktree prune
+
+      # 4. BEST PRACTICES
+      # Find worktree by branch name
+      git worktree list | grep feature/login
+    featured: true
 ---
 
 # Git Worktree: Tingkatkan Produktivitas Development Tanpa Mengganggu Workflow
@@ -137,32 +164,6 @@ git checkout main        # Kembali lagi, kehilangan context
 - Tidak ada context loss - semua tersedia bersamaan
 
 <!-- INTERACTIVE_DEMO:worktree-vs-checkout -->
-
-```visual
-# Comparison: Git Checkout vs Git Worktree
-
-## Scenario: Work on 3 features simultaneously
-
-### Traditional Way (git checkout)
-Time spent:
-- Stash changes: 5 seconds
-- Checkout branch: 10 seconds
-- Context reload: 30 seconds
-- Work on feature: varies
-- Checkout back: 10 seconds
-- Stash pop: 5 seconds
-Total overhead per switch: ~60 seconds
-
-If switch 10 times/day: 10 minutes lost
-
-### Worktree Way
-Setup once:
-- Create worktree: 2 seconds
-- Done. All branches available simultaneously.
-
-Zero switching overhead. Just open different folders.
-```
-
 <!-- END_INTERACTIVE_DEMO -->
 
 ## Cara Menggunakan Git Worktree
@@ -223,64 +224,6 @@ cd ../learning-feature
 ```
 
 <!-- INTERACTIVE_DEMO:worktree-commands -->
-
-```bash
-# ============================================
-# Git Worktree Commands Cheat Sheet
-# ============================================
-
-# 1. CREATE WORKTREE
-# Create new branch + worktree
-git worktree add <path> -b <branch-name>
-
-# Create worktree from existing branch
-git worktree add <path> <existing-branch>
-
-# Example:
-git worktree add ../learning-feature -b feature/new-login
-git worktree add ../learning-hotfix hotfix/critical-bug
-
-
-# 2. LIST WORKTREES
-# Show all active worktrees
-git worktree list
-
-# Show detailed info
-git worktree list --porcelain
-
-
-# 3. REMOVE WORKTREE
-# Remove worktree (safely)
-git worktree remove <path>
-
-# Force remove
-git worktree remove --force <path>
-
-# Clean up deleted worktrees
-git worktree prune
-
-
-# 4. MOVE WORKTREE
-# Move worktree to new location
-git worktree move <path> <new-path>
-
-
-# 5. LOCK/UNLOCK WORKTREE
-# Lock worktree (useful for network drives)
-git worktree lock <path>
-
-# Unlock worktree
-git worktree unlock <path>
-
-
-# 6. BEST PRACTICES
-# Check which worktrees use which branches
-git worktree list | grep main
-
-# Find worktree by branch name
-git worktree list | grep feature/login
-```
-
 <!-- END_INTERACTIVE_DEMO -->
 
 ## Use Cases Praktis untuk Tim Koneksi

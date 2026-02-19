@@ -1,4 +1,8 @@
 ---
+import { Code } from "astro:components";
+import CssPatternTest from "./demos/CssPatternTest.astro";
+import ColorPaletteGenerator from "./demos/ColorPaletteGenerator.astro";
+
 export interface Props {
   class?: string;
   demos?: Array<{
@@ -9,18 +13,22 @@ export interface Props {
     content: string;
     language?: string;
     interactive?: boolean;
+    icon?: string;
+    featured?: boolean;
+    metadata?: Record<string, any>;
   }>;
 }
 
-const {
-  class: className,
-  demos = [
-    {
-      id: "tailwind-config",
-      title: "Tailwind CSS Config Comparison",
-      description: "Lihat perbedaan antara Tailwind v3 dan v4 configuration",
-      type: "code",
-      content: `// Tailwind v3 (Config File)
+const { class: className, demos: propDemos = [] } = Astro.props;
+
+// Default demos to show if no specific demos are provided for the article
+const defaultDemos = [
+  {
+    id: "tailwind-config",
+    title: "Tailwind CSS Config Comparison",
+    description: "Lihat perbedaan antara Tailwind v3 dan v4 configuration",
+    type: "code",
+    content: `// Tailwind v3 (Config File)
 module.exports = {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
@@ -42,14 +50,17 @@ module.exports = {
   --color-primary-500: #3b82f6;
   --color-primary-900: #1e3a8a;
 }`,
-      language: "javascript",
-    },
-    {
-      id: "path-aliases",
-      title: "Path Aliases Demo",
-      description: "Coba implementasi path aliases di project Astro Anda",
-      type: "interactive",
-      content: `// tsconfig.json
+    language: "javascript",
+    icon: "💻",
+    featured: true,
+    metadata: { tags: ["tailwind", "config"] },
+  },
+  {
+    id: "path-aliases",
+    title: "Path Aliases Demo",
+    description: "Coba implementasi path aliases di project Astro Anda",
+    type: "interactive",
+    content: `// tsconfig.json
 {
   "compilerOptions": {
     "baseUrl": ".",
@@ -64,18 +75,30 @@ module.exports = {
 // Usage in components
 import MainLayout from '@layouts/MainLayout.astro';
 import Card from '@components/ui/Card.astro';`,
-      language: "json",
-    },
-    {
-      id: "color-palette",
-      title: "Color Palette Generator",
-      description: "Generate color palette untuk design system Anda",
-      type: "visual",
-      content: "color-palette-generator",
-      interactive: true,
-    },
-  ],
-} = Astro.props;
+    language: "json",
+    icon: "📁",
+    featured: false,
+    metadata: { tags: ["astro", "tsconfig"] },
+  },
+  {
+    id: "color-palette",
+    title: "Color Palette Generator",
+    description: "Generate color palette untuk design system Anda",
+    type: "visual",
+    content: "color-palette-generator",
+    interactive: true,
+    icon: "🎨",
+    featured: false,
+    metadata: { tags: ["design", "ui"] },
+  },
+];
+
+// Use article-specific demos if provided, otherwise fallback to defaults
+const demos = propDemos && propDemos.length > 0 ? propDemos : defaultDemos;
+
+// If we don't want to show any demos on certain pages, we could pass an empty array
+// For now, if both are empty, we won't render the section
+if (demos.length === 0) return null;
 ---
 
 <div class={`interactive-demos-tabbed ${className || ""}`}>
@@ -102,15 +125,13 @@ import Card from '@components/ui/Card.astro';`,
             title={demo.description}
           >
             <span class="tab-icon">
-              {demo.type === "code" && "💻"}
-              {demo.type === "visual" && "🎨"}
-              {demo.type === "interactive" && "🎮"}
+              {demo.type === "code"
+                ? "💻"
+                : demo.type === "visual"
+                  ? "🎨"
+                  : "🎮"}
             </span>
-            <span class="tab-label">
-              {demo.type === "code" && "Code"}
-              {demo.type === "visual" && "Visual"}
-              {demo.type === "interactive" && "Interactive"}
-            </span>
+            <span class="tab-label">{demo.title}</span>
           </button>
         ))
       }
@@ -159,115 +180,61 @@ import Card from '@components/ui/Card.astro';`,
                     Copy
                   </button>
                 </div>
-                <pre class="code-block">
-                  <code set:html={demo.content} />
-                </pre>
+                <div class="code-block">
+                  <Code
+                    code={demo.content}
+                    lang={(demo.language as any) || "javascript"}
+                    theme="github-dark"
+                  />
+                </div>
               </div>
             )}
 
             {demo.type === "visual" && (
               <div class="visual-demo">
-                {demo.id === "color-palette" && (
-                  <div class="color-palette-generator">
-                    <div class="color-inputs">
-                      <div class="color-input-group">
-                        <label for="primary-color">Primary Color</label>
-                        <input
-                          type="color"
-                          id="primary-color"
-                          value="#3b82f6"
-                          class="color-picker"
-                        />
-                      </div>
-                      <div class="color-input-group">
-                        <label for="secondary-color">Secondary Color</label>
-                        <input
-                          type="color"
-                          id="secondary-color"
-                          value="#14b8a6"
-                          class="color-picker"
-                        />
-                      </div>
+                {demo.id === "color-palette" ? (
+                  <ColorPaletteGenerator />
+                ) : demo.id === "css-pattern-test" ? (
+                  <CssPatternTest />
+                ) : demo.content ? (
+                  <div class="visual-content-preview prose prose-neutral max-w-none">
+                    <div class="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm shadow-neutral-200/50">
+                      {demo.content
+                        .split("\n")
+                        .filter((l) => l.trim())
+                        .map((line) =>
+                          line.startsWith("#") ? (
+                            <h5 class="mb-4 text-lg font-bold text-neutral-800">
+                              {line.replace(/^#+\s*/, "")}
+                            </h5>
+                          ) : line.startsWith("-") || line.startsWith("*") ? (
+                            <li class="mb-2 ml-4 text-neutral-600">
+                              {line.replace(/^[-*]\s*/, "")}
+                            </li>
+                          ) : (
+                            <p class="mb-3 leading-relaxed text-neutral-600">
+                              {line}
+                            </p>
+                          ),
+                        )}
                     </div>
-
-                    <div class="color-palette-output">
-                      <div class="palette-row">
-                        <div class="color-swatch" data-shade="50">
-                          <div class="color-preview" />
-                          <span class="color-name">50</span>
-                          <span class="color-value">#eff6ff</span>
-                        </div>
-                        <div class="color-swatch" data-shade="100">
-                          <div class="color-preview" />
-                          <span class="color-name">100</span>
-                          <span class="color-value">#dbeafe</span>
-                        </div>
-                        <div class="color-swatch" data-shade="200">
-                          <div class="color-preview" />
-                          <span class="color-name">200</span>
-                          <span class="color-value">#bfdbfe</span>
-                        </div>
-                        <div class="color-swatch" data-shade="300">
-                          <div class="color-preview" />
-                          <span class="color-name">300</span>
-                          <span class="color-value">#93c5fd</span>
-                        </div>
-                        <div class="color-swatch" data-shade="400">
-                          <div class="color-preview" />
-                          <span class="color-name">400</span>
-                          <span class="color-value">#60a5fa</span>
-                        </div>
+                  </div>
+                ) : (
+                  <div class="generic-visual-fallback">
+                    <div class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-neutral-300 bg-neutral-100/50 p-12 text-center transition-all hover:bg-neutral-100">
+                      <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-white text-4xl shadow-lg ring-8 ring-neutral-50">
+                        {demo.icon || "🎨"}
                       </div>
-                      <div class="palette-row">
-                        <div class="color-swatch" data-shade="500">
-                          <div class="color-preview" />
-                          <span class="color-name">500</span>
-                          <span class="color-value">#3b82f6</span>
-                        </div>
-                        <div class="color-swatch" data-shade="600">
-                          <div class="color-preview" />
-                          <span class="color-name">600</span>
-                          <span class="color-value">#2563eb</span>
-                        </div>
-                        <div class="color-swatch" data-shade="700">
-                          <div class="color-preview" />
-                          <span class="color-name">700</span>
-                          <span class="color-value">#1d4ed8</span>
-                        </div>
-                        <div class="color-swatch" data-shade="800">
-                          <div class="color-preview" />
-                          <span class="color-name">800</span>
-                          <span class="color-value">#1e40af</span>
-                        </div>
-                        <div class="color-swatch" data-shade="900">
-                          <div class="color-preview" />
-                          <span class="color-name">900</span>
-                          <span class="color-value">#1e3a8a</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="code-output">
-                      <h5>Generated CSS Variables:</h5>
-                      <pre class="generated-code">
-                        <code id="generated-css">{`:root {
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
-}`}</code>
-                      </pre>
-                      <button
-                        class="copy-generated-btn"
-                        data-target="generated-css"
-                      >
-                        Copy CSS Variables
+                      <h5 class="mb-3 text-xl font-bold text-neutral-800">
+                        Visualisasi {demo.title}
+                      </h5>
+                      <p class="max-w-md leading-relaxed text-neutral-600">
+                        Visualisasi interaktif sedang disiapkan khusus untuk
+                        topik ini. Silakan baca langkah-langkah di artikel untuk
+                        mendapatkan wawasan lebih lanjut.
+                      </p>
+                      <button class="bg-primary-500 hover:bg-primary-600 mt-8 rounded-full px-6 py-2 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg">
+                        Lihat Panduan Visual
                       </button>
                     </div>
                   </div>
@@ -335,33 +302,39 @@ import Card from '@components/ui/Card.astro';`,
 
 <script>
   class InteractiveDemosTabbed {
+    private container: HTMLElement | null = null;
     private tabs: NodeListOf<HTMLButtonElement> | null = null;
     private panels: NodeListOf<HTMLElement> | null = null;
     private activeTab: string = "";
-    // Reserved for future palette caching if needed
-    // private colorPalette: any = null;
 
-    constructor() {
+    constructor(container: HTMLElement) {
+      this.container = container;
       this.initializeTabs();
       this.setupEventListeners();
       this.initializeColorPalette();
     }
 
     private initializeTabs(): void {
-      this.tabs = document.querySelectorAll(".tab-badge");
-      this.panels = document.querySelectorAll(".tab-panel");
+      if (!this.container) return;
+      this.tabs = this.container.querySelectorAll(".tab-badge");
+      this.panels = this.container.querySelectorAll(".tab-panel");
 
       console.log("Found tabs:", this.tabs.length);
       console.log("Found panels:", this.panels.length);
 
-      // Set initial active tab
-      if (this.tabs.length > 0) {
+      // Set initial active tab from URL hash or default
+      const hash = window.location.hash.replace("#demo-", "");
+      if (hash && this.container?.querySelector(`[data-tab="${hash}"]`)) {
+        this.activeTab = hash;
+        this.switchTab(hash, false); // Switch without smooth scroll to prevent jumpy load
+      } else if (this.tabs && this.tabs.length > 0) {
         this.activeTab = this.tabs[0].getAttribute("data-tab") || "";
-        console.log("Initial active tab:", this.activeTab);
       }
     }
 
     private setupEventListeners(): void {
+      if (!this.container) return;
+
       // Tab navigation
       this.tabs?.forEach((tab) => {
         tab.addEventListener("click", () => {
@@ -373,7 +346,7 @@ import Card from '@components/ui/Card.astro';`,
       });
 
       // Copy code buttons
-      document.querySelectorAll(".copy-code-btn").forEach((btn) => {
+      this.container.querySelectorAll(".copy-code-btn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const target = e.target as HTMLElement;
           const button = target.closest(".copy-code-btn") as HTMLButtonElement;
@@ -386,7 +359,7 @@ import Card from '@components/ui/Card.astro';`,
       });
 
       // Copy generated CSS
-      document.querySelectorAll(".copy-generated-btn").forEach((btn) => {
+      this.container.querySelectorAll(".copy-generated-btn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const target = e.target as HTMLElement;
           const button = target.closest(
@@ -402,7 +375,7 @@ import Card from '@components/ui/Card.astro';`,
       });
 
       // Interactive buttons
-      document.querySelectorAll(".interactive-btn").forEach((btn) => {
+      this.container.querySelectorAll(".interactive-btn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const target = e.target as HTMLElement;
           const button = target.closest(
@@ -414,7 +387,7 @@ import Card from '@components/ui/Card.astro';`,
       });
 
       // Run demo buttons
-      document.querySelectorAll(".run-demo").forEach((btn) => {
+      this.container.querySelectorAll(".run-demo").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const target = e.target as HTMLElement;
           const button = target.closest(".run-demo") as HTMLButtonElement;
@@ -424,7 +397,7 @@ import Card from '@components/ui/Card.astro';`,
       });
 
       // Share demo buttons
-      document.querySelectorAll(".share-demo").forEach((btn) => {
+      this.container.querySelectorAll(".share-demo").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const target = e.target as HTMLElement;
           const button = target.closest(".share-demo") as HTMLButtonElement;
@@ -434,20 +407,14 @@ import Card from '@components/ui/Card.astro';`,
       });
     }
 
-    private switchTab(tabId: string): void {
-      console.log("Switching to tab:", tabId);
+    private switchTab(tabId: string, updateHash: boolean = true): void {
+      if (!this.container) return;
 
       // Update active tab button
       this.tabs?.forEach((tab) => {
         const isActive = tab.getAttribute("data-tab") === tabId;
         tab.classList.toggle("active", isActive);
         tab.setAttribute("aria-selected", isActive.toString());
-        console.log(
-          "Tab button updated:",
-          tab.getAttribute("data-tab"),
-          "active:",
-          isActive,
-        );
       });
 
       // Update active panel
@@ -455,15 +422,18 @@ import Card from '@components/ui/Card.astro';`,
         const isActive = panel.getAttribute("data-tab") === tabId;
         panel.classList.toggle("active", isActive);
         panel.setAttribute("aria-hidden", (!isActive).toString());
-        console.log(
-          "Panel updated:",
-          panel.getAttribute("data-tab"),
-          "active:",
-          isActive,
-        );
       });
 
       this.activeTab = tabId;
+
+      // Update URL hash for sharing
+      if (updateHash) {
+        const newHash = `#demo-${tabId}`;
+        if (window.location.hash !== newHash) {
+          history.replaceState(null, "", newHash);
+        }
+      }
+
       this.trackTabEvent("tab_switch", tabId);
     }
 
@@ -544,7 +514,10 @@ import Card from '@components/ui/Card.astro';`,
 
     private adjustColor(color: string, amount: number): string {
       // Very small utility to adjust a hex color brightness
-      if (!color.startsWith("#") || (color.length !== 7 && color.length !== 4)) {
+      if (
+        !color.startsWith("#") ||
+        (color.length !== 7 && color.length !== 4)
+      ) {
         return color;
       }
 
@@ -574,8 +547,7 @@ import Card from '@components/ui/Card.astro';`,
       g = adjust(g);
       b = adjust(b);
 
-      const toHex = (channel: number) =>
-        channel.toString(16).padStart(2, "0");
+      const toHex = (channel: number) => channel.toString(16).padStart(2, "0");
 
       return `#${toHex(Math.round(r))}${toHex(Math.round(g))}${toHex(
         Math.round(b),
@@ -694,7 +666,10 @@ import Card from '@components/ui/Card.astro';`,
 
   // Initialize interactive demos when DOM is ready
   function initInteractiveDemosTabbed(): void {
-    new InteractiveDemosTabbed();
+    const containers = document.querySelectorAll(".interactive-demos-tabbed");
+    containers.forEach((container) => {
+      new InteractiveDemosTabbed(container as HTMLElement);
+    });
   }
 
   if (document.readyState === "loading") {
@@ -707,16 +682,17 @@ import Card from '@components/ui/Card.astro';`,
 <style>
   @reference "@/styles/global.css";
   .interactive-demos-tabbed {
-    @apply rounded-2xl border border-neutral-100 bg-white p-6 shadow-lg;
+    @apply mb-12 rounded-3xl border border-neutral-200 bg-neutral-50/30 p-8 shadow-2xl shadow-neutral-900/5;
+    backdrop-filter: blur(8px);
   }
 
   /* Header and Tabs Container */
   .header-tabs-container {
-    @apply mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between;
+    @apply mb-6 flex flex-col gap-4 overflow-hidden lg:flex-row lg:items-center lg:justify-between;
   }
 
   .demos-header {
-    @apply shrink-0;
+    @apply min-w-0 shrink-0 pr-4;
   }
 
   .demos-title {
@@ -729,11 +705,19 @@ import Card from '@components/ui/Card.astro';`,
 
   /* Tab Navigation */
   .tabs-navigation {
-    @apply flex flex-wrap gap-2 lg:shrink-0;
+    @apply flex min-w-0 items-center gap-2 overflow-x-auto pb-4 lg:pb-0;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(to right, black 90%, transparent 100%);
+  }
+
+  .tabs-navigation::-webkit-scrollbar {
+    display: none;
   }
 
   .tab-badge {
-    @apply inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-2 text-sm font-medium text-neutral-600 transition-all duration-200;
+    @apply inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-neutral-100 px-4 py-2 text-sm font-medium whitespace-nowrap text-neutral-600 transition-all duration-200;
     @apply focus:ring-primary-500 hover:bg-neutral-200 hover:text-neutral-700 focus:ring-2 focus:ring-offset-2 focus:outline-none;
   }
 
@@ -783,7 +767,7 @@ import Card from '@components/ui/Card.astro';`,
   }
 
   .tab-panel-content {
-    @apply mb-6;
+    @apply mb-6 overflow-hidden rounded-xl;
   }
 
   /* Code Demo Styles */
@@ -808,7 +792,33 @@ import Card from '@components/ui/Card.astro';`,
   }
 
   .code-block {
-    @apply max-h-96 overflow-x-auto p-4 text-sm text-neutral-100;
+    @apply relative overflow-hidden rounded-b-lg bg-neutral-900;
+  }
+
+  .code-block :global(pre) {
+    @apply !m-0 !block !bg-transparent !p-4;
+    max-height: 400px !important;
+    overflow: auto !important;
+  }
+
+  /* Enhanced Scrollbar Visibility */
+  .code-block :global(pre)::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .code-block :global(pre)::-webkit-scrollbar-track {
+    @apply bg-white/5;
+  }
+
+  .code-block :global(pre)::-webkit-scrollbar-thumb {
+    @apply hover:bg-primary-500 rounded-full border-2 border-transparent bg-neutral-600 bg-clip-padding transition-colors;
+  }
+
+  /* Ensure scrollbar shows on all platforms */
+  .code-block :global(pre) {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
   }
 
   .code-block code {
@@ -820,60 +830,8 @@ import Card from '@components/ui/Card.astro';`,
     @apply space-y-6;
   }
 
-  .color-palette-generator {
-    @apply space-y-6;
-  }
-
-  .color-inputs {
-    @apply grid grid-cols-1 gap-4 md:grid-cols-2;
-  }
-
-  .color-input-group {
-    @apply space-y-2;
-  }
-
-  .color-input-group label {
-    @apply block text-sm font-medium text-neutral-700;
-  }
-
-  .color-picker {
-    @apply h-12 w-full cursor-pointer rounded-lg border border-neutral-300;
-  }
-
-  .color-palette-output {
-    @apply space-y-3;
-  }
-
-  .palette-row {
-    @apply flex gap-2;
-  }
-
-  .color-swatch {
-    @apply flex-1 text-center;
-  }
-
-  .color-preview {
-    @apply mb-2 h-16 w-full rounded-lg border border-neutral-300;
-  }
-
-  .color-name {
-    @apply block text-xs font-medium text-neutral-600;
-  }
-
-  .color-value {
-    @apply block font-mono text-xs text-neutral-500;
-  }
-
-  .code-output {
-    @apply mt-6 rounded-lg bg-neutral-50 p-4;
-  }
-
-  .code-output h5 {
-    @apply mb-2 text-sm font-medium text-neutral-700;
-  }
-
-  .generated-code {
-    @apply overflow-x-auto rounded bg-neutral-900 p-3 font-mono text-xs text-neutral-100;
+  .generated-code::-webkit-scrollbar-thumb {
+    @apply hover:bg-primary-500 rounded-full border-2 border-transparent bg-neutral-600 bg-clip-padding transition-colors;
   }
 
   .copy-generated-btn {
@@ -882,7 +840,7 @@ import Card from '@components/ui/Card.astro';`,
 
   /* Interactive Demo Styles */
   .interactive-demo {
-    @apply py-8 text-center;
+    @apply py-6 text-center;
   }
 
   .interactive-content {

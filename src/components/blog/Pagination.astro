@@ -1,0 +1,131 @@
+---
+interface Props {
+    page: any; // Astro's Page object
+}
+
+const { page } = Astro.props;
+const { url, currentPage, lastPage } = page;
+
+// Logic to show a limited number of page buttons
+const maxVisiblePages = 5;
+let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+let endPage = Math.min(lastPage, startPage + maxVisiblePages - 1);
+
+if (endPage - startPage + 1 < maxVisiblePages) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+}
+
+const pages = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, i) => startPage + i,
+);
+---
+
+{
+    lastPage > 1 && (
+        <nav
+            class="mt-12 flex items-center justify-center space-x-2"
+            aria-label="Pagination"
+        >
+            {/* Previous Page */}
+            <a
+                href={url.prev}
+                class={`hover:border-primary-500 hover:text-primary-600 dark:hover:border-primary-500 dark:hover:text-primary-400 flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-600 transition-all dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 ${
+                    !url.prev
+                        ? "pointer-events-none opacity-50"
+                        : "hover:shadow-md"
+                }`}
+                aria-label="Halaman sebelumnya"
+            >
+                <svg
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 19l-7-7 7-7"
+                    />
+                </svg>
+            </a>
+
+            {/* Page Numbers */}
+            <div class="hidden items-center space-x-2 sm:flex">
+                {startPage > 1 && (
+                    <>
+                        <a
+                            href="/blog"
+                            class="hover:border-primary-500 hover:text-primary-600 dark:hover:border-primary-500 flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-600 transition-all dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400"
+                        >
+                            1
+                        </a>
+                        {startPage > 2 && (
+                            <span class="text-neutral-400">...</span>
+                        )}
+                    </>
+                )}
+
+                {pages.map((p) => (
+                    <a
+                        href={p === 1 ? "/blog" : `/blog/${p}`}
+                        class={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all ${
+                            currentPage === p
+                                ? "border-primary-500 bg-primary-500 shadow-primary-500/30 text-white shadow-lg"
+                                : "hover:border-primary-500 hover:text-primary-600 dark:hover:border-primary-500 border-neutral-200 bg-white text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400"
+                        }`}
+                        aria-current={currentPage === p ? "page" : undefined}
+                    >
+                        {p}
+                    </a>
+                ))}
+
+                {endPage < lastPage && (
+                    <>
+                        {endPage < lastPage - 1 && (
+                            <span class="text-neutral-400">...</span>
+                        )}
+                        <a
+                            href={`/blog/${lastPage}`}
+                            class="hover:border-primary-500 hover:text-primary-600 dark:hover:border-primary-500 flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-600 transition-all dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400"
+                        >
+                            {lastPage}
+                        </a>
+                    </>
+                )}
+            </div>
+
+            {/* Current page indicator for mobile */}
+            <div class="flex items-center px-4 font-medium text-neutral-700 sm:hidden dark:text-neutral-300">
+                Halaman {currentPage} dari {lastPage}
+            </div>
+
+            {/* Next Page */}
+            <a
+                href={url.next}
+                class={`hover:border-primary-500 hover:text-primary-600 dark:hover:border-primary-500 dark:hover:text-primary-400 flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-600 transition-all dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 ${
+                    !url.next
+                        ? "pointer-events-none opacity-50"
+                        : "hover:shadow-md"
+                }`}
+                aria-label="Halaman berikutnya"
+            >
+                <svg
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                    />
+                </svg>
+            </a>
+        </nav>
+    )
+}

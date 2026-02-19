@@ -1,0 +1,90 @@
+---
+import UnifiedLayout from "@layouts/UnifiedLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import PostsGrid from "@components/blog/PostsGrid.astro";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog");
+    const uniqueCategories = [
+        ...new Set(posts.map((post) => post.data.category)),
+    ];
+
+    return uniqueCategories.map((category) => {
+        const filteredPosts = posts.filter(
+            (post) => post.data.category === category,
+        );
+        return {
+            params: { category },
+            props: { posts: filteredPosts, category },
+        };
+    });
+}
+
+const { category, posts } = Astro.props;
+const sortedPosts = posts.sort(
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+        b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+
+// Map categories to friendlier labels if needed
+const categoryMetadata: Record<string, { title: string; desc: string }> = {
+    business: {
+        title: "Bisnis & Strategi",
+        desc: "Tips dan wawasan untuk pertumbuhan bisnis digital Anda.",
+    },
+    technical: {
+        title: "Teknikal & Development",
+        desc: "Tutorial mendalam seputar coding, arsitektur, dan tools.",
+    },
+    "case-study": {
+        title: "Studi Kasus",
+        desc: "Pelajari dari pengalaman nyata implementasi proyek.",
+    },
+    tutorial: {
+        title: "Tutorial Praktis",
+        desc: "Panduan langkah demi langkah untuk menyelesaikan masalah.",
+    },
+    insights: {
+        title: "Wawasan Industri",
+        desc: "Tren dan analisis mendalam tentang industri teknologi.",
+    },
+    testing: {
+        title: "Testing & QA",
+        desc: "Metodologi dan tools untuk menjamin kualitas software.",
+    },
+};
+
+const meta = categoryMetadata[category] || {
+    title: category.charAt(0).toUpperCase() + category.slice(1),
+    desc: `Artikel terbaru seputar ${category}.`,
+};
+---
+
+<UnifiedLayout
+    title={`${meta.title} - Blog KonXC`}
+    description={meta.desc}
+    headerVariant="default"
+    footerVariant="extended"
+>
+    <section class="bg-neutral-50 py-16">
+        <div class="container">
+            <div class="mx-auto max-w-4xl text-center">
+                <span
+                    class="text-primary-600 mb-2 block text-sm font-bold tracking-wider uppercase"
+                >
+                    Kategori
+                </span>
+                <h1
+                    class="mb-4 text-4xl font-bold text-neutral-900 md:text-5xl"
+                >
+                    {meta.title}
+                </h1>
+                <p class="text-lg text-neutral-600">
+                    {meta.desc}
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <PostsGrid posts={sortedPosts} showFilters={false} />
+</UnifiedLayout>

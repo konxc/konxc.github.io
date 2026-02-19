@@ -3,11 +3,11 @@ title: "Migrasi Tailwind CSS v3 ke v4: Panduan Lengkap dengan CSS-Based Configur
 description: "Pelajari cara migrasi dari JavaScript config ke @theme block, mengatasi error @apply, dan menggunakan slash notation untuk opacity dalam Tailwind CSS v4"
 publishDate: 2024-01-27
 author: "Sandikodev"
-category: "tutorial"
-tags: ["tailwindcss", "css", "migration", "frontend", "web-development"]
+category: "frontend"
+tags: ["tailwind-v4", "css-migration", "modern-styling", "frontend-engineering"]
 featured: true
 readingTime: 15
-image: "/blog/tailwind-v4-migration.jpg"
+coverImage: "/images/blog/tailwind-v4-migration.png"
 ---
 
 # Migrasi Tailwind CSS v3 ke v4: Panduan Lengkap dengan CSS-Based Configuration

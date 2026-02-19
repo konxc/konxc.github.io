@@ -16,7 +16,7 @@ expertise:
 location: "Jakarta, Indonesia"
 website: "https://konxc.space"
 github: "https://github.com/konxc"
-linkedin: "https://www.linkedin.com/company/konxc"
+linkedin: "https://www.linkedin.com/in/koneksi-indonesia"
 joinDate: "2024-01-01"
 isActive: true
 contributions:

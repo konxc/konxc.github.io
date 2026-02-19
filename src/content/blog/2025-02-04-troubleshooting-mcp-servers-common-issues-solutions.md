@@ -1,721 +1,144 @@
 ---
-title: "Troubleshooting MCP Servers: Common Issues & Solutions"
-description: "Panduan troubleshooting lengkap untuk masalah umum saat setup dan menggunakan MCP servers (Serena, GitHub, Memory Bank, Figma, Markdownify). Pelajari cara membaca error logs, mengatasi masalah koneksi, dan verifikasi setup."
-publishDate: 2025-11-14
+title: "Mastering MCP: Panduan Definitif Troubleshooting untuk Developer"
+description: "Jangan biarkan error teknis menghambat produktivitas Anda. Temukan solusi mendalam untuk masalah Dockerimage, path configuration, hingga problem autentikasi pada MCP servers dengan pendekatan diagnosa profesional."
+publishDate: 2025-02-04
 author: "Tim Koneksi"
-category: "tutorial"
-tags:
-  [
-    "mcp-server",
-    "troubleshooting",
-    "debugging",
-    "setup-guide",
-    "error-handling",
-    "serena",
-    "github",
-    "figma",
-    "memory-bank",
-  ]
+category: "devops"
+tags: ["mcp-troubleshooting", "system-debugging", "ai-infrastructure", "error-recovery"]
 featured: false
-readingTime: 14
-coverImage: "/blog/troubleshooting-mcp-hero.jpg"
+readingTime: 16
+coverImage: "/images/blog/mcp-troubleshooting.png"
 interactiveDemos:
-  [
-    {
-      id: "error-solutions",
-      type: "code",
-      title: "Common Error Solutions",
-      description: "Kumpulan solusi untuk error-error umum MCP servers",
-      icon: "🔧",
-      featured: true,
-      metadata: { tags: ["errors", "solutions"], language: "bash" },
-    },
-    {
-      id: "troubleshooting-checklist",
-      type: "visual",
-      title: "Troubleshooting Checklist",
-      description: "Visual checklist untuk debugging MCP server issues",
-      icon: "✅",
-      featured: true,
-      metadata: { tags: ["checklist", "debugging"] },
-    },
-  ]
+  - id: "error-solutions"
+    type: "code"
+    title: "Diagnostic & Recovery Scripts"
+    description: "Kumpulan perintah recovery untuk memulihkan state MCP server yang bermasalah"
+    icon: "🛠️"
+    featured: true
+    content: |
+      # 1. Reset Docker State (Jika Image Corrupt)
+      docker system prune -f && docker pull ghcr.io/oraios/serena:latest
+
+      # 2. Fix Permission & Path Absolut (Linux/macOS)
+      # Ganti path sesuai dengan MEMORY_BANK_ROOT Anda
+      MB_PATH="/home/$USER/.memory-bank"
+      mkdir -p "$MB_PATH" && chmod -R 755 "$MB_PATH" && chown -R $USER:$USER "$MB_PATH"
+
+      # 3. Validasi JSON Config (Cursor/Claude)
+      # Menemukan trailing comma atau syntax error yang sering luput
+      python3 -m json.tool ~/.cursor/mcp.json > /dev/null && echo "✅ Config Valid" || echo "❌ Config Invalid"
+  - id: "troubleshooting-checklist"
+    type: "visual"
+    title: "The Zero-Downtime Debug Flow"
+    description: "Metodologi eliminasi masalah untuk mengidentifikasi bottleneck secara sistematis"
+    content: |
+      # Strategi Eliminasi Diagnostik
+      - Layer 1: Infrastruktur (Apakah Docker daemon aktif? Apakah Node.js terbaca di PATH?)
+      - Layer 2: Konfigurasi (Verifikasi JSON syntax & validasi Path Absolut)
+      - Layer 3: Kredensial (Cek expiry date GitHub/Figma PAT & Scopes permission)
+      - Layer 4: Environment (Pastikan variabel seperti MEMORY_BANK_ROOT sudah didefinisikan dengan benar)
+      - Layer 5: Runtime (Restart aplikasi secara 'Hard Quit', bukan sekadar menutup jendela)
+    icon: "🎯"
+    featured: true
 ---
 
-# Troubleshooting MCP Servers: Common Issues & Solutions
+# Mastering MCP: Panduan Definitif Troubleshooting untuk Developer
 
-_Panduan troubleshooting lengkap untuk mengatasi masalah umum saat setup dan menggunakan MCP servers. Pelajari cara membaca error logs, mengatasi masalah koneksi Docker, path configuration, dan verifikasi setup._
+Sebagai developer, mengadopsi **Model Context Protocol (MCP)** adalah langkah besar menuju efisiensi masa depan. Namun, kita semua tahu bahwa di balik kecanggihan AI coding assistant, terdapat lapisan infrastruktur yang terkadang bisa menjadi penghalang utama jika tidak dikonfigurasi dengan presisi.
 
----
-
-## Checklist Troubleshooting Umum
-
-Sebelum mulai troubleshoot, pastikan:
-
-- ✅ MCP server sudah terkonfigurasi di `mcp.json`
-- ✅ File konfigurasi JSON valid (no syntax errors)
-- ✅ Application (Cursor/Claude Desktop) sudah di-restart setelah update config
-- ✅ Dependencies terinstall (Docker, Node.js, uv, dll)
-- ✅ Permissions folder/files sudah benar
-
----
-
-## Issue 1: Docker Image Tidak Ditemukan
-
-### Gejala
-
-```
-Error: Unable to find image 'ghcr.io/oraios/serena:latest' locally
-Error: Unable to find image 'ghcr.io/github/github-mcp-server' locally
-```
-
-### Penyebab
-
-Docker image belum ter-pull atau ada masalah koneksi ke container registry.
-
-### Solusi
-
-**Opsi 1: Biarkan Docker Auto-Pull (Recommended)**
-
-Docker akan otomatis pull image saat pertama kali digunakan. Tunggu beberapa saat untuk download selesai.
-
-**Opsi 2: Manual Pull**
-
-```bash
-# Untuk Serena
-docker pull ghcr.io/oraios/serena:latest
-
-# Untuk GitHub MCP
-docker pull ghcr.io/github/github-mcp-server
-
-# Verify
-docker images | grep serena
-docker images | grep github-mcp-server
-```
-
-**Opsi 3: Check Docker Service**
-
-```bash
-# Check Docker running
-docker ps
-
-# Jika error, start Docker service
-# Linux
-sudo systemctl start docker
-
-# Mac (Docker Desktop)
-# Buka Docker Desktop application
-```
-
-### Verifikasi
-
-Setelah pull selesai, restart Cursor/Claude Desktop dan coba lagi.
+Troubleshooting bukan sekadar mencari pesan error di Google; ini adalah seni **eliminasi masalah**. Artikel ini disusun berdasarkan pengalaman tim engineering kami dalam menangani berbagai skenario setup MCP servers (Serena, GitHub, Memory Bank, hingga Figma) untuk memastikan alur kerja Anda tetap tidak terinterupsi.
 
 ---
 
-## Issue 2: Path Tidak Valid (Memory Bank, Markdownify)
+## 🛠️ Filosofi Pertama: Checklist Pra-Diagnosa
 
-### Gejala
+Sebelum menyelam ke masalah spesifik, selalu mulai dengan verifikasi fundamental. Seringkali, masalah bukan terletak pada kode server, melainkan pada environment tempat ia berjalan.
 
-```
-Error: No such file or directory: /path/to/memory-bank
-Error: ENOENT: no such file or directory
-```
-
-### Penyebab
-
-1. Path tidak absolut (menggunakan relative path)
-2. Folder tidak ada
-3. Path typo atau salah format
-
-### Solusi
-
-**Step 1: Verifikasi Path Absolut**
-
-```bash
-# Dari dalam folder yang ingin digunakan
-cd /path/to/memory-bank
-pwd
-
-# Output: /home/user/.memory-bank (path absolut yang benar)
-```
-
-**Step 2: Pastikan Folder Ada**
-
-```bash
-# Jika belum ada, buat folder
-mkdir -p /home/user/.memory-bank
-
-# Verify
-ls -la /home/user/.memory-bank
-```
-
-**Step 3: Update Config dengan Path Absolut**
-
-```json
-{
-  "mcpServers": {
-    "allpepper-memory-bank": {
-      "env": {
-        "MEMORY_BANK_ROOT": "/home/user/.memory-bank" // Pastikan absolut
-      }
-    }
-  }
-}
-```
-
-**Tips:**
-
-- Jangan gunakan `~/` atau `$HOME`, gunakan path absolut lengkap
-- Jangan gunakan trailing slash (`/memory-bank/` → `/memory-bank`)
+1.  **JSON Integrity**: Satu koma yang berlebih (*trailing comma*) di `mcp.json` dapat melumpuhkan seluruh sistem.
+2.  **The "Hard Restart" Rule**: Menutup jendela Cursor atau Claude tidak cukup. Pastikan Anda melakukan *Quit* sepenuhnya agar proses background server benar-benar terhenti dan dimuat ulang.
+3.  **Absolute Path Over Everything**: AI agent seringkali gagal menginterpretasikan simbol `~/` atau variabel lokal. Gunakan path absolut (seperti `/home/user/...`) untuk semua referensi folder.
 
 ---
 
-## Issue 3: Permission Denied
+## 🏗️ Kategori 1: Isu Kontainerisasi (Docker Image)
 
-### Gejala
+Bagi pengguna **Serena** atau **GitHub MCP**, Docker adalah fondasi utama. Masalah paling umum biasanya berkaitan dengan ketersediaan image.
 
-```
-Error: EACCES: permission denied
-Error: Permission denied
-```
+### Skenario: "Unable to find image locally"
+Pesan ini menandakan Docker tidak dapat menemukan image yang Anda referensikan. 
 
-### Penyebab
-
-Folder atau file tidak memiliki permission yang tepat untuk dibaca/ditulis.
-
-### Solusi
-
-```bash
-# Berikan permission yang tepat
-chmod -R 755 /path/to/memory-bank
-
-# Atau untuk user-specific
-chown -R $USER:$USER /path/to/memory-bank
-chmod -R 755 /path/to/memory-bank
-
-# Verify
-ls -la /path/to/memory-bank
-```
-
-### Prevention
-
-Pastikan folder dibuat dengan permission yang tepat sejak awal:
-
-```bash
-mkdir -p ~/.memory-bank
-chmod 755 ~/.memory-bank
-```
+*   **Penyebab Tersembunyi**: Terkadang container registry (seperti GHCR) sedang mengalami limitasi atau Anda belum melakukan autentikasi ke registry tersebut.
+*   **Solusi Professional**: Lakukan manual pull untuk memastikan image benar-benar ada di mesin lokal Anda sebelum dijalankan oleh MCP client.
+    ```bash
+    docker pull ghcr.io/oraios/serena:latest
+    ```
+*   **Pro Tip**: Jika Anda menggunakan Linux, pastikan Docker daemon dapat berjalan tanpa `sudo`. Gunakan perintah `sudo usermod -aG docker $USER` untuk kenyamanan development jangka panjang.
 
 ---
 
-## Issue 4: MCP Server Tidak Muncul di Tools List
+## 📁 Kategori 2: Path & Direktori (Memory Bank & Markdownify)
 
-### Gejala
+Memory Bank adalah tool krusial untuk menjaga konteks artikel, namun ia sangat sensitif terhadap lokasi penyimpanan.
 
-Setelah restart, MCP server tidak muncul atau tidak bisa digunakan.
+### Problem: ENOENT atau "No such file or directory"
+Masalah ini sering muncul pada tool seperti **Markdownify** atau server yang memerlukan akses file lokal.
 
-### Penyebab
-
-1. JSON syntax error di config
-2. Command path salah atau executable tidak ada
-3. Environment variables tidak set
-4. MCP server belum fully initialized
-
-### Solusi
-
-**Step 1: Validasi JSON Syntax**
-
-```bash
-# Check JSON validity
-cat ~/.cursor/mcp.json | python3 -m json.tool
-
-# Jika ada error, akan menunjukkan line yang bermasalah
-```
-
-**Step 2: Check Command Path**
-
-```bash
-# Untuk npx-based servers (auto-install, biasanya OK)
-which npx
-
-# Untuk node-based servers
-which node
-node --version
-
-# Untuk docker-based servers
-which docker
-docker --version
-```
-
-**Step 3: Check Environment Variables**
-
-Pastikan semua env vars di config sudah benar:
-
-```json
-{
-  "mcpServers": {
-    "github": {
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxxxxxxxxxxx" // Pastikan tidak kosong
-      }
-    },
-    "allpepper-memory-bank": {
-      "env": {
-        "MEMORY_BANK_ROOT": "/path/to/memory-bank" // Pastikan absolut dan ada
-      }
-    }
-  }
-}
-```
-
-**Step 4: Check MCP Server Logs**
-
-Di Cursor:
-
-- Buka Developer Tools atau MCP logs
-- Cari error messages spesifik
-
-**Step 5: Restart Application**
-
-Setelah fix config:
-
-1. Quit application sepenuhnya (tidak hanya close window)
-2. Buka kembali
-3. Tunggu MCP servers initialize (bisa 10-30 detik)
+*   **Solusi Diagnostik**:
+    AI tidak bisa menebak di mana folder Anda berada. JIka Anda mengatur `MEMORY_BANK_ROOT`, pastikan folder tersebut sudah ada secara fisik.
+    ```bash
+    # Langkah Validasi Cepat
+    [ -d "/path/to/your/folder" ] && echo "Folder exists" || mkdir -p "/path/to/your/folder"
+    ```
+*   **Catatan Penting untuk Windows Subsystem for Linux (WSL)**: Jika menjalankan Cursor di Windows namun MCP di WSL, pastikan path yang digunakan adalah path mount point `/mnt/c/...` yang konsisten.
 
 ---
 
-## Issue 5: GitHub MCP - Authentication Error
+## 🔐 Kategori 3: Kredensial & Autentikasi (GitHub & Figma)
 
-### Gejala
+Kesalahan pada layer autentikasi biasanya paling sulit dideteksi karena seringkali "Silent Error"—server terlihat tersambung tapi tool tidak berfungsi.
 
-```
-Error: Bad credentials
-Error: 401 Unauthorized
-```
+### Skenario: 401 Unauthorized / Bad Credentials
+Ini adalah musuh utama bagi pengguna integrasi GitHub.
 
-### Penyebab
-
-1. Token tidak valid atau expired
-2. Token tidak memiliki scopes yang cukup
-3. Token typo atau salah copy-paste
-
-### Solusi
-
-**Step 1: Verify Token Format**
-
-GitHub PAT format: `ghp_xxxxxxxxxxxxxxxxxxxxxxxxxx` (prefix `ghp_` + 36 chars)
-
-**Step 2: Check Token Scopes**
-
-Pastikan token memiliki scopes:
-
-- `repo` (atau minimal `public_repo`)
-- `read:user`
-- `read:org` (jika perlu)
-
-**Step 3: Generate New Token**
-
-Jika token tidak valid:
-
-1. Buka [GitHub Settings → Developer settings → Personal access tokens](https://github.com/settings/personal-access-tokens)
-2. Revoke token lama (jika perlu)
-3. Generate token baru dengan scopes yang tepat
-4. Update di `mcp.json`
-
-**Step 4: Test Token**
-
-```bash
-# Test token dengan curl
-curl -H "Authorization: token ghp_your_token" https://api.github.com/user
-
-# Jika valid, akan return user info
-# Jika invalid, akan return error
-```
+*   **Scope Permission**: Saat membuat *Personal Access Token (PAT)*, pastikan minimal memiliki scope `repo` untuk akses repository privat dan `read:user`. Menggunakan token tanpa scope yang tepat akan membuat server gagal memuat daftar file.
+*   **Token Expiry**: Token GitHub default biasanya expire dalam 30 hari. Jika tiba-tiba MCP berhenti bekerja tanpa perubahan config, periksa tanggal pembuatan token Anda di dashboard GitHub.
 
 ---
 
-## Issue 6: Figma MCP - API Key Error
+## 🚀 Optimasi Performa: Mengatasi Lag & Timeout
 
-### Gejala
+Terkadang MCP server berhasil terhubung, namun responsnya memakan waktu lebih dari 30 detik sehingga AI membatalkan proses.
 
-```
-Error: Invalid API key
-Error: 401 Unauthorized
-```
+### Mengapa Hal Ini Terjadi?
+1.  **Cold Start Docker**: Container yang tidak aktif memerlukan waktu untuk boot.
+2.  **Resource Throttling**: Jika Anda menjalankan banyak container sekaligus, RAM mesin Anda mungkin menjadi bottleneck.
 
-### Penyebab
-
-1. Figma token tidak valid
-2. Token expired atau revoked
-3. Token format salah
-
-### Solusi
-
-**Step 1: Verify Token Format**
-
-Figma token format: `figd_xxxxxxxxxxxxxxxxxxxxxxxxxx`
-
-**Step 2: Generate New Token**
-
-1. Login ke [Figma](https://www.figma.com/)
-2. Settings → Security → Personal access tokens
-3. Generate new token
-4. Update di config:
-
-```json
-{
-  "mcpServers": {
-    "Framelink MCP for Figma": {
-      "args": [
-        "-y",
-        "figma-developer-mcp",
-        "--figma-api-key=figd_your_new_token_here", // Update di sini
-        "--stdio"
-      ]
-    }
-  }
-}
-```
-
-**Step 3: Verify Token Permissions**
-
-Pastikan token memiliki permission untuk:
-
-- Read file content (minimal untuk MCP server)
+### Strategi Perbaikan:
+*   **Isolation Test**: Nonaktifkan (*disable*) satu per satu server di konfigurasi JSON Anda untuk melihat server mana yang menyebabkan lag masif.
+*   **Docker Stats**: Selalu pantau konsumsi resource dengan perintah `docker stats`. Jika Serena atau server lain memakan memori di atas 500MB tanpa aktivitas, pertimbangkan untuk me-restart Docker service.
 
 ---
 
-## Issue 7: Markdownify - UV Path Not Found
+## 🔍 Debugging Tingkat Lanjut (Verbose Logging)
 
-### Gejala
+Jika semua langkah di atas gagal, saatnya melihat apa yang terjadi di "bawah kap."
 
-```
-Error: UV_PATH not found
-Error: uv: command not found
-```
-
-### Penyebab
-
-`uv` (Python package manager) belum terinstall atau tidak ada di PATH.
-
-### Solusi
-
-**Step 1: Install UV**
-
-```bash
-# Install uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Verify installation
-which uv
-# Output: /home/user/.cargo/bin/uv atau /home/user/.local/bin/uv
-```
-
-**Step 2: Update Config dengan Path yang Benar**
-
-```json
-{
-  "mcpServers": {
-    "markdownify": {
-      "env": {
-        "UV_PATH": "/home/user/.cargo/bin/uv" // Path dari 'which uv'
-      }
-    }
-  }
-}
-```
-
-**Step 3: Alternative - Add to PATH**
-
-Jika ingin gunakan PATH, pastikan `uv` ada di PATH:
-
-```bash
-# Add to ~/.bashrc atau ~/.zshrc
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# Reload
-source ~/.bashrc  # atau source ~/.zshrc
-```
+*   **Akses Developer Tools**: Di dalam Cursor, Anda dapat menekan `Shift + Cmd + P` lalu cari "Toggle Developer Tools". Lihat di tab Console untuk melihat pesan error yang dikirimkan oleh process MCP.
+*   **Stdio Tracking**: Karena MCP berkomunikasi lewat Standard I/O, pastikan tidak ada kode di dalam server Anda yang melakukan `console.log` sembarangan, karena ini bisa merusak komunikasi JSON-RPC antara client dan server.
 
 ---
 
-## Issue 8: Serena - Docker Volume Mount Error
+## 💡 Kesimpulan: Mentalitas "Battle-Tested"
 
-### Gejala
+Troubleshooting MCP servers adalah bagian dari perjalanan menjadi developer yang lebih andal. Kuncinya adalah **presisi pada detail**. Jangan pernah meremehkan satu spasi di path atau satu karakter di token API.
 
-```
-Error: Cannot access /path/to/projects: No such file or directory
-```
+Dengan mengikuti panduan ini, Anda tidak hanya memperbaiki error, tetapi juga membangun sistem yang lebih tangguh dan siap untuk menangani beban tugas development yang lebih berat.
 
-### Penyebab
-
-Path untuk volume mount tidak valid atau tidak ada.
-
-### Solusi
-
-**Step 1: Verify Project Path**
-
-```bash
-# Pastikan path project benar
-cd /path/to/your/project
-pwd
-
-# Output: /home/user/projects/my-project
-```
-
-**Step 2: Check Path Format**
-
-Pastikan menggunakan path absolut (bukan relative):
-
-```json
-{
-  "mcpServers": {
-    "serena": {
-      "args": [
-        "-v",
-        "/home/user/projects/my-project:/workspaces/projects" // Absolut path
-      ]
-    }
-  }
-}
-```
-
-**Step 3: Check Permissions**
-
-```bash
-# Pastikan folder bisa diakses
-ls -la /path/to/your/project
-
-# Jika perlu, fix permissions
-chmod -R 755 /path/to/your/project
-```
+### Langkah Selanjutnya:
+*   [Setup MCP Servers untuk Development: Panduan Lengkap](/blog/2025-01-31-setup-mcp-servers-untuk-development-panduan-lengkap)
+*   [Serena MCP Server: Pengenalan dan Manfaat](/blog/2025-02-01-serena-mcp-server-pengenalan-dan-manfaat)
+*   [Panduan Lengkap Cara Menggunakan Serena](/blog/2025-02-03-panduan-lengkap-cara-menggunakan-serena-mcp-server)
 
 ---
 
-## Issue 9: MCP Server Timeout atau Hang
-
-### Gejala
-
-MCP server tidak merespons atau timeout saat digunakan.
-
-### Penyebab
-
-1. Server sedang loading atau initializing
-2. Network issues (untuk remote servers)
-3. Resource constraints (memory, CPU)
-4. Server crash atau error
-
-### Solusi
-
-**Step 1: Check Server Status**
-
-Lihat logs untuk melihat apakah server masih running atau ada error.
-
-**Step 2: Restart Server**
-
-1. Restart application (Cursor/Claude Desktop)
-2. Tunggu MCP servers initialize (bisa 30-60 detik untuk pertama kali)
-
-**Step 3: Check Resource Usage**
-
-```bash
-# Check Docker container resource
-docker stats
-
-# Check system resources
-top
-# atau
-htop
-```
-
-**Step 4: Simplify Config**
-
-Jika ada banyak MCP servers, coba disable beberapa untuk isolate masalah:
-
-```json
-{
-  "mcpServers": {
-    "serena": {
-      "disabled": false // Test satu per satu
-    },
-    "github": {
-      "disabled": true // Temporary disable
-    }
-  }
-}
-```
-
----
-
-## Issue 10: Tools Tidak Muncul atau Tidak Bisa Dipanggil
-
-### Gejala
-
-MCP server connected tapi tools tidak muncul atau tidak bisa dipanggil.
-
-### Penyebab
-
-1. Tools belum ter-expose di MCP server
-2. MCP server version berbeda
-3. Compatibility issues
-
-### Solusi
-
-**Step 1: Check MCP Server Logs**
-
-Lihat logs untuk melihat tools yang ter-expose:
-
-```
-INFO - Starting MCP server with 28 tools: ['read_file', 'find_symbol', ...]
-```
-
-**Step 2: Check Server Version**
-
-Pastikan menggunakan versi terbaru:
-
-```bash
-# Untuk Serena (Docker)
-docker pull ghcr.io/oraios/serena:latest
-
-# Untuk GitHub MCP
-docker pull ghcr.io/github/github-mcp-server
-```
-
-**Step 3: Verify Tool Names**
-
-Pastikan menggunakan nama tool yang benar. Cek dokumentasi MCP server untuk daftar tools yang tersedia.
-
----
-
-## Verifikasi Setup
-
-Setelah fix semua issues, verifikasi setup:
-
-### Checklist Verifikasi
-
-```bash
-# 1. Docker running
-docker ps
-
-# 2. MCP config valid
-cat ~/.cursor/mcp.json | python3 -m json.tool
-
-# 3. Paths valid
-ls -la /path/to/memory-bank
-ls -la /path/to/markdownify-mcp/dist/index.js
-
-# 4. Tokens valid
-# Test GitHub token
-curl -H "Authorization: token ghp_xxx" https://api.github.com/user
-
-# 5. Tools accessible
-# Test di Cursor/Claude Desktop dengan command sederhana
-```
-
-### Test Commands
-
-Setelah setup, test dengan perintah sederhana:
-
-```
-# Test GitHub
-@github list repositories
-
-# Test Memory Bank
-@memory-bank list projects
-
-# Test Serena
-@serena list_dir relative_path="."
-```
-
----
-
-## Debugging Tips
-
-### 1. Enable Verbose Logging
-
-Beberapa MCP servers support verbose logging. Check dokumentasi masing-masing server.
-
-### 2. Check Application Logs
-
-- **Cursor:** Developer Tools atau MCP server logs
-- **Claude Desktop:** Console atau log files
-
-### 3. Test dengan Simple Commands
-
-Mulai dengan command sederhana untuk isolate masalah:
-
-```
-# Simple test
-@serena list_dir relative_path="."
-```
-
-### 4. Isolate Issues
-
-Jika ada multiple MCP servers, disable semua kecuali satu untuk isolate masalah:
-
-```json
-{
-  "mcpServers": {
-    "serena": {
-      "disabled": false
-    },
-    "github": {
-      "disabled": true // Temporary
-    }
-  }
-}
-```
-
-### 5. Check Dependencies
-
-Pastikan semua dependencies terinstall:
-
-```bash
-# Node.js
-node --version
-
-# Docker
-docker --version
-
-# uv (untuk Markdownify)
-uv --version
-
-# pnpm/npm
-pnpm --version
-```
-
----
-
-## Getting Help
-
-Jika masih mengalami masalah:
-
-1. **Check Documentation** - Dokumentasi resmi MCP server
-2. **GitHub Issues** - Search atau buat issue di repository MCP server
-3. **Community** - MCP community atau Discord/Slack channels
-4. **Logs** - Selalu sertakan error logs saat minta bantuan
-
----
-
-## Kesimpulan
-
-Sebagian besar masalah MCP servers bisa diselesaikan dengan:
-
-1. ✅ Validasi JSON config
-2. ✅ Verifikasi paths (harus absolut)
-3. ✅ Check permissions
-4. ✅ Verify tokens/credentials
-5. ✅ Restart application setelah perubahan
-6. ✅ Check logs untuk error spesifik
-
-### Next Steps
-
-- [Setup MCP Servers untuk Development](/blog/setup-mcp-servers-untuk-development-panduan-lengkap)
-- [Serena MCP Server: Pengenalan dan Manfaat](/blog/serena-mcp-server-pengenalan-dan-manfaat)
-- [Panduan Lengkap Cara Menggunakan Serena](/blog/panduan-lengkap-cara-menggunakan-serena-mcp-server)
-
----
-
-**Ingin belajar lebih lanjut tentang development tools dan troubleshooting?** Bergabunglah dengan program **"Naik Kelas by Koneksi"** untuk pelatihan intensif. [Daftar sekarang →](/waiting-list)
+**Ingin meningkatkan skill development tools Anda ke level expert?** Bergabunglah dengan komunitas eksklusif kami dan dapatkan wawasan terbaru langsung di inbox Anda. [Dapatkan Update Eksklusif →](/blog)

@@ -79,11 +79,25 @@ const { class: className } = Astro.props;
     private optimizeImageSource(img: HTMLImageElement): void {
       const src = img.src;
 
-      // Convert to WebP if supported and not already WebP
-      if (this.supportsWebP() && !src.includes(".webp")) {
-        const webpSrc = src.replace(/\.(jpg|jpeg|png)$/i, ".webp");
-        img.src = webpSrc;
+      // Store original source for fallback
+      if (!img.dataset.originalSrc) {
+        img.dataset.originalSrc = src;
       }
+
+      /* Disable auto-webp replacement to prevent 404s until assets are generated
+      if (
+        this.supportsWebP() &&
+        !src.includes(".webp") &&
+        (src.startsWith("/") || src.startsWith(window.location.origin)) &&
+        !src.startsWith("chrome-extension://")
+      ) {
+        const webpSrc = src.replace(/\.(jpg|jpeg|png)$/i, ".webp");
+        // Only set if different
+        if (webpSrc !== src) {
+          img.src = webpSrc;
+        }
+      }
+      */
 
       // Add responsive image attributes
       if (!img.hasAttribute("sizes")) {
@@ -95,17 +109,24 @@ const { class: className } = Astro.props;
     }
 
     private supportsWebP(): boolean {
-      const canvas = document.createElement("canvas");
-      canvas.width = 1;
-      canvas.height = 1;
-      return canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0;
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 1;
+        canvas.height = 1;
+        return canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0;
+      } catch (e) {
+        return false;
+      }
     }
 
     private handleImageError(img: HTMLImageElement): void {
       // Fallback to original format if WebP fails
-      const src = img.src;
-      if (src.includes(".webp")) {
-        img.src = src.replace(".webp", ".jpg");
+      const originalSrc = img.dataset.originalSrc;
+      if (originalSrc && img.src !== originalSrc) {
+        console.log(
+          `WebP optimization failed for ${img.src}, falling back to original: ${originalSrc}`,
+        );
+        img.src = originalSrc;
       }
     }
 
@@ -186,12 +207,11 @@ const { class: className } = Astro.props;
     }
 
     private preloadCriticalResources(): void {
-      // Only preload resources that actually exist
+      // Only preload resources that actually exist and are used in the page
       const criticalResources = [
-        "/css/critical.css",
-        "/js/main.js",
+        "/logo-konxc.webp",
+        "/logo-konxc.png",
         "/sw.js",
-        // '/fonts/inter.woff2', // Using Google Fonts CDN instead
       ];
 
       criticalResources.forEach((resource) => {
@@ -387,9 +407,6 @@ const { class: className } = Astro.props;
     }
 
     private handleScroll(): void {
-      // Update reading progress
-      this.updateReadingProgress();
-
       // Lazy load images in viewport
       this.lazyLoadInViewport();
     }
@@ -400,32 +417,6 @@ const { class: className } = Astro.props;
 
       // Update responsive images
       this.updateResponsiveImages();
-    }
-
-    private updateReadingProgress(): void {
-      const progressBar = document.getElementById("reading-progress-bar");
-      if (!progressBar) return;
-
-      // Only target the specific blog content card, not the entire page
-      const article = document.querySelector(".blog-content");
-      if (!article) return;
-
-      const articleRect = article.getBoundingClientRect();
-      const articleTop = articleRect.top + window.pageYOffset;
-      const articleHeight = articleRect.height;
-      const windowHeight = window.innerHeight;
-      const scrollTop = window.pageYOffset;
-
-      let progress = 0;
-      if (scrollTop >= articleTop) {
-        const scrolledThrough = Math.min(
-          scrollTop - articleTop + windowHeight,
-          articleHeight,
-        );
-        progress = Math.min(scrolledThrough / articleHeight, 1);
-      }
-
-      progressBar.style.width = `${progress * 100}%`;
     }
 
     private lazyLoadInViewport(): void {

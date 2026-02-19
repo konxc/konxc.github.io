@@ -3,39 +3,11 @@ title: "Mengapa Git Worktree Harus Dihapus Manual? Memahami Safety Mechanism Git
 description: "Penjelasan mendalam tentang alasan desain Git yang memerlukan manual cleanup untuk worktree. Pelajari safety mechanism Git, perbedaan worktree dengan branch, dan mengapa tidak ada perintah 'git worktree apply' seperti yang sering diasumsikan."
 publishDate: 2025-01-30
 author: "Tim Koneksi"
-category: "technical"
-tags:
-  [
-    "git",
-    "worktree",
-    "git-internals",
-    "safety",
-    "version-control",
-    "design-principles",
-  ]
+category: "engineering"
+tags: ["git-internals", "worktree-mechanics", "software-safety", "version-control-design"]
 featured: false
 readingTime: 14
-interactiveDemos:
-  [
-    {
-      id: "safety-mechanism",
-      type: "visual",
-      title: "Git Safety Mechanism Visualization",
-      description: "Visualisasi bagaimana Git melindungi data dengan manual cleanup requirement",
-      icon: "🛡️",
-      featured: true,
-      metadata: { tags: ["safety", "visualization"] },
-    },
-    {
-      id: "worktree-internals",
-      type: "code",
-      title: "Understanding Worktree Internals",
-      description: "Kode dan struktur internal worktree untuk memahami bagaimana Git mengelola multiple working directories",
-      icon: "🔍",
-      featured: true,
-      metadata: { tags: ["internals", "git"], language: "bash" },
-    },
-  ]
+coverImage: "/images/blog/git-worktree-safety.png"
 ---
 
 # Mengapa Git Worktree Harus Dihapus Manual? Memahami Safety Mechanism Git

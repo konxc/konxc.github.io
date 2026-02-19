@@ -1,46 +1,13 @@
 ---
 title: "10 Use Case Praktis Serena MCP Server untuk Project Anda"
 description: "10 contoh use case konkret menggunakan Serena MCP Server untuk refactoring, bug fixing, dan development tasks. Pelajari bagaimana semantic code analysis bisa meningkatkan produktivitas Anda dalam project SvelteKit, TypeScript, dan codebase modern."
-publishDate: 2025-11-07
+publishDate: 2025-02-02
 author: "Tim Koneksi"
-category: "tutorial"
-tags:
-  [
-    "serena",
-    "mcp-server",
-    "use-cases",
-    "refactoring",
-    "bug-fixing",
-    "productivity",
-    "sveltekit",
-    "typescript",
-    "real-world",
-    "case-studies",
-  ]
+category: "ai"
+tags: ["ai-use-cases", "mcp-implementation", "semantic-refactoring", "software-automation"]
 featured: true
 readingTime: 20
-coverImage: "/blog/serena-use-cases-hero.jpg"
-interactiveDemos:
-  [
-    {
-      id: "refactoring-example",
-      type: "code",
-      title: "Refactoring Component Example",
-      description: "Contoh konkret refactoring component dengan Serena",
-      icon: "🔧",
-      featured: true,
-      metadata: { tags: ["refactoring", "example"], language: "typescript" },
-    },
-    {
-      id: "use-case-comparison",
-      type: "visual",
-      title: "Before vs After: Productivity Comparison",
-      description: "Perbandingan waktu yang diperlukan dengan dan tanpa Serena",
-      icon: "⏱️",
-      featured: true,
-      metadata: { tags: ["comparison", "productivity"] },
-    },
-  ]
+coverImage: "/images/blog/serena-usecases-final.png"
 ---
 
 # 10 Use Case Praktis Serena MCP Server untuk Project Anda

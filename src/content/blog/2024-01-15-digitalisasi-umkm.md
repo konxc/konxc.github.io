@@ -4,9 +4,23 @@ description: "Panduan praktis untuk UMKM yang ingin memulai transformasi digital
 publishDate: 2024-01-15
 author: "Tim KonXC"
 category: "business"
-tags: ["umkm", "digitalisasi", "transformasi-digital", "efisiensi-bisnis"]
+tags: ["digital-transformation", "msme-strategy", "business-growth", "efficient-operations"]
 featured: true
-readingTime: 5
+coverImage: "/images/blog/digitalisasi-umkm-final.png"
+readingTime: 8
+interactiveDemos:
+  - id: "umkm-digital-roadmap"
+    type: "visual"
+    title: "UMKM Digitalization Roadmap"
+    description: "Alur langkah demi langkah menuju bisnis digital yang matang"
+    content: |
+      # 5 Tahap Transformasi
+      - Tahap 1: Digital Presence (Sosmed, Google Maps)
+      - Tahap 2: Digital Payment (QRIS, E-wallet)
+      - Tahap 3: Digital Management (Cloud POS, Stok Digital)
+      - Tahap 4: Digital Marketing (Ads, Content Strategy)
+      - Tahap 5: Data-Driven Decisions (Analytics)
+    icon: "🚀"
 ---
 
 # 5 Langkah Digitalisasi UMKM di Era Post-Pandemic

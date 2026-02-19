@@ -2,8 +2,20 @@
 // Reading Progress Indicator Component
 ---
 
-<div class="reading-progress">
-  <div class="progress-bar" id="reading-progress-bar"></div>
+<div class="reading-progress-sidebar">
+  <div class="mb-2 flex items-center justify-between">
+    <span
+      class="text-[10px] font-bold tracking-widest text-neutral-400 uppercase"
+      >Reading Progress</span
+    >
+    <span
+      class="progress-percentage text-primary-600 text-xs font-black"
+      id="reading-percentage">0%</span
+    >
+  </div>
+  <div class="progress-track">
+    <div class="progress-bar" id="reading-progress-bar"></div>
+  </div>
 </div>
 
 <script>
@@ -31,8 +43,14 @@
       progress = Math.min(scrolledThrough / articleHeight, 1);
     }
 
-    // Update progress bar width
+    // Update progress bar
     progressBar.style.width = `${progress * 100}%`;
+
+    // Update percentage text
+    const percentageText = document.getElementById("reading-percentage");
+    if (percentageText) {
+      percentageText.textContent = `${Math.round(progress * 100)}%`;
+    }
 
     // Add completion class when fully read
     if (progress >= 0.95) {
@@ -87,61 +105,43 @@
 
 <style>
   @reference "@/styles/global.css";
-  .reading-progress {
-    @apply sticky top-0 left-0 z-40 mb-8 h-2 w-full overflow-hidden bg-neutral-200;
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
-    margin-top: -2.5rem;
-    width: calc(100% + 3rem);
+  .reading-progress-sidebar {
+    @apply mb-6 rounded-2xl border border-neutral-100 bg-white/80 p-4 shadow-sm backdrop-blur-md transition-all duration-300;
+  }
+
+  .progress-track {
+    @apply h-2 w-full overflow-hidden rounded-full bg-neutral-100 shadow-inner;
   }
 
   .progress-bar {
-    @apply from-primary-500 to-secondary-500 h-full bg-linear-to-r transition-all duration-300 ease-out;
+    @apply from-primary-500 to-accent-500 relative h-full rounded-full bg-linear-to-r transition-all duration-300 ease-out;
     width: 0%;
-    position: relative;
-    border-radius: inherit;
+    box-shadow: 0 0 12px oklch(from var(--color-primary-500) l c h / 0.25);
   }
 
   .progress-bar.completed {
-    @apply from-green-500 to-green-600;
-  }
-
-  .progress-bar::after {
-    content: "";
-    @apply absolute top-0 right-0 h-2 w-2 translate-x-1 -translate-y-0.5 transform rounded-full bg-current;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .progress-bar.completed::after {
-    opacity: 1;
-  }
-
-  /* Mobile responsive adjustments */
-  @media (max-width: 768px) {
-    .reading-progress {
-      @apply mb-6 h-0.5;
-      margin-left: -1rem;
-      margin-right: -1rem;
-      width: calc(100% + 2rem);
-      border-radius: 0.75rem 0.75rem 0 0; /* Slightly smaller radius for mobile */
-    }
-  }
-
-  /* Smooth animation */
-  .progress-bar {
-    transition: width 0.1s ease-out;
-  }
-
-  /* Dark mode support */
-  @media (prefers-color-scheme: dark) {
-    .reading-progress {
-      @apply bg-neutral-700;
-    }
+    @apply from-success-500 to-success-600;
+    box-shadow: 0 0 15px oklch(from var(--color-success-500) l c h / 0.3);
   }
 
   /* Dark mode class support */
-  .dark .reading-progress {
-    @apply bg-neutral-700;
+  .dark .reading-progress-sidebar {
+    @apply border-neutral-700 bg-neutral-800/80 shadow-xl;
+  }
+
+  .dark .progress-track {
+    @apply bg-neutral-900;
+  }
+
+  /* Transitions */
+  .progress-bar {
+    transition:
+      width 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 0.5s ease,
+      box-shadow 0.5s ease;
+  }
+
+  .progress-percentage {
+    @apply text-primary-600 font-bold tabular-nums;
   }
 </style>

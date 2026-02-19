@@ -3,11 +3,11 @@ title: "Mengapa Svelte 5 Deprecate $page Store dan Migrasi ke Runes: Penjelasan 
 description: "Sebagai developer yang baru migsrasi dari Svelte 4 ke Svelte 5, saya akan menjelaskan kenapa Svelte meninggalkan $page store dan bagaimana Runes reactivity membuat hidup kita lebih rumit (tapi lebih powerful)."
 publishDate: 2025-01-28
 author: "Sandikodev"
-category: "technical"
-tags: ["svelte", "svelte-5", "runes", "migration", "reactivity", "javascript"]
+category: "frontend"
+tags: ["svelte", "svelte-5", "runes", "reactivity-engine", "frontend-framework"]
 featured: true
 readingTime: 8
-coverImage: "/blog/svelte-5-runes.png"
+coverImage: "/images/blog/svelte-runes.png"
 ---
 
 # Mengapa Svelte 5 Deprecate $page Store dan Migrasi ke Runes: Penjelasan untuk Developer yang Bingung

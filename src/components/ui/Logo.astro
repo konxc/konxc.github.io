@@ -44,9 +44,10 @@ const currentVariant = variantConfig[variant];
       <div class={`logo-container ${className}`}>
         <div class="logo-wrapper">
           <img
-            src="/logo-konxc.jpg"
+            src="/logo-konxc.webp"
             alt="KonXC"
             class={`logo-image ${currentSize.image} rounded-lg object-cover`}
+            onerror="this.src='/logo-konxc.png'"
           />
           {showText && (
             <span
@@ -62,9 +63,10 @@ const currentVariant = variantConfig[variant];
     <div class={`logo-container ${className}`}>
       <div class="logo-wrapper">
         <img
-          src="/logo-konxc.jpg"
+          src="/logo-konxc.webp"
           alt="KonXC"
           class={`logo-image ${currentSize.image} rounded-lg object-cover`}
+          onerror="this.src='/logo-konxc.jpg'"
         />
         {showText && (
           <span

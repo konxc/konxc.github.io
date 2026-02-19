@@ -3,9 +3,10 @@ title: "Arsitektur Mikroservis untuk Aplikasi Enterprise"
 description: "Pelajari cara membangun aplikasi enterprise yang scalable menggunakan arsitektur mikroservis. Panduan lengkap dari konsep hingga implementasi."
 publishDate: 2024-01-20
 author: "Tim Developer KonXC"
-category: "technical"
-tags: ["mikroservis", "enterprise", "scalability", "architecture"]
+category: "engineering"
+tags: ["microservices", "enterprise", "scalability", "architectural-patterns", "backend"]
 featured: false
+coverImage: "/images/blog/microservices.png"
 readingTime: 10
 ---
 

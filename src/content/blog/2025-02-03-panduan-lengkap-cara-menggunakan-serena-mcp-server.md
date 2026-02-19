@@ -1,45 +1,35 @@
 ---
 title: "Panduan Lengkap: Cara Menggunakan Serena MCP Server untuk Coding Tasks"
 description: "Panduan praktis step-by-step menggunakan Serena MCP Server dengan 10 contoh perintah konkret. Pelajari tips dan best practices untuk memaksimalkan produktivitas development dengan semantic code analysis."
-publishDate: 2025-11-12
+publishDate: 2025-02-03
 author: "Tim Koneksi"
-category: "tutorial"
-tags:
-  [
-    "serena",
-    "mcp-server",
-    "tutorial",
-    "how-to",
-    "commands",
-    "productivity",
-    "coding-assistant",
-    "development-workflow",
-    "best-practices",
-  ]
+category: "ai"
+tags: ["ai-tutorial", "mcp-server-guide", "coding-automation", "developer-workflow"]
 featured: true
 readingTime: 16
-coverImage: "/blog/serena-guide-hero.jpg"
+coverImage: "/images/blog/serena-guide-final.png"
 interactiveDemos:
-  [
-    {
-      id: "command-examples",
-      type: "code",
-      title: "Serena Command Examples",
-      description: "Kumpulan contoh perintah praktis untuk berbagai use cases",
-      icon: "💻",
-      featured: true,
-      metadata: { tags: ["commands", "examples"], language: "markdown" },
-    },
-    {
-      id: "workflow-diagram",
-      type: "visual",
-      title: "Serena Workflow Diagram",
-      description: "Visualisasi workflow menggunakan Serena untuk development tasks",
-      icon: "🔄",
-      featured: true,
-      metadata: { tags: ["workflow", "visualization"] },
-    },
-  ]
+  - id: "command-examples"
+    type: "code"
+    title: "Serena Command Examples"
+    description: "Kumpulan contoh perintah praktis untuk berbagai use cases"
+    icon: "💻"
+    featured: true
+    metadata: { tags: ["commands", "examples"], language: "markdown" }
+  - id: "workflow-diagram"
+    type: "visual"
+    title: "Serena Workflow Diagram"
+    description: "Visualisasi workflow menggunakan Serena untuk development tasks"
+    content: |
+      # Development Workflow with Serena
+      - Request: User memberikan instruksi natural language (e.g. 'Refactor dashboard component')
+      - Analysis: Serena melakukan semantic search untuk memahami konteks codebase
+      - Proposal: Serena memberikan saran perubahan atau dokumentasi
+      - Feedback: User mereview dan memberikan instruksi tambahan jika perlu
+      - Execution: Serena meneraplan perubahan secara akurat berdasarkan pemahaman struktur kode
+    icon: "🔄"
+    featured: true
+    metadata: { tags: ["workflow", "visualization"] }
 ---
 
 # Panduan Lengkap: Cara Menggunakan Serena MCP Server untuk Coding Tasks

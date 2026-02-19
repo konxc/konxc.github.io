@@ -1,46 +1,36 @@
 ---
 title: "Setup MCP Servers untuk Development: Panduan Lengkap Cursor & Claude Desktop"
 description: "Panduan step-by-step setup MCP servers (GitHub, Memory Bank, Markdownify, Figma) di Cursor dan Claude Desktop. Pelajari konfigurasi, troubleshooting, dan best practices untuk meningkatkan produktivitas development dengan AI coding assistant."
-publishDate: 2025-10-31
+publishDate: 2025-01-31
 author: "Tim Koneksi"
-category: "tutorial"
-tags:
-  [
-    "mcp-server",
-    "cursor",
-    "claude",
-    "development-tools",
-    "ai-assistant",
-    "productivity",
-    "setup-guide",
-    "github",
-    "figma",
-    "markdownify",
-  ]
+category: "devops"
+tags: ["mcp-infrastructure", "ai-dev-tools", "environment-setup", "coding-productivity"]
 featured: true
 readingTime: 15
-coverImage: "/blog/mcp-servers-setup-hero.jpg"
+coverImage: "/images/blog/mcp-server-setup.png"
 interactiveDemos:
-  [
-    {
-      id: "mcp-config-example",
-      type: "code",
-      title: "MCP Configuration Example",
-      description: "Contoh konfigurasi lengkap untuk berbagai MCP servers",
-      icon: "⚙️",
-      featured: true,
-      metadata: { tags: ["configuration", "example"], language: "json" },
-    },
-    {
-      id: "setup-checklist",
-      type: "visual",
-      title: "Setup Checklist",
-      description: "Visual checklist untuk memastikan semua MCP servers terpasang dengan benar",
-      icon: "✅",
-      featured: true,
-      metadata: { tags: ["checklist", "verification"] },
-    },
-  ]
+  - id: "mcp-config-example"
+    type: "code"
+    title: "MCP Configuration Example"
+    description: "Contoh konfigurasi lengkap untuk berbagai MCP servers"
+    icon: "⚙️"
+    featured: true
+    metadata: { tags: ["configuration", "example"], language: "json" }
+  - id: "setup-checklist"
+    type: "visual"
+    title: "Setup Checklist"
+    description: "Visual checklist untuk memastikan semua MCP servers terpasang dengan benar"
+    content: |
+      # MCP Installation Checklist
+      - Install Cursor or Claude Desktop (latest version)
+      - Configure environment variables for API-based servers
+      - Update 'mcpServers' object in configuration file
+      - Test connection for each server individually
+      - Verify tool visibility in the AI Chat/Composer interface
+      - Monitor logs for any startup errors
+    icon: "✅"
+    featured: true
+    metadata: { tags: ["checklist", "verification"] }
 ---
 
 # Setup MCP Servers untuk Development: Panduan Lengkap Cursor & Claude Desktop

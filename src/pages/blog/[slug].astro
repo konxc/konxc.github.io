@@ -2,19 +2,18 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import BlogSlugLayout from "@layouts/BlogSlugLayout.astro";
 import SocialShare from "@components/blog/SocialShare.astro";
-import ReadingProgress from "@components/blog/ReadingProgress.astro";
-import TableOfContents from "@components/blog/TableOfContents.astro";
-import DarkModeToggle from "@components/blog/DarkModeToggle.astro";
+
 import SmartBlogTestingSuite from "@components/blog/SmartBlogTestingSuite.astro";
 import ReadingAnalytics from "@components/blog/ReadingAnalytics.astro";
 import ArticleSeries from "@components/blog/ArticleSeries.astro";
-import CommentsSystem from "@components/blog/CommentsSystem.astro";
 import InteractiveDemos from "@components/blog/InteractiveDemos.astro";
 import ReadingMode from "@components/blog/ReadingMode.astro";
 import PerformanceOptimizer from "@components/blog/PerformanceOptimizer.astro";
-import CopyPageMenu from "@components/blog/CopyPageMenu.astro";
-import ArticleStats from "@components/blog/ArticleStats.astro";
 import RelatedArticles from "@components/blog/RelatedArticles.astro";
+import BlogPostHero from "@components/blog/BlogPostHero.astro";
+import BlogPostSidebar from "@components/blog/BlogPostSidebar.astro";
+import BlogPostComments from "@components/blog/BlogPostComments.astro";
+import { getRelatedArticles } from "@utils/blog";
 
 // Type declaration for URL global
 declare const URL: typeof globalThis.URL;
@@ -36,157 +35,45 @@ export async function getStaticPaths() {
 const { post }: Props = Astro.props;
 const { Content } = await post.render();
 
-// Generate full URL for social sharing
+// Generate full URL for SEO/Social
 const fullUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
-// Get all posts for related articles
-const allPosts = await getCollection("blog");
-
-// Filter related articles based on tags and category (exclude current post)
-const getRelatedArticles = (
-  currentPost: CollectionEntry<"blog">,
-  maxArticles = 4,
-) => {
-  const currentTags = currentPost.data.tags || [];
-  const currentCategory = currentPost.data.category;
-
-  // Score articles based on relevance
-  const scoredArticles = allPosts
-    .filter((p) => p.slug !== currentPost.slug) // Exclude current post
-    .map((p) => {
-      let score = 0;
-
-      // Same category gets higher score
-      if (p.data.category === currentCategory) {
-        score += 10;
-      }
-
-      // Shared tags get points
-      const sharedTags = (p.data.tags || []).filter((tag: string) =>
-        currentTags.includes(tag),
-      );
-      score += sharedTags.length * 5;
-
-      // Featured articles get bonus points
-      if (p.data.featured) {
-        score += 2;
-      }
-
-      // More recent articles get slight bonus
-      const daysDiff =
-        Math.abs(new Date().getTime() - p.data.publishDate.getTime()) /
-        (1000 * 60 * 60 * 24);
-      if (daysDiff < 30) score += 1;
-
-      return { post: p, score };
-    })
-    .sort((a, b) => b.score - a.score) // Sort by relevance score
-    .slice(0, maxArticles)
-    .map(({ post: p }) => ({
-      id: p.slug,
-      title: p.data.title,
-      excerpt: p.data.description,
-      category: p.data.category,
-      readTime: `${Math.ceil((p.body?.length || 1000) / 200)} min read`,
-      slug: p.slug,
-    }));
-
-  return scoredArticles;
-};
-
 // Get related articles for current post
-const relatedArticles = getRelatedArticles(post, 4);
+const relatedArticles = await getRelatedArticles(post, 4);
 ---
 
 <BlogSlugLayout
   title={post.data.title}
   description={post.data.description}
-  image={post.data.image}
+  image={post.data.coverImage}
   post={post}
   keywords={post.data.tags?.join(", ")}
   author={post.data.author}
+  showNewsletter={false}
 >
-  <!-- Blog Post Header -->
-  <section
-    class="from-primary-50 to-secondary-50 bg-linear-to-br py-20 md:py-32"
-  >
-    <div class="container">
-      <div class="mx-auto max-w-4xl">
-        <div class="my-8 text-center">
-          <div
-            class="text-primary-600 mb-4 text-sm font-semibold tracking-wide uppercase"
-          >
-            {post.data.category}
-          </div>
-          <h1 class="mb-6 text-4xl font-bold lg:text-5xl">
-            {post.data.title}
-          </h1>
-          <p class="mb-8 text-xl text-neutral-600">
-            {post.data.description}
-          </p>
+  <!-- Hero Section -->
+  <BlogPostHero post={post} />
 
-          <div
-            class="mb-8 flex items-center justify-center gap-6 text-sm text-neutral-500"
-          >
-            <div class="flex items-center gap-2">
-              <span
-                class="bg-primary-100 text-primary-600 flex h-8 w-8 items-center justify-center rounded-full font-semibold"
-              >
-                {post.data.author.charAt(0)}
-              </span>
-              <span>By {post.data.author}</span>
-            </div>
-            <span>•</span>
-            <span>{post.data.publishDate.toLocaleDateString("id-ID")}</span>
-            {
-              post.data.readingTime && (
-                <>
-                  <span>•</span>
-                  <span>{post.data.readingTime} min read</span>
-                </>
-              )
-            }
-          </div>
-
-          <div class="flex flex-wrap justify-center gap-2">
-            {
-              post.data.tags.map((tag: string) => (
-                <span class="text-primary-600 rounded-full bg-white px-3 py-1 text-sm shadow-sm">
-                  #{tag}
-                </span>
-              ))
-            }
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Blog Post Content -->
-  <section class="bg-white py-16 md:py-24">
+  <!-- Main Content Layout -->
+  <section class="bg-white py-10 md:py-14">
     <div class="container">
       <div class="mx-auto max-w-6xl">
-        <!-- Article Series -->
         <ArticleSeries currentPostSlug={post.slug} />
 
-        <div class="grid gap-8 lg:grid-cols-4">
-          <!-- Main Content -->
+        <div class="grid gap-12 lg:grid-cols-4">
+          <!-- Main Article Area -->
           <div class="lg:col-span-3">
-            <div
-              class="prose prose-lg blog-content max-w-none hover:translate-y-0"
-            >
-              <ReadingProgress />
-              <!-- Reading Progress Bar -->
+            <article class="prose prose-lg blog-content max-w-none">
               <Content />
-            </div>
+            </article>
 
-            <!-- Interactive Demos -->
-            <div class="mt-8">
-              <InteractiveDemos />
-            </div>
-
-            <!-- Social Sharing -->
-            <div class="mt-8">
+            <div class="mt-12 space-y-12">
+              {
+                post.data.interactiveDemos &&
+                  post.data.interactiveDemos.length > 0 && (
+                    <InteractiveDemos demos={post.data.interactiveDemos} />
+                  )
+              }
               <SocialShare
                 title={post.data.title}
                 url={fullUrl}
@@ -195,47 +82,22 @@ const relatedArticles = getRelatedArticles(post, 4);
             </div>
           </div>
 
-          <!-- Sidebar -->
-          <div class="lg:col-span-1">
-            <div class="sticky-sidebar space-y-2">
-              <div class="flex items-center justify-between gap-2">
-                <CopyPageMenu />
-                <DarkModeToggle />
-              </div>
-
-              <!-- Table of Contents -->
-              <TableOfContents />
-
-              <!-- Article Stats -->
-              <ArticleStats
-                readingTime={post.data.readingTime || 5}
-                wordCount={0}
-                views={0}
-                publishDate={post.data.publishDate}
-              />
-            </div>
-          </div>
+          <!-- Sidebar Area -->
+          <aside class="lg:col-span-1">
+            <BlogPostSidebar post={post} />
+          </aside>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Smart Blog Testing Suite (Development Only) -->
+  <!-- Support Components -->
   <SmartBlogTestingSuite />
-
-  <!-- Reading Analytics (Hidden) -->
   <ReadingAnalytics postSlug={post.slug} />
-
-  <!-- Reading Mode -->
   <ReadingMode />
-
-  <!-- Code Block Enhancer -->
-  <!-- <CodeBlockEnhancer /> -->
-
-  <!-- Performance Optimizer (Hidden) -->
   <PerformanceOptimizer />
 
-  <!-- Related Articles Section -->
+  <!-- Footer Sections -->
   {
     relatedArticles.length > 0 && (
       <RelatedArticles
@@ -246,206 +108,14 @@ const relatedArticles = getRelatedArticles(post, 4);
       />
     )
   }
-  <!-- Comments System -->
-  <section class="comments-section">
-    <div class="container">
-      <div class="comments-container">
-        <!-- Section Header -->
-        <div class="comments-header">
-          <h2 class="comments-title">Diskusi & Komentar</h2>
-          <p class="comments-subtitle">
-            Bagikan pemikiran Anda atau ajukan pertanyaan tentang artikel ini
-          </p>
-          <div class="comments-divider"></div>
-        </div>
 
-        <!-- Comments Component -->
-        <div class="comments-content">
-          <CommentsSystem postSlug={post.slug} />
-        </div>
-      </div>
-    </div>
-  </section>
+  <BlogPostComments postSlug={post.slug} />
 </BlogSlugLayout>
 
 <style>
   @reference "@/styles/global.css";
 
-  /* Comments Section Styling */
-  .comments-section {
-    @apply relative overflow-hidden py-16 md:py-20;
-    background: var(--gradient-cream-elegant);
-  }
-
-  .comments-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(
-        circle at 20% 80%,
-        rgba(194, 154, 108, 0.06) 0%,
-        transparent 60%
-      ),
-      radial-gradient(
-        circle at 80% 20%,
-        rgba(160, 126, 84, 0.04) 0%,
-        transparent 60%
-      );
-    pointer-events: none;
-  }
-
-  .comments-container {
-    @apply relative z-10 mx-auto max-w-4xl;
-  }
-
-  /* Comments Header */
-  .comments-header {
-    @apply mb-12 text-center;
-  }
-
-  .comments-title {
-    @apply mb-4 text-2xl font-bold tracking-tight md:text-3xl;
-    background: linear-gradient(
-      135deg,
-      #3c2e26 0%,
-      #5d4037 25%,
-      #4a2c20 50%,
-      #2d1810 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 2px 4px rgba(60, 46, 38, 0.1);
-  }
-
-  .comments-subtitle {
-    @apply mx-auto mb-6 max-w-2xl text-base leading-relaxed font-medium text-amber-900/80 md:text-lg;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-  }
-
-  .comments-divider {
-    @apply mx-auto h-1 w-16 rounded-full;
-    background: linear-gradient(
-      90deg,
-      #8b6914 0%,
-      #a0751a 25%,
-      #b8860b 50%,
-      #cd9a1b 75%,
-      #daa520 100%
-    );
-    box-shadow: 0 2px 4px rgba(139, 105, 20, 0.2);
-  }
-
-  /* Comments Content */
-  .comments-content {
-    @apply rounded-2xl border bg-white p-6 shadow-lg shadow-neutral-900/10 md:p-8;
-    border-color: rgba(194, 154, 108, 0.15);
-    box-shadow:
-      0 10px 25px rgba(194, 154, 108, 0.08),
-      0 4px 10px rgba(194, 154, 108, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .comments-section {
-      @apply py-12;
-    }
-
-    .comments-header {
-      @apply mb-8;
-    }
-
-    .comments-title {
-      @apply text-xl;
-    }
-
-    .comments-subtitle {
-      @apply text-sm;
-    }
-
-    .comments-content {
-      @apply p-4;
-    }
-  }
-
-  .sticky-sidebar {
-    @apply sticky top-6;
-    /* max-height: calc(100vh - 4rem); */
-    /* overflow-y: auto; */
-  }
-
-  .sticky-sidebar::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .sticky-sidebar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .sticky-sidebar::-webkit-scrollbar-thumb {
-    background: #e5e7eb;
-    border-radius: 2px;
-  }
-
-  .sticky-sidebar::-webkit-scrollbar-thumb:hover {
-    background: #d1d5db;
-  }
-
-  /* Sidebar Widgets */
-  .sidebar-widget {
-    background-color: rgb(255 255 255);
-    border-radius: 0.5rem;
-    box-shadow:
-      0 1px 3px 0 rgb(0 0 0 / 0.1),
-      0 1px 2px -1px rgb(0 0 0 / 0.1);
-    border: 1px solid rgb(229 231 235);
-    overflow: hidden;
-  }
-
-  .sidebar-widget:first-child {
-    /* border-top: 4px solid rgb(147 51 234); */
-  }
-
-  .sidebar-widget h3 {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: rgb(17 24 39);
-    margin-bottom: 0.75rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 1rem;
-  }
-
-  .sidebar-widget > div:not(:first-child) {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-bottom: 1rem;
-  }
-
-  /* Dark mode sidebar */
-  .dark .sidebar-widget {
-    background-color: rgb(38 38 38);
-    border-color: rgb(64 64 64);
-  }
-
-  .dark .sidebar-widget h3 {
-    color: rgb(245 245 245);
-  }
-
-  .dark .sidebar-widget .text-neutral-600 {
-    color: rgb(156 163 175);
-  }
-
-  .dark .sidebar-widget .text-neutral-900 {
-    color: rgb(245 245 245);
-  }
-
-  /* Professional Content Typography - Hyper-Compact Vertical Rhythm */
+  /* Professional Blog Content Typography */
   .blog-content {
     @apply text-neutral-800 antialiased;
     font-family: var(--font-body);
@@ -457,7 +127,7 @@ const relatedArticles = getRelatedArticles(post, 4);
   .blog-content :global(h2),
   .blog-content :global(h3),
   .blog-content :global(h4) {
-    @apply text-neutral-900 font-bold tracking-tight;
+    @apply font-bold tracking-tight text-neutral-900;
     font-family: var(--font-heading);
     line-height: 1.2;
     margin-top: 1.25rem;
@@ -465,46 +135,58 @@ const relatedArticles = getRelatedArticles(post, 4);
     padding-bottom: 0px !important;
   }
 
-  .blog-content :global(h1) { @apply text-4xl lg:text-5xl mt-0; }
-  .blog-content :global(h2) { @apply text-2xl lg:text-3xl mt-6; border-bottom: 1px solid rgba(0,0,0,0.05); }
-  .blog-content :global(h3) { @apply text-xl lg:text-2xl mt-5; }
-  .blog-content :global(h4) { @apply text-lg lg:text-xl mt-4; }
+  .blog-content :global(h1) {
+    @apply mt-0 text-4xl lg:text-5xl;
+    margin-bottom: 2rem !important;
+  }
+  .blog-content :global(h2) {
+    @apply mt-6 text-2xl lg:text-3xl;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .blog-content :global(h3) {
+    @apply mt-5 text-xl lg:text-2xl;
+  }
+  .blog-content :global(h4) {
+    @apply mt-4 text-lg lg:text-xl;
+  }
 
   .blog-content :global(p) {
-    margin-bottom: 0.75rem;
+    @apply mb-3;
   }
 
   /* Lead paragraph special styling */
   .blog-content :global(p:first-of-type) {
-    @apply text-lg lg:text-xl text-neutral-700 leading-relaxed font-medium;
-    margin-bottom: 1rem;
+    @apply mb-4 text-lg leading-relaxed font-medium text-neutral-700 lg:text-xl;
   }
 
   /* Links */
   .blog-content :global(a) {
-    @apply text-primary-600 font-semibold underline decoration-primary-200 decoration-2 underline-offset-4 transition-all hover:text-primary-700 hover:decoration-primary-600;
+    @apply text-primary-600 decoration-primary-200 hover:text-primary-700 hover:decoration-primary-600 font-semibold underline decoration-2 underline-offset-4 transition-all;
   }
 
   /* Lists & Markers */
-  .blog-content :global(ul), 
+  .blog-content :global(ul),
   .blog-content :global(ol) {
-    margin-bottom: 0.75rem;
-    padding-left: 1.5rem;
+    @apply mb-4 pl-6;
   }
 
   .blog-content :global(li) {
     @apply pl-1;
   }
 
-  .blog-content :global(ul li) { @apply list-disc; }
-  .blog-content :global(ol li) { @apply list-decimal; }
-  .blog-content :global(li::marker) { @apply text-primary-600 font-bold; }
+  .blog-content :global(ul li) {
+    @apply list-disc;
+  }
+  .blog-content :global(ol li) {
+    @apply list-decimal;
+  }
+  .blog-content :global(li::marker) {
+    @apply text-primary-600 font-bold;
+  }
 
   /* Blockquotes - Modern Minimalist */
   .blog-content :global(blockquote) {
-    @apply border-l-4 border-primary-500 bg-neutral-50/50 italic rounded-r-2xl;
-    padding: 0.75rem 1.25rem;
-    margin: 1rem 0;
+    @apply border-primary-500 my-4 rounded-r-2xl border-l-4 bg-neutral-50/50 px-5 py-3 italic;
     font-size: 1.1rem;
     line-height: 1.5;
     color: var(--color-neutral-600);
@@ -512,11 +194,10 @@ const relatedArticles = getRelatedArticles(post, 4);
 
   /* Code Blocks */
   .blog-content :global(pre) {
-    margin: 1rem 0;
-    @apply overflow-x-auto rounded-xl bg-neutral-900 p-4 text-sm text-neutral-200 shadow-lg;
+    @apply mt-0 mb-4 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-sm text-neutral-200 shadow-lg;
   }
   .blog-content :global(code) {
-    @apply rounded-md bg-neutral-100 px-1 py-0.5 font-mono text-xs font-medium text-primary-700;
+    @apply text-primary-700 rounded-md bg-neutral-100 px-1 py-0.5 font-mono text-xs font-medium;
   }
   .blog-content :global(pre code) {
     @apply bg-transparent p-0 text-inherit;
@@ -524,73 +205,75 @@ const relatedArticles = getRelatedArticles(post, 4);
 
   /* Images & Figures */
   .blog-content :global(img) {
-    margin: 1.25rem 0;
-    @apply h-auto w-full rounded-xl shadow-lg transition-transform duration-500 hover:scale-[1.005];
+    @apply my-5 h-auto w-full rounded-xl shadow-lg transition-transform duration-500 hover:scale-[1.005];
   }
   .blog-content :global(figcaption) {
-    margin-top: 0.5rem;
-    @apply text-center text-xs italic text-neutral-500;
+    @apply mt-2 text-center text-xs text-neutral-500 italic;
   }
 
   /* Tables */
   .blog-content :global(table) {
-    margin: 1rem 0;
-    @apply w-full border-collapse text-left text-sm;
+    @apply my-4 w-full border-collapse text-left text-sm;
   }
   .blog-content :global(th) {
-    @apply border-b border-neutral-200 bg-neutral-50/50 px-2 py-1 font-bold text-neutral-900;
+    @apply border-b border-neutral-200 bg-neutral-50/50 px-2 py-1.5 font-bold text-neutral-900;
   }
   .blog-content :global(td) {
-    @apply border-b border-neutral-100 px-2 py-1 text-neutral-600;
+    @apply border-b border-neutral-100 px-2 py-1.5 text-neutral-600;
   }
 
   /* Dark Mode Overrides */
-  .dark .blog-content { @apply text-neutral-300; }
+  .dark .blog-content {
+    @apply text-neutral-300;
+  }
   .dark .blog-content :global(h1),
   .dark .blog-content :global(h2),
-  .dark .blog-content :global(h3) { @apply text-white; }
-  .dark .blog-content :global(p:first-of-type) { @apply text-neutral-200; }
-  .dark .blog-content :global(blockquote) { @apply bg-white/5 text-neutral-400 border-primary-400; }
-  .dark .blog-content :global(code) { @apply bg-white/10 text-primary-300; }
-  .dark .blog-content :global(th) { @apply bg-white/5 border-neutral-800 text-white; }
-  .dark .blog-content :global(td) { @apply border-neutral-800 text-neutral-400; }
-  .dark .blog-content :global(h2) { border-color: rgba(255,255,255,0.1); }
+  .dark .blog-content :global(h3) {
+    @apply text-white;
+  }
+  .dark .blog-content :global(p:first-of-type) {
+    @apply text-neutral-200;
+  }
+  .dark .blog-content :global(blockquote) {
+    @apply border-primary-400 bg-white/5 text-neutral-400;
+  }
+  .dark .blog-content :global(code) {
+    @apply text-primary-300 bg-white/10;
+  }
+  .dark .blog-content :global(th) {
+    @apply border-neutral-800 bg-white/5 text-white;
+  }
+  .dark .blog-content :global(td) {
+    @apply border-neutral-800 text-neutral-400;
+  }
+  .dark .blog-content :global(h2) {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
 
   /* Mobile Adjustments */
   @media (max-width: 768px) {
-    .blog-content { font-size: 0.95rem; }
-    .blog-content :global(h1) { font-size: 1.75rem; }
-    .blog-content :global(h2) { font-size: 1.35rem; margin-top: 0.75rem; }
-    .blog-content :global(p:first-of-type) { font-size: 1rem; margin-bottom: 0.75rem; }
-    .blog-content :global(blockquote) { font-size: 0.95rem; padding: 0.5rem 1rem; margin: 0.75rem 0; }
-    .blog-content :global(pre), .blog-content :global(img), .blog-content :global(table) { margin: 0.75rem 0; }
+    .blog-content {
+      font-size: 0.95rem;
+    }
+    .blog-content :global(h1) {
+      font-size: 1.75rem;
+    }
+    .blog-content :global(h2) {
+      font-size: 1.35rem;
+      margin-top: 0.75rem;
+    }
+    .blog-content :global(p:first-of-type) {
+      font-size: 1rem;
+      @apply mb-3;
+    }
+    .blog-content :global(blockquote) {
+      font-size: 0.95rem;
+      @apply my-3 px-4 py-2;
+    }
+    .blog-content :global(pre),
+    .blog-content :global(img),
+    .blog-content :global(table) {
+      @apply my-3;
+    }
   }
 </style>
-
-<script>
-  // Sidebar quick actions
-  document.addEventListener("DOMContentLoaded", function () {
-    // Quick actions
-    const scrollToTopBtn = document.getElementById("scroll-to-top");
-    if (scrollToTopBtn) {
-      scrollToTopBtn.addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-    }
-
-    const scrollToCommentsBtn = document.getElementById("scroll-to-comments");
-    if (scrollToCommentsBtn) {
-      scrollToCommentsBtn.addEventListener("click", function () {
-        const commentsSection =
-          document.querySelector(".comments-system") ||
-          document.querySelector('[class*="comment"]');
-        if (commentsSection) {
-          commentsSection.scrollIntoView({ behavior: "smooth" });
-        }
-      });
-    }
-
-    // Note: reading progress, dark mode, and newsletter behavior
-    // are handled by their respective components.
-  });
-</script>

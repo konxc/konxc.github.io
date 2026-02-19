@@ -21,8 +21,7 @@ import Header from "@components/ui/Header.astro";
     right: 0;
     z-index: 1000;
     transform: translateY(0);
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    will-change: transform;
+    will-change: transform, opacity;
   }
 
   .smart-header.hidden {
@@ -54,7 +53,11 @@ import Header from "@components/ui/Header.astro";
     -webkit-backdrop-filter: blur(12px) !important;
     border-bottom: 1px solid rgba(229, 231, 235, 0.3) !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    transition:
+      background 0.4s ease,
+      box-shadow 0.4s ease,
+      border-color 0.4s ease,
+      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform: scale(1);
   }
 
@@ -201,169 +204,118 @@ import Header from "@components/ui/Header.astro";
   document.addEventListener("DOMContentLoaded", function () {
     const header = document.getElementById("smart-header");
     if (!header) return;
-    const headerEl = header;
 
-    // Find blog post header section (the first section with gradient background)
-    const blogPostHeader =
-      document.querySelector<HTMLElement>(".section.bg-linear-to-br") ||
-      document.querySelector<HTMLElement>(".section.bg-gradient-to-br") ||
-      document.querySelector<HTMLElement>("section:first-of-type");
-
+    let lastScrollY = window.scrollY;
     let ticking = false;
+    let hideTimer: ReturnType<typeof setTimeout> | null = null;
+    let showTimer: ReturnType<typeof setTimeout> | null = null;
 
-    // 🎯 CONFIGURATION: Adjust hide threshold here
-    // Options:
-    // - 0.2 = Hide after 20% of blog post header (very sensitive)
-    // - 0.5 = Hide after 50% of blog post header (sensitive)
-    // - 0.8 = Hide after 80% of blog post header (balanced - default)
-    // - 0.9 = Hide after 90% of blog post header (conservative)
-    // - 1.0 = Hide after 100% of blog post header (very conservative)
-    const hideThresholdPercentage = 0.3; // 🔧 CHANGE THIS VALUE
+    // CONFIGURATION
+    const SCROLLED_THRESHOLD = 50; // threshold to add shadow/bg
+    const SHOW_DELTA = 15; // minimum scroll up distance to show header
+    const HIDE_THRESHOLD = 400; // minimum scroll down distance before hiding starts
 
-    // Function to update header visibility with smooth animations
-    function updateHeaderVisibility() {
+    function updateHeader() {
       const currentScrollY = window.scrollY;
-      if (!blogPostHeader) {
-        // Fallback: Hide header if no blog post header found
-        // Header should NOT appear in other sections
-        console.log("⚠️ No blog post header found - hiding header");
-        hideHeader();
-        return;
+      const scrollDelta = currentScrollY - lastScrollY;
+      const isScrollingDown = scrollDelta > 0;
+
+      // 1. Handle absolute top (Reset to initial state)
+      if (currentScrollY < SCROLLED_THRESHOLD) {
+        showHeader(false);
       }
-
-      const blogPostHeaderHeight = blogPostHeader.offsetHeight;
-
-      // Calculate hide threshold using the configuration
-      const hideThreshold = blogPostHeaderHeight * hideThresholdPercentage;
-
-      // Show/hide header based on scroll position and direction
-      // Header ONLY appears in blog post header section
-      if (currentScrollY < 100) {
-        // Show header at the top of blog post header
-        showHeader(false); // Don't add scrolled class
-      } else if (currentScrollY > hideThreshold) {
-        // Hide header when scrolled past blog post header
-        // Header should NOT appear in other sections
-        hideHeader();
-      } else {
-        // Show header with scrolled styling when in blog post header area
-        showHeader(true); // Add scrolled class
-      }
-
-      // Additional check: Ensure header is hidden in other sections
-      // Check if we're in a different section (not blog post header)
-      const currentSection = document.elementFromPoint(
-        window.innerWidth / 2,
-        100,
-      );
-      const isInBlogPostHeader =
-        currentSection?.closest(".section.bg-linear-to-br") ||
-        currentSection?.closest(".section.bg-gradient-to-br");
-
-      if (!isInBlogPostHeader && currentScrollY > hideThreshold) {
-        // Force hide header if we're in a different section
+      // 2. Handle scroll DOWN (Hide after threshold)
+      else if (isScrollingDown && currentScrollY > HIDE_THRESHOLD) {
         hideHeader();
       }
-
-      // Optional: Add visual feedback for blog post header
-      const progress = Math.min(currentScrollY / blogPostHeaderHeight, 1);
-      blogPostHeader.style.setProperty("--scroll-progress", String(progress));
-
-      // 🎯 CONFIGURATION: Visual feedback threshold
-      // When to show "approaching threshold" visual feedback
-      const visualFeedbackThreshold = hideThreshold * 0.9; // 90% of hide threshold
-
-      // Add class when approaching threshold
-      if (currentScrollY >= visualFeedbackThreshold) {
-        blogPostHeader.classList.add("approaching-threshold");
-      } else {
-        blogPostHeader.classList.remove("approaching-threshold");
+      // 3. Handle scroll UP (Show)
+      else if (!isScrollingDown && Math.abs(scrollDelta) > SHOW_DELTA) {
+        showHeader(true);
       }
+
+      lastScrollY = currentScrollY;
       ticking = false;
     }
 
-    // Smooth show animation
-    function showHeader(addScrolledClass = true) {
-      if (headerEl.classList.contains("hidden")) {
-        console.log("🎬 Starting show animation...");
+    function showHeader(scrolled = true) {
+      // Clear any pending hide
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+      }
 
-        // Remove hidden class and add showing class for animation
-        headerEl.classList.remove("hidden", "hiding");
-        headerEl.classList.add("showing");
+      // If already visible and just updating 'scrolled' class
+      if (
+        !header?.classList.contains("hidden") &&
+        !header?.classList.contains("hiding")
+      ) {
+        if (scrolled) header?.classList.add("scrolled");
+        else header?.classList.remove("scrolled");
+        return;
+      }
 
-        // Add scrolled class if needed
-        if (addScrolledClass) {
-          headerEl.classList.add("scrolled");
-        } else {
-          headerEl.classList.remove("scrolled");
-        }
+      // Start show animation
+      header?.classList.remove("hidden", "hiding");
+      header?.classList.add("showing");
 
-        // Remove showing class after animation completes
-        setTimeout(() => {
-          headerEl.classList.remove("showing");
-          console.log("✅ Show animation completed");
+      if (scrolled) header?.classList.add("scrolled");
+      else header?.classList.remove("scrolled");
+
+      // Prevent re-triggering show if already in progress
+      if (!showTimer) {
+        showTimer = setTimeout(() => {
+          header?.classList.remove("showing");
+          showTimer = null;
         }, 500);
-      } else {
-        // Just update scrolled class if already visible
-        if (addScrolledClass) {
-          headerEl.classList.add("scrolled");
-        } else {
-          headerEl.classList.remove("scrolled");
-        }
       }
     }
 
-    // Smooth hide animation
     function hideHeader() {
-      if (!headerEl.classList.contains("hidden")) {
-        console.log("🎬 Starting hide animation...");
+      // Don't hide if we're basically at the top
+      if (window.scrollY < SCROLLED_THRESHOLD) return;
 
-        // Remove any existing animation classes
-        headerEl.classList.remove("showing");
+      // Clear any pending show
+      if (showTimer) {
+        clearTimeout(showTimer);
+        showTimer = null;
+      }
 
-        // Add hiding class for animation
-        headerEl.classList.add("hiding");
+      // If already hidden or hiding
+      if (
+        header?.classList.contains("hidden") ||
+        header?.classList.contains("hiding")
+      ) {
+        return;
+      }
 
-        // Wait for animation to complete before adding hidden class
-        setTimeout(() => {
-          headerEl.classList.add("hidden");
-          headerEl.classList.remove("hiding", "scrolled");
-          console.log("✅ Hide animation completed");
-        }, 300); // Match animation duration (300ms)
+      // Start hide animation
+      header?.classList.remove("showing");
+      header?.classList.add("hiding");
+
+      // Prevent re-triggering hide if already in progress
+      if (!hideTimer) {
+        hideTimer = setTimeout(() => {
+          if (header?.classList.contains("hiding")) {
+            header?.classList.add("hidden");
+            header?.classList.remove("hiding", "scrolled");
+          }
+          hideTimer = null;
+        }, 300);
       }
     }
 
-    // Throttled scroll handler
+    // Use requestAnimationFrame for performance
     function onScroll() {
       if (!ticking) {
-        requestAnimationFrame(updateHeaderVisibility);
+        window.requestAnimationFrame(updateHeader);
         ticking = true;
       }
     }
 
-    // Add scroll event listener
-    window.addEventListener("scroll", onScroll);
+    // Event Listeners
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-    // Initial check
-    updateHeaderVisibility();
-
-    // Debug logging
-    console.log("SmartHeader initialized:", {
-      header: headerEl ? "found" : "not found",
-      blogPostHeader: blogPostHeader ? "found" : "not found",
-      blogPostHeaderHeight: blogPostHeader
-        ? blogPostHeader.offsetHeight
-        : "N/A",
-      hideThresholdPercentage: hideThresholdPercentage,
-      hideThreshold: blogPostHeader
-        ? Math.round(blogPostHeader.offsetHeight * hideThresholdPercentage)
-        : "N/A",
-      visualFeedbackThreshold: blogPostHeader
-        ? Math.round(
-            blogPostHeader.offsetHeight * hideThresholdPercentage * 0.9,
-          )
-        : "N/A",
-      behavior: "Header ONLY appears in blog post header section",
-    });
+    // Initial State Check
+    updateHeader();
   });
 </script>

@@ -4,20 +4,10 @@ description: "Panduan lengkap untuk testing komponen Table of Contents dengan be
 publishDate: 2024-01-30
 author: "Sandikodev"
 category: "testing"
-tags:
-  [
-    "testing",
-    "table-of-contents",
-    "puppeteer",
-    "frontend",
-    "quality-assurance",
-    "automation",
-    "toc",
-    "navigation",
-  ]
+tags: ["automated-testing", "puppeteer-testing", "navigation-ux", "quality-engineering"]
 featured: true
 readingTime: 12
-image: "/blog/toc-testing-guide.jpg"
+coverImage: "/images/blog/toc-testing-final.png"
 ---
 
 # Testing Table of Contents - Comprehensive Guide

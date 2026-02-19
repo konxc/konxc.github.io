@@ -3,11 +3,25 @@ title: "Mengatasi Warning @import CSS: Panduan Lengkap dengan Referensi MDN"
 description: "Pelajari cara mengatasi warning '@import rules must precede all other statements' dengan mengikuti spesifikasi CSS resmi dari Mozilla Developer Network"
 publishDate: 2024-01-28
 author: "Sandikodev"
-category: "tutorial"
-tags: ["css", "import", "warning", "frontend", "web-development", "mdn"]
+category: "frontend"
+tags: ["css-standards", "import-rules", "mdn-guidelines", "frontend-optimization"]
 featured: true
 readingTime: 10
-image: "/blog/css-import-warning-fix.jpg"
+coverImage: "/images/blog/css-import-final.png"
+interactiveDemos:
+  - id: "css-import-order"
+    type: "code"
+    title: "Correct CSS Import Order"
+    description: "Contoh urutan import yang benar vs salah berdasarkan spek CSS"
+    language: "css"
+    content: |
+      /* ❌ SALAH (Warning muncul) */
+      .header { color: blue; }
+      @import url('https://fonts.googleapis.com/css2?family=Inter');
+
+      /* ✅ BENAR (Sesuai spesifikasi) */
+      @import url('https://fonts.googleapis.com/css2?family=Inter');
+      .header { color: blue; }
 ---
 
 # Mengatasi Warning @import CSS: Panduan Lengkap dengan Referensi MDN

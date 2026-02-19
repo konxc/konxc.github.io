@@ -3,11 +3,11 @@ title: "Path Aliases di Astro: Solusi Import yang Lebih Bersih dan Maintainable"
 description: "Panduan lengkap implementasi path aliases di Astro dengan contoh real case untuk meningkatkan developer experience"
 publishDate: 2024-01-26
 author: "Tim KonXC"
-category: "tutorial"
-tags: ["astro", "typescript", "frontend", "developer-experience", "path-aliases"]
+category: "engineering"
+tags: ["astro-framework", "path-aliases", "clean-architecture", "developer-experience"]
 featured: true
 readingTime: 8
-image: "/blog/astro-path-aliases.jpg"
+coverImage: "/images/blog/astro-aliases-final.png"
 ---
 
 # Path Aliases di Astro: Solusi Import yang Lebih Bersih dan Maintainable

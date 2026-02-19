@@ -43,27 +43,53 @@ const {
   trackingEnabled = true,
 } = Astro.props;
 
+// Deterministic variety for headlines to avoid monotony
+const headlines = [
+  "Mari Bangun Masa Depan Bersama",
+  "Tetap Terhubung dengan Koneksi",
+  "Wawasan Eksklusif di Inbox Anda",
+  "Jangan Lewatkan Update Strategis",
+  "Gabung dalam Ekosistem Inovasi",
+];
+
+const sublines = [
+  "Dapatkan update terbaru tentang teknologi, tips bisnis, dan kesempatan kolaborasi.",
+  "Wawasan mendalam seputar dunia engineering, desain, dan strategi digital.",
+  "Kurasi berita teknologi pilihan untuk membantu bisnis Anda tumbuh lebih cepat.",
+  "Newsletter mingguan yang didesain untuk para tech-enthusiast dan business owner.",
+];
+
+// Simple hash to pick a headline if none provided
+const getDeterministicIndex = (str: string, max: number) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return Math.abs(hash) % max;
+};
+
+const pageKey =
+  typeof Astro.url !== "undefined" ? Astro.url.pathname : "default";
+const hIndex = getDeterministicIndex(pageKey, headlines.length);
+const sIndex = getDeterministicIndex(pageKey + "sub", sublines.length);
+
 // Variant-specific configurations
 const variantConfig = {
   default: {
-    title: title || "Tetap Terhubung dengan Koneksi",
-    subtitle:
-      subtitle ||
-      "Dapatkan update terbaru tentang teknologi, tips bisnis, dan kesempatan kolaborasi.",
+    title: title || headlines[hIndex],
+    subtitle: subtitle || sublines[sIndex],
     containerClass: "newsletter-section-default",
     contentClass: "newsletter-content-default",
   },
   compact: {
-    title: title || "Tetap Terhubung dengan Koneksi",
-    subtitle:
-      subtitle ||
-      "Dapatkan update terbaru tentang teknologi dan kesempatan kolaborasi.",
+    title: title || headlines[(hIndex + 1) % headlines.length],
+    subtitle: subtitle || sublines[(sIndex + 1) % sublines.length],
     containerClass: "newsletter-section-compact",
     contentClass: "newsletter-content-compact",
   },
   sidebar: {
     title: title || "✨ Newsletter",
-    subtitle: subtitle || "Jangan lewatkan artikel terbaru!",
+    subtitle: subtitle || "Update terbaru!",
     containerClass: "newsletter-section-sidebar",
     contentClass: "newsletter-content-sidebar",
   },

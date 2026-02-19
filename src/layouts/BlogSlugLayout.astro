@@ -16,6 +16,7 @@ export interface Props {
   keywords?: string;
   author?: string;
   noindex?: boolean;
+  showNewsletter?: boolean;
 }
 
 const {
@@ -28,25 +29,32 @@ const {
   keywords,
   author,
   noindex = false,
+  showNewsletter = true,
 } = Astro.props;
 ---
 
-<Head
-  title={title}
-  description={description}
-  image={image}
-  canonical={canonical}
-  type="article"
-  post={post}
-  keywords={keywords}
-  author={author}
-  noindex={noindex}
-/>
+<!doctype html>
+<html lang="id">
+  <head>
+    <Head
+      title={title}
+      description={description}
+      image={image}
+      canonical={canonical}
+      type="article"
+      post={post}
+      keywords={keywords}
+      author={author}
+      noindex={noindex}
+    />
+  </head>
+  <body>
+    <SmartHeaderFixed />
 
-<SmartHeaderFixed />
+    <main>
+      <slot />
+    </main>
 
-<main>
-  <slot />
-</main>
-
-<Footer variant={footerVariant} />
+    <Footer variant={footerVariant} showNewsletter={showNewsletter} />
+  </body>
+</html>

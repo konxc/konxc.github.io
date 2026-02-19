@@ -1,0 +1,198 @@
+---
+/**
+ * ColorPaletteGenerator - Demo untuk menghasilkan palet warna desain system.
+ */
+---
+
+<div class="color-palette-generator">
+    <div class="color-inputs">
+        <div class="color-input-group">
+            <label for="primary-color">Primary Color</label>
+            <input
+                type="color"
+                id="primary-color"
+                value="#3b82f6"
+                class="color-picker"
+            />
+        </div>
+        <div class="color-input-group">
+            <label for="secondary-color">Secondary Color</label>
+            <input
+                type="color"
+                id="secondary-color"
+                value="#14b8a6"
+                class="color-picker"
+            />
+        </div>
+    </div>
+
+    <div class="color-palette-output">
+        <div class="palette-row">
+            <div class="color-swatch" data-shade="50" data-type="primary">
+                <div class="color-preview"></div>
+                <span class="color-name">50</span>
+                <span class="color-value">#eff6ff</span>
+            </div>
+            <div class="color-swatch" data-shade="100" data-type="primary">
+                <div class="color-preview"></div>
+                <span class="color-name">100</span>
+                <span class="color-value">#dbeafe</span>
+            </div>
+            <div class="color-swatch" data-shade="200" data-type="primary">
+                <div class="color-preview"></div>
+                <span class="color-name">200</span>
+                <span class="color-value">#bfdbfe</span>
+            </div>
+            <div class="color-swatch" data-shade="300" data-type="primary">
+                <div class="color-preview"></div>
+                <span class="color-name">300</span>
+                <span class="color-value">#93c5fd</span>
+            </div>
+            <div class="color-swatch" data-shade="400" data-type="primary">
+                <div class="color-preview"></div>
+                <span class="color-name">400</span>
+                <span class="color-value">#60a5fa</span>
+            </div>
+        </div>
+        <div class="palette-row">
+            <div class="color-swatch" data-shade="500" data-type="primary">
+                <div class="color-preview"></div>
+                <span class="color-name">500</span>
+                <span class="color-value">#3b82f6</span>
+            </div>
+            <div class="color-swatch" data-shade="600" data-type="primary">
+                <div class="color-preview"></div>
+                <span class="color-name">600</span>
+                <span class="color-value">#2563eb</span>
+            </div>
+            <div class="color-swatch" data-shade="700" data-type="primary">
+                <div class="color-preview"></div>
+                <span class="color-name">700</span>
+                <span class="color-value">#1d4ed8</span>
+            </div>
+            <div class="color-swatch" data-shade="800" data-type="primary">
+                <div class="color-preview"></div>
+                <span class="color-name">800</span>
+                <span class="color-value">#1e40af</span>
+            </div>
+            <div class="color-swatch" data-shade="900" data-type="primary">
+                <div class="color-preview"></div>
+                <span class="color-name">900</span>
+                <span class="color-value">#1e3a8a</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="code-output">
+        <h5>Generated CSS Variables:</h5>
+        <pre
+            class="generated-code"><code id="generated-css">{`:root {
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+}`}</code></pre>
+        <button class="copy-generated-btn" data-target="generated-css">
+            Copy CSS Variables
+        </button>
+    </div>
+</div>
+
+<style>
+    @reference "@/styles/global.css";
+
+    .color-palette-generator {
+        @apply space-y-6;
+    }
+
+    .color-inputs {
+        @apply grid grid-cols-1 gap-4 md:grid-cols-2;
+    }
+
+    .color-input-group {
+        @apply space-y-2;
+    }
+
+    .color-input-group label {
+        @apply block text-sm font-medium text-neutral-700;
+    }
+
+    .color-picker {
+        @apply h-12 w-full cursor-pointer rounded-lg border border-neutral-300;
+    }
+
+    .color-palette-output {
+        @apply space-y-3;
+    }
+
+    .palette-row {
+        @apply flex gap-2;
+    }
+
+    .color-swatch {
+        @apply flex-1 text-center;
+    }
+
+    .color-preview {
+        @apply mb-2 h-16 w-full rounded-lg border border-neutral-300;
+    }
+
+    .color-name {
+        @apply block text-xs font-medium text-neutral-600;
+    }
+
+    .color-value {
+        @apply block font-mono text-xs text-neutral-500;
+    }
+
+    .code-output {
+        @apply mt-6 rounded-lg bg-neutral-50 p-4;
+    }
+
+    .code-output h5 {
+        @apply mb-2 text-sm font-medium text-neutral-700;
+    }
+
+    .generated-code {
+        @apply overflow-x-auto rounded bg-neutral-900 p-3 font-mono text-xs text-neutral-100;
+    }
+
+    .generated-code::-webkit-scrollbar {
+        height: 4px;
+        width: 4px;
+    }
+
+    .generated-code::-webkit-scrollbar-track {
+        @apply rounded-full bg-neutral-800/50;
+    }
+
+    .generated-code::-webkit-scrollbar-thumb {
+        @apply hover:bg-primary-500 rounded-full border-2 border-transparent bg-neutral-600 bg-clip-padding transition-colors;
+    }
+
+    .copy-generated-btn {
+        @apply bg-primary-500 hover:bg-primary-600 mt-2 rounded px-3 py-1 text-sm text-white transition-colors;
+    }
+
+    .dark .color-input-group label {
+        @apply text-neutral-300;
+    }
+
+    .dark .color-picker {
+        @apply border-neutral-600;
+    }
+
+    .dark .code-output {
+        @apply bg-neutral-700;
+    }
+
+    .dark .code-output h5 {
+        @apply text-neutral-300;
+    }
+</style>

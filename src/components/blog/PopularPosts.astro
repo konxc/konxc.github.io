@@ -69,7 +69,12 @@ const displayPosts = popularPosts.slice(0, maxPosts);
                 </h4>
 
                 <div class="popular-meta">
-                  <span class="popular-category">{post.data.category}</span>
+                  <a
+                    href={`/blog/category/${post.data.category}`}
+                    class="popular-category hover:underline"
+                  >
+                    {post.data.category}
+                  </a>
                   <span class="popular-date">{publishDate}</span>
                   {showViews && (post.data as any).views && (
                     <span class="popular-views">

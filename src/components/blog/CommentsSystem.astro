@@ -48,11 +48,16 @@ const mockComments = [
 ---
 
 <div class={`comments-system ${className || ''}`} data-post-slug={postSlug}>
-  <div class="comments-header">
-    <h3 class="comments-title">
-      💬 Komentar ({mockComments.length})
-    </h3>
-    <p class="comments-subtitle">Bagikan pemikiran dan pertanyaan Anda tentang artikel ini</p>
+  <div class="comments-intro mb-6">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/5 border border-primary-500/10 mb-4">
+        <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+        </span>
+        <span class="text-[10px] font-black uppercase tracking-widest text-primary-600 dark:text-primary-400">Community Discussion</span>
+    </div>
+    <h3 class="text-2xl font-black text-neutral-900 dark:text-white mb-2 italic tracking-tight">Komentar <span class="text-primary-600">({mockComments.length})</span></h3>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400">Apa pendapat Anda tentang artikel ini? Mari berbagi pemikiran.</p>
   </div>
 
   <!-- Comment Form -->
@@ -664,321 +669,143 @@ const mockComments = [
 <style>
   @reference "@/styles/global.css";
   .comments-system {
-    /* @apply bg-white rounded-2xl p-6 shadow-lg border border-neutral-100; */
+    @apply mx-auto max-w-2xl;
   }
 
-  .comments-header {
-    @apply mb-8;
-  }
-
-  .comments-title {
-    @apply text-xl md:text-2xl font-bold mb-3 tracking-tight;
-    background: linear-gradient(135deg, 
-      #6b5b73 0%, 
-      #8b7d8b 25%, 
-      #a0969f 50%, 
-      #b8adb6 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 1px 3px rgba(107, 91, 115, 0.1);
-  }
-
-  .comments-subtitle {
-    @apply text-slate-600 font-medium;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-  }
-
+  /* Form Styling - Cleaner and modern */
   .comment-form-container {
-    @apply mb-8 p-6 rounded-2xl border-2;
-    background: var(--gradient-cream-elegant);
-    border-color: var(--border-cream-medium);
-    box-shadow: var(--shadow-cream-medium);
-  }
-
-  .comment-form {
-    @apply space-y-4;
+    @apply mb-8 p-6 rounded-3xl border border-neutral-100 dark:border-neutral-800 bg-white/50 dark:bg-neutral-900/50 backdrop-blur-sm shadow-xl;
   }
 
   .form-group {
-    @apply space-y-2;
+    @apply mb-5;
   }
 
   .form-label {
-    @apply block text-sm font-medium mb-2;
-    color: var(--text-primary);
+    @apply block text-xs font-black uppercase tracking-tighter text-neutral-500 dark:text-neutral-400 mb-2;
   }
 
   .form-input,
   .form-textarea {
-    @apply w-full px-4 py-3 border-2 rounded-lg font-medium;
-    color: var(--text-primary);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, var(--color-cream-200) 100%);
-    border-color: var(--border-cream-strong);
-    box-shadow: var(--shadow-cream-soft);
-    transition: var(--transition-smooth);
-  }
-
-  .form-input::placeholder,
-  .form-textarea::placeholder {
-    color: var(--text-placeholder);
-  }
-
-  .form-input:focus,
-  .form-textarea:focus {
-    outline: none;
-    border-color: var(--border-focus);
-    box-shadow: var(--shadow-cream-focus);
+    @apply w-full px-5 py-4 bg-neutral-50 dark:bg-neutral-800/50 border-neutral-100 dark:border-neutral-700 rounded-2xl text-neutral-800 dark:text-neutral-100 text-sm focus:bg-white dark:focus:bg-neutral-800 transition-all duration-300 outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500/30;
   }
 
   .form-textarea {
-    @apply resize-none;
+    @apply min-h-[120px] resize-none;
   }
 
   .char-counter {
-    @apply text-xs text-right font-medium;
-    color: var(--text-muted);
-  }
-
-  .char-counter .over-limit {
-    @apply text-red-500 font-medium;
+    @apply text-[10px] text-right mt-2 font-bold text-neutral-400 tabular-nums;
   }
 
   .form-actions {
-    @apply flex gap-3;
+    @apply flex items-center gap-4 pt-4;
   }
 
   .btn-primary {
-    @apply flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white;
-    background: var(--gradient-sophisticated);
-    box-shadow: var(--shadow-sophisticated);
-    transition: var(--transition-smooth);
-    transform: scale(1);
-  }
-
-  .btn-primary:hover {
-    background: var(--gradient-sophisticated-hover);
-    box-shadow: var(--shadow-sophisticated-hover);
-    transform: scale(1.02);
-  }
-
-  .btn-primary:active {
-    transform: scale(0.98);
+    @apply flex items-center gap-3 px-8 py-3.5 bg-neutral-900 dark:bg-white text-white dark:text-black rounded-2xl text-sm font-black tracking-tight hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl shadow-neutral-900/10;
   }
 
   .btn-secondary {
-    @apply flex items-center gap-2 px-6 py-3 rounded-lg font-semibold border-2;
-    color: var(--text-secondary);
-    background: var(--color-cream-100);
-    border-color: var(--border-cream-strong);
-    box-shadow: var(--shadow-cream-soft);
-    transition: var(--transition-smooth);
-  }
-
-  .btn-secondary:hover {
-    background: var(--color-cream-200);
-    border-color: var(--border-focus);
-  }
-
-  .btn-sm {
-    @apply px-4 py-2 text-sm;
+    @apply flex items-center gap-3 px-8 py-3.5 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 rounded-2xl text-sm font-black tracking-tight hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg shadow-neutral-900/5;
   }
 
   .btn-icon {
-    @apply w-4 h-4;
+    @apply w-5 h-5 opacity-80;
   }
 
+  /* Comments List - Conversation focused */
   .comments-list {
-    @apply space-y-6;
+    @apply space-y-6 relative;
   }
 
   .comment-item {
-    @apply p-6 rounded-xl border;
-    background: var(--gradient-cream-soft);
-    border-color: var(--border-cream-light);
-    box-shadow: var(--shadow-cream-soft);
+    @apply relative pl-4 md:pl-0;
+  }
+
+  .comment-item::before {
+    content: "";
+    @apply absolute left-0 top-12 bottom-0 w-px bg-neutral-100 dark:bg-neutral-800 md:hidden;
   }
 
   .comment-header {
-    @apply flex items-center justify-between mb-4;
+    @apply flex items-start justify-between mb-4;
   }
 
   .comment-author {
-    @apply flex items-center gap-3;
+    @apply flex items-center gap-4;
   }
 
   .author-avatar {
-    @apply w-10 h-10 text-white rounded-full flex items-center justify-center font-bold;
-    background: var(--gradient-sophisticated);
-    box-shadow: var(--shadow-sophisticated);
+    @apply w-12 h-12 rounded-2xl bg-linear-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-primary-500/20 transform !rotate-6;
   }
 
-  .author-avatar.small {
-    @apply w-8 h-8 text-sm;
+  .author-info {
+    @apply flex flex-col;
   }
 
   .author-name {
-    @apply font-semibold;
-    color: var(--text-primary);
+    @apply text-base font-black text-neutral-900 dark:text-neutral-100;
   }
 
-  .comment-date,
-  .reply-date {
-    @apply text-sm font-medium;
-    color: var(--text-muted);
+  .comment-date {
+    @apply text-[10px] font-bold text-neutral-400 uppercase tracking-widest;
   }
 
+  .comment-content {
+    @apply text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed mb-4 md:pl-16;
+  }
+
+  /* Action Buttons */
   .comment-actions {
-    @apply flex items-center gap-3;
+    @apply flex items-center gap-6 md:pl-16;
   }
 
   .action-btn {
-    @apply flex items-center gap-1 px-3 py-1 rounded-lg text-sm font-medium;
-    color: var(--text-secondary);
-    background: var(--color-cream-100);
-    border: 1px solid var(--border-cream-strong);
-    box-shadow: var(--shadow-cream-soft);
-    transition: var(--transition-fast);
-  }
-
-  .action-btn:hover {
-    background: var(--color-cream-200);
+    @apply flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-neutral-400 hover:text-primary-500 transition-colors duration-200;
   }
 
   .action-btn.liked {
-    @apply bg-red-50 text-red-600;
-    border-color: rgba(239, 68, 68, 0.3);
-    box-shadow: 0 1px 4px rgba(239, 68, 68, 0.1);
+    @apply text-red-500;
   }
 
   .action-icon {
-    @apply w-4 h-4;
+    @apply w-3.5 h-3.5;
   }
 
-  .comment-content,
-  .reply-content {
-    @apply leading-relaxed font-medium;
-    color: var(--text-primary);
-  }
-
+  /* Replies */
   .replies-list {
-    @apply mt-4 ml-8 space-y-4;
+    @apply mt-6 ml-4 md:ml-16 space-y-4 relative;
   }
 
   .reply-item {
-    @apply p-4 rounded-lg border;
-    background: var(--gradient-cream-soft);
-    border-color: var(--border-cream-light);
-    box-shadow: var(--shadow-cream-soft);
-  }
-
-  .reply-header {
-    @apply flex items-center justify-between mb-3;
+    @apply relative border-l-2 border-neutral-50 dark:border-neutral-800 pl-6;
   }
 
   .reply-author {
-    @apply flex items-center gap-2;
+    @apply flex items-center gap-3 mb-2;
   }
 
-  .reply-actions {
-    @apply flex items-center gap-2;
+  .author-avatar.small {
+    @apply w-8 h-8 text-sm rotate-0 rounded-xl;
   }
 
-  .reply-form-container {
-    @apply mt-4 p-4 rounded-lg border;
-    background: var(--gradient-cream-soft);
-    border-color: var(--border-cream-medium);
-    box-shadow: var(--shadow-cream-soft);
+  .reply-content {
+    @apply text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed;
   }
 
-  .reply-form {
-    @apply space-y-3;
+  /* Shared styles for dark mode */
+  .dark .btn-primary {
+    @apply hover:shadow-white/5;
   }
 
-  .field-error {
-    @apply text-sm text-red-500 mt-1;
-  }
-
-  .form-input.error,
-  .form-textarea.error {
-    @apply border-red-300 focus:ring-red-500;
-  }
-
-  .message {
-    @apply p-4 rounded-lg font-medium;
-  }
-
-  .message-success {
-    @apply bg-green-50 text-green-700 border border-green-200;
-  }
-
-  .message-error {
-    @apply bg-red-50 text-red-700 border border-red-200;
-  }
-
-  .comments-footer {
-    @apply text-center pt-6 border-t border-neutral-200;
-  }
-
-  /* Dark mode styles */
-  .dark .comments-system {
-    @apply bg-neutral-800 border-neutral-700;
-  }
-
-  .dark .comments-title {
-    @apply text-neutral-100;
-  }
-
-  .dark .comments-subtitle {
-    @apply text-neutral-400;
-  }
-
-  .dark .comment-form-container {
-    @apply from-primary-900 to-secondary-900 border-primary-700;
-  }
-
-  .dark .form-input,
-  .dark .form-textarea {
-    @apply bg-neutral-700 border-neutral-600 text-neutral-100 placeholder-neutral-400;
-  }
-
-  .dark .comment-item {
-    @apply bg-neutral-700 border-neutral-600;
-  }
-
-  .dark .reply-item {
-    @apply bg-neutral-600 border-neutral-500;
-  }
-
-  .dark .reply-form-container {
-    @apply bg-neutral-600 border-neutral-500;
-  }
-
-  /* Mobile responsive */
+  /* Mobile Tuning */
   @media (max-width: 768px) {
-    .comments-system {
-      @apply p-4;
-    }
-    
-    .comment-form-container {
-      @apply p-4;
-    }
-    
-    .comment-header {
-      @apply flex-col items-start gap-3;
-    }
-    
     .comment-actions {
-      @apply w-full justify-start;
+      @apply pl-0 mt-4;
     }
-    
-    .replies-list {
-      @apply ml-4;
-    }
-    
-    .form-actions {
-      @apply flex-col;
+    .comment-content {
+      @apply pl-0;
     }
   }
 </style>

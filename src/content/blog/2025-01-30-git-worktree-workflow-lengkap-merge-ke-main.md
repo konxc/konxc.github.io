@@ -3,40 +3,33 @@ title: "Workflow Lengkap Git Worktree: Dari Create Hingga Merge ke Main"
 description: "Panduan step-by-step lengkap untuk menggunakan Git worktree mulai dari membuat worktree, bekerja di worktree, commit, push, merge ke main branch, hingga cleanup. Tutorial praktis untuk developer yang ingin menguasai workflow worktree secara menyeluruh."
 publishDate: 2025-01-30
 author: "Tim Koneksi"
-category: "tutorial"
-tags:
-  [
-    "git",
-    "worktree",
-    "workflow",
-    "merge",
-    "best-practices",
-    "version-control",
-    "tutorial",
-  ]
+category: "engineering"
+tags: ["git-workflow", "worktree-patterns", "collaborative-development", "dev-process"]
 featured: false
 readingTime: 15
+coverImage: "/images/blog/git-worktree-workflow.png"
 interactiveDemos:
-  [
-    {
-      id: "workflow-complete",
-      type: "code",
-      title: "Complete Worktree Workflow Script",
-      description: "Script lengkap untuk semua langkah dalam workflow worktree",
-      icon: "💻",
-      featured: true,
-      metadata: { tags: ["workflow", "script"], language: "bash" },
-    },
-    {
-      id: "merge-workflow",
-      type: "visual",
-      title: "Merge Workflow Visualization",
-      description: "Visualisasi alur merge dari worktree branch ke main",
-      icon: "📊",
-      featured: true,
-      metadata: { tags: ["merge", "visualization"] },
-    },
-  ]
+  - id: "workflow-complete"
+    type: "code"
+    title: "Complete Worktree Workflow Script"
+    description: "Script lengkap untuk semua langkah dalam workflow worktree"
+    icon: "💻"
+    featured: true
+    metadata: { tags: ["workflow", "script"], language: "bash" }
+  - id: "merge-workflow"
+    type: "visual"
+    title: "Merge Workflow Visualization"
+    description: "Visualisasi alur merge dari worktree branch ke main"
+    content: |
+      # Worktree to Main Workflow
+      - Step 1: 'git worktree add' -> Membuat working directory parallel
+      - Step 2: Develop & Commit -> Bekerja secara terisolasi di folder baru
+      - Step 3: 'git push' -> Mengirim perubahan ke remote repository
+      - Step 4: PR & Merge -> Menyatukan branch fitur ke branch 'main'
+      - Step 5: 'git worktree remove' -> Cleanup folder lokal setelah merge selesai
+    icon: "📊"
+    featured: true
+    metadata: { tags: ["merge", "visualization"] }
 ---
 
 # Workflow Lengkap Git Worktree: Dari Create Hingga Merge ke Main

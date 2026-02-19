@@ -1,0 +1,25 @@
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: koneksi-portfolio
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=4321
+    expose:
+      - "4321"
+    networks:
+      - nginx-net
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:4321/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+networks:
+  nginx-net:
+    external: true

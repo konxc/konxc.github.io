@@ -3,39 +3,11 @@ title: "Kapan Branch Remote Masih Diperlukan? Panduan Keputusan untuk Developer"
 description: "Panduan komprehensif untuk developer dalam memutuskan kapan branch remote perlu dipertahankan dan kapan aman untuk dihapus. Pelajari skenario praktis, checklist keputusan, dan best practices untuk manajemen branch remote yang efektif."
 publishDate: 2025-01-30
 author: "Tim Koneksi"
-category: "technical"
-tags:
-  [
-    "git",
-    "branch-management",
-    "remote",
-    "collaboration",
-    "decision-making",
-    "best-practices",
-  ]
+category: "engineering"
+tags: ["git-best-practices", "branch-lifecycle", "development-governance", "collaboration"]
 featured: false
 readingTime: 12
-interactiveDemos:
-  [
-    {
-      id: "decision-tree",
-      type: "visual",
-      title: "Decision Tree: Keep or Delete Remote Branch",
-      description: "Diagram keputusan untuk menentukan apakah branch remote perlu dipertahankan",
-      icon: "🌳",
-      featured: true,
-      metadata: { tags: ["decision", "visualization"] },
-    },
-    {
-      id: "cleanup-checklist",
-      type: "code",
-      title: "Branch Cleanup Checklist Script",
-      description: "Script untuk membantu proses cleanup branch remote",
-      icon: "✅",
-      featured: true,
-      metadata: { tags: ["checklist", "script"], language: "bash" },
-    },
-  ]
+coverImage: "/images/blog/git-remote-branch-decision.png"
 ---
 
 # Kapan Branch Remote Masih Diperlukan? Panduan Keputusan untuk Developer

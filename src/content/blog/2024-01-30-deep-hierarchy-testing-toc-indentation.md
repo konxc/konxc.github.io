@@ -4,19 +4,10 @@ description: "Artikel khusus untuk testing indentasi dan visual hierarchy pada T
 publishDate: 2024-01-30
 author: "Sandikodev"
 category: "testing"
-tags:
-  [
-    "testing",
-    "indentation",
-    "hierarchy",
-    "toc",
-    "visual-design",
-    "frontend",
-    "quality-assurance",
-  ]
+tags: ["hierarchy-validation", "visual-regression", "depth-testing", "ux-accessibility"]
 featured: false
 readingTime: 8
-image: "/blog/deep-hierarchy-testing.jpg"
+coverImage: "/images/blog/toc-deep-hierarchy.png"
 ---
 
 # Deep Hierarchy Testing - TOC Indentation Validation

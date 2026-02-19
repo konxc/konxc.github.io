@@ -3,13 +3,13 @@ title: "Gap vs Space di Tailwind CSS: Kapan Menggunakan Yang Mana?"
 description: "Pelajari perbedaan fundamental antara gap dan space utilities di Tailwind CSS, kapan menggunakan masing-masing, dan best practices untuk spacing yang optimal."
 publishDate: 2024-01-26
 lastModified: 2024-01-26
-author: "Konxc"
-category: "tutorial"
-tags:
-  ["Tailwind CSS", "CSS", "Frontend", "Web Development", "Spacing", "Layout"]
+author: "Tim Koneksi"
+category: "frontend"
+tags: ["tailwind-spacing", "css-layouts", "ui-consistency", "layout-engineering"]
 featured: false
 readingTime: 8
 wordCount: 2100
+coverImage: "/images/blog/tailwind-gap-vs-space.png"
 ---
 
 # Gap vs Space di Tailwind CSS: Kapan Menggunakan Yang Mana?

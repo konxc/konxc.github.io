@@ -1,46 +1,13 @@
 ---
 title: "Serena MCP Server: Pengenalan dan Manfaat untuk Codebase Development"
 description: "Pelajari tentang Serena MCP Server - coding agent toolkit yang menggunakan Language Server Protocol (LSP) untuk semantic code retrieval dan editing. Temukan perbedaannya dengan tools lain dan manfaatnya untuk project SvelteKit, TypeScript, dan codebase modern."
-publishDate: 2025-11-05
+publishDate: 2025-02-01
 author: "Tim Koneksi"
-category: "technical"
-tags:
-  [
-    "serena",
-    "mcp-server",
-    "lsp",
-    "semantic-code",
-    "refactoring",
-    "productivity",
-    "development-tools",
-    "sveltekit",
-    "typescript",
-    "coding-assistant",
-  ]
+category: "ai"
+tags: ["mcp-server", "serena-ai", "semantic-analysis", "ai-productivity", "coding-agents"]
 featured: true
 readingTime: 18
-coverImage: "/blog/serena-mcp-hero.jpg"
-interactiveDemos:
-  [
-    {
-      id: "serena-vs-traditional",
-      type: "visual",
-      title: "Serena vs Traditional Text-based Tools",
-      description: "Perbandingan visual antara semantic analysis dengan text-based search",
-      icon: "📊",
-      featured: true,
-      metadata: { tags: ["comparison", "visualization"] },
-    },
-    {
-      id: "semantic-refactoring-flow",
-      type: "code",
-      title: "Semantic Refactoring Process",
-      description: "Flow diagram proses refactoring dengan semantic understanding",
-      icon: "🔄",
-      featured: true,
-      metadata: { tags: ["refactoring", "process"] },
-    },
-  ]
+coverImage: "/images/blog/serena-intro-final.png"
 ---
 
 # Serena MCP Server: Pengenalan dan Manfaat untuk Codebase Development

@@ -316,7 +316,9 @@ const {
       ) as HTMLButtonElement;
 
       if (followBtn) {
-        const authorMeta = this.authors.find((author) => author.id === authorId);
+        const authorMeta = this.authors.find(
+          (author) => author.id === authorId,
+        );
         const isFollowing = followBtn.classList.contains("following");
 
         if (isFollowing) {

@@ -4,18 +4,10 @@ description: "Artikel sederhana untuk testing basic functionality Table of Conte
 publishDate: 2024-01-30
 author: "Sandikodev"
 category: "testing"
-tags:
-  [
-    "testing",
-    "basic-functionality",
-    "toc",
-    "simple-testing",
-    "frontend",
-    "validation",
-  ]
+tags: ["ui-testing", "toc-validation", "dom-integrity", "frontend-qa"]
 featured: false
 readingTime: 5
-image: "/blog/simple-toc-testing.jpg"
+coverImage: "/images/blog/toc-simple-basic.png"
 ---
 
 # Simple TOC Testing - Basic Functionality Validation
@@ -24,76 +16,46 @@ image: "/blog/simple-toc-testing.jpg"
 
 Artikel sederhana ini dirancang untuk testing basic functionality Table of Contents dengan struktur yang mudah dipahami dan tidak terlalu kompleks.
 
-## 📋 **Introduction**
+---
 
-Pengenalan singkat tentang testing basic functionality.
+## 🛠️ **Testing Scenarios**
 
-## 📋 **Getting Started**
+### 1. **Header Detection**
+- Memastikan generator TOC dapat mendeteksi H2 dan H3.
+- Memastikan ID otomatis dibuat untuk setiap header.
 
-Cara memulai testing basic functionality.
-
-### **Level 3: Setup**
-
-Setup environment untuk testing.
-
-#### **Level 4: Prerequisites**
-
-Prerequisites yang diperlukan.
-
-### **Level 3: Configuration**
-
-Konfigurasi untuk testing.
-
-## 📋 **Basic Testing**
-
-Testing basic functionality.
-
-### **Level 3: TOC Generation**
-
-Testing generasi Table of Contents.
-
-### **Level 3: Link Creation**
-
-Testing pembuatan links.
-
-### **Level 3: Smooth Scrolling**
-
-Testing smooth scrolling behavior.
-
-## 📋 **Visual Testing**
-
-Testing visual aspects.
-
-### **Level 3: Styling**
-
-Testing styling dan appearance.
-
-### **Level 3: Responsive Design**
-
-Testing responsive design.
-
-## 📋 **Interactive Testing**
-
-Testing interactive features.
-
-### **Level 3: Click Events**
-
-Testing click events.
-
-### **Level 3: Hover Effects**
-
-Testing hover effects.
-
-### **Level 3: Active States**
-
-Testing active states.
-
-## 📋 **Conclusion**
-
-Kesimpulan testing basic functionality.
+### 2. **Navigation Link**
+- Memastikan link di TOC dapat mengantar user ke header yang tepat.
+- Memastikan scroll smooth berfungsi.
 
 ---
 
-**✅ Testing Complete**: Basic functionality berfungsi dengan baik!
+## 🏗️ **Content Structure**
 
-**📊 Results**: Semua test cases passed dengan success rate 100%.
+### **Section 1: Basic Header**
+Header ini seharusnya muncul di level 1 pada TOC.
+
+#### **Sub-section 1.1**
+Header ini seharusnya muncul sebagai child di bawah Section 1.
+
+#### **Sub-section 1.2**
+Header ini juga seharusnya muncul sebagai child di bawah Section 1.
+
+### **Section 2: Another Basic Header**
+Header kedua untuk memastikan listing berfungsi untuk banyak item.
+
+---
+
+## 📊 **Expected Results**
+
+| Test Case | Expected Result |
+| :--- | :--- |
+| TOC Visibility | Muncul di area sidebar/content |
+| List Accuracy | Menampilkan 2 item level 1 |
+| Hierarchy | Menampilkan sub-item dengan indentasi |
+
+---
+
+## 🏁 **Conclusion**
+
+Testing ini dianggap sukses jika semua poin di atas terpenuhi secara visual dan fungsional.

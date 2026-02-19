@@ -4,39 +4,10 @@ description: "Tutorial praktis berdasarkan kasus nyata: memindahkan route waitin
 publishDate: 2025-01-30
 author: "Tim Koneksi"
 category: "case-study"
-tags:
-  [
-    "git",
-    "worktree",
-    "sveltekit",
-    "case-study",
-    "routing",
-    "refactoring",
-    "real-world",
-  ]
+tags: ["git-worktree", "sveltekit", "refactoring-case-study", "engineering-workflow"]
 featured: true
 readingTime: 18
-interactiveDemos:
-  [
-    {
-      id: "route-migration-process",
-      type: "visual",
-      title: "Route Migration Process Flow",
-      description: "Visualisasi alur proses migrasi route dari (public) ke (auth)",
-      icon: "🔄",
-      featured: true,
-      metadata: { tags: ["migration", "visualization"] },
-    },
-    {
-      id: "error-solutions",
-      type: "code",
-      title: "Error Solutions and Commands",
-      description: "Kumpulan error yang muncul dan solusinya dalam kasus ini",
-      icon: "🔧",
-      featured: true,
-      metadata: { tags: ["errors", "solutions"], language: "bash" },
-    },
-  ]
+coverImage: "/images/blog/git-worktree-sveltekit-case.png"
 ---
 
 # Case Study: Memindahkan Route SvelteKit dengan Git Worktree
