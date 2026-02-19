@@ -2,56 +2,96 @@
 title: "Evolusi Tailwind CSS v4: Panduan Lengkap Migrasi"
 description: "Panduan komprehensif untuk migrasi dari Tailwind CSS v3 ke v4 dengan contoh praktis dan tool interaktif"
 publishDate: 2024-01-25
-tags: ["tailwind", "css", "frontend", "migration"]
-category: "technical"
+tags: ["tailwind-css", "css-framework", "web-design", "frontend-engineering", "migration-guide"]
+category: "frontend"
 author: "Konxc"
 readingTime: 12
 featured: true
+coverImage: "/images/blog/tailwind-v4-evolution-premium.png"
 interactiveDemos:
+  - id: "v4-config-comparison"
+    type: "visual"
+    title: "v3 Config vs v4 CSS-First"
+    description: "Visualisasi perbedaan cara mengkonfigurasi theme antara v3 dan v4"
+    icon: "🎨"
+    featured: true
+    content: |
+      # Paradigma Konfigurasi v4
+      - v3: Menggunakan file 'tailwind.config.js' (JavaScript-based)
+      - v4: Menggunakan direktif '@theme' langsung di CSS (CSS-First)
+      - Zero Config: v4 mendeteksi file secara otomatis tanpa array 'content'
+      - CSS Variables: Theme variabel secara otomatis menjadi CSS variables murni
   - id: "tailwind-config"
     type: "code"
     title: "Tailwind Config Generator"
     description: "Generate konfigurasi Tailwind CSS dengan mudah menggunakan tool interaktif"
-    icon: "⚙️"
+    language: "javascript"
+    content: |
+      // tailwind.config.js
+      /** @type {import('tailwindcss').Config} */
+      module.exports = {
+        content: [
+          './src/**/*.{js,ts,jsx,tsx}',
+          './src/**/*.{html,astro}',
+          './public/**/*.html'
+        ],
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                500: '#3b82f6',
+                900: '#1e3a8a',
+              }
+            }
+          }
+        },
+        plugins: [
+          require('@tailwindcss/forms'),
+          require('@tailwindcss/typography'),
+        ]
+      }
     featured: true
-    metadata:
-      difficulty: "beginner"
-      duration: "5 min"
-      prerequisites: ["basic-css"]
-      tags: ["configuration", "setup"]
   - id: "path-aliases"
-    type: "visual"
+    type: "code"
     title: "Path Aliases Setup"
-    description: "Visualisasi setup path aliases di berbagai framework dan bundler"
-    icon: "🎨"
+    description: "Konfigurasi path aliases di berbagai framework"
+    language: "typescript"
+    content: |
+      // tsconfig.json
+      {
+        "compilerOptions": {
+          "baseUrl": ".",
+          "paths": {
+            "@/*": ["./src/*"],
+            "@components/*": ["./src/components/*"],
+            "@utils/*": ["./src/utils/*"]
+          }
+        }
+      }
     featured: false
-    metadata:
-      difficulty: "intermediate"
-      duration: "8 min"
-      prerequisites: ["typescript", "bundler-knowledge"]
-      tags: ["aliases", "typescript", "bundler"]
   - id: "color-palette"
-    type: "interactive"
+    type: "visual"
     title: "Color Palette Generator"
-    description: "Buat dan eksplorasi palet warna yang konsisten dengan tool interaktif"
-    icon: "🎮"
+    description: "Buat dan eksplorasi palet warna yang konsisten"
+    content: "color-palette-generator"
+    interactive: true
     featured: true
-    metadata:
-      difficulty: "beginner"
-      duration: "10 min"
-      prerequisites: ["color-theory"]
-      tags: ["colors", "design", "palette"]
   - id: "responsive-design"
     type: "interactive"
     title: "Responsive Design Tool"
     description: "Test dan eksplorasi responsive design dengan berbagai breakpoint"
-    icon: "📱"
+    language: "html"
+    content: |
+      <!-- Responsive Grid System -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h3 class="text-lg font-semibold mb-2">Card 1</h3>
+          <p class="text-gray-600 text-sm">Responsive card content</p>
+        </div>
+      </div>
     featured: false
-    metadata:
-      difficulty: "intermediate"
-      duration: "15 min"
-      prerequisites: ["responsive-design", "css-grid"]
-      tags: ["responsive", "breakpoints", "mobile-first"]
 ---
 
 # Evolusi Tailwind CSS v4: Panduan Lengkap Migrasi
