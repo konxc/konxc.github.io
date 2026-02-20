@@ -41,7 +41,8 @@
     "test:smart-header": "node scripts/simple-smart-header-test.js",
     "test:smart-header:install": "pnpm install playwright && pnpx playwright install chromium",
     "test:smart-header:quick": "node scripts/quick-smart-header-test.js",
-    "test:smart-header:html": "node scripts/test-smart-header-html.js"
+    "test:smart-header:html": "node scripts/test-smart-header-html.js",
+    "test:ecosystem": "node scripts/test-ecosystem-ui.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",
