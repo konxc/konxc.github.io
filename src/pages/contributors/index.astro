@@ -50,9 +50,12 @@ const totalKoneksi = activeContributors.reduce(
 <UnifiedLayout
   title="The Squad - Kontributor KonXC"
   description="Temukan talenta di balik ekosistem teknologi KonXC. Komunitas pengembang, desainer, dan penulis terbaik Indonesia."
+  showNewsletter={false}
+  headerVariant="transparent"
+  theme="dark"
 >
   <!-- 1. Cinematic Hero Section -->
-  <section class="relative overflow-hidden pt-32 pb-20 md:pt-48 md:pb-32">
+  <section class="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-32">
     <!-- Sophisticated Background -->
     <div class="absolute inset-0 -z-10 bg-[#0a0a0b]">
       <div
@@ -93,7 +96,7 @@ const totalKoneksi = activeContributors.reduce(
           >
         </h1>
         <p
-          class="mx-auto max-w-2xl text-lg leading-relaxed text-neutral-400 md:text-xl"
+          class="mx-auto max-w-2xl text-lg leading-relaxed text-neutral-300 md:text-xl"
         >
           Kami bukan sekadar kontributor. Kami adalah kolektif inovator yang
           membangun masa depan teknologi Indonesia melalui kolaborasi terbuka
@@ -105,7 +108,11 @@ const totalKoneksi = activeContributors.reduce(
       <div class="mt-20 grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-8">
         {
           [
-            { label: "Builders", value: activeContributors.length, icon: "⚡" },
+            {
+              label: "Builders",
+              value: activeContributors.length,
+              icon: "⚡",
+            },
             { label: "OS Impact", value: totalOS, icon: "🌍" },
             { label: "Local Projects", value: totalKoneksi, icon: "🏗️" },
             { label: "Community XP", value: "High", icon: "🏆" },
@@ -115,7 +122,7 @@ const totalKoneksi = activeContributors.reduce(
                 {stat.icon}
               </div>
               <div class="text-3xl font-black text-white">{stat.value}</div>
-              <div class="text-xs font-bold tracking-widest text-neutral-500 uppercase">
+              <div class="text-xs font-black tracking-widest text-neutral-400 uppercase">
                 {stat.label}
               </div>
             </div>
@@ -126,7 +133,7 @@ const totalKoneksi = activeContributors.reduce(
   </section>
 
   <!-- 2. Wall of Fame (Bento Layout) -->
-  <section class="bg-[#0a0a0b] py-24" id="hall-of-fame">
+  <section class="bg-[#0a0a0b] pt-24 pb-12" id="hall-of-fame">
     <div class="container text-white">
       <div class="mb-16 flex items-end justify-between">
         <div class="max-w-xl">
@@ -136,7 +143,7 @@ const totalKoneksi = activeContributors.reduce(
           <div class="bg-primary-500 mt-4 h-1 w-20"></div>
         </div>
         <p
-          class="hidden text-xs font-bold tracking-widest text-neutral-500 uppercase md:block"
+          class="hidden text-xs font-black tracking-widest text-neutral-300 uppercase md:block"
         >
           Season: Early 2024
         </p>
@@ -155,10 +162,11 @@ const totalKoneksi = activeContributors.reduce(
         <!-- Rank 2, 3, 4: Sidebar Bento -->
         {
           topChallengers.map((c, i) => (
-            <div class={`h-full md:col-span-5`}>
+            <div class={`md:col-span-5`}>
               <ContributorCard
                 contributor={c}
-                variant="compact"
+                variant="default"
+                showDetails={false}
                 class="h-full border-white/10! bg-white/5! transition-colors hover:bg-white/10!"
               />
             </div>
@@ -169,13 +177,11 @@ const totalKoneksi = activeContributors.reduce(
   </section>
 
   <!-- 3. The Squads (Interactive Section) -->
-  <section class="relative bg-neutral-50 py-24 dark:bg-[#0f0f10]">
+  <section class="relative bg-neutral-50 pt-12 pb-24 dark:bg-[#0f0f10]">
     <div class="container">
       <div class="mb-16">
-        <h2 class="text-4xl font-black text-neutral-900 dark:text-white">
-          Active Squads.
-        </h2>
-        <p class="mt-4 text-neutral-600 dark:text-neutral-400">
+        <h2 class="text-4xl font-black text-white">Active Squads.</h2>
+        <p class="mt-4 text-neutral-300">
           Dikelompokkan berdasarkan spesialisasi taktis mereka.
         </p>
       </div>
@@ -207,7 +213,7 @@ const totalKoneksi = activeContributors.reduce(
                 {role === "writer" && (
                   <a
                     href="/contributors/writers"
-                    class="group hover:text-primary-600 flex items-center gap-2 text-sm font-bold text-neutral-600 dark:text-neutral-400"
+                    class="group hover:text-primary-400 flex items-center gap-2 text-sm font-bold text-neutral-400"
                   >
                     View Full Archive
                     <svg
@@ -351,157 +357,19 @@ const totalKoneksi = activeContributors.reduce(
 </UnifiedLayout>
 
 <style>
+  @reference "@/styles/global.css";
+
   /* Base layout polish */
   :global(body) {
-    @apply antialiased;
+    @apply bg-[#0a0a0b] antialiased;
   }
 
   .text-gradient {
     @apply from-primary-400 bg-gradient-to-br to-teal-400 bg-clip-text text-transparent;
   }
-</style>
 
-<style>
-  @reference "@/styles/global.css";
-
-  .text-gradient {
-    background: linear-gradient(135deg, #3b82f6, #14b8a6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-section {
+  /* Cinematic Section Enhancements */
+  section {
     @apply relative overflow-hidden;
-  }
-
-  .hero-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-  }
-
-  .hero-section .container {
-    @apply relative z-10;
-  }
-
-  .stat-card {
-    @apply rounded-xl border border-neutral-100 bg-white p-4 text-center shadow-sm;
-  }
-
-  .stat-number {
-    @apply text-primary-600 text-2xl font-bold;
-  }
-
-  .stat-label {
-    @apply text-sm text-neutral-600;
-  }
-
-  .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 inline-flex items-center gap-2 rounded-lg px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl;
-  }
-
-  .btn-secondary {
-    @apply text-primary-600 border-primary-200 hover:bg-primary-50 inline-flex items-center gap-2 rounded-lg border bg-white px-6 py-3 font-semibold shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl;
-  }
-
-  .btn-white {
-    @apply text-primary-600 inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-neutral-50 hover:shadow-xl;
-  }
-
-  .btn-outline-white {
-    @apply hover:text-primary-600 inline-flex items-center gap-2 rounded-lg border border-white bg-transparent px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-xl;
-  }
-
-  .project-card {
-    @apply rounded-2xl border border-neutral-100 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
-  }
-
-  .project-header {
-    @apply mb-4;
-  }
-
-  .project-icon {
-    @apply mb-2 text-3xl;
-  }
-
-  .project-title {
-    @apply mb-2 text-xl font-bold text-neutral-800;
-  }
-
-  .project-description {
-    @apply text-sm text-neutral-600;
-  }
-
-  .project-stats {
-    @apply mb-4 flex gap-4;
-  }
-
-  .project-stats .stat {
-    @apply text-center;
-  }
-
-  .project-stats .stat-number {
-    @apply text-primary-600 block text-lg font-bold;
-  }
-
-  .project-stats .stat-label {
-    @apply block text-xs text-neutral-500;
-  }
-
-  .project-links {
-    @apply flex gap-2;
-  }
-
-  .project-link {
-    @apply bg-primary-100 text-primary-700 hover:bg-primary-200 flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors;
-  }
-
-  /* Dark mode styles */
-  .dark .hero-section {
-    @apply from-primary-900 to-secondary-900;
-  }
-
-  .dark .hero-section h1 {
-    @apply text-neutral-100;
-  }
-
-  .dark .hero-section p {
-    @apply text-neutral-300;
-  }
-
-  .dark .stat-card {
-    @apply border-neutral-700 bg-neutral-800;
-  }
-
-  .dark .project-card {
-    @apply border-neutral-700 bg-neutral-800;
-  }
-
-  .dark .project-title {
-    @apply text-neutral-100;
-  }
-
-  .dark .project-description {
-    @apply text-neutral-400;
-  }
-
-  /* Mobile responsive */
-  @media (max-width: 768px) {
-    .hero-section h1 {
-      @apply text-3xl;
-    }
-
-    .stat-card {
-      @apply p-3;
-    }
-
-    .project-card {
-      @apply p-4;
-    }
   }
 </style>

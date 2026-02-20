@@ -44,8 +44,8 @@ const activeGradient =
 <div
   class={`group relative overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
     variant === "featured"
-      ? "bg-neutral-900 border border-white/10 p-8 md:p-12"
-      : "bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-white/5 p-6 shadow-sm hover:shadow-2xl"
+      ? "bg-neutral-900/80 backdrop-blur-md border border-white/10 p-8"
+      : "bg-neutral-900/60 backdrop-blur-md border border-white/10 p-6 shadow-sm hover:shadow-2xl"
   } ${className || ""}`}
   data-contributor-id={contributor.slug}
 >
@@ -87,7 +87,7 @@ const activeGradient =
       <div class="min-w-0 flex-1">
         <div class="mb-1 flex flex-wrap items-center gap-2">
           <h3
-            class={`font-black tracking-tight ${variant === "featured" ? "text-3xl text-white" : "text-xl text-neutral-900 dark:text-white"}`}
+            class={`font-black tracking-tight ${variant === "featured" ? "text-3xl text-white" : "text-xl text-white"}`}
           >
             <a
               href={`/contributors/${contributor.slug}`}
@@ -109,7 +109,7 @@ const activeGradient =
         </p>
         {
           data.location && (
-            <p class="mt-2 flex items-center gap-1 text-xs font-medium text-neutral-500 opacity-70 dark:text-neutral-400">
+            <p class="mt-2 flex items-center gap-1 text-xs font-bold text-neutral-400">
               📍 {data.location}
             </p>
           )
@@ -123,7 +123,7 @@ const activeGradient =
               <div class="text-2xl font-black text-white">
                 {totalContributions}
               </div>
-              <div class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase">
+              <div class="text-[10px] font-black tracking-widest text-neutral-400 uppercase">
                 Impact
               </div>
             </div>
@@ -131,7 +131,7 @@ const activeGradient =
               <div class="text-2xl font-black text-white">
                 {data.socialProof.githubStars}
               </div>
-              <div class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase">
+              <div class="text-[10px] font-black tracking-widest text-neutral-400 uppercase">
                 Stars
               </div>
             </div>
@@ -145,7 +145,7 @@ const activeGradient =
       variant !== "compact" && showDetails && (
         <div class="mt-8 space-y-6">
           <p
-            class={`line-clamp-3 text-sm leading-relaxed ${variant === "featured" ? "text-neutral-400" : "text-neutral-600 dark:text-neutral-400"}`}
+            class={`line-clamp-3 text-sm leading-relaxed ${variant === "featured" ? "text-neutral-400" : "text-neutral-300"}`}
           >
             {data.bio}
           </p>
@@ -156,36 +156,12 @@ const activeGradient =
                 class={`rounded-lg px-3 py-1 text-[10px] font-black tracking-wide uppercase ${
                   variant === "featured"
                     ? "bg-white/5 text-neutral-300 ring-1 ring-white/10"
-                    : "bg-neutral-100 text-neutral-700 dark:bg-neutral-700/50 dark:text-neutral-300"
+                    : "bg-white/10 text-neutral-200 ring-1 ring-white/10"
                 }`}
               >
                 {skill}
               </span>
             ))}
-          </div>
-
-          {/* Micro-Contributions Preview */}
-          <div
-            class={`grid gap-2 rounded-2xl p-4 ${variant === "featured" ? "bg-white/5" : "bg-neutral-50 dark:bg-neutral-900/50"}`}
-          >
-            <p class="mb-2 text-[10px] font-black tracking-widest text-neutral-500 uppercase">
-              Primary Missions
-            </p>
-            <div class="flex flex-col gap-2">
-              {data.contributions.openSourceProjects.slice(0, 2).map((p) => (
-                <div class="flex items-center gap-3">
-                  <span class="text-lg opacity-50">⚡</span>
-                  <div class="min-w-0 flex-1">
-                    <p class="truncate text-xs font-bold text-neutral-800 dark:text-neutral-200">
-                      {p.name}
-                    </p>
-                    <p class="text-[10px] leading-none text-neutral-500 uppercase">
-                      {p.role}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       )
