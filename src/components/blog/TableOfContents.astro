@@ -8,9 +8,11 @@ const { class: className } = Astro.props;
 
 <div class={`table-of-contents ${className || ""}`}>
   <div class="toc-header">
-    <h4 class="text-lg font-semibold text-neutral-800">Daftar Isi</h4>
+    <h4 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100">
+      Daftar Isi
+    </h4>
     <button
-      class="toc-toggle-btn"
+      class="toc-toggle-btn dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-neutral-200"
       id="toc-toggle-btn"
       aria-label="Toggle table of contents"
     >
@@ -31,9 +33,7 @@ const { class: className } = Astro.props;
 
   <nav class="toc-nav collapsed" id="toc-nav">
     <!-- Generated dynamically by JavaScript -->
-    <div
-      style="padding: 1rem; text-align: center; color: #6b7280; font-size: 0.875rem;"
-    >
+    <div class="p-4 text-center text-sm text-neutral-500 dark:text-neutral-400">
       Loading table of contents...
     </div>
   </nav>
@@ -197,21 +197,11 @@ const { class: className } = Astro.props;
     const tocLinks = document.querySelectorAll(".toc-link");
     tocLinks.forEach((link) => {
       link.classList.remove("active");
-      // Remove active styles
-      (link as HTMLElement).style.backgroundColor = "";
-      (link as HTMLElement).style.color = "";
-      (link as HTMLElement).style.fontWeight = "";
-      (link as HTMLElement).style.borderLeftColor = "";
-      (link as HTMLElement).style.transform = "";
+      // Remove legacy inline styles if any
+      (link as HTMLElement).style.cssText = "";
     });
 
     activeLink.classList.add("active");
-    // Add active styles inline with better visual feedback
-    (activeLink as HTMLElement).style.backgroundColor = "#f3f4f6";
-    (activeLink as HTMLElement).style.color = "#374151";
-    (activeLink as HTMLElement).style.fontWeight = "600";
-    (activeLink as HTMLElement).style.borderLeftColor = "#3b82f6";
-    (activeLink as HTMLElement).style.transform = "translateX(2px)";
   }
 
   function toggleTOC() {
@@ -307,11 +297,8 @@ const { class: className } = Astro.props;
   @reference "@/styles/global.css";
 
   .table-of-contents {
-    background-color: white;
+    @apply rounded-lg border border-neutral-200 bg-white shadow-sm dark:border-white/10 dark:bg-[var(--dark-bg-secondary)];
     padding: 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
   .toc-header {
@@ -328,7 +315,7 @@ const { class: className } = Astro.props;
   .toc-toggle-btn {
     padding: 0.25rem;
     border-radius: 0.5rem;
-    color: var(--neutral-500);
+    @apply text-neutral-500 dark:text-neutral-400;
     transition: all 0.2s;
     border: none;
     background: transparent;
@@ -378,7 +365,7 @@ const { class: className } = Astro.props;
     padding: 0.5rem 0.75rem;
     border-radius: 0.5rem;
     font-size: 0.875rem;
-    color: var(--neutral-600);
+    @apply text-neutral-600 dark:text-neutral-400;
     transition: all 0.2s;
     position: relative;
     margin-bottom: 0.25rem;
@@ -396,10 +383,8 @@ const { class: className } = Astro.props;
   }
 
   .toc-link.active {
-    color: var(--primary-700);
-    background-color: var(--primary-50);
-    font-weight: 600;
-    border-left: 4px solid var(--primary-500);
+    @apply text-primary-700 bg-primary-50 dark:text-primary-300 dark:bg-primary-900/30 font-semibold;
+    border-left: 4px solid theme("colors.primary.500");
     box-shadow: 0 2px 4px rgba(99, 102, 241, 0.1);
     transform: translateX(2px);
   }

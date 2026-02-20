@@ -55,7 +55,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
   <BlogPostHero post={post} />
 
   <!-- Main Content Layout -->
-  <section class="bg-white py-10 md:py-14">
+  <section class="bg-white py-10 md:py-14 dark:bg-[var(--dark-bg-primary)]">
     <div class="container">
       <div class="mx-auto max-w-6xl">
         <ArticleSeries currentPostSlug={post.slug} />
@@ -63,7 +63,9 @@ const relatedArticles = await getRelatedArticles(post, 4);
         <div class="grid gap-12 lg:grid-cols-4">
           <!-- Main Article Area -->
           <div class="lg:col-span-3">
-            <article class="prose prose-lg blog-content max-w-none">
+            <article
+              class="prose prose-lg dark:prose-invert blog-content max-w-none"
+            >
               <Content />
             </article>
 
@@ -248,6 +250,14 @@ const relatedArticles = await getRelatedArticles(post, 4);
   }
   .dark .blog-content :global(h2) {
     border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Enhanced Dark Mode Links & Markers */
+  .dark .blog-content :global(a) {
+    @apply text-primary-400 decoration-primary-800 hover:text-primary-300 hover:decoration-primary-500;
+  }
+  .dark .blog-content :global(li::marker) {
+    @apply text-primary-400;
   }
 
   /* Mobile Adjustments */

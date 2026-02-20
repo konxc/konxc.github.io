@@ -533,19 +533,19 @@ const { className = "" } = Astro.props;
   }
 
   .dark .copy-page-btn.active {
-    @apply bg-primary-900 text-primary-300 border-primary-700;
+    @apply bg-primary-900/30 text-primary-300 border-primary-700;
   }
 
   .dark .copy-page-menu-content {
-    @apply border-neutral-700 bg-neutral-800;
+    @apply border-neutral-700 bg-neutral-800 shadow-2xl shadow-black/50;
   }
 
   .dark .menu-item {
-    @apply hover:bg-neutral-700;
+    @apply hover:bg-white/5;
   }
 
   .dark .menu-item:not(.disabled):hover {
-    @apply bg-neutral-700;
+    @apply bg-white/5;
   }
 
   .dark .menu-icon {

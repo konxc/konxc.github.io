@@ -91,7 +91,7 @@ const hasSeries = currentSeries.length > 0;
           <div class="series-posts">
             {currentSeries.map((post, index) => (
               <div
-                class={`series-post ${index === currentPostIndex ? "current" : ""} ${index < currentPostIndex ? "completed" : ""}`}
+                class={`series-post group ${index === currentPostIndex ? "current" : ""} ${index < currentPostIndex ? "completed" : ""}`}
               >
                 <div class="post-number">
                   {index < currentPostIndex ? (
@@ -316,8 +316,15 @@ const hasSeries = currentSeries.length > 0;
 
 <style>
   @reference "@/styles/global.css";
+
   .article-series {
-    @apply from-primary-50 to-secondary-50 border-primary-200 mb-8 rounded-2xl border bg-linear-to-br p-6 shadow-lg;
+    @apply mb-8 rounded-2xl border p-6 shadow-lg;
+    background-image: linear-gradient(
+      to bottom right,
+      var(--color-primary-50),
+      var(--color-secondary-50)
+    );
+    border-color: var(--color-primary-200);
   }
 
   .series-header {
@@ -330,6 +337,13 @@ const hasSeries = currentSeries.length > 0;
 
   .series-title {
     @apply text-primary-800 mb-2 text-xl font-bold;
+  }
+
+  .series-header h3 {
+    @apply text-lg font-bold text-neutral-900;
+  }
+  .dark .series-header h3 {
+    color: var(--color-neutral-100);
   }
 
   .series-description {
@@ -345,11 +359,19 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .progress-fill {
-    @apply from-primary-500 to-secondary-500 h-full bg-linear-to-r transition-all duration-500 ease-out;
+    @apply h-full transition-all duration-500 ease-out;
+    background-image: linear-gradient(
+      to right,
+      var(--color-primary-500),
+      var(--color-secondary-500)
+    );
   }
 
-  .progress-text {
-    @apply text-primary-700 text-sm font-medium;
+  .series-progress-text {
+    @apply text-sm font-medium text-neutral-600;
+  }
+  .dark .series-progress-text {
+    color: var(--color-neutral-400);
   }
 
   .series-navigation {
@@ -361,15 +383,46 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .series-post {
-    @apply border-primary-100 flex items-center gap-4 rounded-xl border bg-white p-4 transition-all duration-200;
+    @apply flex flex-col gap-2 rounded-xl border border-neutral-200 bg-white p-4 transition-all hover:shadow-md;
+  }
+  .series-post:hover {
+    border-color: var(--color-primary-300);
+    transform: translateY(-2px);
+  }
+
+  .dark .series-post {
+    background-color: var(--color-neutral-800);
+    border-color: var(--color-neutral-800);
+  }
+  .dark .series-post:hover {
+    background-color: var(--color-neutral-700);
+    border-color: var(--color-primary-700);
+  }
+
+  .nav-card {
+    @apply flex flex-col gap-2 rounded-xl border border-neutral-200 bg-white p-4 transition-all hover:shadow-md;
+  }
+  .nav-card:hover {
+    border-color: var(--color-primary-300);
+  }
+
+  .dark .nav-card {
+    background-color: var(--color-neutral-800);
+    border-color: var(--color-neutral-800);
+  }
+  .dark .nav-card:hover {
+    background-color: var(--color-neutral-700);
+    border-color: var(--color-primary-700);
   }
 
   .series-post.current {
-    @apply border-primary-300 bg-primary-50 shadow-sm;
+    @apply bg-primary-50 shadow-sm;
+    border-color: var(--color-primary-300);
   }
 
   .series-post.completed {
-    @apply border-green-200 bg-green-50;
+    @apply bg-green-50;
+    border-color: var(--color-green-200);
   }
 
   .post-number {
@@ -381,7 +434,11 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .series-post.current .post-number {
-    @apply from-primary-500 to-secondary-500 bg-linear-to-r;
+    background-image: linear-gradient(
+      to right,
+      var(--color-primary-500),
+      var(--color-secondary-500)
+    );
   }
 
   .completed-icon {
@@ -396,8 +453,18 @@ const hasSeries = currentSeries.length > 0;
     @apply mb-1 text-lg font-semibold;
   }
 
+  .nav-label {
+    @apply text-xs font-semibold tracking-wider text-neutral-500 uppercase;
+  }
+  .dark .nav-label {
+    color: var(--color-neutral-400);
+  }
+
   .post-link {
-    @apply text-primary-700 hover:text-primary-800 transition-colors;
+    @apply text-primary-700 transition-colors;
+  }
+  .post-link:hover {
+    color: var(--color-primary-800);
   }
 
   .current-post {
@@ -419,6 +486,10 @@ const hasSeries = currentSeries.length > 0;
   .series-nav-btn {
     @apply bg-primary-500 hover:bg-primary-600 flex items-center gap-2 rounded-lg px-4 py-2 font-medium text-white transition-colors;
   }
+  .series-nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
 
   .series-nav-btn.prev {
     @apply bg-neutral-500 hover:bg-neutral-600;
@@ -430,7 +501,12 @@ const hasSeries = currentSeries.length > 0;
 
   /* Dark mode styles */
   .dark .article-series {
-    @apply from-primary-900 to-secondary-900 border-primary-700;
+    background-image: linear-gradient(
+      to bottom right,
+      var(--color-primary-900),
+      var(--color-secondary-900)
+    );
+    border-color: var(--color-primary-700);
   }
 
   .dark .series-title {
@@ -441,20 +517,34 @@ const hasSeries = currentSeries.length > 0;
     @apply text-primary-300;
   }
 
-  .dark .series-post {
-    @apply border-neutral-700 bg-neutral-800;
+  .dark .series-navigation {
+    border-color: var(--color-neutral-800);
+    background-color: rgba(255, 255, 255, 0.05);
   }
 
   .dark .series-post.current {
-    @apply border-primary-600 bg-primary-900;
+    background-color: var(--color-primary-900);
+    border-color: var(--color-primary-600);
   }
 
   .dark .series-post.completed {
-    @apply border-green-600 bg-green-900;
+    background-color: var(--color-green-900, #14532d);
+    border-color: var(--color-green-600, #16a34a);
+  }
+
+  .dark .nav-title {
+    @apply line-clamp-2 font-medium text-neutral-200;
+  }
+  .dark .nav-card:hover .nav-title,
+  .dark .series-post:hover .nav-title {
+    @apply text-primary-400;
   }
 
   .dark .post-link {
-    @apply text-primary-300 hover:text-primary-200;
+    @apply text-primary-300;
+  }
+  .dark .post-link:hover {
+    color: var(--color-primary-200);
   }
 
   .dark .current-post {
@@ -484,17 +574,7 @@ const hasSeries = currentSeries.length > 0;
     }
   }
 
-  /* Animation for progress bar */
   .progress-fill {
     transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Hover effects */
-  .series-post:hover {
-    @apply -translate-y-0.5 transform shadow-sm;
-  }
-
-  .series-nav-btn:hover {
-    @apply -translate-y-0.5 transform shadow-sm;
   }
 </style>

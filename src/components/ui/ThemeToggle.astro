@@ -10,6 +10,9 @@ export interface Props {
 
 const { size = "md", variant = "button", className = "" } = Astro.props;
 
+// Disable theme toggle for production
+return null;
+
 const sizeClasses = {
   sm: "w-8 h-8",
   md: "w-10 h-10",
@@ -97,21 +100,12 @@ const iconSizes = {
     }
 
     private loadTheme(): void {
-      // Check localStorage first
-      const savedTheme = localStorage.getItem("theme") as
-        | "light"
-        | "dark"
-        | null;
+      // Check if the theme is already set by the inline script in Head
+      const isDark = document.documentElement.classList.contains("dark");
+      this.currentTheme = isDark ? "dark" : "light";
 
-      // Check system preference
-      const systemPrefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
-
-      // Determine theme to apply
-      this.currentTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
-
-      this.applyTheme(this.currentTheme);
+      // Sync the UI without re-applying the class (redundant but safe)
+      this.updateToggleStates();
     }
 
     private applyTheme(theme: "light" | "dark"): void {
@@ -292,13 +286,16 @@ const iconSizes = {
     @apply fixed right-4 bottom-4 z-50 shadow-lg;
   }
 
-  /* Smooth transitions for theme changes */
-  * {
+  /* Smooth transitions for theme changes on the toggle button only */
+  .theme-toggle,
+  .theme-toggle * {
     transition:
       background-color 0.3s ease,
       color 0.3s ease,
       border-color 0.3s ease,
-      box-shadow 0.3s ease;
+      box-shadow 0.3s ease,
+      transform 0.3s ease,
+      opacity 0.3s ease;
   }
 
   /* Prevent flash of unstyled content */

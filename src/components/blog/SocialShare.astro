@@ -11,7 +11,7 @@ const encodedUrl = encodeURIComponent(url);
 ---
 
 <div class="social-share">
-  <h4 class="mb-4 text-lg font-semibold text-neutral-800">
+  <h4 class="mb-4 text-lg font-semibold text-neutral-800 dark:text-neutral-100">
     Bagikan Artikel Ini
   </h4>
   <div class="flex flex-wrap gap-3">
@@ -152,6 +152,7 @@ const encodedUrl = encodeURIComponent(url);
   @reference "@/styles/global.css";
   .social-share {
     @apply from-primary-50 to-secondary-50 border-primary-100 rounded-2xl border bg-linear-to-br p-6;
+    @apply dark:from-primary-900/30 dark:to-secondary-900/30 dark:border-primary-800;
   }
 
   .social-share-btn {
@@ -160,22 +161,27 @@ const encodedUrl = encodeURIComponent(url);
 
   .social-share-btn.twitter {
     @apply bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700;
+    @apply dark:bg-blue-900/50 dark:text-blue-200 dark:hover:bg-blue-900/80 dark:hover:text-blue-100;
   }
 
   .social-share-btn.linkedin {
     @apply bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800;
+    @apply dark:bg-blue-900/50 dark:text-blue-200 dark:hover:bg-blue-900/80 dark:hover:text-blue-100;
   }
 
   .social-share-btn.facebook {
     @apply bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700;
+    @apply dark:bg-blue-900/50 dark:text-blue-200 dark:hover:bg-blue-900/80 dark:hover:text-blue-100;
   }
 
   .social-share-btn.whatsapp {
     @apply bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-700;
+    @apply dark:bg-green-900/50 dark:text-green-200 dark:hover:bg-green-900/80 dark:hover:text-green-100;
   }
 
   .social-share-btn.copy-link {
     @apply bg-neutral-50 text-neutral-600 hover:bg-neutral-100 hover:text-neutral-700;
+    @apply dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:hover:text-neutral-200;
   }
 
   .social-share-btn.copied {

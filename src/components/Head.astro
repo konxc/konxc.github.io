@@ -127,3 +127,27 @@ const siteName = "KonXC - PT Koneksi Jaringan Indonesia";
   siteName={siteName}
   data={structuredData}
 />
+
+<!-- Theme Initialization Script (Prevents Flickering) -->
+<script is:inline>
+  // Immediately invoked function to set the theme before the page renders
+  (function () {
+    try {
+      const savedTheme = localStorage.getItem("theme");
+      const systemPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+
+      const shouldBeDark =
+        savedTheme === "dark" || (!savedTheme && systemPrefersDark);
+
+      if (shouldBeDark) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    } catch (e) {
+      console.error("Theme initialization failed:", e);
+    }
+  })();
+</script>

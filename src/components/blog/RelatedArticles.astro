@@ -48,11 +48,11 @@ const getArticleUrl = (article: Article) => {
     <!-- Header with Left Alignment -->
     <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
       <div class="header-content">
-        <span class="eyebrow text-primary-600 mb-2 block text-[10px] font-bold tracking-[0.2em] uppercase">
+        <span class="eyebrow text-primary-600 mb-2 block text-[10px] font-bold tracking-[0.2em] uppercase dark:text-primary-400">
           Eksplorasi Lainnya
         </span>
-        <h2 class="text-3xl font-black tracking-tight text-neutral-900 md:text-4xl">
-          {title}<span class="text-primary-600">.</span>
+        <h2 class="text-3xl font-black tracking-tight text-neutral-900 md:text-4xl dark:text-neutral-100">
+          {title}<span class="text-primary-600 dark:text-primary-400">.</span>
         </h2>
       </div>
       
@@ -61,7 +61,7 @@ const getArticleUrl = (article: Article) => {
         <div class="h-1 w-10 rounded-full bg-neutral-100 overflow-hidden">
           <div class="h-full w-1/4 bg-primary-600 rounded-full"></div>
         </div>
-        <span class="text-[9px] font-bold text-neutral-400 uppercase tracking-widest italic">Geser Eksplorasi</span>
+        <span class="text-[9px] font-bold text-neutral-400 uppercase tracking-widest italic dark:text-neutral-500">Geser Eksplorasi</span>
       </div>
     </div>
 
@@ -131,6 +131,7 @@ const getArticleUrl = (article: Article) => {
 
   .related-articles-section {
     @apply relative bg-neutral-50/50 border-t border-neutral-100 overflow-hidden;
+    @apply dark:bg-black/20 dark:border-neutral-800;
   }
 
   .carousel-scroll {

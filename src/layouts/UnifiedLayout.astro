@@ -33,10 +33,7 @@ const {
 ---
 
 <!doctype html>
-<html
-  lang="id"
-  class={theme === "dark" ? "dark" : theme === "light" ? "light" : ""}
->
+<html lang="id" class="">
   <head>
     <Head
       title={title}
@@ -44,7 +41,35 @@ const {
       image={image}
       canonical={canonical}
     />
-  </head>
+    {
+      /* Theme initialization disabled for production env
+    <script is:inline>
+      // Immediately invoked function to set the theme before the page renders
+      (function () {
+        try {
+          const savedTheme = localStorage.getItem("theme");
+          const systemPrefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+
+          const shouldBeDark =
+            savedTheme === "dark" || (!savedTheme && systemPrefersDark);
+
+          if (shouldBeDark) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+        } catch (e) {
+          console.error("Theme initialization failed:", e);
+        }
+      })();
+    </script>
+    */
+    }</head
+  >
+  <!-- Theme Initialization Script (Prevents Flickering) -->
+
   <body>
     <SkipLinks />
     <FocusManager />

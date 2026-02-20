@@ -482,7 +482,8 @@ const testCategories = [
 
   /* 1. TRIGGER FAB */
   .lab-trigger {
-    @apply fixed bottom-8 left-8 z-101 outline-none;
+    @apply fixed bottom-8 left-8 outline-none;
+    z-index: 101;
   }
   .trigger-inner {
     @apply relative flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-900 text-white shadow-2xl transition-all hover:scale-110 active:scale-95;
@@ -505,7 +506,13 @@ const testCategories = [
 
   /* 2. WINDOW SYSTEM */
   .lab-window {
-    @apply shadow-4xl pointer-events-none fixed top-1/2 left-1/2 z-[1000] flex h-[650px] max-h-[85vh] w-[1000px] max-w-[95vw] -translate-x-1/2 -translate-y-1/2 scale-95 overflow-hidden rounded-3xl bg-white opacity-0 transition-all duration-500;
+    @apply pointer-events-none fixed top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 scale-95 overflow-hidden rounded-3xl bg-white opacity-0 transition-all duration-500;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+    height: 650px;
+    max-height: 85vh;
+    width: 1000px;
+    max-width: 95vw;
     border: 1px solid var(--border-color);
   }
   .lab-window.active {
@@ -531,7 +538,14 @@ const testCategories = [
     @apply flex-1 space-y-1;
   }
   .nav-item {
-    @apply flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold opacity-40 transition-all hover:bg-black/5 hover:opacity-100;
+    @apply flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold opacity-40 transition-all;
+  }
+  .nav-item:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  .nav-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
   }
   .nav-item.active {
     @apply text-primary-600 bg-white opacity-100 shadow-sm;
@@ -595,7 +609,8 @@ const testCategories = [
     border-color: var(--border-color);
   }
   .diagnostic-log header {
-    @apply flex items-center justify-between border-b bg-slate-50/80 px-5 py-3 backdrop-blur-sm;
+    @apply flex items-center justify-between border-b px-5 py-3 backdrop-blur-sm;
+    background-color: rgba(248, 250, 252, 0.8);
     border-color: var(--border-color);
   }
   .diagnostic-log h4 {
@@ -608,19 +623,20 @@ const testCategories = [
     @apply h-64 space-y-1 overflow-y-auto p-4 font-mono text-[11px];
   }
   .log-entry {
-    @apply flex items-center gap-4 rounded-lg border-b border-black/5 px-3 py-2 transition-colors;
+    @apply flex items-center gap-4 rounded-lg border-b px-3 py-2 transition-colors;
+    border-bottom-color: rgba(0, 0, 0, 0.05);
   }
   .log-entry:last-child {
     border-bottom: 0;
   }
   .log-entry.info {
-    @apply bg-blue-50/30;
+    background-color: rgba(239, 246, 255, 0.5);
   }
   .log-entry.success {
-    @apply bg-green-50/30;
+    background-color: rgba(240, 253, 244, 0.5);
   }
   .log-entry.warn {
-    @apply bg-amber-50/30;
+    background-color: rgba(255, 251, 235, 0.5);
   }
   .log-time {
     @apply shrink-0 font-bold opacity-30;
@@ -682,7 +698,8 @@ const testCategories = [
   }
 
   .mini-run {
-    @apply rounded-full bg-black/5 p-2 transition-transform hover:rotate-180;
+    @apply rounded-full p-2 transition-transform hover:rotate-180;
+    background-color: rgba(0, 0, 0, 0.05);
   }
 
   .tab-footer {

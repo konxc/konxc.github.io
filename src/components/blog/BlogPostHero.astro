@@ -9,7 +9,7 @@ const { post } = Astro.props;
 ---
 
 <section
-    class="from-primary-50 to-secondary-50 relative overflow-hidden bg-linear-to-br pt-24 pb-10 md:pt-32 md:pb-14"
+    class="from-primary-50 to-secondary-50 relative overflow-hidden bg-linear-to-br pt-24 pb-10 md:pt-32 md:pb-14 dark:from-neutral-900 dark:to-neutral-800"
 >
     {
         post.data.coverImage && (
@@ -25,14 +25,16 @@ const { post } = Astro.props;
     <div class="container">
         <div class="mx-auto max-w-4xl text-center">
             <div
-                class="text-primary-600 mb-4 text-sm font-semibold tracking-wide uppercase"
+                class="text-primary-600 dark:text-primary-400 mb-4 text-sm font-semibold tracking-wide uppercase"
             >
                 {post.data.category}
             </div>
-            <h1 class="mb-6 text-4xl font-bold lg:text-5xl">
+            <h1
+                class="mb-6 text-4xl font-bold lg:text-5xl dark:text-neutral-100"
+            >
                 {post.data.title}
             </h1>
-            <p class="mb-8 text-xl text-neutral-600">
+            <p class="mb-8 text-xl text-neutral-600 dark:text-neutral-400">
                 {post.data.description}
             </p>
 
@@ -41,14 +43,18 @@ const { post } = Astro.props;
             >
                 <div class="flex items-center gap-2">
                     <span
-                        class="bg-primary-100 text-primary-600 flex h-8 w-8 items-center justify-center rounded-full font-semibold"
+                        class="bg-primary-100 text-primary-600 dark:text-primary-300 flex h-8 w-8 items-center justify-center rounded-full font-semibold dark:bg-neutral-800"
                     >
                         {post.data.author.charAt(0)}
                     </span>
-                    <span>By {post.data.author}</span>
+                    <span class="dark:text-neutral-400"
+                        >By {post.data.author}</span
+                    >
                 </div>
                 <span>•</span>
-                <span>{post.data.publishDate.toLocaleDateString("id-ID")}</span>
+                <span class="dark:text-neutral-400"
+                    >{post.data.publishDate.toLocaleDateString("id-ID")}</span
+                >
                 {
                     post.data.readingTime && (
                         <>
@@ -62,7 +68,7 @@ const { post } = Astro.props;
             <div class="flex flex-wrap justify-center gap-2">
                 {
                     post.data.tags.map((tag: string) => (
-                        <span class="text-primary-600 rounded-full bg-white px-3 py-1 text-sm font-medium shadow-sm">
+                        <span class="text-primary-600 dark:text-primary-300 rounded-full bg-white px-3 py-1 text-sm font-medium shadow-sm dark:bg-neutral-800 dark:shadow-none">
                             #{tag}
                         </span>
                     ))
@@ -71,7 +77,7 @@ const { post } = Astro.props;
 
             {
                 post.data.coverImage && (
-                    <div class="mt-12 flex justify-center overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5">
+                    <div class="mt-12 flex justify-center overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5 dark:shadow-none dark:ring-neutral-700">
                         <img
                             src={post.data.coverImage}
                             alt={post.data.title}
