@@ -5,7 +5,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
  */
 export async function getRelatedArticles(
   currentPost: CollectionEntry<"blog">,
-  maxArticles = 4
+  maxArticles = 4,
 ) {
   const allPosts = await getCollection("blog");
   const currentTags = currentPost.data.tags || [];
@@ -16,15 +16,17 @@ export async function getRelatedArticles(
     .map((p) => {
       let score = 0;
       if (p.data.category === currentCategory) score += 10;
-      
+
       const sharedTags = (p.data.tags || []).filter((tag: string) =>
-        currentTags.includes(tag)
+        currentTags.includes(tag),
       );
       score += sharedTags.length * 5;
-      
+
       if (p.data.featured) score += 2;
-      
-      const daysDiff = Math.abs(new Date().getTime() - p.data.publishDate.getTime()) / (1000 * 60 * 60 * 24);
+
+      const daysDiff =
+        Math.abs(new Date().getTime() - p.data.publishDate.getTime()) /
+        (1000 * 60 * 60 * 24);
       if (daysDiff < 30) score += 1;
 
       return { post: p, score };

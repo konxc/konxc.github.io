@@ -5,6 +5,7 @@ import astroParser from "astro-eslint-parser";
 import importPlugin from "eslint-plugin-import";
 import prettier from "eslint-config-prettier";
 import prettierPlugin from "eslint-plugin-prettier";
+import qwikPlugin from "eslint-plugin-qwik";
 
 // Utility globals
 const browserGlobals = {
@@ -56,9 +57,11 @@ export default [
     plugins: {
       "@typescript-eslint": tseslint.plugin,
       import: importPlugin,
+      qwik: qwikPlugin,
     },
     rules: {
       ...config.rules,
+      ...qwikPlugin.configs.recommended.rules,
       "@typescript-eslint/no-unused-vars": [
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
@@ -99,7 +102,7 @@ export default [
     rules: {
       ...astro.configs.recommended.rules,
       "astro/no-set-html-directive": "off",
-      "astro/no-unused-css-selector": "warn", // Disabled because CSS is dynamically applied in dark mode
+      "astro/no-unused-css-selector": "off", // Disabled because CSS is dynamically applied in dark mode
     },
   },
 

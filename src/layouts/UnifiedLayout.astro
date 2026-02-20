@@ -16,7 +16,6 @@ export interface Props {
   footerVariant?: "default" | "minimal" | "extended";
   showSearch?: boolean;
   showNewsletter?: boolean;
-  theme?: "light" | "dark" | "auto";
 }
 
 const {
@@ -28,7 +27,6 @@ const {
   footerVariant = "extended",
   showSearch = true,
   showNewsletter = true,
-  theme = "auto",
 } = Astro.props;
 ---
 

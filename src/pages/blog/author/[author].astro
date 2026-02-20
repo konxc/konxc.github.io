@@ -5,95 +5,91 @@ import PostsGrid from "@components/blog/PostsGrid.astro";
 import slugify from "slugify";
 
 export async function getStaticPaths() {
-    const posts = await getCollection("blog");
-    const uniqueAuthors = [...new Set(posts.map((post) => post.data.author))];
-    const contributors = await getCollection("contributors");
+  const posts = await getCollection("blog");
+  const uniqueAuthors = [...new Set(posts.map((post) => post.data.author))];
+  const contributors = await getCollection("contributors");
 
-    return uniqueAuthors.map((authorName) => {
-        const slug = slugify(authorName, { lower: true, strict: true });
-        const filteredPosts = posts.filter(
-            (post) => post.data.author === authorName,
-        );
-        // Find matching contributor profile
-        const contributor = contributors.find(
-            (c) => c.data.name === authorName,
-        );
+  return uniqueAuthors.map((authorName) => {
+    const slug = slugify(authorName, { lower: true, strict: true });
+    const filteredPosts = posts.filter(
+      (post) => post.data.author === authorName,
+    );
+    // Find matching contributor profile
+    const contributor = contributors.find((c) => c.data.name === authorName);
 
-        return {
-            params: { author: slug },
-            props: {
-                posts: filteredPosts,
-                authorName,
-                contributor,
-            },
-        };
-    });
+    return {
+      params: { author: slug },
+      props: {
+        posts: filteredPosts,
+        authorName,
+        contributor,
+      },
+    };
+  });
 }
 
 const { authorName, posts, contributor } = Astro.props;
 const sortedPosts = posts.sort(
-    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-        b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
 );
 ---
 
 <UnifiedLayout
-    title={`Artikel oleh ${authorName} - Blog KonXC`}
-    description={`Baca artikel terbaru yang ditulis oleh ${authorName}.`}
-    headerVariant="default"
-    footerVariant="extended"
+  title={`Artikel oleh ${authorName} - Blog KonXC`}
+  description={`Baca artikel terbaru yang ditulis oleh ${authorName}.`}
+  headerVariant="default"
+  footerVariant="extended"
 >
-    <section class="bg-neutral-50 py-16">
-        <div class="container">
-            <div class="mx-auto max-w-4xl text-center">
-                {
-                    contributor?.data.avatar && (
-                        <img
-                            src={contributor.data.avatar}
-                            alt={authorName}
-                            class="mx-auto mb-6 h-32 w-32 rounded-full border-4 border-white object-cover shadow-lg"
-                        />
-                    )
-                }
-                <span
-                    class="text-primary-600 mb-2 block text-sm font-bold tracking-wider uppercase"
-                >
-                    Penulis
+  <section class="bg-neutral-50 py-16">
+    <div class="container">
+      <div class="mx-auto max-w-4xl text-center">
+        {
+          contributor?.data.avatar && (
+            <img
+              src={contributor.data.avatar}
+              alt={authorName}
+              class="mx-auto mb-6 h-32 w-32 rounded-full border-4 border-white object-cover shadow-lg"
+            />
+          )
+        }
+        <span
+          class="text-primary-600 mb-2 block text-sm font-bold tracking-wider uppercase"
+        >
+          Penulis
+        </span>
+        <h1 class="mb-4 text-4xl font-bold text-neutral-900 md:text-5xl">
+          {authorName}
+        </h1>
+        {
+          contributor && (
+            <p class="mx-auto max-w-2xl text-lg text-neutral-600">
+              {contributor.data.bio}
+            </p>
+          )
+        }
+        {
+          !contributor && (
+            <p class="text-neutral-600">
+              Menampilkan {posts.length} artikel dari {authorName}
+            </p>
+          )
+        }
+
+        {
+          contributor && contributor.data.socialProof && (
+            <div class="mt-6 flex justify-center gap-6 text-sm text-neutral-500">
+              {contributor.data.role && (
+                <span class="rounded-full bg-neutral-200 px-3 py-1 font-medium text-neutral-700">
+                  {contributor.data.role}
                 </span>
-                <h1
-                    class="mb-4 text-4xl font-bold text-neutral-900 md:text-5xl"
-                >
-                    {authorName}
-                </h1>
-                {
-                    contributor && (
-                        <p class="mx-auto max-w-2xl text-lg text-neutral-600">
-                            {contributor.data.bio}
-                        </p>
-                    )
-                }
-                {
-                    !contributor && (
-                        <p class="text-neutral-600">
-                            Menampilkan {posts.length} artikel dari {authorName}
-                        </p>
-                    )
-                }
-
-                {
-                    contributor && contributor.data.socialProof && (
-                        <div class="mt-6 flex justify-center gap-6 text-sm text-neutral-500">
-                            {contributor.data.role && (
-                                <span class="rounded-full bg-neutral-200 px-3 py-1 font-medium text-neutral-700">
-                                    {contributor.data.role}
-                                </span>
-                            )}
-                        </div>
-                    )
-                }
+              )}
             </div>
-        </div>
-    </section>
+          )
+        }
+      </div>
+    </div>
+  </section>
 
-    <PostsGrid posts={sortedPosts} showFilters={false} />
+  <PostsGrid posts={sortedPosts} showFilters={false} />
 </UnifiedLayout>

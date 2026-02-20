@@ -2,6 +2,7 @@
 /// <reference path="../.astro/types.d.ts" />
 
 // Custom types declarations for KonXC project
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare namespace App {
   interface Locals {
     // Add any custom locals types here
@@ -12,21 +13,17 @@ declare namespace App {
 // Extend global types if needed
 declare global {
   // Google Analytics gtag (loaded via external script)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function gtag(...args: any[]): void;
+  function gtag(...args: unknown[]): void;
   interface Window {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    gtag?: (...args: any[]) => void;
+    gtag?: (...args: unknown[]) => void;
     // Fuse.js may be loaded via CDN in some pages/components
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Fuse?: any;
+    Fuse?: unknown;
     toggleDarkMode?: () => void;
     initializeDarkMode?: () => void;
   }
 
   // Fuse.js global constructor (when loaded via CDN)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Fuse: any;
+  const Fuse: unknown;
 }
 
 export {};

@@ -10,11 +10,11 @@ export interface InteractiveDemo {
   featured: boolean;
   content: string;
   language?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface ParsedBlogPost {
-  frontmatter: any;
+  frontmatter: Record<string, unknown>;
   content: string;
   interactiveDemos: InteractiveDemo[];
   readingTime: number;
@@ -26,7 +26,7 @@ export interface ParsedBlogPost {
  */
 export function parseInteractiveDemos(
   content: string,
-  frontmatter: any,
+  frontmatter: Record<string, unknown>,
 ): InteractiveDemo[] {
   const demos: InteractiveDemo[] = [];
 
@@ -39,21 +39,22 @@ export function parseInteractiveDemos(
     const [, id, language, demoContent] = match;
 
     // Cari metadata dari frontmatter
-    const demoMetadata = frontmatter.interactiveDemos?.find(
-      (d: any) => d.id === id,
-    );
+    const demoMetadata = (
+      frontmatter.interactiveDemos as Array<Record<string, unknown>>
+    )?.find((d: Record<string, unknown>) => d.id === id);
 
     if (demoMetadata) {
       const demo: InteractiveDemo = {
         id,
-        type: demoMetadata.type || "code",
-        title: demoMetadata.title || id,
-        description: demoMetadata.description || "",
-        icon: demoMetadata.icon || "💻",
-        featured: demoMetadata.featured || false,
+        type:
+          (demoMetadata.type as "code" | "visual" | "interactive") || "code",
+        title: (demoMetadata.title as string) || id,
+        description: (demoMetadata.description as string) || "",
+        icon: (demoMetadata.icon as string) || "💻",
+        featured: (demoMetadata.featured as boolean) || false,
         content: demoContent.trim(),
         language: language || "javascript",
-        metadata: demoMetadata.metadata || {},
+        metadata: (demoMetadata.metadata as Record<string, unknown>) || {},
       };
 
       demos.push(demo);
@@ -124,23 +125,25 @@ export function extractDemoContent(content: string, demoId: string): string {
  * Get demo metadata dari frontmatter
  */
 export function getDemoMetadata(
-  frontmatter: any,
+  frontmatter: Record<string, unknown>,
   demoId: string,
 ): InteractiveDemo | null {
-  const demo = frontmatter.interactiveDemos?.find((d: any) => d.id === demoId);
+  const demo = (
+    frontmatter.interactiveDemos as Array<Record<string, unknown>>
+  )?.find((d: Record<string, unknown>) => d.id === demoId);
 
   if (!demo) return null;
 
   return {
     id: demoId,
-    type: demo.type || "code",
-    title: demo.title || demoId,
-    description: demo.description || "",
-    icon: demo.icon || "💻",
-    featured: demo.featured || false,
+    type: (demo.type as "code" | "visual" | "interactive") || "code",
+    title: (demo.title as string) || demoId,
+    description: (demo.description as string) || "",
+    icon: (demo.icon as string) || "💻",
+    featured: (demo.featured as boolean) || false,
     content: "",
     language: "javascript",
-    metadata: demo.metadata || {},
+    metadata: (demo.metadata as Record<string, unknown>) || {},
   };
 }
 
@@ -221,27 +224,32 @@ export function generateTableOfContents(
   level: number;
   text: string;
   id: string;
-  children: any[];
+  children: Array<Record<string, unknown>>;
 }> {
   const toc: Array<{
     level: number;
     text: string;
     id: string;
-    children: any[];
+    children: Array<Record<string, unknown>>;
   }> = [];
-  const stack: any[] = [];
+  const stack: Array<Record<string, unknown>> = [];
 
   headings.forEach((heading) => {
     const tocItem = { ...heading, children: [] };
 
     // Pop stack sampai level yang sesuai
-    while (stack.length > 0 && stack[stack.length - 1].level >= heading.level) {
+    while (
+      stack.length > 0 &&
+      (stack[stack.length - 1].level as number) >= heading.level
+    ) {
       stack.pop();
     }
 
     // Add ke parent yang sesuai
     if (stack.length > 0) {
-      stack[stack.length - 1].children.push(tocItem);
+      (stack[stack.length - 1].children as Array<Record<string, unknown>>).push(
+        tocItem,
+      );
     } else {
       toc.push(tocItem);
     }
@@ -264,7 +272,7 @@ export async function parseBlogPostComplete(
       level: number;
       text: string;
       id: string;
-      children: any[];
+      children: Array<Record<string, unknown>>;
     }>;
     demoSummary: {
       total: number;
@@ -331,12 +339,12 @@ export function extractDemoDependencies(content: string): string[] {
 export function generateDemoSEOMetadata(demos: InteractiveDemo[]): {
   keywords: string[];
   description: string;
-  structuredData: any;
+  structuredData: Record<string, unknown>;
 } {
   const keywords = demos.flatMap((demo) => [
     demo.title,
     demo.type,
-    ...(demo.metadata?.tags || []),
+    ...((demo.metadata?.tags as string[]) || []),
   ]);
 
   const description = demos

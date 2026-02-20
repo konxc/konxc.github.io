@@ -26,7 +26,7 @@ class BasicTOCTester {
         console.log(`❌ Dev server returned status code: ${statusCode}`);
         return false;
       }
-    } catch (_error) {
+    } catch {
       console.log("❌ Dev server is not running or not accessible");
       console.log("💡 Please run: npm run dev");
       return false;
@@ -51,7 +51,7 @@ class BasicTOCTester {
         console.log(`❌ Blog post returned status code: ${statusCode}`);
         return false;
       }
-    } catch (_error) {
+    } catch {
       console.log("❌ Blog post is not accessible");
       return false;
     }

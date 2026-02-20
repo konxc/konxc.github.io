@@ -288,8 +288,7 @@ const navigationLinks = [
 
     function updateDarkModeIcon(button: HTMLButtonElement) {
       const isDark = document.documentElement.classList.contains("dark");
-      const icon =
-        button.querySelector<HTMLElement>(".dark-mode-icon");
+      const icon = button.querySelector<HTMLElement>(".dark-mode-icon");
       if (icon) {
         icon.className = isDark
           ? "i-mdi-weather-night dark-mode-icon"

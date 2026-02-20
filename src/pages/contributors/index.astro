@@ -23,7 +23,6 @@ const sortedContributors = [...activeContributors].sort(
 
 const topHero = sortedContributors[0];
 const topChallengers = sortedContributors.slice(1, 4);
-const theRest = sortedContributors.slice(4);
 
 // Group contributors by role for the "Squads" section
 const squadGroups = activeContributors.reduce(
@@ -96,7 +95,7 @@ const totalKoneksi = activeContributors.reduce(
           >
         </h1>
         <p
-          class="mx-auto max-w-2xl text-lg leading-relaxed text-neutral-300 md:text-xl"
+          class="mx-auto max-w-2xl text-lg leading-relaxed text-neutral-200 md:text-xl"
         >
           Kami bukan sekadar kontributor. Kami adalah kolektif inovator yang
           membangun masa depan teknologi Indonesia melalui kolaborasi terbuka
@@ -122,7 +121,7 @@ const totalKoneksi = activeContributors.reduce(
                 {stat.icon}
               </div>
               <div class="text-3xl font-black text-white">{stat.value}</div>
-              <div class="text-xs font-black tracking-widest text-neutral-400 uppercase">
+              <div class="text-xs font-black tracking-widest text-neutral-200 uppercase">
                 {stat.label}
               </div>
             </div>
@@ -143,7 +142,7 @@ const totalKoneksi = activeContributors.reduce(
           <div class="bg-primary-500 mt-4 h-1 w-20"></div>
         </div>
         <p
-          class="hidden text-xs font-black tracking-widest text-neutral-300 uppercase md:block"
+          class="hidden text-xs font-black tracking-widest text-neutral-200 uppercase md:block"
         >
           Season: Early 2024
         </p>
@@ -159,9 +158,8 @@ const totalKoneksi = activeContributors.reduce(
           />
         </div>
 
-        <!-- Rank 2, 3, 4: Sidebar Bento -->
         {
-          topChallengers.map((c, i) => (
+          topChallengers.map((c) => (
             <div class={`md:col-span-5`}>
               <ContributorCard
                 contributor={c}
@@ -176,12 +174,14 @@ const totalKoneksi = activeContributors.reduce(
     </div>
   </section>
 
-  <!-- 3. The Squads (Interactive Section) -->
-  <section class="relative bg-neutral-50 pt-12 pb-24 dark:bg-[#0f0f10]">
+  <!-- 3. The Squads (Interactive Section) - below Wall of Fame -->
+  <section class="relative bg-neutral-100 pt-12 pb-24 dark:bg-[#0f0f10]">
     <div class="container">
       <div class="mb-16">
-        <h2 class="text-4xl font-black text-white">Active Squads.</h2>
-        <p class="mt-4 text-neutral-300">
+        <h2 class="text-4xl font-black text-neutral-900 dark:text-white">
+          Active Squads.
+        </h2>
+        <p class="mt-4 text-neutral-600 dark:text-neutral-200">
           Dikelompokkan berdasarkan spesialisasi taktis mereka.
         </p>
       </div>
@@ -192,7 +192,7 @@ const totalKoneksi = activeContributors.reduce(
             <div class="relative">
               <div class="mb-8 flex items-center justify-between">
                 <div class="flex items-center gap-4">
-                  <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-2xl shadow-sm dark:bg-neutral-800">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-2xl shadow-sm dark:bg-neutral-800 dark:text-neutral-100">
                     {role === "developer" && "💻"}
                     {role === "designer" && "🎨"}
                     {role === "writer" && "✍️"}
@@ -205,7 +205,7 @@ const totalKoneksi = activeContributors.reduce(
                     <h3 class="text-2xl font-bold text-neutral-900 capitalize dark:text-white">
                       {role.replace(/-/g, " ")}
                     </h3>
-                    <p class="text-primary-500 text-sm font-bold tracking-widest uppercase">
+                    <p class="text-sm font-bold tracking-widest uppercase text-primary-600 dark:text-primary-400">
                       {members.length} Agents Assigned
                     </p>
                   </div>
@@ -213,7 +213,7 @@ const totalKoneksi = activeContributors.reduce(
                 {role === "writer" && (
                   <a
                     href="/contributors/writers"
-                    class="group hover:text-primary-400 flex items-center gap-2 text-sm font-bold text-neutral-400"
+                    class="group flex items-center gap-2 text-sm font-bold text-neutral-600 hover:text-primary-500 dark:text-neutral-300 dark:hover:text-primary-400"
                   >
                     View Full Archive
                     <svg
@@ -262,7 +262,7 @@ const totalKoneksi = activeContributors.reduce(
         <h2 class="text-3xl font-bold text-white md:text-5xl">
           Global Impact.
         </h2>
-        <p class="mt-6 text-neutral-400">
+        <p class="mt-6 text-neutral-200">
           Proyek mercusuar yang kami kembangkan bersama komunitas global.
         </p>
       </div>
@@ -295,7 +295,7 @@ const totalKoneksi = activeContributors.reduce(
             <div class="group relative overflow-hidden rounded-[2.5rem] bg-white/5 p-10 backdrop-blur-sm transition-all hover:bg-white/[0.08]">
               <div class="mb-4 text-5xl">{proj.icon}</div>
               <h3 class="mb-4 text-2xl font-bold text-white">{proj.name}</h3>
-              <p class="mb-8 text-neutral-400">{proj.desc}</p>
+              <p class="mb-8 text-neutral-200">{proj.desc}</p>
               <div class="mt-auto flex items-center justify-between">
                 <span class="text-primary-400 text-xs font-black tracking-widest uppercase">
                   {proj.stats}
@@ -362,10 +362,6 @@ const totalKoneksi = activeContributors.reduce(
   /* Base layout polish */
   :global(body) {
     @apply bg-[#0a0a0b] antialiased;
-  }
-
-  .text-gradient {
-    @apply from-primary-400 bg-gradient-to-br to-teal-400 bg-clip-text text-transparent;
   }
 
   /* Cinematic Section Enhancements */

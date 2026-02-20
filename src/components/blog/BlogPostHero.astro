@@ -2,90 +2,86 @@
 import { type CollectionEntry } from "astro:content";
 
 export interface Props {
-    post: CollectionEntry<"blog">;
+  post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
 ---
 
 <section
-    class="from-primary-50 to-secondary-50 relative overflow-hidden bg-linear-to-br pt-24 pb-10 md:pt-32 md:pb-14 dark:from-neutral-900 dark:to-neutral-800"
+  class="from-primary-50 to-secondary-50 relative overflow-hidden bg-linear-to-br pt-24 pb-10 md:pt-32 md:pb-14 dark:from-neutral-900 dark:to-neutral-800"
 >
-    {
-        post.data.coverImage && (
-            <div class="pointer-events-none absolute inset-0 opacity-10">
-                <img
-                    src={post.data.coverImage}
-                    alt=""
-                    class="h-full w-full scale-110 object-cover blur-sm filter"
-                />
-            </div>
-        )
-    }
-    <div class="container">
-        <div class="mx-auto max-w-4xl text-center">
-            <div
-                class="text-primary-600 dark:text-primary-400 mb-4 text-sm font-semibold tracking-wide uppercase"
-            >
-                {post.data.category}
-            </div>
-            <h1
-                class="mb-6 text-4xl font-bold lg:text-5xl dark:text-neutral-100"
-            >
-                {post.data.title}
-            </h1>
-            <p class="mb-8 text-xl text-neutral-600 dark:text-neutral-400">
-                {post.data.description}
-            </p>
+  {
+    post.data.coverImage && (
+      <div class="pointer-events-none absolute inset-0 opacity-10">
+        <img
+          src={post.data.coverImage}
+          alt=""
+          class="h-full w-full scale-110 object-cover blur-sm filter"
+        />
+      </div>
+    )
+  }
+  <div class="container">
+    <div class="mx-auto max-w-4xl text-center">
+      <div
+        class="text-primary-600 dark:text-primary-400 mb-4 text-sm font-semibold tracking-wide uppercase"
+      >
+        {post.data.category}
+      </div>
+      <h1 class="mb-6 text-4xl font-bold lg:text-5xl dark:text-neutral-100">
+        {post.data.title}
+      </h1>
+      <p class="mb-8 text-xl text-neutral-600 dark:text-neutral-400">
+        {post.data.description}
+      </p>
 
-            <div
-                class="mb-8 flex items-center justify-center gap-6 text-sm text-neutral-500"
-            >
-                <div class="flex items-center gap-2">
-                    <span
-                        class="bg-primary-100 text-primary-600 dark:text-primary-300 flex h-8 w-8 items-center justify-center rounded-full font-semibold dark:bg-neutral-800"
-                    >
-                        {post.data.author.charAt(0)}
-                    </span>
-                    <span class="dark:text-neutral-400"
-                        >By {post.data.author}</span
-                    >
-                </div>
-                <span>•</span>
-                <span class="dark:text-neutral-400"
-                    >{post.data.publishDate.toLocaleDateString("id-ID")}</span
-                >
-                {
-                    post.data.readingTime && (
-                        <>
-                            <span>•</span>
-                            <span>{post.data.readingTime} min read</span>
-                        </>
-                    )
-                }
-            </div>
-
-            <div class="flex flex-wrap justify-center gap-2">
-                {
-                    post.data.tags.map((tag: string) => (
-                        <span class="text-primary-600 dark:text-primary-300 rounded-full bg-white px-3 py-1 text-sm font-medium shadow-sm dark:bg-neutral-800 dark:shadow-none">
-                            #{tag}
-                        </span>
-                    ))
-                }
-            </div>
-
-            {
-                post.data.coverImage && (
-                    <div class="mt-12 flex justify-center overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5 dark:shadow-none dark:ring-neutral-700">
-                        <img
-                            src={post.data.coverImage}
-                            alt={post.data.title}
-                            class="h-auto max-w-full object-cover"
-                        />
-                    </div>
-                )
-            }
+      <div
+        class="mb-8 flex items-center justify-center gap-6 text-sm text-neutral-500"
+      >
+        <div class="flex items-center gap-2">
+          <span
+            class="bg-primary-100 text-primary-600 dark:text-primary-300 flex h-8 w-8 items-center justify-center rounded-full font-semibold dark:bg-neutral-800"
+          >
+            {post.data.author.charAt(0)}
+          </span>
+          <span class="dark:text-neutral-400">By {post.data.author}</span>
         </div>
+        <span>•</span>
+        <span class="dark:text-neutral-400"
+          >{post.data.publishDate.toLocaleDateString("id-ID")}</span
+        >
+        {
+          post.data.readingTime && (
+            <>
+              <span>•</span>
+              <span>{post.data.readingTime} min read</span>
+            </>
+          )
+        }
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-2">
+        {
+          post.data.tags.map((tag: string) => (
+            <span class="text-primary-600 dark:text-primary-300 rounded-full bg-white px-3 py-1 text-sm font-medium shadow-sm dark:bg-neutral-800 dark:shadow-none">
+              #{tag}
+            </span>
+          ))
+        }
+      </div>
+
+      {
+        post.data.coverImage && (
+          <div class="mt-12 flex justify-center overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5 dark:shadow-none dark:ring-neutral-700">
+            <img
+              src={post.data.coverImage}
+              alt={post.data.title}
+              class="h-auto max-w-full object-cover"
+            />
+          </div>
+        )
+      }
     </div>
+  </div>
 </section>

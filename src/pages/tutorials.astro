@@ -2,91 +2,91 @@
 import UnifiedLayout from "@/layouts/UnifiedLayout.astro";
 
 const tutorials = [
-    {
-        title: "Membangun API Skalabel dengan Go",
-        meta: "15 min read • Backend",
-        desc: "Panduan praktis mengimplementasikan arsitektur bersih pada layanan backend menggunakan bahasa pemrograman Go.",
-        level: "Advanced",
-    },
-    {
-        title: "Optimasi Performance Astro & Tailwind",
-        meta: "10 min read • Frontend",
-        desc: "Tips dan trik meningkatkan skor Lighthouse hingga 100 dengan teknik optimasi aset dan kode.",
-        level: "Intermediate",
-    },
-    {
-        title: "Security Hardening untuk Server Linux",
-        meta: "20 min read • DevOps",
-        desc: "Langkah-langkah taktis mengamankan infrastruktur server dari ancaman siber paling umum.",
-        level: "Pro",
-    },
+  {
+    title: "Membangun API Skalabel dengan Go",
+    meta: "15 min read • Backend",
+    desc: "Panduan praktis mengimplementasikan arsitektur bersih pada layanan backend menggunakan bahasa pemrograman Go.",
+    level: "Advanced",
+  },
+  {
+    title: "Optimasi Performance Astro & Tailwind",
+    meta: "10 min read • Frontend",
+    desc: "Tips dan trik meningkatkan skor Lighthouse hingga 100 dengan teknik optimasi aset dan kode.",
+    level: "Intermediate",
+  },
+  {
+    title: "Security Hardening untuk Server Linux",
+    meta: "20 min read • DevOps",
+    desc: "Langkah-langkah taktis mengamankan infrastruktur server dari ancaman siber paling umum.",
+    level: "Pro",
+  },
 ];
 ---
 
 <UnifiedLayout
-    title="Tutorial Teknologi - KonXC Academy"
-    description="Koleksi panduan teknis dan tutorial mendalam dari para ahli di ekosistem KonXC."
-    headerVariant="transparent"
-    theme="dark"
+  title="Tutorial Teknologi - KonXC Academy"
+  description="Koleksi panduan teknis dan tutorial mendalam dari para ahli di ekosistem KonXC."
+  headerVariant="transparent"
+  theme="dark"
 >
-    <section class="relative overflow-hidden pt-24 pb-20 md:pt-32">
-        <div class="absolute inset-0 -z-10 bg-[#0a0a0b]"></div>
-        <div class="container">
-            <div class="mb-16">
-                <h1
-                    class="mb-6 text-5xl font-black tracking-tighter text-white uppercase md:text-8xl"
+  <section class="relative overflow-hidden pt-24 pb-20 md:pt-32">
+    <div class="absolute inset-0 -z-10 bg-[#0a0a0b]"></div>
+    <div class="container">
+      <div class="mb-16">
+        <h1
+          class="mb-6 text-5xl font-black tracking-tighter text-white uppercase md:text-8xl"
+        >
+          LEARN BY <br />
+          <span class="text-primary-500 italic">DOING</span>.
+        </h1>
+        <p class="max-w-xl text-neutral-400">
+          Tutorial langkah-demi-langkah untuk membantu Anda menguasai teknologi
+          terbaru yang digunakan di industri.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-3">
+        {
+          tutorials.map((item) => (
+            <div class="group relative flex flex-col rounded-[2.5rem] border border-white/5 bg-white/5 p-10 transition-all hover:bg-white/10">
+              <div class="mb-4 flex items-center justify-between">
+                <span class="text-[10px] font-black tracking-widest text-neutral-500 uppercase">
+                  {item.meta}
+                </span>
+                <span class="bg-primary-500/10 text-primary-400 ring-primary-500/20 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase ring-1">
+                  {item.level}
+                </span>
+              </div>
+              <h3 class="group-hover:text-primary-400 mb-6 text-xl leading-tight font-black text-white uppercase transition-colors">
+                {item.title}
+              </h3>
+              <p class="mb-8 text-sm leading-relaxed text-neutral-400">
+                {item.desc}
+              </p>
+
+              <a
+                href="#"
+                class="group-hover:text-primary-500 mt-auto inline-flex items-center gap-2 text-xs font-black tracking-widest text-white uppercase"
+              >
+                Start Reading
+                <svg
+                  class="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                    LEARN BY <br />
-                    <span class="text-primary-500 italic">DOING</span>.
-                </h1>
-                <p class="max-w-xl text-neutral-400">
-                    Tutorial langkah-demi-langkah untuk membantu Anda menguasai
-                    teknologi terbaru yang digunakan di industri.
-                </p>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </a>
             </div>
-
-            <div class="grid gap-8 md:grid-cols-3">
-                {
-                    tutorials.map((item) => (
-                        <div class="group relative flex flex-col rounded-[2.5rem] border border-white/5 bg-white/5 p-10 transition-all hover:bg-white/10">
-                            <div class="mb-4 flex items-center justify-between">
-                                <span class="text-[10px] font-black tracking-widest text-neutral-500 uppercase">
-                                    {item.meta}
-                                </span>
-                                <span class="bg-primary-500/10 text-primary-400 ring-primary-500/20 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase ring-1">
-                                    {item.level}
-                                </span>
-                            </div>
-                            <h3 class="group-hover:text-primary-400 mb-6 text-xl leading-tight font-black text-white uppercase transition-colors">
-                                {item.title}
-                            </h3>
-                            <p class="mb-8 text-sm leading-relaxed text-neutral-400">
-                                {item.desc}
-                            </p>
-
-                            <a
-                                href="#"
-                                class="group-hover:text-primary-500 mt-auto inline-flex items-center gap-2 text-xs font-black tracking-widest text-white uppercase"
-                            >
-                                Start Reading
-                                <svg
-                                    class="h-4 w-4 transition-transform group-hover:translate-x-1"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                    />
-                                </svg>
-                            </a>
-                        </div>
-                    ))
-                }
-            </div>
-        </div>
-    </section>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </UnifiedLayout>

@@ -163,13 +163,7 @@ import Services from "@components/sections/Services.astro";
           <div class="flex flex-col gap-4 sm:flex-row">
             <a href="#contact" class="btn-primary"> Hubungi Kami </a>
             <a href="/blog" class="btn-secondary"> Baca Blog Kami </a>
-            <a
-              href="https://platform.konxc.space"
-              target="_blank"
-              class="btn-accent"
-            >
-              Join Komunitas
-            </a>
+            <a href="/app" class="btn-accent"> Join Komunitas </a>
           </div>
         </div>
         <div class="rounded-3xl bg-white p-8 shadow-xl">
@@ -212,67 +206,113 @@ import Services from "@components/sections/Services.astro";
       <div class="grid gap-12 lg:grid-cols-2">
         <!-- Contact Form -->
         <div
-          class="from-primary-50 to-secondary-50 rounded-3xl bg-linear-to-br p-8"
+          class="from-primary-50 to-secondary-50 rounded-3xl bg-linear-to-br p-8 shadow-sm lg:p-12"
         >
-          <h3 class="mb-6 text-2xl font-bold">Konsultasi Gratis</h3>
-          <form class="space-y-6">
-            <div>
-              <label class="form-label">Nama Lengkap</label>
-              <input
-                type="text"
-                class="form-input"
-                placeholder="Masukkan nama lengkap Anda"
-                required
-              />
+          <form id="contact-form" class="space-y-6">
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div class="space-y-2">
+                <label
+                  for="first_name"
+                  class="text-sm font-semibold text-neutral-700"
+                  >Nama Depan</label
+                >
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  required
+                  class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 transition-all outline-none focus:ring-4"
+                  placeholder="John"
+                />
+              </div>
+              <div class="space-y-2">
+                <label
+                  for="last_name"
+                  class="text-sm font-semibold text-neutral-700"
+                  >Nama Belakang</label
+                >
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 transition-all outline-none focus:ring-4"
+                  placeholder="Doe"
+                />
+              </div>
             </div>
-            <div>
-              <label class="form-label">Email</label>
+
+            <div class="space-y-2">
+              <label for="email" class="text-sm font-semibold text-neutral-700"
+                >Email Bisnis</label
+              >
               <input
                 type="email"
-                class="form-input"
-                placeholder="contoh@email.com"
+                id="email"
+                name="email"
                 required
+                class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 transition-all outline-none focus:ring-4"
+                placeholder="email@perusahaan.com"
               />
             </div>
-            <div>
-              <label class="form-label">Nomor Telepon</label>
-              <input
-                type="tel"
-                class="form-input"
-                placeholder="+62 xxx xxx xxxx"
-                required
-              />
-            </div>
-            <div>
-              <label class="form-label">Perusahaan/Institusi</label>
-              <input
-                type="text"
-                class="form-input"
-                placeholder="Nama perusahaan atau institusi"
-              />
-            </div>
-            <div>
-              <label class="form-label">Layanan yang Diperlukan</label>
-              <select class="form-input" required>
-                <option value="">Pilih layanan</option>
-                <option value="it-support">IT Support & Infrastruktur</option>
-                <option value="software">Software Development</option>
-                <option value="branding">Branding & Media Digital</option>
-                <option value="retail">Retail Teknologi</option>
-                <option value="cloud">Cloud & SaaS</option>
-                <option value="consultation">Konsultasi Umum</option>
+
+            <div class="space-y-2">
+              <label
+                for="subject"
+                class="text-sm font-semibold text-neutral-700">Subjek</label
+              >
+              <select
+                id="subject"
+                name="subject"
+                class="focus:border-primary-500 focus:ring-primary-500/10 w-full appearance-none rounded-xl border border-neutral-200 bg-white px-4 py-3 transition-all outline-none focus:ring-4"
+                style='background-image: url("data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"%236B7280\" stroke-width=\"2\"%3E%3Cpath stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M19 9l-7 7-7-7\"%3E%3C/path%3E%3C/svg%3E"); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.25rem;'
+              >
+                <option value="consultation">Konsultasi Layanan</option>
+                <option value="collaboration">Kerjasama / Partnership</option>
+                <option value="contributor">Menjadi Kontributor</option>
+                <option value="other">Tanya Sesuatu yang Lain</option>
               </select>
             </div>
-            <div>
-              <label class="form-label">Pesan</label>
+
+            <div class="space-y-2">
+              <label
+                for="message"
+                class="text-sm font-semibold text-neutral-700">Pesan Anda</label
+              >
               <textarea
-                class="form-textarea"
+                id="message"
+                name="message"
                 rows="4"
-                placeholder="Ceritakan kebutuhan teknologi bisnis Anda..."
+                required
+                class="focus:border-primary-500 focus:ring-primary-500/10 w-full resize-none rounded-xl border border-neutral-200 bg-white px-4 py-3 transition-all outline-none focus:ring-4"
+                placeholder="Ceritakan tentang project Anda atau pertanyaan Anda..."
               ></textarea>
             </div>
-            <button type="submit" class="btn-primary w-full">
-              Kirim Konsultasi
+
+            <button
+              type="submit"
+              class="group bg-primary-600 hover:bg-primary-700 relative w-full overflow-hidden rounded-xl px-6 py-4 font-bold text-white shadow-lg transition-all active:scale-95"
+            >
+              <div class="relative z-10 flex items-center justify-center gap-2">
+                <span>Kirim via WhatsApp</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-message-circle transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                >
+                  <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"></path>
+                </svg>
+              </div>
+              <div
+                class="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 group-hover:translate-x-full"
+              >
+              </div>
             </button>
           </form>
         </div>
@@ -345,3 +385,53 @@ import Services from "@components/sections/Services.astro";
     </div>
   </section>
 </UnifiedLayout>
+
+<script>
+  // WhatsApp form handling
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      // Construct WhatsApp message
+      const phoneNumber = "62882007952010"; // International format
+      const fullName = `${data.first_name} ${data.last_name || ""}`.trim();
+      const subjectMap: Record<string, string> = {
+        consultation: "Konsultasi Layanan",
+        collaboration: "Kerjasama / Partnership",
+        contributor: "Menjadi Kontributor",
+        other: "Tanya Sesuatu yang Lain",
+      };
+
+      const subject =
+        subjectMap[data.subject as string] || (data.subject as string);
+
+      const message = `*Nama:* ${fullName}\n*Email:* ${data.email}\n*Subjek:* ${subject}\n\n*Pesan:*\n${data.message}`;
+
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+        "Halo KonXC, saya tertarik konsultasi:\n\n" + message,
+      )}`;
+
+      // Open WhatsApp
+      window.open(whatsappUrl, "_blank");
+
+      // Feedback UI
+      const button = form.querySelector('button[type="submit"]');
+      if (button) {
+        const originalContent = button.innerHTML;
+        button.innerHTML = "<span>Mengarahkan ke WhatsApp...</span>";
+        button.classList.remove("bg-primary-600");
+        button.classList.add("bg-green-600");
+
+        setTimeout(() => {
+          button.innerHTML = originalContent;
+          button.classList.remove("bg-green-600");
+          button.classList.add("bg-primary-600");
+          form.reset();
+        }, 3000);
+      }
+    });
+  }
+</script>

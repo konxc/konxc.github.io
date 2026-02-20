@@ -1,5 +1,5 @@
-// tests/markdownParser.test.ts
 import { describe, it, expect } from "vitest";
+import type { CollectionEntry } from "astro:content";
 
 import {
   parseInteractiveDemos,
@@ -13,6 +13,7 @@ import {
   formatDemoContent,
   extractDemoDependencies,
   generateDemoSEOMetadata,
+  type InteractiveDemo,
 } from "../src/utils/markdownParser";
 
 describe("Markdown Parser", () => {
@@ -200,9 +201,9 @@ const config = {};
         content: "const config = {};",
         language: "javascript",
         metadata: {},
-      };
+      } as InteractiveDemo;
 
-      const isValid = validateDemoStructure(demo as any);
+      const isValid = validateDemoStructure(demo);
 
       expect(isValid).toBe(false);
     });
@@ -221,7 +222,7 @@ const config = {};
           content: "const config = {};",
           language: "javascript",
           metadata: {},
-        },
+        } as unknown as InteractiveDemo,
         {
           id: "demo2",
           type: "visual",
@@ -232,7 +233,7 @@ const config = {};
           content: ":root { --color: #000; }",
           language: "css",
           metadata: {},
-        },
+        } as InteractiveDemo,
       ];
 
       const summary = generateDemoSummary(demos);
@@ -362,7 +363,7 @@ import React from 'react';
           content: "const config = {};",
           language: "javascript",
           metadata: { tags: ["configuration", "setup"] },
-        },
+        } as InteractiveDemo,
       ];
 
       const seoMetadata = generateDemoSEOMetadata(demos);
@@ -381,7 +382,40 @@ import React from 'react';
 });
 
 describe("Integration Tests", () => {
-  it("should parse complete blog post", () => {
+  const sampleContent = `
+# Test Article
+
+## Introduction
+
+This is a test article with interactive demos.
+
+### Demo 1
+
+<!-- INTERACTIVE_DEMO:demo1 -->
+\`\`\`javascript
+const config = {
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  theme: { extend: {} }
+};
+\`\`\`
+<!-- END_INTERACTIVE_DEMO -->
+
+### Demo 2
+
+<!-- INTERACTIVE_DEMO:demo2 -->
+\`\`\`css
+:root {
+  --color-primary: #3b82f6;
+}
+\`\`\`
+<!-- END_INTERACTIVE_DEMO -->
+
+## Conclusion
+
+This concludes the test article.
+  `;
+
+  it("should parse complete blog post", async () => {
     // Mock blog post entry
     const mockPost = {
       frontmatter: {
@@ -406,9 +440,9 @@ describe("Integration Tests", () => {
       body: "This is the article body.",
       compiledContent: () => sampleContent,
       rawContent: () => sampleContent,
-    } as any;
+    } as unknown as CollectionEntry<"blog">;
 
-    const parsed = parseBlogPostComplete(mockPost);
+    const parsed = await parseBlogPostComplete(mockPost);
 
     expect(parsed).toMatchObject({
       frontmatter: expect.any(Object),

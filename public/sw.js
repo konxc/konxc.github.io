@@ -5,6 +5,7 @@ const CACHE_NAME = 'konxc-v1';
 const STATIC_CACHE_URLS = [
   '/',
   '/blog',
+  '/offline.html',
   '/css/critical.css',
   '/js/main.js',
   '/favicon.svg',
@@ -113,7 +114,17 @@ async function handlePageRequest(request) {
       return offlinePage;
     }
     
-    // Last resort - return a beautiful offline response
+    // Last resort - try to fetch offline.html from network
+    try {
+      const offlineResponse = await fetch('/offline.html');
+      if (offlineResponse.ok) {
+        return offlineResponse;
+      }
+    } catch (e) {
+      // Ignore fetch error
+    }
+    
+    // Absolute last resort - return minimal offline response
     return new Response(`
       <!DOCTYPE html>
       <html lang="id">

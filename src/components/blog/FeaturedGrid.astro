@@ -3,142 +3,132 @@ import { type CollectionEntry } from "astro:content";
 import PostVisual from "./PostVisual.astro";
 
 export interface Props {
-    featuredPost: CollectionEntry<"blog">;
-    secondaryPosts: CollectionEntry<"blog">[];
-    class?: string;
+  featuredPost: CollectionEntry<"blog">;
+  secondaryPosts: CollectionEntry<"blog">[];
+  class?: string;
 }
 
 const { featuredPost, secondaryPosts, class: className } = Astro.props;
 
 const formatDate = (date: Date) => {
-    return date.toLocaleDateString("id-ID", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-    });
+  return date.toLocaleDateString("id-ID", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 };
 ---
 
 <section class={`featured-grid ${className || ""}`}>
-    <div class="grid gap-6 lg:grid-cols-12 lg:gap-8">
-        {/* Main Featured Post (Left, spans 7 or 8 cols) */}
-        <div class="lg:col-span-8">
+  <div class="grid gap-6 lg:grid-cols-12 lg:gap-8">
+    {/* Main Featured Post (Left, spans 7 or 8 cols) */}
+    <div class="lg:col-span-8">
+      <div
+        class="group relative h-full overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:bg-neutral-800"
+      >
+        <a href={`/blog/${featuredPost.slug}`} class="block h-full">
+          <div
+            class="relative aspect-[16/9] w-full overflow-hidden sm:aspect-[2/1] lg:aspect-auto lg:h-full"
+          >
+            <PostVisual
+              title={featuredPost.data.title}
+              category={featuredPost.data.category}
+              image={featuredPost.data.coverImage}
+              slug={featuredPost.slug}
+              class="h-full w-full"
+            />
             <div
-                class="group relative h-full overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:bg-neutral-800"
+              class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-90 transition-opacity group-hover:opacity-100"
             >
-                <a href={`/blog/${featuredPost.slug}`} class="block h-full">
-                    <div
-                        class="relative aspect-[16/9] w-full overflow-hidden sm:aspect-[2/1] lg:aspect-auto lg:h-full"
-                    >
-                        <PostVisual
-                            title={featuredPost.data.title}
-                            category={featuredPost.data.category}
-                            image={featuredPost.data.coverImage}
-                            slug={featuredPost.slug}
-                            class="h-full w-full"
-                        />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-90 transition-opacity group-hover:opacity-100"
-                        >
-                        </div>
-
-                        <div
-                            class="absolute bottom-0 left-0 p-6 sm:p-8 lg:p-10"
-                        >
-                            <span
-                                class="bg-primary-600 mb-3 inline-block rounded-full px-3 py-1 text-xs font-bold tracking-wider text-white uppercase shadow-lg transition-all duration-500 ease-in-out group-hover:invisible group-hover:opacity-0"
-                            >
-                                {featuredPost.data.category}
-                            </span>
-                            <h2
-                                class="mb-4 text-2xl leading-tight font-bold text-white sm:text-3xl lg:text-4xl"
-                            >
-                                {featuredPost.data.title}
-                            </h2>
-                            <p
-                                class="mb-6 line-clamp-2 max-w-2xl text-base text-neutral-200 sm:text-lg"
-                            >
-                                {featuredPost.data.description}
-                            </p>
-
-                            <div
-                                class="flex items-center gap-4 text-sm font-medium text-white/90"
-                            >
-                                <div class="flex items-center gap-2">
-                                    <div
-                                        class="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm"
-                                    >
-                                        {featuredPost.data.author.charAt(0)}
-                                    </div>
-                                    <span>{featuredPost.data.author}</span>
-                                </div>
-                                <span>•</span>
-                                <span
-                                    >{
-                                        formatDate(
-                                            featuredPost.data.publishDate,
-                                        )
-                                    }</span
-                                >
-                                <span>•</span>
-                                <span class="flex items-center gap-1">
-                                    <svg
-                                        class="h-4 w-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        ><path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        ></path></svg
-                                    >
-                                    {featuredPost.data.readingTime} min
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
             </div>
-        </div>
 
-        {/* Secondary Posts (Right, stacked, spans 4 or 5 cols) */}
-        <div class="flex flex-col gap-6 lg:col-span-4 lg:gap-8">
-            {
-                secondaryPosts.map((post) => (
-                    <div class="group relative flex-1 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:bg-neutral-800">
-                        <a href={`/blog/${post.slug}`} class="block h-full">
-                            <div class="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:aspect-square">
-                                <PostVisual
-                                    title={post.data.title}
-                                    category={post.data.category}
-                                    image={post.data.coverImage}
-                                    slug={post.slug}
-                                    class="absolute inset-0 h-full w-full"
-                                />
-                                <div class="absolute inset-0 z-[2] bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
+            <div class="absolute bottom-0 left-0 p-6 sm:p-8 lg:p-10">
+              <span
+                class="bg-primary-600 mb-3 inline-block rounded-full px-3 py-1 text-xs font-bold tracking-wider text-white uppercase shadow-lg transition-all duration-500 ease-in-out group-hover:invisible group-hover:opacity-0"
+              >
+                {featuredPost.data.category}
+              </span>
+              <h2
+                class="mb-4 text-2xl leading-tight font-bold text-white sm:text-3xl lg:text-4xl"
+              >
+                {featuredPost.data.title}
+              </h2>
+              <p
+                class="mb-6 line-clamp-2 max-w-2xl text-base text-neutral-200 sm:text-lg"
+              >
+                {featuredPost.data.description}
+              </p>
 
-                                <div class="absolute bottom-0 left-0 z-[3] p-6">
-                                    <span class="text-primary-300 mb-2 inline-block text-xs font-bold tracking-wide uppercase transition-all duration-500 ease-in-out group-hover:invisible group-hover:opacity-0">
-                                        {post.data.category}
-                                    </span>
-                                    <h3 class="group-hover:text-primary-300 mb-2 line-clamp-2 text-xl leading-snug font-bold text-white transition-colors">
-                                        {post.data.title}
-                                    </h3>
-                                    <div class="flex items-center gap-3 text-xs text-neutral-300">
-                                        <span>{post.data.author}</span>
-                                        <span>•</span>
-                                        <span>
-                                            {formatDate(post.data.publishDate)}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                ))
-            }
-        </div>
+              <div
+                class="flex items-center gap-4 text-sm font-medium text-white/90"
+              >
+                <div class="flex items-center gap-2">
+                  <div
+                    class="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm"
+                  >
+                    {featuredPost.data.author.charAt(0)}
+                  </div>
+                  <span>{featuredPost.data.author}</span>
+                </div>
+                <span>•</span>
+                <span>{formatDate(featuredPost.data.publishDate)}</span>
+                <span>•</span>
+                <span class="flex items-center gap-1">
+                  <svg
+                    class="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    ><path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path></svg
+                  >
+                  {featuredPost.data.readingTime} min
+                </span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
+
+    {/* Secondary Posts (Right, stacked, spans 4 or 5 cols) */}
+    <div class="flex flex-col gap-6 lg:col-span-4 lg:gap-8">
+      {
+        secondaryPosts.map((post) => (
+          <div class="group relative flex-1 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:bg-neutral-800">
+            <a href={`/blog/${post.slug}`} class="block h-full">
+              <div class="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:aspect-square">
+                <PostVisual
+                  title={post.data.title}
+                  category={post.data.category}
+                  image={post.data.coverImage}
+                  slug={post.slug}
+                  class="absolute inset-0 h-full w-full"
+                />
+                <div class="absolute inset-0 z-[2] bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
+
+                <div class="absolute bottom-0 left-0 z-[3] p-6">
+                  <span class="text-primary-300 mb-2 inline-block text-xs font-bold tracking-wide uppercase transition-all duration-500 ease-in-out group-hover:invisible group-hover:opacity-0">
+                    {post.data.category}
+                  </span>
+                  <h3 class="group-hover:text-primary-300 mb-2 line-clamp-2 text-xl leading-snug font-bold text-white transition-colors">
+                    {post.data.title}
+                  </h3>
+                  <div class="flex items-center gap-3 text-xs text-neutral-300">
+                    <span>{post.data.author}</span>
+                    <span>•</span>
+                    <span>{formatDate(post.data.publishDate)}</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
 </section>

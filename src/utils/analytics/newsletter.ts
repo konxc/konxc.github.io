@@ -465,5 +465,9 @@ export const newsletterAnalytics = new NewsletterAnalytics({
 
 // Export for global access
 if (typeof window !== "undefined") {
-  (window as any).newsletterAnalytics = newsletterAnalytics;
+  (
+    window as unknown as {
+      newsletterAnalytics: typeof newsletterAnalytics;
+    }
+  ).newsletterAnalytics = newsletterAnalytics;
 }

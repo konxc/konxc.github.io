@@ -7,11 +7,13 @@
     "src/**/*.svelte",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/env.d.ts"
+    "src/env.d.ts",
+    "drizzle.config.ts"
   ],
   "exclude": ["dist", "node_modules", "public", "docs", "scripts", "tests"],
   "compilerOptions": {
     "baseUrl": ".",
+    "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],

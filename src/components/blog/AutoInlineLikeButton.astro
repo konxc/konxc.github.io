@@ -66,8 +66,9 @@ const containerId = `auto-like-container-${postSlug}-${Math.random()
 >
   // Auto Inline Like Button Functionality
   function initializeAutoInlineLikeButtons() {
-    const container =
-      document.querySelector<HTMLElement>(".auto-like-container");
+    const container = document.querySelector<HTMLElement>(
+      ".auto-like-container",
+    );
     if (!container) return;
 
     const contentElement = document.querySelector(contentSelector);

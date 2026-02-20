@@ -44,8 +44,8 @@ const activeGradient =
 <div
   class={`group relative overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
     variant === "featured"
-      ? "bg-neutral-900/80 backdrop-blur-md border border-white/10 p-8"
-      : "bg-neutral-900/60 backdrop-blur-md border border-white/10 p-6 shadow-sm hover:shadow-2xl"
+      ? "bg-neutral-800/95 backdrop-blur-md border border-white/15 p-8"
+      : "bg-neutral-800/90 backdrop-blur-md border border-white/15 p-6 shadow-lg hover:shadow-xl shadow-black/20"
   } ${className || ""}`}
   data-contributor-id={contributor.slug}
 >
@@ -91,7 +91,7 @@ const activeGradient =
           >
             <a
               href={`/contributors/${contributor.slug}`}
-              class="hover:text-primary-500 transition-colors">{data.name}</a
+              class="text-white hover:text-primary-300 transition-colors">{data.name}</a
             >
           </h3>
           {
@@ -102,14 +102,18 @@ const activeGradient =
             )
           }
         </div>
-        <p
-          class={`font-bold uppercase tracking-widest text-xs ${variant === "featured" ? "text-primary-400" : "text-primary-600 dark:text-primary-400"}`}
+        <span
+          class={`inline-block rounded-lg px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest ${
+            variant === "featured"
+              ? "bg-primary-500/25 text-primary-200 ring-1 ring-primary-400/30"
+              : "bg-white/15 text-neutral-200 ring-1 ring-white/20"
+          }`}
         >
           {data.role.replace(/-/g, " ")}
-        </p>
+        </span>
         {
           data.location && (
-            <p class="mt-2 flex items-center gap-1 text-xs font-bold text-neutral-400">
+            <p class="mt-2 flex items-center gap-1 text-xs font-bold text-neutral-300">
               📍 {data.location}
             </p>
           )
@@ -123,7 +127,7 @@ const activeGradient =
               <div class="text-2xl font-black text-white">
                 {totalContributions}
               </div>
-              <div class="text-[10px] font-black tracking-widest text-neutral-400 uppercase">
+              <div class="text-[10px] font-black tracking-widest text-neutral-200 uppercase">
                 Impact
               </div>
             </div>
@@ -131,7 +135,7 @@ const activeGradient =
               <div class="text-2xl font-black text-white">
                 {data.socialProof.githubStars}
               </div>
-              <div class="text-[10px] font-black tracking-widest text-neutral-400 uppercase">
+              <div class="text-[10px] font-black tracking-widest text-neutral-200 uppercase">
                 Stars
               </div>
             </div>
@@ -145,7 +149,7 @@ const activeGradient =
       variant !== "compact" && showDetails && (
         <div class="mt-8 space-y-6">
           <p
-            class={`line-clamp-3 text-sm leading-relaxed ${variant === "featured" ? "text-neutral-400" : "text-neutral-300"}`}
+            class={`line-clamp-3 text-sm leading-relaxed ${variant === "featured" ? "text-neutral-200" : "text-neutral-200"}`}
           >
             {data.bio}
           </p>
@@ -155,8 +159,8 @@ const activeGradient =
               <span
                 class={`rounded-lg px-3 py-1 text-[10px] font-black tracking-wide uppercase ${
                   variant === "featured"
-                    ? "bg-white/5 text-neutral-300 ring-1 ring-white/10"
-                    : "bg-white/10 text-neutral-200 ring-1 ring-white/10"
+                    ? "bg-white/10 text-neutral-200 ring-1 ring-white/20"
+                    : "bg-white/10 text-neutral-200 ring-1 ring-white/20"
                 }`}
               >
                 {skill}
@@ -169,7 +173,7 @@ const activeGradient =
 
     {/* Footer / Social - Dynamic Reveal on Featured, Static on Default */}
     <div
-      class={`flex items-center justify-between mt-8 pt-6 border-t ${variant === "featured" ? "border-white/5" : "border-neutral-100 dark:border-white/5"}`}
+      class="flex items-center justify-between mt-8 pt-6 border-t border-white/10"
     >
       <div class="flex gap-3">
         {
@@ -188,7 +192,7 @@ const activeGradient =
                 <a
                   href={data[s.key as keyof typeof data] as string}
                   target="_blank"
-                  class={`transition-all hover:scale-110 ${variant === "featured" ? "text-neutral-500 hover:text-white" : "hover:text-primary-600 text-neutral-400"}`}
+                  class={`transition-all hover:scale-110 ${variant === "featured" ? "text-neutral-300 hover:text-white" : "text-neutral-300 hover:text-primary-400 dark:text-neutral-300"}`}
                 >
                   <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
                     <path d={s.icon} />
@@ -203,8 +207,8 @@ const activeGradient =
         href={`/contributors/${contributor.slug}`}
         class={`group/btn flex items-center gap-2 text-xs font-black tracking-widest uppercase transition-all ${
           variant === "featured"
-            ? "text-white hover:text-primary-400"
-            : "text-primary-600 dark:text-primary-400"
+            ? "text-white hover:text-primary-300"
+            : "text-neutral-200 hover:text-white"
         }`}
       >
         Profile Details

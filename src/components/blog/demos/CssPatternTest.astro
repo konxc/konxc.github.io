@@ -5,62 +5,62 @@
 ---
 
 <div class="css-pattern-preview">
-    <div class="pattern-grid">
-        <div class="pattern-item group">
-            <div
-                class="pattern-box from-primary-500 to-accent-500 animate-pulse bg-linear-to-br"
-            >
-            </div>
-            <span class="pattern-label">Gradients</span>
-        </div>
-        <div class="pattern-item group">
-            <div
-                class="pattern-box border-primary-500 animate-spin border-4 border-dashed [animation-duration:10s]"
-            >
-            </div>
-            <span class="pattern-label">Borders</span>
-        </div>
-        <div class="pattern-item group">
-            <div
-                class="pattern-box shadow-primary-500/50 shadow-2xl transition-transform hover:scale-110"
-            >
-            </div>
-            <span class="pattern-label">Shadows</span>
-        </div>
-        <div class="pattern-item group">
-            <div
-                class="pattern-box bg-primary-500/10 border border-white/20 backdrop-blur-md"
-            >
-            </div>
-            <span class="pattern-label">Glassmorphism</span>
-        </div>
+  <div class="pattern-grid">
+    <div class="pattern-item group">
+      <div
+        class="pattern-box from-primary-500 to-accent-500 animate-pulse bg-linear-to-br"
+      >
+      </div>
+      <span class="pattern-label">Gradients</span>
     </div>
+    <div class="pattern-item group">
+      <div
+        class="pattern-box border-primary-500 animate-spin border-4 border-dashed [animation-duration:10s]"
+      >
+      </div>
+      <span class="pattern-label">Borders</span>
+    </div>
+    <div class="pattern-item group">
+      <div
+        class="pattern-box shadow-primary-500/50 shadow-2xl transition-transform hover:scale-110"
+      >
+      </div>
+      <span class="pattern-label">Shadows</span>
+    </div>
+    <div class="pattern-item group">
+      <div
+        class="pattern-box bg-primary-500/10 border border-white/20 backdrop-blur-md"
+      >
+      </div>
+      <span class="pattern-label">Glassmorphism</span>
+    </div>
+  </div>
 </div>
 
 <style>
-    @reference "@/styles/global.css";
+  @reference "@/styles/global.css";
 
-    .css-pattern-preview {
-        @apply py-8;
-    }
+  .css-pattern-preview {
+    @apply py-8;
+  }
 
-    .pattern-grid {
-        @apply grid grid-cols-2 gap-6 lg:grid-cols-4;
-    }
+  .pattern-grid {
+    @apply grid grid-cols-2 gap-6 lg:grid-cols-4;
+  }
 
-    .pattern-item {
-        @apply flex flex-col items-center gap-3;
-    }
+  .pattern-item {
+    @apply flex flex-col items-center gap-3;
+  }
 
-    .pattern-box {
-        @apply h-24 w-24 rounded-2xl bg-white shadow-xl shadow-neutral-200/50 transition-all duration-300;
-    }
+  .pattern-box {
+    @apply h-24 w-24 rounded-2xl bg-white shadow-xl shadow-neutral-200/50 transition-all duration-300;
+  }
 
-    .pattern-label {
-        @apply text-xs font-black tracking-widest text-neutral-400 uppercase;
-    }
+  .pattern-label {
+    @apply text-xs font-black tracking-widest text-neutral-400 uppercase;
+  }
 
-    .dark .pattern-box {
-        @apply bg-neutral-800 shadow-neutral-950/50;
-    }
+  .dark .pattern-box {
+    @apply bg-neutral-800 shadow-neutral-950/50;
+  }
 </style>
