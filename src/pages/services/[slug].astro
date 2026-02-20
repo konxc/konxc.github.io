@@ -1,0 +1,315 @@
+---
+import UnifiedLayout from "@/layouts/UnifiedLayout.astro";
+
+export async function getStaticPaths() {
+    const services = [
+        {
+            slug: "it-support",
+            title: "IT Support & Infrastructure",
+            subtitle: "Enterprise-Grade Reliability",
+            description:
+                "Kami menyediakan dukungan teknis komprehensif untuk memastikan operasional bisnis Anda berjalan tanpa hambatan.",
+            icon: "🛠️",
+            stats: [
+                { label: "Uptime", value: "99.9%" },
+                { label: "SLA Response", value: "< 1hr" },
+                { label: "Systems Managed", value: "500+" },
+            ],
+        },
+        {
+            slug: "software-development",
+            title: "Software Development",
+            subtitle: "Scalable Custom Solutions",
+            description:
+                "Pengembangan perangkat lunak tailor-made yang dirancang untuk memecahkan masalah bisnis spesifik Anda.",
+            icon: "💻",
+            stats: [
+                { label: "Projects", value: "150+" },
+                { label: "Languages", value: "12+" },
+                { label: "Standard", value: "ISO" },
+            ],
+        },
+        {
+            slug: "digital-branding",
+            title: "Digital Branding",
+            subtitle: "Identity & Visual Strategy",
+            description:
+                "Membantu merek Anda menonjol di pasar digital yang padat dengan desain dan strategi yang tepat sasaran.",
+            icon: "🎨",
+            stats: [
+                { label: "Brands", value: "80+" },
+                { label: "Retention", value: "95%" },
+                { label: "Creative Team", value: "Elite" },
+            ],
+        },
+        {
+            slug: "web-development",
+            title: "Web Development",
+            subtitle: "High Performance Web",
+            description:
+                "Membangun kehadiran web yang kuat dengan fokus pada kecepatan, keamanan, dan pengalaman pengguna.",
+            icon: "🌐",
+            stats: [
+                { label: "Loading Speed", value: "< 2s" },
+                { label: "Conversion", value: "+40%" },
+                { label: "Security", value: "Max" },
+            ],
+        },
+        {
+            slug: "mobile-apps",
+            title: "Mobile App Development",
+            subtitle: "Next-Gen Mobile XP",
+            description:
+                "Aplikasi mobile yang dikembangkan untuk memberikan performa maksimal pada platform iOS dan Android.",
+            icon: "📱",
+            stats: [
+                { label: "Downloads", value: "5M+" },
+                { label: "Platforms", value: "Cross" },
+                { label: "Ratings", value: "4.8/5" },
+            ],
+        },
+        {
+            slug: "retail-tech",
+            title: "Retail Technology",
+            subtitle: "Smart Commerce Ops",
+            description:
+                "Transformasi bisnis ritel tradisional menjadi modern dengan sistem terintegrasi dan cerdas.",
+            icon: "🛒",
+            stats: [
+                { label: "Outlets", value: "1000+" },
+                { label: "Sync Speed", value: "Realtime" },
+                { label: "Efficiency", value: "300%" },
+            ],
+        },
+        {
+            slug: "cloud-saas",
+            title: "Cloud & SaaS",
+            subtitle: "Architecture for Scale",
+            description:
+                "Infrastruktur cloud yang tangguh dan solusi SaaS yang siap mendukung pertumbuhan bisnis global.",
+            icon: "☁️",
+            stats: [
+                { label: "Scalability", value: "Auto" },
+                { label: "Cost Save", value: "25%" },
+                { label: "Global Nodes", value: "12" },
+            ],
+        },
+        {
+            slug: "cloud-solutions", // Alias for Cloud & SaaS
+            title: "Cloud Solutions",
+            subtitle: "Robust Infrastructure",
+            description:
+                "Solusi cloud terintegrasi untuk kebutuhan enterprise mulai dari migrasi hingga manajemen data.",
+            icon: "☁️",
+            stats: [
+                { label: "Migration", value: "Zero Zero" },
+                { label: "Storage", value: "PB Scale" },
+                { label: "Uptime", value: "99.99%" },
+            ],
+        },
+        {
+            slug: "digital-marketing",
+            title: "Digital Marketing",
+            subtitle: "Data Driven Growth",
+            description:
+                "Strategi pemasaran digital yang berfokus pada hasil nyata dan ROI yang dapat diukur.",
+            icon: "📈",
+            stats: [
+                { label: "ROI", value: "x10" },
+                { label: "Reach", value: "10M+" },
+                { label: "Strategy", value: "Data" },
+            ],
+        },
+    ];
+
+    return services.map((service) => ({
+        params: { slug: service.slug },
+        props: { service },
+    }));
+}
+
+const { service } = Astro.props;
+---
+
+<UnifiedLayout
+    title={`${service.title} - Layanan KonXC`}
+    description={service.description}
+    showNewsletter={false}
+    headerVariant="transparent"
+    theme="dark"
+>
+    <!-- 1. Service Hero -->
+    <section
+        class="relative flex min-h-[60vh] items-center overflow-hidden pt-24 pb-20 md:pt-32"
+    >
+        <div class="absolute inset-0 -z-10 bg-[#0a0a0b]">
+            <div
+                class="bg-primary-600/10 absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[150px]"
+            >
+            </div>
+            <div
+                class="bg-[url('data:image/svg+xml,%3Csvg width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M0 0h40v1H0V0zm0 1h1v39H0V1z%22 fill=%22%23ffffff%22 fill-opacity=%220.03%22/%3E%3C/svg%3E')] absolute inset-0 opacity-40"
+            >
+            </div>
+        </div>
+
+        <div class="relative z-10 container">
+            <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+                <div>
+                    <div
+                        class="text-primary-400 mb-6 text-xs font-black tracking-[0.3em] uppercase"
+                    >
+                        // Service Pillar
+                    </div>
+                    <h1
+                        class="mb-4 text-5xl font-black tracking-tight text-white md:text-7xl"
+                    >
+                        {
+                            service.title
+                                .split(" ")
+                                .map((word, i) =>
+                                    i ===
+                                    service.title.split(" ").length - 1 ? (
+                                        <span class="text-primary-500 inline-block px-2 font-black">
+                                            {word}
+                                        </span>
+                                    ) : (
+                                        word + " "
+                                    ),
+                                )
+                        }
+                    </h1>
+                    <p
+                        class="mb-8 text-xl font-bold tracking-tight text-neutral-500 italic"
+                    >
+                        {service.subtitle}
+                    </p>
+                    <p
+                        class="mb-12 max-w-xl text-lg leading-relaxed text-neutral-400"
+                    >
+                        {service.description}
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <a
+                            href="/contact"
+                            class="bg-primary-600 hover:bg-primary-700 rounded-full px-10 py-4 font-black tracking-widest text-white transition-all hover:scale-105"
+                        >
+                            INITIATE OPS
+                        </a>
+                        <a
+                            href="/services"
+                            class="rounded-full border border-white/20 px-10 py-4 font-black tracking-widest text-white transition-all hover:bg-white/5"
+                        >
+                            BACK TO HUB
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tactical Stats -->
+                <div
+                    class="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1"
+                >
+                    {
+                        service.stats.map((stat) => (
+                            <div class="group flex items-center gap-6 rounded-3xl border border-white/5 bg-white/5 p-8 backdrop-blur-md transition-all hover:bg-white/10">
+                                <div class="bg-primary-600 h-14 w-1 flex-shrink-0 transition-all group-hover:h-16" />
+                                <div>
+                                    <div class="mb-1 text-4xl font-black text-white">
+                                        {stat.value}
+                                    </div>
+                                    <div class="text-[10px] font-black tracking-[0.2em] text-neutral-500 uppercase">
+                                        {stat.label}
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Detailed Briefing Area -->
+    <section class="bg-[#0a0a0b] py-24">
+        <div class="container">
+            <div class="mx-auto max-w-4xl">
+                <div class="border-primary-500 mb-16 border-l-2 pl-8">
+                    <h2
+                        class="mb-4 text-3xl font-black tracking-tighter text-white uppercase md:text-5xl"
+                    >
+                        Strategic Framework.
+                    </h2>
+                    <p class="text-neutral-400">
+                        Pendekatan kami dalam mengeksekusi layanan {
+                            service.title
+                        } selalu didasarkan pada riset mendalam dan kepatuhan terhadap
+                        standar industri global.
+                    </p>
+                </div>
+
+                <div class="grid gap-12 md:grid-cols-2">
+                    {
+                        [
+                            {
+                                title: "Discovery",
+                                desc: "Kami mulai dengan memahami tantangan unik bisnis Anda dan goals yang ingin dicapai.",
+                            },
+                            {
+                                title: "Architecture",
+                                desc: "Perancangan blueprints teknis yang skalabel dan aman untuk jangka panjang.",
+                            },
+                            {
+                                title: "Execution",
+                                desc: "Implementasi taktis oleh tim ahli dengan metodologi agile yang transparan.",
+                            },
+                            {
+                                title: "Deployment",
+                                desc: "Peluncuran sistem dengan monitoring ketat untuk memastikan performa maksimal.",
+                            },
+                        ].map((step) => (
+                            <div class="group relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-[#0f0f12] p-10">
+                                <div class="group-hover:text-primary-500/10 absolute -top-4 -right-4 text-6xl font-black text-white/5 transition-all group-hover:scale-110">
+                                    {step.title[0]}
+                                </div>
+                                <h4 class="mb-4 text-lg font-black tracking-widest text-white uppercase">
+                                    {step.title}
+                                </h4>
+                                <p class="text-sm leading-relaxed text-neutral-500 transition-colors group-hover:text-neutral-400">
+                                    {step.desc}
+                                </p>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Final Call -->
+    <section class="border-t border-white/5 bg-[#0a0a0b] py-32">
+        <div class="container text-center">
+            <h2 class="mb-12 text-5xl font-black text-white md:text-7xl">
+                READY TO DEPLOY?
+            </h2>
+            <a
+                href="/contact"
+                class="from-primary-600 hover:shadow-primary-600/20 inline-block rounded-full bg-gradient-to-br to-indigo-700 px-16 py-6 font-black tracking-widest text-white transition-all hover:scale-110 hover:shadow-2xl"
+            >
+                START CONSULTATION
+            </a>
+        </div>
+    </section>
+
+    <style>
+        @reference "@/styles/global.css";
+
+        :global(body) {
+            @apply bg-[#0a0a0b] antialiased;
+        }
+
+        section {
+            @apply relative overflow-hidden;
+        }
+    </style>
+</UnifiedLayout>

@@ -1,0 +1,170 @@
+---
+import UnifiedLayout from "@/layouts/UnifiedLayout.astro";
+
+const docCategories = [
+    {
+        title: "Getting Started",
+        links: ["Introduction", "Quick Start Guide", "Architecture Overview"],
+    },
+    {
+        title: "Services Documentation",
+        links: ["Cloud Setup", "Software SDK", "Web Guidelines"],
+    },
+    {
+        title: "Community",
+        links: ["Contributing Rules", "Code of Conduct", "Security Policy"],
+    },
+];
+---
+
+<UnifiedLayout
+    title="Dokumentasi Teknis - KonXC Knowledge Base"
+    description="Pusat bantuan dan dokumentasi teknis untuk seluruh layanan, produk, dan inisiatif sumber terbuka KonXC."
+    headerVariant="transparent"
+    theme="dark"
+>
+    <!-- 1. Docs Hero -->
+    <section class="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-32">
+        <div class="absolute inset-0 -z-10 bg-[#0a0a0b]">
+            <div
+                class="bg-[url('data:image/svg+xml,%3Csvg width=%2230%22 height=%2230%22 viewBox=%220 0 30 30%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M0 0h1v1H0V0zm10 10h1v1h-1v-1z%22 fill=%22%23ffffff%22 fill-opacity=%220.02%22/%3E%3C/svg%3E')] absolute inset-0 opacity-30"
+            >
+            </div>
+        </div>
+
+        <div class="relative z-10 container">
+            <div class="max-w-3xl">
+                <div
+                    class="text-primary-500 mb-6 text-xs font-black tracking-[0.3em] uppercase"
+                >
+                    // Knowledge Base
+                </div>
+                <h1
+                    class="mb-8 text-5xl font-black tracking-tighter text-white uppercase md:text-8xl"
+                >
+                    Build with <span
+                        class="from-primary-400 bg-gradient-to-r to-indigo-500 bg-clip-text text-transparent italic"
+                        >Precision</span
+                    >.
+                </h1>
+                <div class="relative max-w-xl">
+                    <input
+                        type="text"
+                        placeholder="Search documentation..."
+                        class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-2xl border border-white/10 bg-white/5 px-8 py-5 text-white backdrop-blur-md focus:ring-1 focus:outline-none"
+                    />
+                    <div
+                        class="absolute top-1/2 right-6 -translate-y-1/2 text-neutral-500"
+                    >
+                        <svg
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            ></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Main Content Grid -->
+    <section class="bg-[#0a0a0b] py-24">
+        <div class="container">
+            <div class="grid gap-12 lg:grid-cols-[300px_1fr]">
+                <!-- Sidebar Nav (Visual) -->
+                <aside class="hidden space-y-12 lg:block">
+                    {
+                        docCategories.map((cat) => (
+                            <div>
+                                <h4 class="mb-6 text-xs font-black tracking-[0.2em] text-white uppercase">
+                                    {cat.title}
+                                </h4>
+                                <ul class="space-y-4">
+                                    {cat.links.map((link) => (
+                                        <li>
+                                            <a
+                                                href="#"
+                                                class="hover:text-primary-400 text-sm text-neutral-500 transition-colors"
+                                            >
+                                                {link}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))
+                    }
+                </aside>
+
+                <!-- Content Preview -->
+                <div class="space-y-16">
+                    <div
+                        class="rounded-[3rem] border border-white/5 bg-white/5 p-12 md:p-20"
+                    >
+                        <h2
+                            class="mb-8 text-4xl font-black tracking-tight text-white"
+                        >
+                            Introduction to KonXC Core.
+                        </h2>
+                        <div
+                            class="prose prose-invert max-w-none leading-relaxed font-medium text-neutral-400"
+                        >
+                            <p class="mb-6">
+                                Selamat datang di dokumentasi resmi KonXC.
+                                Panduan ini dirancang untuk membantu Anda
+                                memahami standar arsitektur dan metodologi kerja
+                                kami.
+                            </p>
+                            <p class="mb-8 font-bold text-white/80 italic">
+                                "Efficiency through standardization, innovation
+                                through collaboration."
+                            </p>
+
+                            <div class="mt-12 grid gap-6 md:grid-cols-2">
+                                <div
+                                    class="rounded-3xl border border-white/5 bg-white/5 p-8 transition-all hover:bg-white/10"
+                                >
+                                    <h4 class="mb-2 font-bold text-white">
+                                        Technical Standards
+                                    </h4>
+                                    <p class="text-sm text-neutral-500">
+                                        Pelajari konvensi penulisan kode dan
+                                        standar keamanan yang kami terapkan pada
+                                        seluruh proyek.
+                                    </p>
+                                </div>
+                                <div
+                                    class="rounded-3xl border border-white/5 bg-white/5 p-8 transition-all hover:bg-white/10"
+                                >
+                                    <h4 class="mb-2 font-bold text-white">
+                                        Architecture Patterns
+                                    </h4>
+                                    <p class="text-sm text-neutral-500">
+                                        Eksplorasi bagaimana kami membangun
+                                        sistem terdistribusi yang skalabel dan
+                                        resilien.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @reference "@/styles/global.css";
+        :global(body) {
+            @apply bg-[#0a0a0b] antialiased;
+        }
+    </style>
+</UnifiedLayout>

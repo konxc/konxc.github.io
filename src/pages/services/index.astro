@@ -1,0 +1,199 @@
+---
+import UnifiedLayout from "@/layouts/UnifiedLayout.astro";
+
+const services = [
+  {
+    title: "IT Support & Managed Ops",
+    slug: "it-support",
+    description: "Dukungan teknis 24/7 dan manajemen infrastruktur IT yang handal untuk stabilitas bisnis Anda.",
+    icon: "🛠️",
+    color: "from-blue-500 to-indigo-600",
+    features: ["24/7 Monitoring", "Server Maintenance", "Security Audits"]
+  },
+  {
+    title: "Custom Software Development",
+    slug: "software-development",
+    description: "Membangun solusi perangkat lunak yang disesuaikan dengan kebutuhan spesifik dan alur kerja bisnis Anda.",
+    icon: "💻",
+    color: "from-emerald-500 to-teal-600",
+    features: ["Enterprise ERP", "Custom CRM", "API Integration"]
+  },
+  {
+    title: "Digital Branding & Identity",
+    slug: "digital-branding",
+    description: "Menciptakan identitas visual yang kuat dan berkesan untuk memenangkan hati pelanggan di dunia digital.",
+    icon: "🎨",
+    color: "from-purple-500 to-pink-600",
+    features: ["Visual Identity", "Brand Strategy", "UI/UX Design"]
+  },
+  {
+    title: "Web Development & E-Commerce",
+    slug: "web-development",
+    description: "Website modern yang responsif dan platform e-commerce berperforma tinggi dengan konversi maksimal.",
+    icon: "🌐",
+    color: "from-orange-500 to-red-600",
+    features: ["Next.js/Astro", "Headless Commerce", "SEO Optimized"]
+  },
+  {
+    title: "Mobile App Development",
+    slug: "mobile-apps",
+    description: "Pengalaman aplikasi mobile native dan hybrid (iOS & Android) yang intuitif dan kaya fitur.",
+    icon: "📱",
+    color: "from-cyan-500 to-blue-600",
+    features: ["React Native/Flutter", "App Store Optimization", "Cloud Sync"]
+  },
+  {
+    title: "Retail Technology Solutions",
+    slug: "retail-tech",
+    description: "Digitalisasi ritel dengan sistem POS cerdas dan manajemen stok inventaris yang terintegrasi.",
+    icon: "🛒",
+    color: "from-amber-500 to-orange-600",
+    features: ["Smart POS", "Inventory Management", "Omnichannel"]
+  },
+  {
+    title: "Cloud & SaaS Architecture",
+    slug: "cloud-saas",
+    description: "Implementasi infrastruktur cloud yang skalabel dan pengembangan platform SaaS masa depan.",
+    icon: "☁️",
+    color: "from-indigo-500 to-blue-700",
+    features: ["AWS/Azure/GCP", "Microservices", "Cost Optimization"]
+  },
+  {
+    title: "Strategic Digital Marketing",
+    slug: "digital-marketing",
+    description: "Kampanye pemasaran berbasis data untuk meningkatkan visibilitas dan pertumbuhan bisnis secara eksponensial.",
+    icon: "📈",
+    color: "from-rose-500 to-red-700",
+    features: ["SEO & SEM", "Social Media Growth", "Content Strategy"]
+  }
+];
+---
+
+<UnifiedLayout
+  title="Layanan & Solusi Digital - KonXC"
+  description="Eksplorasi spektrum lengkap kapabilitas teknologi kami, mulai dari infrastruktur cloud hingga pengembangan aplikasi strategis."
+  showNewsletter={false}
+  headerVariant="transparent"
+  theme="dark"
+>
+  <!-- 1. Cinematic Hero Section -->
+  <section class="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-32">
+    <div class="absolute inset-0 -z-10 bg-[#0a0a0b]">
+      <div
+        class="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-primary-600/20 blur-[120px]"
+      >
+      </div>
+      <div
+        class="bg-[url('data:image/svg+xml,%3Csvg width=%2220%22 height=%2220%22 viewBox=%220 0 20%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M0 0h1v1H0V0zm10 10h1v1h-1v-1z%22 fill=%22%23ffffff%22 fill-opacity=%220.03%22 fill-rule=%22evenodd%22/%3E%3C/svg%3E')] absolute inset-0 opacity-30"
+      >
+      </div>
+    </div>
+
+    <div class="relative z-10 container">
+      <div class="max-w-4xl">
+        <div
+          class="text-primary-400 mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-black tracking-[0.2em] uppercase backdrop-blur-md"
+        >
+          <span class="relative flex h-2 w-2">
+            <span class="bg-primary-400 absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
+            <span class="bg-primary-500 relative inline-flex h-2 w-2 rounded-full"></span>
+          </span>
+          Integrated Solutions
+        </div>
+        <h1 class="mb-8 text-5xl font-black tracking-tight text-white md:text-8xl">
+          ELEVATING <span class="bg-gradient-to-r from-primary-400 to-teal-400 bg-clip-text text-transparent inline-block px-2">BUSINESS</span><br />
+          THROUGH TECH.
+        </h1>
+        <p class="max-w-2xl text-lg leading-relaxed text-neutral-400 md:text-xl">
+          Kami menyederhanakan kompleksitas teknologi dan mengubahnya menjadi nilai kompetitif yang nyata bagi bisnis Anda di era digital.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Interactive Services Grid -->
+  <section class="bg-[#0a0a0b] py-24">
+    <div class="container">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {services.map((service) => (
+          <a
+            href={`/services/${service.slug}`}
+            class="group relative flex flex-col overflow-hidden rounded-[2.5rem] border border-white/5 bg-white/5 p-8 backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:bg-white/10 hover:shadow-2xl hover:shadow-primary-600/10"
+          >
+            <!-- Background Accent -->
+            <div class={`absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-to-br ${service.color} opacity-10 blur-2xl transition-opacity group-hover:opacity-20`}></div>
+            
+            <div class="mb-6 flex items-center justify-between">
+              <div class="text-4xl transition-transform duration-500 group-hover:scale-110">
+                {service.icon}
+              </div>
+              <svg class="h-6 w-6 text-white/20 transition-all duration-500 group-hover:translate-x-1 group-hover:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
+
+            <h3 class="mb-4 text-xl font-black tracking-tight text-white uppercase group-hover:text-primary-400 transition-colors">
+              {service.title}
+            </h3>
+            
+            <p class="mb-8 text-sm leading-relaxed text-neutral-400">
+              {service.description}
+            </p>
+
+            <div class="mt-auto flex flex-wrap gap-2">
+              {service.features.map((feature) => (
+                <span class="rounded bg-white/5 px-2 py-1 text-[9px] font-bold tracking-widest text-neutral-500 uppercase group-hover:text-neutral-300">
+                  {feature}
+                </span>
+              ))}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Bottom CTA -->
+  <section class="bg-[#0a0a0b] py-24">
+    <div class="container">
+      <div class="relative overflow-hidden rounded-[3.5rem] bg-gradient-to-br from-primary-600 to-indigo-700 px-8 py-20 text-center md:px-20">
+        <div class="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-white/10 blur-3xl"></div>
+        <div class="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-white/5 blur-3xl"></div>
+        
+        <h2 class="relative z-10 text-4xl font-black text-white md:text-6xl">
+          Transform Your <br class="hidden md:block" /> Business Perspective.
+        </h2>
+        <p class="relative z-10 mx-auto mt-8 max-w-2xl text-lg text-white/80">
+          Mari diskusikan bagaimana solusi teknologi kami dapat membantu mempercepat pertumbuhan bisnis Anda hari ini.
+        </p>
+        
+        <div class="relative z-10 mt-12 flex flex-col justify-center gap-4 sm:flex-row">
+          <a
+            href="/contact"
+            class="rounded-full bg-white px-10 py-4 font-black tracking-wide text-primary-600 transition-all hover:scale-105 hover:shadow-2xl"
+          >
+            START A PROJECT
+          </a>
+          <a
+            href="/about"
+            class="rounded-full border-2 border-white/30 px-10 py-4 font-black tracking-wide text-white transition-all hover:bg-white/10"
+          >
+            LEARN MORE
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @reference "@/styles/global.css";
+    
+    :global(body) {
+      @apply bg-[#0a0a0b] antialiased;
+    }
+
+    section {
+      @apply relative overflow-hidden;
+    }
+  </style>
+</UnifiedLayout>

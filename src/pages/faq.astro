@@ -1,0 +1,77 @@
+---
+import UnifiedLayout from "@/layouts/UnifiedLayout.astro";
+
+const faqs = [
+    {
+        kategori: "General",
+        questions: [
+            {
+                q: "Apa itu KonXC?",
+                a: "KonXC adalah kolektif inovator dan penyedia layanan teknologi terintegrasi yang berfokus pada pembangunan ekosistem digital Indonesia.",
+            },
+            {
+                q: "Bagaimana cara bekerja sama dengan KonXC?",
+                a: "Anda dapat memulai konsultasi melalui halaman Kontak atau langsung menghubungi kami melalui WhatsApp untuk respon cepat.",
+            },
+        ],
+    },
+    {
+        kategori: "Kontributor",
+        questions: [
+            {
+                q: "Siapa saja yang bisa menjadi kontributor?",
+                a: "Siapapun yang memiliki passion di bidang teknologi, mulai dari developer, desainer, hingga penulis teknis.",
+            },
+            {
+                q: "Apa keuntungan menjadi bagian dari The Squad?",
+                a: "Akses ke network eksklusif, kesempatan mengerjakan proyek berdampak besar, dan pengembangan portofolio profesional.",
+            },
+        ],
+    },
+];
+---
+
+<UnifiedLayout
+    title="FAQ - Pertanyaan Umum KonXC"
+    description="Temukan jawaban atas pertanyaan yang paling sering diajukan mengenai layanan dan komunitas KonXC."
+    headerVariant="transparent"
+    theme="dark"
+>
+    <section class="relative overflow-hidden pt-24 pb-20 md:pt-32">
+        <div class="absolute inset-0 -z-10 bg-[#0a0a0b]"></div>
+        <div class="container">
+            <div class="max-w-3xl">
+                <h1
+                    class="mb-12 text-5xl font-black tracking-tighter text-white uppercase md:text-8xl"
+                >
+                    FREQUENTLY <br />
+                    <span class="text-primary-500 italic">ASKED</span>.
+                </h1>
+
+                <div class="space-y-16">
+                    {
+                        faqs.map((cat) => (
+                            <div>
+                                <h2 class="mb-8 border-b border-white/10 pb-4 text-xs font-black tracking-[0.4em] text-neutral-500 uppercase">
+                                    {cat.kategori}
+                                </h2>
+                                <div class="space-y-6">
+                                    {cat.questions.map((item) => (
+                                        <div class="group rounded-3xl border border-white/5 bg-white/5 p-8 transition-all hover:bg-white/10">
+                                            <h4 class="group-hover:text-primary-400 mb-4 text-lg font-black tracking-tight text-white uppercase transition-colors">
+                                                {item.q}
+                                            </h4>
+                                            <p class="text-sm leading-relaxed text-neutral-400">
+                                                {item.a}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</UnifiedLayout>

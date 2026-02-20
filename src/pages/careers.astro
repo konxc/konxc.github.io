@@ -1,0 +1,79 @@
+---
+import UnifiedLayout from "@/layouts/UnifiedLayout.astro";
+
+const categories = ["Engineering", "Design", "Operations", "Content"];
+---
+
+<UnifiedLayout
+    title="Karier di Koneksi - Membangun Masa Depan Digital Indonesia"
+    description="Bergabunglah dengan tim Koneksi dan berkontribusi langsung dalam mewujudkan Kedaulatan Data Indonesia. Temukan peluang karier di bidang teknologi, manajemen, dan lainnya."
+    showNewsletter={false}
+    headerVariant="transparent"
+    theme="dark"
+>
+    <section class="relative overflow-hidden pt-24 pb-20 md:pt-32">
+        <div class="absolute inset-0 -z-10 bg-[#0a0a0b]">
+            <div
+                class="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-indigo-600/10 blur-[120px]"
+            >
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="max-w-4xl">
+                <div
+                    class="text-primary-500 mb-6 text-xs font-black tracking-[0.4em] uppercase"
+                >
+                    // Recruitment Operations
+                </div>
+                <h1
+                    class="mb-8 text-6xl font-black tracking-tight text-white uppercase md:text-9xl"
+                >
+                    WORK ON <br />
+                    <span
+                        class="to-primary-500 inline-block bg-gradient-to-r from-indigo-400 bg-clip-text px-4 text-transparent italic"
+                        >PURPOSE</span
+                    >.
+                </h1>
+                <p
+                    class="max-w-2xl text-lg leading-relaxed text-neutral-400 md:text-xl"
+                >
+                    Bekerja di KonXC bukan hanya tentang menulis kode atau
+                    mendesain pixel. Ini tentang membangun kedaulatan digital
+                    dan memberikan dampak nyata bagi jutaan pengguna.
+                </p>
+            </div>
+
+            <div class="mt-20">
+                <div class="mb-12 flex flex-wrap gap-4">
+                    {
+                        categories.map((cat) => (
+                            <button class="hover:border-primary-500 rounded-full border border-white/10 bg-white/5 px-8 py-3 text-xs font-black tracking-widest text-neutral-400 uppercase transition-all hover:text-white">
+                                {cat}
+                            </button>
+                        ))
+                    }
+                </div>
+
+                <div
+                    class="rounded-[3rem] border border-white/5 bg-white/5 p-12 text-center backdrop-blur-md"
+                >
+                    <h3 class="mb-4 text-2xl font-black text-white uppercase">
+                        Looking for something specific?
+                    </h3>
+                    <p class="mx-auto mb-8 max-w-xl text-neutral-500">
+                        Posisi terbuka akan diperbarui secara berkala. Jika Anda
+                        merasa memiliki kemampuan yang bisa memperkuat Squad
+                        kami, jangan ragu untuk mengirimkan profil Anda.
+                    </p>
+                    <a
+                        href="/contributors/join"
+                        class="text-primary-600 inline-block rounded-full bg-white px-10 py-4 font-black tracking-widest transition-all hover:scale-105"
+                    >
+                        VIEW SQUAD MISSIONS
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</UnifiedLayout>
