@@ -1,5 +1,5 @@
 ---
-// Writers Hero Component
+// Writers Hero Component - Re-styled for Premium Aesthetics
 export interface Props {
   totalWriters: number;
   totalBlogPosts: number;
@@ -9,40 +9,60 @@ export interface Props {
 const { totalWriters, totalBlogPosts, totalContributions } = Astro.props;
 ---
 
-<section class="section from-primary-50 to-secondary-50 bg-linear-to-br">
-  <div class="container">
+<section
+  class="relative overflow-hidden border-b border-white/5 bg-[#0a0a0b] pt-32 pb-20"
+>
+  <!-- Tactical Background -->
+  <div
+    class="bg-[url('data:image/svg+xml,%3Csvg width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M0 0h40v1H0V0zm0 1h1v39H0V1z%22 fill=%22%23ffffff%22 fill-opacity=%220.03%22/%3E%3C/svg%3E')] absolute inset-0 -z-10"
+  >
+  </div>
+  <div
+    class="bg-primary-600/10 absolute -top-24 -left-24 h-96 w-96 rounded-full blur-[120px]"
+  >
+  </div>
+
+  <div class="relative z-10 container">
     <div class="mx-auto max-w-4xl text-center">
       <div
-        class="text-primary-600 mb-4 text-sm font-semibold tracking-wide uppercase"
+        class="text-primary-500 mb-4 inline-flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase"
       >
-        Writers & Bloggers
+        <span class="bg-primary-500 h-px w-8"></span>
+        Elite Scribes
+        <span class="bg-primary-500 h-px w-8"></span>
       </div>
-      <h1 class="mb-6 text-4xl font-bold lg:text-5xl">
-        Penulis & Blogger Koneksi
+      <h1
+        class="mb-8 text-5xl font-black tracking-tighter text-white md:text-7xl lg:text-8xl"
+      >
+        WORDS <span class="text-primary-500">POWER</span> APPS.
       </h1>
-      <p class="mb-8 text-xl text-neutral-600">
-        Temukan kontributor yang berdedikasi untuk berbagi pengetahuan melalui
-        artikel berkualitas, tutorial mendalam, dan insights teknologi terbaru.
+      <p class="mx-auto mb-12 max-w-2xl text-lg text-neutral-400">
+        Barisan penulis dan blogger terbaik kami, berdedikasi untuk
+        mendokumentasikan masa depan teknologi melalui artikel berkualitas dan
+        riset mendalam.
       </p>
 
-      <!-- Stats -->
+      <!-- Tactical Stats -->
       <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-        <div class="rounded-lg bg-white p-6 shadow-sm">
-          <div class="text-primary-600 text-3xl font-bold">{totalWriters}</div>
-          <div class="text-sm text-neutral-600">Penulis Aktif</div>
-        </div>
-        <div class="rounded-lg bg-white p-6 shadow-sm">
-          <div class="text-primary-600 text-3xl font-bold">
-            {totalBlogPosts}
-          </div>
-          <div class="text-sm text-neutral-600">Artikel Diterbitkan</div>
-        </div>
-        <div class="rounded-lg bg-white p-6 shadow-sm">
-          <div class="text-primary-600 text-3xl font-bold">
-            {totalContributions}
-          </div>
-          <div class="text-sm text-neutral-600">Total Kontribusi</div>
-        </div>
+        {
+          [
+            { label: "Active Scribes", value: totalWriters, icon: "🖋️" },
+            { label: "Ops Logged", value: totalBlogPosts, icon: "📑" },
+            { label: "Net Impact", value: totalContributions, icon: "📈" },
+          ].map((stat) => (
+            <div class="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/5 p-8 backdrop-blur-md transition-all hover:bg-white/10">
+              <div class="mb-2 text-3xl opacity-50 transition-transform group-hover:scale-110">
+                {stat.icon}
+              </div>
+              <div class="mb-1 text-4xl font-black tracking-tight text-white">
+                {stat.value}
+              </div>
+              <div class="text-[10px] font-black tracking-widest text-neutral-500 uppercase">
+                {stat.label}
+              </div>
+            </div>
+          ))
+        }
       </div>
     </div>
   </div>

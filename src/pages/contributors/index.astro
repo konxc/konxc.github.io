@@ -1,5 +1,5 @@
 ---
-import ExtendedLayout from "@layouts/ExtendedLayout.astro";
+import UnifiedLayout from "@layouts/UnifiedLayout.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import ContributorCard from "@components/contributors/ContributorCard.astro";
 
@@ -7,332 +7,359 @@ const contributors = await getCollection("contributors");
 const activeContributors = contributors.filter(
   (contributor) => contributor.data.isActive,
 );
-const sortedContributors = activeContributors.sort(
+
+// Sorting for leaderboard/wall of fame
+const sortedContributors = [...activeContributors].sort(
   (a: CollectionEntry<"contributors">, b: CollectionEntry<"contributors">) => {
     const aScore =
-      a.data.socialProof.githubStars + a.data.socialProof.communityReputation;
+      a.data.socialProof.githubStars +
+      a.data.socialProof.communityReputation * 1.5;
     const bScore =
-      b.data.socialProof.githubStars + b.data.socialProof.communityReputation;
+      b.data.socialProof.githubStars +
+      b.data.socialProof.communityReputation * 1.5;
     return bScore - aScore;
   },
 );
 
-// Group contributors by role
-const contributorsByRole = sortedContributors.reduce(
-  (acc, contributor: CollectionEntry<"contributors">) => {
+const topHero = sortedContributors[0];
+const topChallengers = sortedContributors.slice(1, 4);
+const theRest = sortedContributors.slice(4);
+
+// Group contributors by role for the "Squads" section
+const squadGroups = activeContributors.reduce(
+  (acc, contributor) => {
     const role = contributor.data.role;
-    if (!acc[role]) {
-      acc[role] = [];
-    }
+    if (!acc[role]) acc[role] = [];
     acc[role].push(contributor);
     return acc;
   },
-  {} as Record<string, typeof sortedContributors>,
+  {} as Record<string, typeof activeContributors>,
 );
 
-// Calculate community stats
-const totalContributions = contributors.reduce(
-  (sum, contributor: CollectionEntry<"contributors">) => {
-    return (
-      sum +
-      contributor.data.contributions.blogPosts +
-      contributor.data.contributions.openSourceProjects.reduce(
-        (projectSum: any, project: { contributions: any }) =>
-          projectSum + (project.contributions || 0),
-        0,
-      ) +
-      contributor.data.contributions.koneksiProjects.length +
-      contributor.data.contributions.communityContributions.length
-    );
-  },
+// Stats logic
+const totalOS = activeContributors.reduce(
+  (s, c) => s + c.data.contributions.openSourceProjects.length,
   0,
 );
-
-const totalOpenSourceProjects = contributors.reduce(
-  (sum, contributor: CollectionEntry<"contributors">) => {
-    return sum + contributor.data.contributions.openSourceProjects.length;
-  },
-  0,
-);
-
-const totalKoneksiProjects = contributors.reduce(
-  (sum, contributor: CollectionEntry<"contributors">) => {
-    return sum + contributor.data.contributions.koneksiProjects.length;
-  },
+const totalKoneksi = activeContributors.reduce(
+  (s, c) => s + c.data.contributions.koneksiProjects.length,
   0,
 );
 ---
 
-<ExtendedLayout
-  title="Kontributor Koneksi - Komunitas Pengembang Indonesia"
-  description="Temukan kontributor-kontributor terbaik di ekosistem teknologi Indonesia. Dari open source hingga project Koneksi, mari bersama membangun komunitas yang kompetitif dan kolaboratif."
+<UnifiedLayout
+  title="The Squad - Kontributor KonXC"
+  description="Temukan talenta di balik ekosistem teknologi KonXC. Komunitas pengembang, desainer, dan penulis terbaik Indonesia."
 >
-  <!-- Hero Section -->
-  <section
-    class="hero-section from-primary-50 to-secondary-50 bg-linear-to-br py-20 md:py-32"
-  >
-    <div class="container">
-      <div class="mx-auto max-w-4xl text-center">
-        <h1 class="mb-6 text-4xl font-bold lg:text-6xl">
-          <span class="text-gradient">Kontributor</span> Koneksi
-        </h1>
-        <p class="mb-8 text-xl text-neutral-600">
-          Komunitas pengembang Indonesia yang kompetitif, kolaboratif, dan
-          sehat. Dari open source hingga project Koneksi, mari bersama membangun
-          ekosistem teknologi yang lebih baik.
-        </p>
-
-        <!-- Community Stats -->
-        <div class="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div class="stat-card">
-            <div class="stat-number">{contributors.length}</div>
-            <div class="stat-label">Kontributor Aktif</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">{totalContributions}</div>
-            <div class="stat-label">Total Kontribusi</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">{totalOpenSourceProjects}</div>
-            <div class="stat-label">Project Open Source</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">{totalKoneksiProjects}</div>
-            <div class="stat-label">Project Koneksi</div>
-          </div>
-        </div>
-
-        <!-- CTA Buttons -->
-        <div class="flex flex-col justify-center gap-4 sm:flex-row">
-          <a href="#contributors" class="btn-primary"> Lihat Kontributor </a>
-          <a href="/contributors/join" class="btn-secondary">
-            Bergabung sebagai Kontributor
-          </a>
-        </div>
+  <!-- 1. Cinematic Hero Section -->
+  <section class="relative overflow-hidden pt-32 pb-20 md:pt-48 md:pb-32">
+    <!-- Sophisticated Background -->
+    <div class="absolute inset-0 -z-10 bg-[#0a0a0b]">
+      <div
+        class="bg-primary-600/20 absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full blur-[120px]"
+      >
+      </div>
+      <div
+        class="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-teal-600/10 blur-[120px]"
+      >
+      </div>
+      <div
+        class="bg-[url('data:image/svg+xml,%3Csvg width=%2220%22 height=%2220%22 viewBox=%220 0 20%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M0 0h1v1H0V0zm10 10h1v1h-1v-1z%22 fill=%22%23ffffff%22 fill-opacity=%220.03%22 fill-rule=%22evenodd%22/%3E%3C/svg%3E')] absolute inset-0 opacity-30"
+      >
       </div>
     </div>
-  </section>
 
-  <!-- Featured Contributors -->
-  <section class="bg-white py-16 md:py-24">
-    <div class="container">
-      <div class="mb-12 text-center">
-        <h2 class="mb-4 text-3xl font-bold">Kontributor Unggulan</h2>
-        <p class="text-neutral-600">
-          Kontributor dengan dampak terbesar di komunitas
+    <div class="relative z-10 container">
+      <div class="flex flex-col items-center text-center">
+        <div
+          class="text-primary-400 mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-bold tracking-widest uppercase backdrop-blur-md"
+        >
+          <span class="relative flex h-2 w-2">
+            <span
+              class="bg-primary-400 absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+            ></span>
+            <span
+              class="bg-primary-500 relative inline-flex h-2 w-2 rounded-full"
+            ></span>
+          </span>
+          Koneksi Ecosystem
+        </div>
+        <h1
+          class="mb-8 text-5xl font-black tracking-tight text-white md:text-8xl"
+        >
+          Meet The <span
+            class="from-primary-400 to-primary-600 bg-gradient-to-r via-teal-400 bg-clip-text text-transparent"
+            >Squad.</span
+          >
+        </h1>
+        <p
+          class="mx-auto max-w-2xl text-lg leading-relaxed text-neutral-400 md:text-xl"
+        >
+          Kami bukan sekadar kontributor. Kami adalah kolektif inovator yang
+          membangun masa depan teknologi Indonesia melalui kolaborasi terbuka
+          dan kompetisi sehat.
         </p>
       </div>
 
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Quick Pulse Stats -->
+      <div class="mt-20 grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-8">
         {
-          sortedContributors
-            .slice(0, 6)
-            .map((contributor, index) => (
-              <ContributorCard
-                contributor={contributor}
-                variant={index < 3 ? "featured" : "default"}
-                showDetails={true}
-              />
-            ))
+          [
+            { label: "Builders", value: activeContributors.length, icon: "⚡" },
+            { label: "OS Impact", value: totalOS, icon: "🌍" },
+            { label: "Local Projects", value: totalKoneksi, icon: "🏗️" },
+            { label: "Community XP", value: "High", icon: "🏆" },
+          ].map((stat) => (
+            <div class="group hover:border-primary-500/50 relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all">
+              <div class="absolute -top-4 -right-4 text-4xl opacity-10 transition-transform group-hover:scale-110">
+                {stat.icon}
+              </div>
+              <div class="text-3xl font-black text-white">{stat.value}</div>
+              <div class="text-xs font-bold tracking-widest text-neutral-500 uppercase">
+                {stat.label}
+              </div>
+            </div>
+          ))
         }
       </div>
     </div>
   </section>
-  <!-- Join Community CTA -->
-  <section
-    class="from-primary-500 to-secondary-500 bg-linear-to-br py-16 text-white md:py-20"
-  >
+
+  <!-- 2. Wall of Fame (Bento Layout) -->
+  <section class="bg-[#0a0a0b] py-24" id="hall-of-fame">
+    <div class="container text-white">
+      <div class="mb-16 flex items-end justify-between">
+        <div class="max-w-xl">
+          <h2 class="text-3xl font-bold tracking-tight md:text-5xl">
+            Wall of Fame
+          </h2>
+          <div class="bg-primary-500 mt-4 h-1 w-20"></div>
+        </div>
+        <p
+          class="hidden text-xs font-bold tracking-widest text-neutral-500 uppercase md:block"
+        >
+          Season: Early 2024
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-12 md:grid-rows-2">
+        <!-- Rank 1: The Giant Card -->
+        <div class="md:col-span-7 md:row-span-2">
+          <ContributorCard
+            contributor={topHero}
+            variant="featured"
+            class="ring-primary-500/30 h-full border-none shadow-2xl! ring-1"
+          />
+        </div>
+
+        <!-- Rank 2, 3, 4: Sidebar Bento -->
+        {
+          topChallengers.map((c, i) => (
+            <div class={`h-full md:col-span-5`}>
+              <ContributorCard
+                contributor={c}
+                variant="compact"
+                class="h-full border-white/10! bg-white/5! transition-colors hover:bg-white/10!"
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. The Squads (Interactive Section) -->
+  <section class="relative bg-neutral-50 py-24 dark:bg-[#0f0f10]">
     <div class="container">
-      <div class="mx-auto max-w-3xl text-center">
-        <h2 class="mb-4 text-3xl font-bold">Bergabung dengan Komunitas</h2>
-        <p class="mb-8 text-xl opacity-90">
-          Apakah Anda ingin berkontribusi pada project open source Indonesia
-          atau project Koneksi? Mari bergabung dan bersama-sama membangun
-          ekosistem teknologi yang lebih baik.
+      <div class="mb-16">
+        <h2 class="text-4xl font-black text-neutral-900 dark:text-white">
+          Active Squads.
+        </h2>
+        <p class="mt-4 text-neutral-600 dark:text-neutral-400">
+          Dikelompokkan berdasarkan spesialisasi taktis mereka.
+        </p>
+      </div>
+
+      <div class="space-y-24">
+        {
+          Object.entries(squadGroups).map(([role, members]) => (
+            <div class="relative">
+              <div class="mb-8 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-2xl shadow-sm dark:bg-neutral-800">
+                    {role === "developer" && "💻"}
+                    {role === "designer" && "🎨"}
+                    {role === "writer" && "✍️"}
+                    {role === "researcher" && "🔬"}
+                    {role === "mentor" && "🎓"}
+                    {role === "community-leader" && "👑"}
+                    {role === "open-source-contributor" && "🌐"}
+                  </span>
+                  <div>
+                    <h3 class="text-2xl font-bold text-neutral-900 capitalize dark:text-white">
+                      {role.replace(/-/g, " ")}
+                    </h3>
+                    <p class="text-primary-500 text-sm font-bold tracking-widest uppercase">
+                      {members.length} Agents Assigned
+                    </p>
+                  </div>
+                </div>
+                {role === "writer" && (
+                  <a
+                    href="/contributors/writers"
+                    class="group hover:text-primary-600 flex items-center gap-2 text-sm font-bold text-neutral-600 dark:text-neutral-400"
+                  >
+                    View Full Archive
+                    <svg
+                      class="h-4 w-4 transition-transform group-hover:translate-x-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </a>
+                )}
+              </div>
+
+              <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {members.map((member) => (
+                  <ContributorCard
+                    contributor={member}
+                    variant="compact"
+                    showDetails={false}
+                    class="hover:ring-primary-500/20 hover:ring-2"
+                  />
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Global Impact Grid -->
+  <section class="relative overflow-hidden bg-neutral-900 py-32">
+    <div
+      class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
+    >
+    </div>
+
+    <div class="container">
+      <div class="mb-20 text-center">
+        <h2 class="text-3xl font-bold text-white md:text-5xl">
+          Global Impact.
+        </h2>
+        <p class="mt-6 text-neutral-400">
+          Proyek mercusuar yang kami kembangkan bersama komunitas global.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-3">
+        {
+          [
+            {
+              name: "SLiMS",
+              desc: "Library management system standard di Indonesia.",
+              icon: "📚",
+              stats: "50K+ Nodes",
+              color: "blue",
+            },
+            {
+              name: "DracOS",
+              desc: "Distribusi Linux karya anak bangsa untuk penetration testing.",
+              icon: "🐉",
+              stats: "10K+ Users",
+              color: "teal",
+            },
+            {
+              name: "OpenSID",
+              desc: "Digitalisasi 10,000+ desa di seluruh nusantara.",
+              icon: "🏘️",
+              stats: "OpenGov",
+              color: "emerald",
+            },
+          ].map((proj) => (
+            <div class="group relative overflow-hidden rounded-[2.5rem] bg-white/5 p-10 backdrop-blur-sm transition-all hover:bg-white/[0.08]">
+              <div class="mb-4 text-5xl">{proj.icon}</div>
+              <h3 class="mb-4 text-2xl font-bold text-white">{proj.name}</h3>
+              <p class="mb-8 text-neutral-400">{proj.desc}</p>
+              <div class="mt-auto flex items-center justify-between">
+                <span class="text-primary-400 text-xs font-black tracking-widest uppercase">
+                  {proj.stats}
+                </span>
+                <div class="group-hover:bg-primary-500 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all">
+                  →
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Recruitment CTA -->
+  <section class="py-24">
+    <div class="container">
+      <div
+        class="from-primary-600 relative overflow-hidden rounded-[3rem] bg-gradient-to-br to-indigo-700 px-8 py-20 text-center md:px-20"
+      >
+        <!-- Decorative circles -->
+        <div
+          class="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-white/10 blur-3xl"
+        >
+        </div>
+        <div
+          class="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-white/5 blur-3xl"
+        >
+        </div>
+
+        <h2 class="relative z-10 text-4xl font-black text-white md:text-6xl">
+          Ready to write <br class="hidden md:block" /> the next chapter?
+        </h2>
+        <p class="relative z-10 mt-8 text-lg text-white/80">
+          Jadilah bagian dari revolusi teknologi Indonesia. Mulai kontribusi
+          pertamamu sekarang.
         </p>
 
-        <div class="flex flex-col justify-center gap-4 sm:flex-row">
-          <a href="/contributors/join" class="btn-white">
-            Daftar sebagai Kontributor
+        <div
+          class="relative z-10 mt-12 flex flex-col justify-center gap-4 sm:flex-row"
+        >
+          <a
+            href="/contributors/join"
+            class="text-primary-600 rounded-full bg-white px-10 py-4 font-black tracking-wide transition-all hover:scale-105 hover:shadow-2xl"
+          >
+            JOIN THE SQUAD
           </a>
-          <a href="/projects" class="btn-outline-white">
-            Lihat Project Tersedia
+          <a
+            href="/projects"
+            class="rounded-full border-2 border-white/30 px-10 py-4 font-black tracking-wide text-white transition-all hover:bg-white/10"
+          >
+            EXPLORE PROJECTS
           </a>
         </div>
       </div>
     </div>
   </section>
-  <!-- Contributors by Role -->
-  <section id="contributors" class="bg-neutral-50 py-16 md:py-24">
-    <div class="container">
-      <div class="mb-12 text-center">
-        <h2 class="mb-4 text-3xl font-bold">Kontributor Berdasarkan Peran</h2>
-        <p class="text-neutral-600">
-          Temukan kontributor berdasarkan keahlian dan peran mereka
-        </p>
-      </div>
+</UnifiedLayout>
 
-      {
-        Object.entries(contributorsByRole).map(([role, roleContributors]) => (
-          <div class="mb-12">
-            <div class="mb-6 flex items-center gap-3">
-              <h3 class="text-2xl font-bold text-neutral-800">
-                {role === "developer" && "👨‍💻 Developer"}
-                {role === "designer" && "🎨 Designer"}
-                {role === "writer" && "✍️ Writer"}
-                {role === "researcher" && "🔬 Researcher"}
-                {role === "mentor" && "🎓 Mentor"}
-                {role === "community-leader" && "👑 Community Leader"}
-                {role === "open-source-contributor" &&
-                  "🌐 Open Source Contributor"}
-              </h3>
-              <span class="bg-primary-100 text-primary-700 rounded-full px-3 py-1 text-sm font-medium">
-                {roleContributors.length} kontributor
-              </span>
-              {role === "writer" && (
-                <a
-                  href="/contributors/writers"
-                  class="bg-primary-600 hover:bg-primary-700 rounded-full px-3 py-1 text-sm font-medium text-white transition-colors"
-                >
-                  Lihat Semua Writers
-                </a>
-              )}
-            </div>
+<style>
+  /* Base layout polish */
+  :global(body) {
+    @apply antialiased;
+  }
 
-            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {roleContributors.map((contributor) => (
-                <ContributorCard
-                  contributor={contributor}
-                  variant="compact"
-                  showDetails={false}
-                />
-              ))}
-            </div>
-          </div>
-        ))
-      }
-    </div>
-  </section>
-
-  <!-- Open Source Projects Showcase -->
-  <section class="bg-white py-16 md:py-20">
-    <div class="container">
-      <div class="mb-12 text-center">
-        <h2 class="mb-4 text-3xl font-bold">Project Open Source Indonesia</h2>
-        <p class="text-neutral-600">
-          Project-project yang dikontribusi oleh komunitas Koneksi
-        </p>
-      </div>
-
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <!-- SLiMS -->
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon">📚</div>
-            <h3 class="project-title">SLiMS</h3>
-            <p class="project-description">
-              Sistem Informasi Perpustakaan Berbasis Web
-            </p>
-          </div>
-          <div class="project-stats">
-            <div class="stat">
-              <span class="stat-number">500+</span>
-              <span class="stat-label">Instalasi</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">50+</span>
-              <span class="stat-label">Kontributor</span>
-            </div>
-          </div>
-          <div class="project-links">
-            <a
-              href="https://github.com/slims/slims9_bulian"
-              target="_blank"
-              class="project-link"
-            >
-              GitHub
-            </a>
-            <a href="https://slims.web.id" target="_blank" class="project-link">
-              Website
-            </a>
-          </div>
-        </div>
-
-        <!-- DracOS -->
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon">🐉</div>
-            <h3 class="project-title">DracOS</h3>
-            <p class="project-description">
-              Linux Distribution untuk Security Testing
-            </p>
-          </div>
-          <div class="project-stats">
-            <div class="stat">
-              <span class="stat-number">1000+</span>
-              <span class="stat-label">Downloads</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">20+</span>
-              <span class="stat-label">Kontributor</span>
-            </div>
-          </div>
-          <div class="project-links">
-            <a
-              href="https://github.com/dracos-linux"
-              target="_blank"
-              class="project-link"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://dracos-linux.org"
-              target="_blank"
-              class="project-link"
-            >
-              Website
-            </a>
-          </div>
-        </div>
-
-        <!-- OpenSID -->
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon">🏘️</div>
-            <h3 class="project-title">OpenSID</h3>
-            <p class="project-description">Sistem Informasi Desa Terbuka</p>
-          </div>
-          <div class="project-stats">
-            <div class="stat">
-              <span class="stat-number">10K+</span>
-              <span class="stat-label">Desa</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">100+</span>
-              <span class="stat-label">Kontributor</span>
-            </div>
-          </div>
-          <div class="project-links">
-            <a
-              href="https://github.com/OpenSID/OpenSID"
-              target="_blank"
-              class="project-link"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://opensid.my.id"
-              target="_blank"
-              class="project-link"
-            >
-              Website
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</ExtendedLayout>
+  .text-gradient {
+    @apply from-primary-400 bg-gradient-to-br to-teal-400 bg-clip-text text-transparent;
+  }
+</style>
 
 <style>
   @reference "@/styles/global.css";

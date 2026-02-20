@@ -1,8 +1,8 @@
 ---
-import MainLayout from "@layouts/MainLayout.astro";
+import UnifiedLayout from "@layouts/UnifiedLayout.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import Avatar from "@components/ui/Avatar.astro";
-import WriterCard from "@components/contributors/WriterCard.astro";
+import ContributorCard from "@components/contributors/ContributorCard.astro";
 
 type Props = {
   contributor: CollectionEntry<"contributors">;
@@ -19,7 +19,6 @@ export async function getStaticPaths() {
 const { contributor }: Props = Astro.props;
 const { data } = contributor;
 
-// Calculate total contributions
 const totalContributions =
   data.contributions.blogPosts +
   data.contributions.openSourceProjects.reduce(
@@ -29,160 +28,123 @@ const totalContributions =
   data.contributions.koneksiProjects.length +
   data.contributions.communityContributions.length;
 
-// Format dates
 const joinDate = new Date(data.joinDate).toLocaleDateString("id-ID", {
   year: "numeric",
   month: "long",
-  day: "numeric",
 });
 
-// Get related contributors (same role or similar expertise)
 const allContributors = await getCollection("contributors");
 const relatedContributors = allContributors
   .filter((c) => c.slug !== contributor.slug)
-  .filter(
-    (c) =>
-      c.data.role === data.role ||
-      c.data.expertise.some((skill) => data.expertise.includes(skill)),
-  )
+  .filter((c) => c.data.role === data.role)
   .slice(0, 3);
+
+const roleColors: Record<string, string> = {
+  developer: "from-blue-600 to-indigo-700",
+  designer: "from-pink-600 to-rose-700",
+  writer: "from-amber-600 to-orange-700",
+  researcher: "from-emerald-600 to-teal-700",
+  mentor: "from-purple-600 to-violet-700",
+};
+const activeGradient =
+  roleColors[data.role] || "from-primary-600 to-primary-800";
 ---
 
-<MainLayout title={`${data.name} - Kontributor Koneksi`} description={data.bio}>
-  <!-- Contributor Hero -->
+<UnifiedLayout title={`${data.name} // Agent Profile`} description={data.bio}>
+  <!-- 1. Immersive Profile Header -->
   <section
-    class="contributor-hero from-primary-50 to-secondary-50 bg-linear-to-br"
+    class="relative min-h-[60vh] overflow-hidden bg-[#0a0a0b] pt-32 pb-20 md:pt-48 md:pb-32"
   >
-    <div class="container">
-      <div class="mx-auto max-w-4xl">
-        <div class="flex flex-col items-center gap-8 md:flex-row">
-          <div class="contributor-avatar-large">
-            <Avatar
-              name={data.name}
-              email={data.github
-                ? `user@${data.github.split("/").pop()}.github.com`
-                : undefined}
-              size={128}
-              src={data.avatar}
-              fallbackType="placeholder"
-              backgroundColor="0D8ABC"
-              textColor="FFFFFF"
-              class="avatar-image"
-            />
-            <div
-              class={`status-indicator-large ${data.isActive ? "active" : "inactive"}`}
+    <!-- Tactical Grid Background -->
+    <div
+      class="bg-[url('data:image/svg+xml,%3Csvg width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M0 0h40v1H0V0zm0 1h1v39H0V1z%22 fill=%22%23ffffff%22 fill-opacity=%220.02%22/%3E%3C/svg%3E')] absolute inset-0 -z-10 mt-[-1px]"
+    >
+    </div>
+
+    <div class="relative z-10 container">
+      <div class="flex flex-col items-center gap-12 lg:flex-row lg:items-end">
+        <!-- Avatar Column -->
+        <div class="relative shrink-0">
+          <div
+            class={`absolute inset-0 rounded-[3rem] bg-gradient-to-br ${activeGradient} blur-2xl opacity-30`}
+          >
+          </div>
+          <div
+            class={`relative overflow-hidden rounded-[3rem] p-1.5 bg-gradient-to-br ${activeGradient}`}
+          >
+            <div class="overflow-hidden rounded-[2.8rem] bg-neutral-900">
+              <Avatar
+                name={data.name}
+                size={240}
+                src={data.avatar}
+                class="h-60 w-60 object-cover grayscale transition-all duration-700 hover:grayscale-0"
+              />
+            </div>
+          </div>
+          {
+            data.isActive && (
+              <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-green-500/20 px-4 py-1.5 text-[10px] font-black tracking-[0.2em] text-green-400 uppercase backdrop-blur-md">
+                Active Agent
+              </div>
+            )
+          }
+        </div>
+
+        <!-- Details Column -->
+        <div class="flex-1 text-center lg:text-left">
+          <div
+            class="text-primary-500 mb-4 inline-flex items-center gap-3 text-sm font-black tracking-[0.2em] uppercase"
+          >
+            <span class="bg-primary-500 h-px w-8"></span>
+            {data.role.replace(/-/g, " ")}
+          </div>
+          <h1
+            class="mb-6 text-5xl font-black text-white md:text-8xl lg:text-9xl"
+          >
+            {data.name.split(" ")[0]}<span class="opacity-20"
+              >{data.name.split(" ").slice(1).join(" ")}</span
             >
+          </h1>
+          <p
+            class="max-w-2xl text-lg leading-relaxed text-neutral-400 md:text-xl"
+          >
+            {data.bio}
+          </p>
+
+          <!-- Metadata Pills -->
+          <div
+            class="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start"
+          >
+            <div
+              class="flex flex-col rounded-2xl border border-white/5 bg-white/5 px-6 py-4 backdrop-blur-md"
+            >
+              <span
+                class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase"
+                >Enlisted</span
+              >
+              <span class="text-xl font-black text-white">{joinDate}</span>
             </div>
-          </div>
-
-          <div class="contributor-info-large">
-            <h1 class="contributor-name-large">{data.name}</h1>
-            <p class="contributor-role-large">{data.role}</p>
-            {
-              data.location && (
-                <p class="contributor-location-large">📍 {data.location}</p>
-              )
-            }
-            <p class="contributor-bio-large">{data.bio}</p>
-
-            <div class="contributor-meta">
-              <div class="meta-item">
-                <span class="meta-label">Bergabung</span>
-                <span class="meta-value">{joinDate}</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Total Kontribusi</span>
-                <span class="meta-value">{totalContributions}</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">GitHub Stars</span>
-                <span class="meta-value">{data.socialProof.githubStars}</span>
-              </div>
+            <div
+              class="flex flex-col rounded-2xl border border-white/5 bg-white/5 px-6 py-4 backdrop-blur-md"
+            >
+              <span
+                class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase"
+                >Rank Impact</span
+              >
+              <span class="text-xl font-black text-white"
+                >#{totalContributions}</span
+              >
             </div>
-
-            <div class="social-links-large">
-              {
-                data.github && (
-                  <a
-                    href={data.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="social-link-large github"
-                  >
-                    <svg
-                      class="social-icon-large"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                    </svg>
-                    GitHub
-                  </a>
-                )
-              }
-              {
-                data.linkedin && (
-                  <a
-                    href={data.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="social-link-large linkedin"
-                  >
-                    <svg
-                      class="social-icon-large"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                    </svg>
-                    LinkedIn
-                  </a>
-                )
-              }
-              {
-                data.twitter && (
-                  <a
-                    href={data.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="social-link-large twitter"
-                  >
-                    <svg
-                      class="social-icon-large"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                    </svg>
-                    Twitter
-                  </a>
-                )
-              }
-              {
-                data.website && (
-                  <a
-                    href={data.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="social-link-large website"
-                  >
-                    <svg
-                      class="social-icon-large"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"
-                      />
-                    </svg>
-                    Website
-                  </a>
-                )
-              }
+            <div
+              class="flex flex-col rounded-2xl border border-white/5 bg-white/5 px-6 py-4 backdrop-blur-md"
+            >
+              <span
+                class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase"
+                >OSS Reputation</span
+              >
+              <span class="text-xl font-black text-white"
+                >{data.socialProof.githubStars}✨</span
+              >
             </div>
           </div>
         </div>
@@ -190,345 +152,192 @@ const relatedContributors = allContributors
     </div>
   </section>
 
-  <!-- Contributor Content -->
-  <section class="section bg-white">
+  <!-- 2. Technical Capabilities (Bento) -->
+  <section class="border-y border-white/5 bg-[#0a0a0b] py-24">
     <div class="container">
-      <div class="mx-auto max-w-6xl">
-        <div class="grid gap-8 lg:grid-cols-3">
-          <!-- Main Content -->
-          <div class="space-y-8 lg:col-span-2">
-            <!-- Expertise -->
-            <div class="expertise-section">
-              <h2 class="section-title">Keahlian</h2>
-              <div class="expertise-grid">
-                {
-                  data.expertise.map((skill) => (
-                    <div class="expertise-item">
-                      <span class="expertise-skill">{skill}</span>
-                    </div>
-                  ))
-                }
-              </div>
-            </div>
-
-            <!-- Open Source Projects -->
+      <div class="grid gap-8 lg:grid-cols-12 lg:grid-rows-2">
+        <!-- Expertise Column -->
+        <div
+          class="rounded-[2.5rem] border border-white/5 bg-white/5 p-10 backdrop-blur-sm lg:col-span-4 lg:row-span-2"
+        >
+          <h2
+            class="mb-8 text-2xl font-black tracking-tighter text-white uppercase"
+          >
+            Core Capabilities.
+          </h2>
+          <div class="flex flex-wrap gap-3">
             {
-              data.contributions.openSourceProjects.length > 0 && (
-                <div class="projects-section">
-                  <h2 class="section-title">Project Open Source</h2>
-                  <div class="projects-grid">
-                    {data.contributions.openSourceProjects.map((project) => (
-                      <div class="project-card">
-                        <div class="project-header">
-                          <h3 class="project-title">{project.name}</h3>
-                          <span
-                            class={`project-role ${project.isMaintainer ? "maintainer" : "contributor"}`}
-                          >
-                            {project.isMaintainer
-                              ? "Maintainer"
-                              : "Contributor"}
-                          </span>
-                        </div>
-                        <p class="project-description">Role: {project.role}</p>
-                        <div class="project-stats">
-                          <span class="project-stat">
-                            <span class="stat-number">
-                              {project.contributions || 0}
-                            </span>
-                            <span class="stat-label">Kontribusi</span>
-                          </span>
-                        </div>
-                        <a
-                          href={project.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="project-link"
-                        >
-                          Lihat Project
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )
-            }
-
-            <!-- Koneksi Projects -->
-            {
-              data.contributions.koneksiProjects.length > 0 && (
-                <div class="projects-section">
-                  <h2 class="section-title">Project Koneksi</h2>
-                  <div class="projects-grid">
-                    {data.contributions.koneksiProjects.map((project) => (
-                      <div class="project-card koneksi">
-                        <div class="project-header">
-                          <h3 class="project-title">{project.name}</h3>
-                          <span class={`project-status ${project.status}`}>
-                            {project.status === "active" && "Aktif"}
-                            {project.status === "completed" && "Selesai"}
-                            {project.status === "archived" && "Arsip"}
-                          </span>
-                        </div>
-                        <p class="project-description">{project.description}</p>
-                        <p class="project-role">Role: {project.role}</p>
-                        <div class="project-dates">
-                          <span class="project-date">
-                            Mulai:{" "}
-                            {new Date(project.startDate).toLocaleDateString(
-                              "id-ID",
-                            )}
-                          </span>
-                          {project.endDate && (
-                            <span class="project-date">
-                              Selesai:{" "}
-                              {new Date(project.endDate).toLocaleDateString(
-                                "id-ID",
-                              )}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )
-            }
-
-            <!-- Community Contributions -->
-            {
-              data.contributions.communityContributions.length > 0 && (
-                <div class="community-section">
-                  <h2 class="section-title">Kontribusi Komunitas</h2>
-                  <div class="community-timeline">
-                    {data.contributions.communityContributions.map(
-                      (contribution) => (
-                        <div class="timeline-item">
-                          <div class="timeline-marker">
-                            <span class="timeline-icon">
-                              {contribution.type === "event" && "🎤"}
-                              {contribution.type === "mentoring" && "🎓"}
-                              {contribution.type === "documentation" && "📚"}
-                              {contribution.type === "translation" && "🌐"}
-                              {contribution.type === "bug-report" && "🐛"}
-                              {contribution.type === "feature-request" && "💡"}
-                            </span>
-                          </div>
-                          <div class="timeline-content">
-                            <h4 class="timeline-title">{contribution.title}</h4>
-                            <p class="timeline-description">
-                              {contribution.description}
-                            </p>
-                            <div class="timeline-meta">
-                              <span class="timeline-date">
-                                {new Date(contribution.date).toLocaleDateString(
-                                  "id-ID",
-                                )}
-                              </span>
-                              <span
-                                class={`timeline-impact ${contribution.impact}`}
-                              >
-                                {contribution.impact === "high" &&
-                                  "Dampak Tinggi"}
-                                {contribution.impact === "medium" &&
-                                  "Dampak Sedang"}
-                                {contribution.impact === "low" &&
-                                  "Dampak Rendah"}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      ),
-                    )}
-                  </div>
-                </div>
-              )
-            }
-
-            <!-- Achievements -->
-            {
-              data.achievements.length > 0 && (
-                <div class="achievements-section">
-                  <h2 class="section-title">Pencapaian</h2>
-                  <div class="achievements-grid">
-                    {data.achievements.map((achievement) => (
-                      <div class="achievement-card">
-                        <div class="achievement-header">
-                          <h4 class="achievement-title">{achievement.title}</h4>
-                          {achievement.verified && (
-                            <span class="achievement-verified">
-                              ✅ Terverifikasi
-                            </span>
-                          )}
-                        </div>
-                        <p class="achievement-description">
-                          {achievement.description}
-                        </p>
-                        <div class="achievement-meta">
-                          <span class="achievement-date">
-                            {new Date(achievement.date).toLocaleDateString(
-                              "id-ID",
-                            )}
-                          </span>
-                          <span
-                            class={`achievement-category ${achievement.category}`}
-                          >
-                            {achievement.category === "technical" && "Teknis"}
-                            {achievement.category === "community" &&
-                              "Komunitas"}
-                            {achievement.category === "leadership" &&
-                              "Kepemimpinan"}
-                            {achievement.category === "innovation" && "Inovasi"}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )
+              data.expertise.map((skill) => (
+                <span class="hover:bg-primary-500 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-bold tracking-widest text-neutral-300 uppercase transition-all hover:text-white">
+                  {skill}
+                </span>
+              ))
             }
           </div>
 
-          <!-- Sidebar -->
-          <div class="lg:col-span-1">
-            <div class="sidebar-content">
-              <!-- Availability -->
-              <div class="availability-card">
-                <h3 class="card-title">Ketersediaan</h3>
-                <div class="availability-list">
-                  {
-                    data.availability.forMentoring && (
-                      <div class="availability-item">
-                        <span class="availability-icon">🎓</span>
-                        <span class="availability-text">Mentoring</span>
-                      </div>
-                    )
-                  }
-                  {
-                    data.availability.forCollaboration && (
-                      <div class="availability-item">
-                        <span class="availability-icon">🤝</span>
-                        <span class="availability-text">Kolaborasi</span>
-                      </div>
-                    )
-                  }
-                  {
-                    data.availability.forSpeaking && (
-                      <div class="availability-item">
-                        <span class="availability-icon">🎤</span>
-                        <span class="availability-text">Speaking</span>
-                      </div>
-                    )
-                  }
+          <hr class="my-10 border-white/5" />
+
+          <h3
+            class="mb-6 text-sm font-black tracking-widest text-neutral-500 uppercase"
+          >
+            Tech Stack
+          </h3>
+          <div class="grid grid-cols-2 gap-4">
+            {
+              data.skills.technical.map((skill) => (
+                <div class="flex items-center gap-2 text-sm text-neutral-300">
+                  <span class="bg-primary-500 h-1.5 w-1.5 rounded-full" />
+                  {skill}
                 </div>
-                {
-                  data.availability.timezone && (
-                    <p class="timezone-info">
-                      Timezone: {data.availability.timezone}
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Operations Wall (Koneksi Projects) -->
+        <div
+          class="rounded-[2.5rem] border border-white/5 bg-white/5 p-10 backdrop-blur-sm lg:col-span-8"
+        >
+          <h2
+            class="mb-8 text-2xl font-black tracking-tighter text-white uppercase"
+          >
+            Sector Operations.
+          </h2>
+          <div class="grid gap-6 md:grid-cols-2">
+            {
+              data.contributions.koneksiProjects.map((proj) => (
+                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-6 transition-all hover:bg-white/10">
+                  <div class="mb-2 flex items-center justify-between">
+                    <h4 class="font-black tracking-tight text-white uppercase">
+                      {proj.name}
+                    </h4>
+                    <span
+                      class={`h-2 w-2 rounded-full ${proj.status === "active" ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" : "bg-blue-500 opacity-50"}`}
+                    />
+                  </div>
+                  <p class="mb-4 text-xs text-neutral-500">
+                    {proj.description}
+                  </p>
+                  <div class="text-primary-400 text-[10px] font-black tracking-widest uppercase">
+                    Assignment: {proj.role}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Global Impact (Open Source) -->
+        <div
+          class="rounded-[2.5rem] border border-white/5 bg-white/5 p-10 backdrop-blur-sm lg:col-span-8"
+        >
+          <h2
+            class="mb-8 text-2xl font-black tracking-tighter text-white uppercase"
+          >
+            Global Deployment.
+          </h2>
+          <div class="flex flex-wrap gap-8">
+            {
+              data.contributions.openSourceProjects.map((proj) => (
+                <a
+                  href={proj.url}
+                  target="_blank"
+                  class="group flex items-center gap-6"
+                >
+                  <div class="group-hover:bg-primary-500 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-2xl transition-colors">
+                    ⚡
+                  </div>
+                  <div>
+                    <h4 class="hover:text-primary-400 font-black tracking-tight text-white uppercase transition-colors">
+                      {proj.name}
+                    </h4>
+                    <p class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase">
+                      Role: {proj.role}
                     </p>
-                  )
-                }
-              </div>
-
-              <!-- Skills Breakdown -->
-              <div class="skills-card">
-                <h3 class="card-title">Breakdown Keahlian</h3>
-                <div class="skills-breakdown">
-                  <div class="skill-category">
-                    <h4 class="skill-category-title">Teknis</h4>
-                    <div class="skill-tags">
-                      {
-                        data.skills.technical.map((skill) => (
-                          <span class="skill-tag technical">{skill}</span>
-                        ))
-                      }
-                    </div>
                   </div>
-                  <div class="skill-category">
-                    <h4 class="skill-category-title">Soft Skills</h4>
-                    <div class="skill-tags">
-                      {
-                        data.skills.soft.map((skill) => (
-                          <span class="skill-tag soft">{skill}</span>
-                        ))
-                      }
-                    </div>
-                  </div>
-                  <div class="skill-category">
-                    <h4 class="skill-category-title">Bahasa</h4>
-                    <div class="skill-tags">
-                      {
-                        data.skills.languages.map((language) => (
-                          <span class="skill-tag language">{language}</span>
-                        ))
-                      }
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Social Proof -->
-              <div class="social-proof-card">
-                <h3 class="card-title">Social Proof</h3>
-                <div class="social-proof-stats">
-                  <div class="proof-stat">
-                    <span class="proof-number"
-                      >{data.socialProof.githubStars}</span
-                    >
-                    <span class="proof-label">GitHub Stars</span>
-                  </div>
-                  <div class="proof-stat">
-                    <span class="proof-number"
-                      >{data.socialProof.npmDownloads.toLocaleString()}</span
-                    >
-                    <span class="proof-label">NPM Downloads</span>
-                  </div>
-                  <div class="proof-stat">
-                    <span class="proof-number"
-                      >{data.socialProof.communityReputation}</span
-                    >
-                    <span class="proof-label">Reputasi Komunitas</span>
-                  </div>
-                  <div class="proof-stat">
-                    <span class="proof-number"
-                      >{data.socialProof.verifiedContributions}</span
-                    >
-                    <span class="proof-label">Kontribusi Terverifikasi</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+                </a>
+              ))
+            }
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Related Contributors -->
+  <!-- 3. Tactical Timeline -->
   {
-    relatedContributors.length > 0 && (
-      <section class="section bg-neutral-50">
+    data.contributions.communityContributions.length > 0 && (
+      <section class="bg-[#0a0a0b] py-24">
         <div class="container">
-          <div class="mx-auto max-w-4xl">
-            <h2 class="mb-8 text-center text-3xl font-bold">
-              Kontributor Terkait
-            </h2>
-            <div class="grid gap-6 md:grid-cols-3">
-              {relatedContributors.map((contributor) => (
-                <WriterCard
-                  writer={contributor}
-                  variant="compact"
-                  showStats={true}
-                  showExpertise={false}
-                  showActions={true}
-                />
-              ))}
-            </div>
+          <h2 class="mb-16 text-center text-4xl font-black tracking-tighter text-white uppercase">
+            Mission Log.
+          </h2>
+          <div class="relative mx-auto max-w-4xl space-y-12 before:absolute before:inset-y-0 before:left-8 before:w-px before:bg-white/5">
+            {data.contributions.communityContributions.map((log) => (
+              <div class="group relative pl-20 lg:pl-32">
+                <div class="border-primary-500 absolute left-6 h-4 w-4 rounded-full border-2 bg-neutral-900 shadow-[0_0_12px_rgba(59,130,246,0.5)] transition-transform group-hover:scale-125" />
+                <div class="group-hover:border-primary-500/30 flex flex-col gap-2 rounded-3xl border border-white/5 bg-white/5 p-8 backdrop-blur-md transition-all">
+                  <div class="flex items-center justify-between">
+                    <span class="text-primary-500 text-[10px] font-black tracking-[0.2em] uppercase">
+                      {new Date(log.date).toLocaleDateString("id-ID", {
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </span>
+                    <span class="rounded bg-white/5 px-2 py-0.5 text-[8px] font-black tracking-widest text-neutral-400 uppercase">
+                      {log.type}
+                    </span>
+                  </div>
+                  <h3 class="text-xl font-bold text-white">{log.title}</h3>
+                  <p class="text-sm text-neutral-400">{log.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
     )
   }
-</MainLayout>
+
+  <!-- 4. Tactical Connections -->
+  {
+    relatedContributors.length > 0 && (
+      <section class="bg-neutral-950 py-32">
+        <div class="container">
+          <h2 class="mb-12 text-center text-2xl font-black tracking-widest text-white uppercase opacity-50">
+            Related Agents.
+          </h2>
+          <div class="grid gap-8 md:grid-cols-3">
+            {relatedContributors.map((c) => (
+              <ContributorCard
+                contributor={c}
+                variant="compact"
+                class="border-white/10! bg-white/5!"
+              />
+            ))}
+          </div>
+
+          <div class="mt-20 text-center">
+            <a
+              href="/contributors"
+              class="hover:text-primary-500 inline-flex items-center gap-4 text-xs font-black tracking-[0.3em] text-neutral-500 uppercase transition-colors"
+            >
+              <span class="h-px w-12 bg-neutral-800" />
+              Return to Squad Center
+              <span class="h-px w-12 bg-neutral-800" />
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+</UnifiedLayout>
+
+<style>
+  :global(body) {
+    @apply bg-[#0a0a0b] antialiased;
+  }
+</style>
 
 <style>
   @reference "@/styles/global.css";

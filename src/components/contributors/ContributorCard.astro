@@ -1,5 +1,5 @@
 ---
-// Contributor Card Component
+// Contributor Card Component - Re-engineered for Premium Aesthetics
 import type { CollectionEntry } from "astro:content";
 import Avatar from "@components/ui/Avatar.astro";
 
@@ -26,550 +26,224 @@ const totalContributions =
   ) +
   data.contributions.koneksiProjects.length +
   data.contributions.communityContributions.length;
+
+const roleColors: Record<string, string> = {
+  developer: "from-blue-500 to-indigo-600",
+  designer: "from-pink-500 to-rose-600",
+  writer: "from-amber-400 to-orange-600",
+  researcher: "from-emerald-400 to-teal-600",
+  mentor: "from-purple-500 to-violet-600",
+  "community-leader": "from-cyan-400 to-blue-600",
+  "open-source-contributor": "from-slate-400 to-slate-600",
+};
+
+const activeGradient =
+  roleColors[data.role] || "from-primary-500 to-primary-700";
 ---
 
 <div
-  class={`contributor-card ${variant} ${className || ""}`}
+  class={`group relative overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
+    variant === "featured"
+      ? "bg-neutral-900 border border-white/10 p-8 md:p-12"
+      : "bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-white/5 p-6 shadow-sm hover:shadow-2xl"
+  } ${className || ""}`}
   data-contributor-id={contributor.slug}
 >
-  <div class="card-header">
-    <div class="contributor-avatar">
-      <Avatar
-        name={data.name}
-        email={data.github
-          ? `user@${data.github.split("/").pop()}.github.com`
-          : undefined}
-        size={64}
-        src={data.avatar}
-        fallbackType="placeholder"
-        backgroundColor="random"
-        class="avatar-image"
-      />
-      <div class={`status-indicator ${data.isActive ? "active" : "inactive"}`}>
-      </div>
-    </div>
-
-    <div class="contributor-info">
-      <h3 class="contributor-name">
-        <a href={`/contributors/${contributor.slug}`}>{data.name}</a>
-      </h3>
-      <p class="contributor-role">{data.role}</p>
-      {data.location && <p class="contributor-location">📍 {data.location}</p>}
-    </div>
-
-    <div class="contributor-stats">
-      <div class="stat-item">
-        <span class="stat-number">{totalContributions}</span>
-        <span class="stat-label">Kontribusi</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">{data.socialProof.githubStars}</span>
-        <span class="stat-label">GitHub Stars</span>
-      </div>
-    </div>
-  </div>
-
+  {/* Modern Background Decor for Featured */}
   {
-    showDetails && (
-      <div class="card-content">
-        <p class="contributor-bio">{data.bio}</p>
-
-        <div class="expertise-section">
-          <h4 class="section-title">Keahlian</h4>
-          <div class="expertise-tags">
-            {data.expertise.slice(0, 5).map((skill) => (
-              <span class="expertise-tag">{skill}</span>
-            ))}
-            {data.expertise.length > 5 && (
-              <span class="expertise-more">
-                +{data.expertise.length - 5} lainnya
-              </span>
-            )}
-          </div>
-        </div>
-
-        <div class="contributions-preview">
-          <h4 class="section-title">Kontribusi Terbaru</h4>
-          <div class="contribution-items">
-            {data.contributions.openSourceProjects
-              .slice(0, 2)
-              .map((project) => (
-                <div class="contribution-item">
-                  <span class="contribution-icon">🔧</span>
-                  <div class="contribution-details">
-                    <span class="contribution-title">{project.name}</span>
-                    <span class="contribution-role">{project.role}</span>
-                  </div>
-                </div>
-              ))}
-            {data.contributions.koneksiProjects.slice(0, 1).map((project) => (
-              <div class="contribution-item">
-                <span class="contribution-icon">🏢</span>
-                <div class="contribution-details">
-                  <span class="contribution-title">{project.name}</span>
-                  <span class="contribution-role">{project.role}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+    variant === "featured" && (
+      <div class="bg-primary-600/20 absolute -top-20 -right-20 h-64 w-64 rounded-full opacity-50 blur-[100px] transition-opacity group-hover:opacity-100" />
     )
   }
 
-  <div class="card-footer">
-    <div class="social-links">
-      {
-        data.github && (
-          <a
-            href={data.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link github"
-            title="GitHub"
+  <div class="relative z-10">
+    {/* Header Area */}
+    <div
+      class={`flex items-start gap-6 ${variant === "compact" ? "items-center" : "flex-col md:flex-row"}`}
+    >
+      <div class="relative shrink-0">
+        <div
+          class={`absolute inset-0 animate-pulse rounded-full bg-gradient-to-br opacity-20 blur-md ${activeGradient}`}
+        >
+        </div>
+        <div
+          class={`relative rounded-full p-1 bg-gradient-to-br ${activeGradient}`}
+        >
+          <div class="rounded-full bg-white p-1 dark:bg-neutral-900">
+            <Avatar
+              name={data.name}
+              size={variant === "featured" ? 96 : 64}
+              src={data.avatar}
+              class="h-full w-full rounded-full object-cover"
+            />
+          </div>
+        </div>
+        <div
+          class={`absolute bottom-1 right-1 h-4 w-4 rounded-full border-4 border-white dark:border-neutral-900 ${data.isActive ? "bg-green-500" : "bg-neutral-400"}`}
+        >
+        </div>
+      </div>
+
+      <div class="min-w-0 flex-1">
+        <div class="mb-1 flex flex-wrap items-center gap-2">
+          <h3
+            class={`font-black tracking-tight ${variant === "featured" ? "text-3xl text-white" : "text-xl text-neutral-900 dark:text-white"}`}
           >
-            <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-            </svg>
-          </a>
-        )
-      }
-      {
-        data.linkedin && (
-          <a
-            href={data.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link linkedin"
-            title="LinkedIn"
-          >
-            <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-            </svg>
-          </a>
-        )
-      }
-      {
-        data.twitter && (
-          <a
-            href={data.twitter}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link twitter"
-            title="Twitter"
-          >
-            <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-            </svg>
-          </a>
-        )
-      }
-      {
-        data.website && (
-          <a
-            href={data.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link website"
-            title="Website"
-          >
-            <svg
-              class="social-icon"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <a
+              href={`/contributors/${contributor.slug}`}
+              class="hover:text-primary-500 transition-colors">{data.name}</a
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"
-              />
-            </svg>
-          </a>
+          </h3>
+          {
+            variant === "featured" && (
+              <span class="bg-primary-500/20 text-primary-400 ring-primary-500/50 rounded-full px-3 py-1 text-[10px] font-black tracking-widest uppercase ring-1">
+                Elite
+              </span>
+            )
+          }
+        </div>
+        <p
+          class={`font-bold uppercase tracking-widest text-xs ${variant === "featured" ? "text-primary-400" : "text-primary-600 dark:text-primary-400"}`}
+        >
+          {data.role.replace(/-/g, " ")}
+        </p>
+        {
+          data.location && (
+            <p class="mt-2 flex items-center gap-1 text-xs font-medium text-neutral-500 opacity-70 dark:text-neutral-400">
+              📍 {data.location}
+            </p>
+          )
+        }
+      </div>
+
+      {
+        variant === "featured" && (
+          <div class="ml-4 hidden gap-8 border-l border-white/10 pl-8 lg:flex">
+            <div class="text-center">
+              <div class="text-2xl font-black text-white">
+                {totalContributions}
+              </div>
+              <div class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase">
+                Impact
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-black text-white">
+                {data.socialProof.githubStars}
+              </div>
+              <div class="text-[10px] font-bold tracking-widest text-neutral-500 uppercase">
+                Stars
+              </div>
+            </div>
+          </div>
         )
       }
     </div>
 
-    <div class="action-buttons">
-      <a href={`/contributors/${contributor.slug}`} class="btn-primary">
-        Lihat Profil
+    {/* Content Area */}
+    {
+      variant !== "compact" && showDetails && (
+        <div class="mt-8 space-y-6">
+          <p
+            class={`line-clamp-3 text-sm leading-relaxed ${variant === "featured" ? "text-neutral-400" : "text-neutral-600 dark:text-neutral-400"}`}
+          >
+            {data.bio}
+          </p>
+
+          <div class="flex flex-wrap gap-2">
+            {data.expertise.slice(0, 4).map((skill) => (
+              <span
+                class={`rounded-lg px-3 py-1 text-[10px] font-black tracking-wide uppercase ${
+                  variant === "featured"
+                    ? "bg-white/5 text-neutral-300 ring-1 ring-white/10"
+                    : "bg-neutral-100 text-neutral-700 dark:bg-neutral-700/50 dark:text-neutral-300"
+                }`}
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+
+          {/* Micro-Contributions Preview */}
+          <div
+            class={`grid gap-2 rounded-2xl p-4 ${variant === "featured" ? "bg-white/5" : "bg-neutral-50 dark:bg-neutral-900/50"}`}
+          >
+            <p class="mb-2 text-[10px] font-black tracking-widest text-neutral-500 uppercase">
+              Primary Missions
+            </p>
+            <div class="flex flex-col gap-2">
+              {data.contributions.openSourceProjects.slice(0, 2).map((p) => (
+                <div class="flex items-center gap-3">
+                  <span class="text-lg opacity-50">⚡</span>
+                  <div class="min-w-0 flex-1">
+                    <p class="truncate text-xs font-bold text-neutral-800 dark:text-neutral-200">
+                      {p.name}
+                    </p>
+                    <p class="text-[10px] leading-none text-neutral-500 uppercase">
+                      {p.role}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    {/* Footer / Social - Dynamic Reveal on Featured, Static on Default */}
+    <div
+      class={`flex items-center justify-between mt-8 pt-6 border-t ${variant === "featured" ? "border-white/5" : "border-neutral-100 dark:border-white/5"}`}
+    >
+      <div class="flex gap-3">
+        {
+          [
+            {
+              key: "github",
+              icon: "M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z",
+            },
+            {
+              key: "linkedin",
+              icon: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
+            },
+          ].map(
+            (s) =>
+              data[s.key as keyof typeof data] && (
+                <a
+                  href={data[s.key as keyof typeof data] as string}
+                  target="_blank"
+                  class={`transition-all hover:scale-110 ${variant === "featured" ? "text-neutral-500 hover:text-white" : "hover:text-primary-600 text-neutral-400"}`}
+                >
+                  <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                    <path d={s.icon} />
+                  </svg>
+                </a>
+              ),
+          )
+        }
+      </div>
+
+      <a
+        href={`/contributors/${contributor.slug}`}
+        class={`group/btn flex items-center gap-2 text-xs font-black tracking-widest uppercase transition-all ${
+          variant === "featured"
+            ? "text-white hover:text-primary-400"
+            : "text-primary-600 dark:text-primary-400"
+        }`}
+      >
+        Profile Details
+        <svg
+          class="h-3 w-3 transition-transform group-hover/btn:translate-x-1"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="3"
+            d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg
+        >
       </a>
-      {
-        data.availability.forCollaboration && (
-          <button class="btn-secondary" data-contributor-id={contributor.slug}>
-            Kolaborasi
-          </button>
-        )
-      }
     </div>
   </div>
 </div>
-
-<script>
-  class ContributorCard {
-    private card: HTMLElement | null = null;
-    private contributorId: string = "";
-
-    constructor() {
-      this.initializeElements();
-      this.setupEventListeners();
-    }
-
-    private initializeElements(): void {
-      this.card = document.querySelector(".contributor-card");
-      this.contributorId = this.card?.getAttribute("data-contributor-id") || "";
-    }
-
-    private setupEventListeners(): void {
-      // Social links tracking
-      document.querySelectorAll(".social-link").forEach((link) => {
-        link.addEventListener("click", (e) => {
-          const target = e.target as HTMLElement;
-          const linkElement = target.closest(
-            ".social-link",
-          ) as HTMLAnchorElement;
-          this.trackSocialClick(linkElement);
-        });
-      });
-
-      // Collaboration button
-      document.querySelectorAll(".btn-secondary").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          const target = e.target as HTMLElement;
-          const button = target.closest(".btn-secondary") as HTMLButtonElement;
-          const contributorId = button.getAttribute("data-contributor-id");
-          this.handleCollaboration(contributorId!);
-        });
-      });
-
-      // Card hover effects
-      this.card?.addEventListener("mouseenter", () => {
-        this.card?.classList.add("hovered");
-      });
-
-      this.card?.addEventListener("mouseleave", () => {
-        this.card?.classList.remove("hovered");
-      });
-    }
-
-    private trackSocialClick(link: HTMLAnchorElement): void {
-      const platform = link.classList.contains("twitter")
-        ? "twitter"
-        : link.classList.contains("linkedin")
-          ? "linkedin"
-          : link.classList.contains("github")
-            ? "github"
-            : "website";
-
-      this.trackEvent("contributor_social_click", {
-        contributorId: this.contributorId,
-        platform,
-        url: link.href,
-      });
-    }
-
-    private handleCollaboration(contributorId: string): void {
-      // In a real implementation, this would open a collaboration request form
-      this.showMessage("Fitur kolaborasi akan segera hadir!", "info");
-      this.trackEvent("contributor_collaboration_request", { contributorId });
-    }
-
-    private trackEvent(eventName: string, data: any): void {
-      if (typeof window !== "undefined" && (window as any).gtag) {
-        (window as any).gtag("event", eventName, {
-          event_category: "contributors",
-          ...data,
-        });
-      }
-    }
-
-    private showMessage(
-      message: string,
-      type: "success" | "info" | "error",
-    ): void {
-      const messageDiv = document.createElement("div");
-      messageDiv.className = `contributor-message contributor-message-${type}`;
-      messageDiv.textContent = message;
-
-      document.body.appendChild(messageDiv);
-
-      setTimeout(() => {
-        messageDiv.remove();
-      }, 3000);
-    }
-  }
-
-  // Initialize contributor card when DOM is ready
-  function initContributorCard(): void {
-    if (document.querySelector(".contributor-card")) {
-      new ContributorCard();
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initContributorCard);
-  } else {
-    initContributorCard();
-  }
-</script>
-
-<style>
-  @reference "@/styles/global.css";
-  .contributor-card {
-    @apply overflow-hidden rounded-2xl border border-neutral-100 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
-  }
-
-  .contributor-card.featured {
-    @apply border-primary-200 from-primary-50 to-secondary-50 bg-linear-to-br;
-  }
-
-  .contributor-card.compact {
-    @apply p-4;
-  }
-
-  .card-header {
-    @apply p-6 pb-4;
-  }
-
-  .contributor-avatar {
-    @apply relative mb-4 inline-block;
-  }
-
-  .avatar-image {
-    @apply h-16 w-16 rounded-full border-2 border-white object-cover shadow-sm;
-  }
-
-  .status-indicator {
-    @apply absolute -right-1 -bottom-1 h-4 w-4 rounded-full border-2 border-white;
-  }
-
-  .status-indicator.active {
-    @apply bg-green-500;
-  }
-
-  .status-indicator.inactive {
-    @apply bg-gray-400;
-  }
-
-  .contributor-info {
-    @apply mb-4;
-  }
-
-  .contributor-name {
-    @apply mb-1 text-xl font-bold text-neutral-800;
-  }
-
-  .contributor-name a {
-    @apply hover:text-primary-600 transition-colors;
-  }
-
-  .contributor-role {
-    @apply text-primary-600 mb-1 text-sm font-medium;
-  }
-
-  .contributor-location {
-    @apply text-sm text-neutral-500;
-  }
-
-  .contributor-stats {
-    @apply mb-4 flex gap-4;
-  }
-
-  .stat-item {
-    @apply text-center;
-  }
-
-  .stat-number {
-    @apply text-primary-600 block text-lg font-bold;
-  }
-
-  .stat-label {
-    @apply block text-xs text-neutral-500;
-  }
-
-  .card-content {
-    @apply px-6 pb-4;
-  }
-
-  .contributor-bio {
-    @apply mb-4 line-clamp-3 text-sm text-neutral-600;
-  }
-
-  .expertise-section {
-    @apply mb-4;
-  }
-
-  .section-title {
-    @apply mb-2 text-sm font-semibold text-neutral-700;
-  }
-
-  .expertise-tags {
-    @apply flex flex-wrap gap-2;
-  }
-
-  .expertise-tag {
-    @apply bg-primary-100 text-primary-700 rounded-full px-2 py-1 text-xs font-medium;
-  }
-
-  .expertise-more {
-    @apply rounded-full bg-neutral-100 px-2 py-1 text-xs font-medium text-neutral-600;
-  }
-
-  .contributions-preview {
-    @apply mb-4;
-  }
-
-  .contribution-items {
-    @apply space-y-2;
-  }
-
-  .contribution-item {
-    @apply flex items-center gap-3 rounded-lg bg-neutral-50 p-2;
-  }
-
-  .contribution-icon {
-    @apply text-lg;
-  }
-
-  .contribution-details {
-    @apply min-w-0 flex-1;
-  }
-
-  .contribution-title {
-    @apply block truncate text-sm font-medium text-neutral-800;
-  }
-
-  .contribution-role {
-    @apply block text-xs text-neutral-500;
-  }
-
-  .card-footer {
-    @apply border-t border-neutral-100 bg-neutral-50 px-6 py-4;
-  }
-
-  .social-links {
-    @apply mb-3 flex gap-2;
-  }
-
-  .social-link {
-    @apply flex h-8 w-8 items-center justify-center rounded-lg border border-neutral-300 bg-white text-neutral-600 transition-colors hover:bg-neutral-50;
-  }
-
-  .social-link.github:hover {
-    @apply border-gray-300 bg-gray-50 text-gray-600;
-  }
-
-  .social-link.linkedin:hover {
-    @apply border-blue-300 bg-blue-50 text-blue-600;
-  }
-
-  .social-link.twitter:hover {
-    @apply border-blue-300 bg-blue-50 text-blue-600;
-  }
-
-  .social-link.website:hover {
-    @apply border-green-300 bg-green-50 text-green-600;
-  }
-
-  .social-icon {
-    @apply h-4 w-4;
-  }
-
-  .action-buttons {
-    @apply flex gap-2;
-  }
-
-  .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium text-white transition-colors;
-  }
-
-  .btn-secondary {
-    @apply rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-50;
-  }
-
-  .contributor-message {
-    @apply fixed top-4 right-4 z-50 rounded-lg px-4 py-2 font-medium text-white;
-  }
-
-  .contributor-message-success {
-    @apply bg-green-500;
-  }
-
-  .contributor-message-info {
-    @apply bg-blue-500;
-  }
-
-  .contributor-message-error {
-    @apply bg-red-500;
-  }
-
-  /* Dark mode styles */
-  .dark .contributor-card {
-    @apply border-neutral-700 bg-neutral-800;
-  }
-
-  .dark .contributor-card.featured {
-    @apply border-primary-600 from-primary-900 to-secondary-900;
-  }
-
-  .dark .contributor-name {
-    @apply text-neutral-100;
-  }
-
-  .dark .contributor-bio {
-    @apply text-neutral-400;
-  }
-
-  .dark .section-title {
-    @apply text-neutral-300;
-  }
-
-  .dark .contribution-item {
-    @apply bg-neutral-700;
-  }
-
-  .dark .contribution-title {
-    @apply text-neutral-200;
-  }
-
-  .dark .card-footer {
-    @apply border-neutral-600 bg-neutral-700;
-  }
-
-  .dark .social-link {
-    @apply border-neutral-500 bg-neutral-600 text-neutral-300;
-  }
-
-  .dark .btn-secondary {
-    @apply border-neutral-500 bg-neutral-600 text-neutral-300;
-  }
-
-  /* Mobile responsive */
-  @media (max-width: 768px) {
-    .contributor-card {
-      @apply mx-2;
-    }
-
-    .card-header {
-      @apply p-4 pb-3;
-    }
-
-    .card-content {
-      @apply px-4 pb-3;
-    }
-
-    .card-footer {
-      @apply px-4 py-3;
-    }
-
-    .action-buttons {
-      @apply flex-col;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      @apply w-full;
-    }
-  }
-</style>
