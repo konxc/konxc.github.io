@@ -1,85 +1,125 @@
 ---
-import ExtendedLayout from "@layouts/ExtendedLayout.astro";
+import UnifiedLayout from "@layouts/UnifiedLayout.astro";
 import { Icon } from "astro-icon/components";
 ---
 
-<ExtendedLayout
+<UnifiedLayout
   title="Tentang Koneksi - Membangun Kedaulatan Data Indonesia"
   description="Koneksi adalah gerakan untuk membangun ekosistem digital Indonesia yang mandiri. Dengan tiga pilar utama: SDM berkualitas, kondusifitas bisnis, dan dukungan politik - kita wujudkan Kedaulatan Data Indonesia."
   showNewsletter={false}
+  theme="dark"
+  headerVariant="transparent"
 >
-  <!-- Hero Section - Visi Kedaulatan Data -->
+  <!-- Hero Section - Cinematic Dark Style -->
   <section
-    class="hero-section relative overflow-hidden bg-linear-to-br from-red-50 via-white to-red-50 py-20 md:py-32"
+    class="relative flex min-h-[90vh] items-center justify-center overflow-hidden bg-[#0a0a0c] pt-20"
   >
-    <div class="absolute inset-0 bg-linear-to-r from-red-500/5 to-transparent">
+    <!-- Tactical Background Layers -->
+    <div class="absolute inset-0 z-0">
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(239,68,68,0.15)_0%,transparent_50%)]"
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-center opacity-[0.03]"
+      >
+      </div>
+      <div
+        class="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-red-600/10 blur-[120px]"
+      >
+      </div>
+      <div
+        class="absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-indigo-600/10 blur-[120px]"
+      >
+      </div>
     </div>
+
     <div class="relative z-10 container">
       <div class="mx-auto max-w-5xl text-center">
-        <div class="mb-8">
+        <div
+          class="mb-10 inline-flex items-center gap-3 rounded-full border border-red-500/20 bg-red-500/5 px-4 py-2 backdrop-blur-md"
+        >
+          <div class="h-2 w-2 animate-pulse rounded-full bg-red-500"></div>
           <span
-            class="mb-6 inline-flex items-center rounded-full bg-red-100 px-4 py-2 text-sm font-medium text-red-800"
+            class="text-[10px] font-black tracking-[0.3em] text-red-400 uppercase"
           >
-            <Icon name="heroicons:flag" class="mr-2 h-4 w-4" />
-            Kedaulatan Data Indonesia
+            Strategic Protocol // Kedaulatan Data
           </span>
         </div>
 
         <h1
-          class="mb-8 text-4xl leading-tight font-bold md:text-5xl lg:text-6xl"
+          class="mb-8 text-5xl font-black tracking-tight text-white uppercase md:text-8xl lg:text-9xl"
         >
-          <span class="text-gray-900">Membangun</span>
+          Eksosistem <br />
           <span
-            class="block bg-linear-to-r from-red-600 to-red-800 bg-clip-text text-transparent md:inline"
-          >
-            Ekosistem Digital
-          </span>
-          <span class="text-gray-900">yang Berdaulat</span>
+            class="inline-block bg-gradient-to-r from-red-500 via-rose-500 to-amber-500 bg-clip-text px-4 text-transparent italic"
+            >Berdaulat</span
+          >.
         </h1>
 
-        <p class="mb-12 text-xl leading-relaxed text-gray-600 md:text-2xl">
-          Indonesia harus memiliki ekosistem digital sendiri yang <strong
-            >berani tampil</strong
-          > dan <strong>matang</strong>. Tidak lagi bergantung sepenuhnya pada
-          infrastruktur cloud luar negeri.
-          <span class="font-semibold text-red-600"
-            >Kedaulatan dimulai dari kemandirian teknologi.</span
-          >
+        <p
+          class="mx-auto mb-16 max-w-2xl text-lg leading-relaxed font-medium text-neutral-400 md:text-xl"
+        >
+          Indonesia memerlukan kemandirian teknologi yang matang. <br
+            class="hidden md:block"
+          />
+          Membangun masa depan digital yang tidak lagi bergantung sepenuhnya pada
+          <span class="text-white">infrastruktur asing</span>.
         </p>
 
-        <!-- Stats Kedaulatan -->
-        <div class="mb-12 grid grid-cols-2 gap-6 md:grid-cols-4">
-          <div class="text-center">
-            <div class="mb-2 text-3xl font-bold text-red-600">85%</div>
-            <div class="text-sm text-gray-600">Infrastruktur Cloud Asing</div>
-          </div>
-          <div class="text-center">
-            <div class="mb-2 text-3xl font-bold text-red-600">12M+</div>
-            <div class="text-sm text-gray-600">Developer Indonesia</div>
-          </div>
-          <div class="text-center">
-            <div class="mb-2 text-3xl font-bold text-red-600">270M</div>
-            <div class="text-sm text-gray-600">Pengguna Internet</div>
-          </div>
-          <div class="text-center">
-            <div class="mb-2 text-3xl font-bold text-red-600">2030</div>
-            <div class="text-sm text-gray-600">Target Kedaulatan</div>
-          </div>
+        <!-- Stats Grid with Tactical Look -->
+        <div
+          class="mb-20 grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-white/5 bg-white/5 backdrop-blur-sm md:grid-cols-4"
+        >
+          {
+            [
+              { label: "Cloud Asing", value: "85%", icon: "heroicons:cloud" },
+              {
+                label: "Talent Pool",
+                value: "12M+",
+                icon: "heroicons:academic-cap",
+              },
+              {
+                label: "Populasi Net",
+                value: "270M",
+                icon: "heroicons:globe-alt",
+              },
+              {
+                label: "Target 2030",
+                value: "DEPLY",
+                icon: "heroicons:rocket-launch",
+              },
+            ].map((stat) => (
+              <div class="group flex flex-col items-center bg-[#0a0a0c]/80 p-8 transition-colors hover:bg-neutral-900">
+                <Icon
+                  name={stat.icon}
+                  class="mb-4 h-5 w-5 text-neutral-600 transition-colors group-hover:text-red-500"
+                />
+                <div class="text-3xl font-black text-white">{stat.value}</div>
+                <div class="mt-1 text-[10px] font-bold tracking-widest text-neutral-500 uppercase">
+                  {stat.label}
+                </div>
+              </div>
+            ))
+          }
         </div>
 
-        <div class="flex flex-col justify-center gap-4 sm:flex-row">
+        <div class="mb-20 flex flex-col justify-center gap-6 sm:flex-row">
           <a
             href="#visi-misi"
-            class="inline-flex items-center rounded-lg border border-red-600 bg-red-600 px-6 py-3 font-semibold text-white transition-colors duration-200 hover:border-red-700 hover:bg-red-700"
+            class="group relative overflow-hidden rounded-xl bg-red-600 px-8 py-4 font-black text-white transition-all hover:bg-red-700"
           >
-            <Icon name="heroicons:eye" class="mr-2 h-5 w-5" />
-            Pelajari Visi Kami
+            <span class="relative z-10 flex items-center gap-3">
+              Pelajari Visi <Icon
+                name="heroicons:arrow-right"
+                class="h-4 w-4 transition-transform group-hover:translate-x-1"
+              />
+            </span>
           </a>
           <a
             href="#tiga-pilar"
-            class="inline-flex items-center rounded-lg border-2 border-red-600 bg-transparent px-6 py-3 font-semibold text-red-600 transition-colors duration-200 hover:bg-red-50"
+            class="rounded-xl border border-white/10 px-8 py-4 font-black text-white transition-all hover:bg-white/5"
           >
-            <Icon name="heroicons:building-library" class="mr-2 h-5 w-5" />
             Tiga Pilar Kedaulatan
           </a>
         </div>
@@ -88,175 +128,168 @@ import { Icon } from "astro-icon/components";
   </section>
 
   <!-- Visi & Misi Section -->
-  <section id="visi-misi" class="bg-white py-16 md:py-24">
+  <section id="visi-misi" class="bg-[#0f0f12] py-24 md:py-32">
     <div class="container">
-      <div class="mb-16 text-center">
-        <h2 class="mb-6 text-3xl font-bold md:text-4xl">
-          <span class="text-gray-900">Visi & Misi</span>
-          <span
-            class="bg-linear-to-r from-red-600 to-red-800 bg-clip-text text-transparent"
-            >Koneksi</span
+      <div class="mb-20 text-center">
+        <h2
+          class="mb-6 text-4xl font-black tracking-tight text-white uppercase md:text-5xl"
+        >
+          Visi & <span
+            class="bg-gradient-to-r from-red-500 to-rose-600 bg-clip-text text-transparent italic"
+            >Misi</span
           >
         </h2>
-        <p class="mx-auto max-w-3xl text-xl text-gray-600">
-          Kami percaya bahwa Indonesia memiliki potensi luar biasa untuk menjadi
-          kekuatan digital global. Namun, kedaulatan tidak datang dengan
-          sendirinya.
+        <p class="mx-auto max-w-2xl text-lg text-neutral-400">
+          Indonesia memiliki potensi luar biasa untuk menjadi kekuatan digital
+          global. Kedaulatan tidak datang dengan sendirinya — ia harus dibangun.
         </p>
       </div>
 
-      <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div class="grid items-center gap-16 lg:grid-cols-2">
         <!-- Visi -->
-        <div class="space-y-8">
+        <div class="space-y-10">
           <div
-            class="rounded-2xl border border-red-100 bg-linear-to-br from-red-50 to-red-100/50 p-8"
+            class="group relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-white/5 p-10 backdrop-blur-md"
           >
-            <div class="mb-6 flex items-center">
-              <div
-                class="mr-4 flex h-12 w-12 items-center justify-center rounded-xl bg-red-600"
-              >
-                <Icon name="heroicons:eye" class="h-6 w-6 text-white" />
-              </div>
-              <h3 class="text-2xl font-bold text-gray-900">Visi</h3>
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+            >
             </div>
-            <p class="text-lg leading-relaxed text-gray-700">
-              <strong>Menjadi katalis utama</strong> dalam mewujudkan <strong
-                >Kedaulatan Data Indonesia</strong
-              >
-              melalui ekosistem digital yang mandiri, inovatif, dan berkelanjutan
-              pada tahun 2030.
-            </p>
+            <div class="relative z-10">
+              <div class="mb-8 flex items-center">
+                <div
+                  class="mr-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.4)]"
+                >
+                  <Icon name="heroicons:eye" class="h-7 w-7" />
+                </div>
+                <h3
+                  class="text-3xl font-black tracking-tight text-white uppercase"
+                >
+                  Visi
+                </h3>
+              </div>
+              <p class="text-xl leading-relaxed text-neutral-300">
+                <span class="font-bold text-white">Menjadi katalis utama</span> dalam
+                mewujudkan <span class="font-black text-red-500"
+                  >Kedaulatan Data Indonesia</span
+                > melalui ekosistem digital yang mandiri dan inovatif.
+              </p>
+            </div>
           </div>
 
           <div
-            class="rounded-2xl border border-blue-100 bg-linear-to-br from-blue-50 to-blue-100/50 p-8"
+            class="group relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-white/5 p-10 backdrop-blur-md"
           >
-            <div class="mb-6 flex items-center">
-              <div
-                class="mr-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600"
-              >
-                <Icon
-                  name="heroicons:rocket-launch"
-                  class="h-6 w-6 text-white"
-                />
-              </div>
-              <h3 class="text-2xl font-bold text-gray-900">Misi</h3>
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-indigo-600/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+            >
             </div>
-            <ul class="space-y-3 text-gray-700">
-              <li class="flex items-start">
-                <Icon
-                  name="heroicons:check-circle"
-                  class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-blue-600"
-                />
-                <span
-                  ><strong>Mempersiapkan SDM</strong> teknologi Indonesia yang world-class</span
+            <div class="relative z-10">
+              <div class="mb-8 flex items-center">
+                <div
+                  class="mr-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.4)]"
                 >
-              </li>
-              <li class="flex items-start">
-                <Icon
-                  name="heroicons:check-circle"
-                  class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-blue-600"
-                />
-                <span
-                  ><strong>Menciptakan kondusifitas bisnis</strong> untuk startup
-                  dan tech company lokal</span
+                  <Icon name="heroicons:rocket-launch" class="h-7 w-7" />
+                </div>
+                <h3
+                  class="text-3xl font-black tracking-tight text-white uppercase"
                 >
-              </li>
-              <li class="flex items-start">
-                <Icon
-                  name="heroicons:check-circle"
-                  class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-blue-600"
-                />
-                <span
-                  ><strong>Mendorong kebijakan politik</strong> yang mendukung kedaulatan
-                  digital</span
-                >
-              </li>
-              <li class="flex items-start">
-                <Icon
-                  name="heroicons:check-circle"
-                  class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-blue-600"
-                />
-                <span
-                  ><strong>Membangun infrastruktur</strong> cloud dan teknologi dalam
-                  negeri</span
-                >
-              </li>
-            </ul>
+                  Misi
+                </h3>
+              </div>
+              <ul class="space-y-4 text-neutral-300">
+                {
+                  [
+                    "Mempersiapkan SDM teknologi Indonesia world-class",
+                    "Menciptakan kondusifitas bisnis startup lokal",
+                    "Mendorong kebijakan politik kedaulatan digital",
+                    "Membangun infrastruktur cloud dalam negeri",
+                  ].map((misi) => (
+                    <li class="flex items-center gap-4">
+                      <div class="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                      <span class="font-medium">{misi}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
           </div>
         </div>
 
         <!-- Ilustrasi Ekosistem -->
         <div class="relative">
           <div
-            class="rounded-2xl border border-gray-200 bg-linear-to-br from-gray-50 to-gray-100 p-8"
+            class="absolute -inset-4 -z-10 rounded-[3rem] border border-white/5 bg-white/2"
           >
-            <h4 class="mb-6 text-center text-xl font-bold text-gray-900">
-              Ekosistem Digital Indonesia
+          </div>
+          <div
+            class="rounded-[3rem] border border-white/10 bg-neutral-900/50 p-12 backdrop-blur-xl"
+          >
+            <h4
+              class="mb-10 text-center text-sm font-black tracking-[0.4em] text-neutral-500 uppercase"
+            >
+              Sovereignty Network
             </h4>
 
             <!-- Indonesia di Tengah -->
-            <div class="relative mb-8 flex items-center justify-center">
+            <div class="relative mb-12 flex items-center justify-center">
+              <div class="absolute inset-0 rounded-full bg-red-600/20 blur-3xl">
+              </div>
               <div
-                class="flex h-32 w-32 items-center justify-center rounded-full bg-linear-to-br from-red-500 to-red-600 shadow-lg"
+                class="relative flex h-36 w-36 items-center justify-center rounded-full border-2 border-white/20 bg-gradient-to-br from-red-600 to-rose-700 shadow-[0_0_40px_rgba(220,38,38,0.3)]"
               >
                 <div class="text-center text-white">
                   <Icon name="heroicons:flag" class="mx-auto mb-2 h-8 w-8" />
-                  <div class="text-sm font-bold">INDONESIA</div>
+                  <div class="text-[10px] font-black tracking-widest uppercase">
+                    ID_CORE
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Orbit Ekosistem -->
             <div class="grid grid-cols-2 gap-4">
-              <div
-                class="rounded-xl border border-gray-200 bg-white p-4 text-center"
-              >
-                <Icon
-                  name="heroicons:cloud"
-                  class="mx-auto mb-2 h-8 w-8 text-blue-600"
-                />
-                <div class="text-sm font-semibold text-gray-900">
-                  Cloud Lokal
-                </div>
-                <div class="text-xs text-gray-600">Infrastructure</div>
-              </div>
-              <div
-                class="rounded-xl border border-gray-200 bg-white p-4 text-center"
-              >
-                <Icon
-                  name="heroicons:cpu-chip"
-                  class="mx-auto mb-2 h-8 w-8 text-green-600"
-                />
-                <div class="text-sm font-semibold text-gray-900">
-                  Tech Stack
-                </div>
-                <div class="text-xs text-gray-600">Open Source</div>
-              </div>
-              <div
-                class="rounded-xl border border-gray-200 bg-white p-4 text-center"
-              >
-                <Icon
-                  name="heroicons:academic-cap"
-                  class="mx-auto mb-2 h-8 w-8 text-purple-600"
-                />
-                <div class="text-sm font-semibold text-gray-900">
-                  Talent Pool
-                </div>
-                <div class="text-xs text-gray-600">World Class</div>
-              </div>
-              <div
-                class="rounded-xl border border-gray-200 bg-white p-4 text-center"
-              >
-                <Icon
-                  name="heroicons:building-office"
-                  class="mx-auto mb-2 h-8 w-8 text-orange-600"
-                />
-                <div class="text-sm font-semibold text-gray-900">
-                  Startup Hub
-                </div>
-                <div class="text-xs text-gray-600">Innovation</div>
-              </div>
+              {
+                [
+                  {
+                    label: "Infrastructure",
+                    name: "Cloud Lokal",
+                    icon: "heroicons:cloud",
+                    color: "text-blue-400",
+                  },
+                  {
+                    label: "Open Source",
+                    name: "Tech Stack",
+                    icon: "heroicons:cpu-chip",
+                    color: "text-emerald-400",
+                  },
+                  {
+                    label: "Engineering",
+                    name: "Talent Pool",
+                    icon: "heroicons:academic-cap",
+                    color: "text-purple-400",
+                  },
+                  {
+                    label: "Innovation",
+                    name: "Startup Hub",
+                    icon: "heroicons:building-office",
+                    color: "text-orange-400",
+                  },
+                ].map((item) => (
+                  <div class="group rounded-2xl border border-white/5 bg-white/5 p-4 text-center transition-all hover:border-white/20">
+                    <Icon
+                      name={item.icon}
+                      class={`mx-auto mb-2 h-6 w-6 ${item.color}`}
+                    />
+                    <div class="text-sm font-black tracking-tight text-white">
+                      {item.name}
+                    </div>
+                    <div class="mt-1 text-[8px] font-bold tracking-widest text-neutral-500 uppercase">
+                      {item.label}
+                    </div>
+                  </div>
+                ))
+              }
             </div>
           </div>
         </div>
@@ -265,537 +298,292 @@ import { Icon } from "astro-icon/components";
   </section>
 
   <!-- Tiga Pilar Kedaulatan -->
-  <section
-    id="tiga-pilar"
-    class="bg-linear-to-br from-gray-50 to-gray-100 py-16 md:py-24"
-  >
+  <section id="tiga-pilar" class="bg-[#0a0a0c] py-24 md:py-32">
     <div class="container">
-      <div class="mb-16 text-center">
-        <h2 class="mb-6 text-3xl font-bold md:text-4xl">
-          <span
-            class="bg-linear-to-r from-red-600 to-red-800 bg-clip-text text-transparent"
-            >Tiga Pilar</span
-          >
-          <span class="text-gray-900">Kedaulatan Digital</span>
+      <div class="mb-20 text-center">
+        <h2
+          class="mb-6 text-4xl font-black tracking-tight text-white uppercase md:text-5xl"
+        >
+          Tiga <span class="text-red-500">Pilar</span> Utama
         </h2>
-        <p class="mx-auto max-w-4xl text-xl text-gray-600">
-          Seperti tiga motor penggerak, jika hancur salah satu, maka sebaik
-          apapun gagasan dan teknologi tidak akan berarti apa-apa. Ketiga pilar
-          ini harus berjalan bersama-sama.
+        <p class="mx-auto max-w-2xl text-lg text-neutral-400">
+          Tiga motor penggerak kedaulatan digital. Jika salah satu lumpuh, maka
+          infrastruktur lainnya tidak akan berarti apa-apa.
         </p>
       </div>
 
       <div class="grid gap-8 lg:grid-cols-3">
-        <!-- Pilar 1: SDM -->
-        <div class="group">
-          <div
-            class="h-full rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-lg"
-          >
-            <div class="mb-6 text-center">
-              <div
-                class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 transition-transform duration-300 group-hover:scale-110"
-              >
-                <Icon
-                  name="heroicons:academic-cap"
-                  class="h-8 w-8 text-white"
-                />
-              </div>
-              <h3 class="text-2xl font-bold text-gray-900">Pilar SDM</h3>
-              <p class="font-semibold text-blue-600">Sumber Daya Manusia</p>
-            </div>
-
-            <div class="space-y-4">
-              <p class="leading-relaxed text-gray-600">
-                <strong>Mempersiapkan talenta teknologi Indonesia</strong> yang tidak
-                hanya skilled, tetapi juga memiliki mindset kedaulatan dan kebanggaan
-                terhadap produk dalam negeri.
-              </p>
-
-              <div class="space-y-3">
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-blue-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >World-class technical skills</span
-                  >
+        {
+          [
+            {
+              title: "Pilar SDM",
+              subtitle: "Technical Mastery",
+              icon: "heroicons:academic-cap",
+              color: "blue",
+              desc: "Mempersiapkan talenta teknologi Indonesia yang world-class, mandiri, dan bangga pada karya lokal.",
+              impact: "1M+ Talents by 2030",
+            },
+            {
+              title: "Pilar Bisnis",
+              subtitle: "Economic Growth",
+              icon: "heroicons:building-office-2",
+              color: "emerald",
+              desc: "Membangun ekosistem bisnis yang kondusif agar tech-startup lokal dapat bersaing dengan raksasa global.",
+              impact: "Sustainable Ecosystem",
+            },
+            {
+              title: "Pilar Politik",
+              subtitle: "State Regulation",
+              icon: "heroicons:building-library",
+              color: "red",
+              desc: "Kebijakan politik yang berpihak pada kedaulatan digital melalui regulasi data dan infrastruktur nasional.",
+              impact: "Data Sovereignty Law",
+            },
+          ].map((pilar) => (
+            <div class="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-1 transition-all hover:border-white/20">
+              <div class="h-full rounded-[1.4rem] bg-[#0f0f12] p-8">
+                <div
+                  class={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-${pilar.color}-600/20 text-${pilar.color}-500 transition-all group-hover:scale-110`}
+                >
+                  <Icon name={pilar.icon} class="h-8 w-8" />
                 </div>
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-blue-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >Entrepreneurial mindset</span
-                  >
-                </div>
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-blue-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >Digital sovereignty awareness</span
-                  >
-                </div>
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-blue-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >Collaborative community spirit</span
-                  >
-                </div>
-              </div>
-
-              <div class="border-t border-gray-100 pt-4">
-                <div class="mb-2 text-sm text-gray-500">Target Impact:</div>
-                <div class="text-lg font-bold text-blue-600">
-                  1M+ Tech Talents by 2030
+                <h3 class="text-2xl font-black tracking-tight text-white uppercase">
+                  {pilar.title}
+                </h3>
+                <p
+                  class={`mb-4 text-sm font-bold text-${pilar.color}-500 tracking-widest uppercase`}
+                >
+                  {pilar.subtitle}
+                </p>
+                <p class="mb-8 leading-relaxed font-medium text-neutral-400">
+                  {pilar.desc}
+                </p>
+                <div class="border-t border-white/5 pt-6">
+                  <div class="mb-1 text-[10px] font-black tracking-[0.2em] text-neutral-600 uppercase">
+                    Projected Impact
+                  </div>
+                  <div class={`text-lg font-black text-${pilar.color}-500`}>
+                    {pilar.impact}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Pilar 2: Bisnis -->
-        <div class="group">
-          <div
-            class="h-full rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-lg"
-          >
-            <div class="mb-6 text-center">
-              <div
-                class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-green-500 to-green-600 transition-transform duration-300 group-hover:scale-110"
-              >
-                <Icon
-                  name="heroicons:building-office-2"
-                  class="h-8 w-8 text-white"
-                />
-              </div>
-              <h3 class="text-2xl font-bold text-gray-900">Pilar Bisnis</h3>
-              <p class="font-semibold text-green-600">Kondusifitas Ekonomi</p>
-            </div>
-
-            <div class="space-y-4">
-              <p class="leading-relaxed text-gray-600">
-                <strong>Menciptakan ekosistem bisnis yang kondusif</strong> untuk
-                startup dan tech company lokal agar dapat bersaing dengan pemain
-                global dan berkembang sustainable.
-              </p>
-
-              <div class="space-y-3">
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-green-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >Access to funding & investment</span
-                  >
-                </div>
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-green-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >Simplified business regulations</span
-                  >
-                </div>
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-green-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >Market protection for local products</span
-                  >
-                </div>
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-green-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >Innovation-friendly tax incentives</span
-                  >
-                </div>
-              </div>
-
-              <div class="border-t border-gray-100 pt-4">
-                <div class="mb-2 text-sm text-gray-500">Target Impact:</div>
-                <div class="text-lg font-bold text-green-600">
-                  100+ Unicorns by 2030
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Pilar 3: Politik -->
-        <div class="group">
-          <div
-            class="h-full rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-lg"
-          >
-            <div class="mb-6 text-center">
-              <div
-                class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-red-500 to-red-600 transition-transform duration-300 group-hover:scale-110"
-              >
-                <Icon
-                  name="heroicons:building-library"
-                  class="h-8 w-8 text-white"
-                />
-              </div>
-              <h3 class="text-2xl font-bold text-gray-900">Pilar Politik</h3>
-              <p class="font-semibold text-red-600">Dukungan Kebijakan</p>
-            </div>
-
-            <div class="space-y-4">
-              <p class="leading-relaxed text-gray-600">
-                <strong>Mendorong kebijakan politik yang mendukung</strong> kedaulatan
-                digital Indonesia melalui regulasi yang tepat dan investasi infrastruktur
-                teknologi.
-              </p>
-
-              <div class="space-y-3">
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-red-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >Data sovereignty regulations</span
-                  >
-                </div>
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-red-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >National cloud infrastructure</span
-                  >
-                </div>
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-red-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >Tech education curriculum reform</span
-                  >
-                </div>
-                <div class="flex items-start">
-                  <Icon
-                    name="heroicons:check-circle"
-                    class="mt-0.5 mr-3 h-5 w-5 shrink-0 text-red-600"
-                  />
-                  <span class="text-sm text-gray-700"
-                    >Digital transformation roadmap</span
-                  >
-                </div>
-              </div>
-
-              <div class="border-t border-gray-100 pt-4">
-                <div class="mb-2 text-sm text-gray-500">Target Impact:</div>
-                <div class="text-lg font-bold text-red-600">
-                  50% Data Sovereignty by 2030
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Interconnection Visualization -->
-      <div class="mt-16 text-center">
-        <div
-          class="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white p-8 shadow-sm"
-        >
-          <h4 class="mb-6 text-xl font-bold text-gray-900">
-            Sinergi Tiga Pilar
-          </h4>
-          <p class="mb-6 text-gray-600">
-            Ketiga pilar ini saling terkait dan memperkuat. Tanpa salah satu,
-            kedaulatan digital tidak akan tercapai.
-          </p>
-
-          <div class="flex items-center justify-center space-x-4">
-            <div
-              class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100"
-            >
-              <Icon
-                name="heroicons:academic-cap"
-                class="h-6 w-6 text-blue-600"
-              />
-            </div>
-            <Icon name="heroicons:plus" class="h-4 w-4 text-gray-400" />
-            <div
-              class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
-            >
-              <Icon
-                name="heroicons:building-office-2"
-                class="h-6 w-6 text-green-600"
-              />
-            </div>
-            <Icon name="heroicons:plus" class="h-4 w-4 text-gray-400" />
-            <div
-              class="flex h-12 w-12 items-center justify-center rounded-full bg-red-100"
-            >
-              <Icon
-                name="heroicons:building-library"
-                class="h-6 w-6 text-red-600"
-              />
-            </div>
-            <Icon name="heroicons:equals" class="h-4 w-4 text-gray-400" />
-            <div
-              class="flex h-12 w-16 items-center justify-center rounded-full bg-linear-to-r from-red-500 to-red-600"
-            >
-              <Icon name="heroicons:flag" class="h-6 w-6 text-white" />
-            </div>
-          </div>
-
-          <div class="mt-4 text-sm text-gray-500">
-            SDM + Bisnis + Politik = Kedaulatan Digital Indonesia
-          </div>
-        </div>
+          ))
+        }
       </div>
     </div>
   </section>
 
+  <!-- Interconnection Visualization -->
+  <div class="mt-24 text-center">
+    <div
+      class="mx-auto max-w-3xl rounded-[2.5rem] border border-white/5 bg-white/2 p-12 backdrop-blur-sm"
+    >
+      <h4 class="mb-6 text-2xl font-black tracking-tight text-white uppercase">
+        Sinergi Tiga Pilar
+      </h4>
+      <p class="mb-10 leading-relaxed font-medium text-neutral-400">
+        Ketiga pilar ini saling terkait dan memperkuat. Tanpa salah satu,
+        kedaulatan digital hanyalah sekadar wacana.
+      </p>
+
+      <div class="flex items-center justify-center space-x-6">
+        <div
+          class="flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-600/20"
+        >
+          <Icon name="heroicons:academic-cap" class="h-7 w-7 text-blue-500" />
+        </div>
+        <Icon name="heroicons:plus" class="h-4 w-4 text-neutral-600" />
+        <div
+          class="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-500/30 bg-emerald-600/20"
+        >
+          <Icon
+            name="heroicons:building-office-2"
+            class="h-7 w-7 text-emerald-500"
+          />
+        </div>
+        <Icon name="heroicons:plus" class="h-4 w-4 text-neutral-600" />
+        <div
+          class="flex h-14 w-14 items-center justify-center rounded-2xl border border-red-500/30 bg-red-600/20"
+        >
+          <Icon
+            name="heroicons:building-library"
+            class="h-7 w-7 text-red-500"
+          />
+        </div>
+        <Icon name="heroicons:equals" class="h-4 w-4 text-neutral-600" />
+        <div
+          class="flex h-14 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-red-600 to-rose-700 shadow-[0_0_20px_rgba(220,38,38,0.3)]"
+        >
+          <Icon name="heroicons:flag" class="h-8 w-8 text-white" />
+        </div>
+      </div>
+
+      <div
+        class="mt-8 text-[11px] font-black tracking-[0.3em] text-neutral-500 uppercase"
+      >
+        SDM + Bisnis + Politik = Kedaulatan Digital
+      </div>
+    </div>
+  </div>
+
   <!-- Mengapa Kedaulatan Data Penting -->
-  <section class="bg-white py-16 md:py-24">
+  <section class="bg-[#0f0f12] py-24 md:py-32">
     <div class="container">
-      <div class="mb-16 text-center">
-        <h2 class="mb-6 text-3xl font-bold md:text-4xl">
-          <span class="text-gray-900">Mengapa</span>
-          <span
-            class="bg-linear-to-r from-red-600 to-red-800 bg-clip-text text-transparent"
-            >Kedaulatan Data</span
+      <div class="mb-20 text-center">
+        <h2
+          class="mb-6 text-4xl font-black tracking-tight text-white uppercase md:text-5xl"
+        >
+          Urgensi <span
+            class="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent italic"
+            >Kedaulatan</span
           >
-          <span class="text-gray-900">Penting?</span>
         </h2>
-        <p class="mx-auto max-w-3xl text-xl text-gray-600">
+        <p class="mx-auto max-w-2xl text-lg text-neutral-400">
           Data adalah aset paling berharga di era digital. Siapa yang menguasai
-          data, menguasai masa depan.
+          data, menguasai masa depan kedaulatan bangsa.
         </p>
       </div>
 
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <!-- Keamanan Nasional -->
-        <div
-          class="rounded-xl border border-red-100 bg-linear-to-br from-red-50 to-red-100/50 p-6"
-        >
-          <div
-            class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-red-600"
-          >
-            <Icon name="heroicons:shield-check" class="h-6 w-6 text-white" />
-          </div>
-          <h3 class="mb-3 text-xl font-bold text-gray-900">
-            Keamanan Nasional
-          </h3>
-          <p class="text-gray-700">
-            Data warga negara dan infrastruktur kritis harus berada di dalam
-            kendali negara untuk mencegah penyalahgunaan dan ancaman keamanan.
-          </p>
-        </div>
-
-        <!-- Ekonomi Digital -->
-        <div
-          class="rounded-xl border border-green-100 bg-linear-to-br from-green-50 to-green-100/50 p-6"
-        >
-          <div
-            class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-green-600"
-          >
-            <Icon name="heroicons:currency-dollar" class="h-6 w-6 text-white" />
-          </div>
-          <h3 class="mb-3 text-xl font-bold text-gray-900">Ekonomi Digital</h3>
-          <p class="text-gray-700">
-            Nilai ekonomi dari data Indonesia harus kembali ke Indonesia. Bukan
-            mengalir ke perusahaan teknologi asing tanpa kontribusi yang setara.
-          </p>
-        </div>
-
-        <!-- Inovasi Lokal -->
-        <div
-          class="rounded-xl border border-blue-100 bg-linear-to-br from-blue-50 to-blue-100/50 p-6"
-        >
-          <div
-            class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600"
-          >
-            <Icon name="heroicons:light-bulb" class="h-6 w-6 text-white" />
-          </div>
-          <h3 class="mb-3 text-xl font-bold text-gray-900">Inovasi Lokal</h3>
-          <p class="text-gray-700">
-            Dengan data yang tersedia secara lokal, startup dan peneliti
-            Indonesia dapat mengembangkan solusi yang lebih relevan untuk
-            masalah lokal.
-          </p>
-        </div>
-
-        <!-- Privasi Warga -->
-        <div
-          class="rounded-xl border border-purple-100 bg-linear-to-br from-purple-50 to-purple-100/50 p-6"
-        >
-          <div
-            class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-600"
-          >
-            <Icon name="heroicons:lock-closed" class="h-6 w-6 text-white" />
-          </div>
-          <h3 class="mb-3 text-xl font-bold text-gray-900">Privasi Warga</h3>
-          <p class="text-gray-700">
-            Hak privasi warga negara Indonesia harus dilindungi oleh hukum
-            Indonesia, bukan tunduk pada jurisdiksi negara lain.
-          </p>
-        </div>
-
-        <!-- Ketahanan Teknologi -->
-        <div
-          class="rounded-xl border border-orange-100 bg-linear-to-br from-orange-50 to-orange-100/50 p-6"
-        >
-          <div
-            class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-600"
-          >
-            <Icon name="heroicons:server" class="h-6 w-6 text-white" />
-          </div>
-          <h3 class="mb-3 text-xl font-bold text-gray-900">
-            Ketahanan Teknologi
-          </h3>
-          <p class="text-gray-700">
-            Indonesia tidak boleh bergantung sepenuhnya pada infrastruktur
-            asing. Kita perlu backup dan alternatif yang dikendalikan sendiri.
-          </p>
-        </div>
-
-        <!-- Daya Saing Global -->
-        <div
-          class="rounded-xl border border-teal-100 bg-linear-to-br from-teal-50 to-teal-100/50 p-6"
-        >
-          <div
-            class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-600"
-          >
-            <Icon
-              name="heroicons:globe-asia-australia"
-              class="h-6 w-6 text-white"
-            />
-          </div>
-          <h3 class="mb-3 text-xl font-bold text-gray-900">
-            Daya Saing Global
-          </h3>
-          <p class="text-gray-700">
-            Dengan ekosistem digital yang mandiri, Indonesia dapat menjadi
-            pemain utama di panggung teknologi global, bukan hanya konsumen.
-          </p>
-        </div>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {
+          [
+            {
+              title: "Keamanan Nasional",
+              icon: "heroicons:shield-check",
+              color: "red",
+              desc: "Data warga negara dan infrastruktur kritis harus berada di bawah jurisdiksi nasional.",
+            },
+            {
+              title: "Ekonomi Digital",
+              icon: "heroicons:currency-dollar",
+              color: "emerald",
+              desc: "Nilai ekonomi data harus kembali ke Indonesia, bukan mengalir keluar tanpa kontribusi.",
+            },
+            {
+              title: "Inovasi Lokal",
+              icon: "heroicons:light-bulb",
+              color: "blue",
+              desc: "Ketersediaan data lokal mendorong startup untuk membangun solusi yang relevan.",
+            },
+            {
+              title: "Privasi Warga",
+              icon: "heroicons:lock-closed",
+              color: "purple",
+              desc: "Hak privasi dilindungi oleh hukum Indonesia, bukan kebijakan perusahaan asing.",
+            },
+            {
+              title: "Ketahanan Tech",
+              icon: "heroicons:server",
+              color: "orange",
+              desc: "Kemandirian infrastruktur memastikan keberlangsungan layanan publik saat terjadi eskalasi.",
+            },
+            {
+              title: "Daya Saing",
+              icon: "heroicons:globe-asia-australia",
+              color: "teal",
+              desc: "Indonesia tampil sebagai subjek teknologi di panggung global, bukan sekadar objek pasar.",
+            },
+          ].map((item) => (
+            <div class="rounded-[2rem] border border-white/5 bg-white/2 p-8 transition-colors hover:bg-white/5">
+              <div
+                class={`mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-${item.color}-600/20 text-${item.color}-500`}
+              >
+                <Icon name={item.icon} class="h-6 w-6" />
+              </div>
+              <h3 class="mb-3 text-xl font-bold tracking-tight text-white">
+                {item.title}
+              </h3>
+              <p class="text-sm leading-relaxed font-medium text-neutral-400">
+                {item.desc}
+              </p>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
 
   <!-- Call to Action -->
-  <section
-    class="bg-linear-to-br from-red-600 to-red-800 py-16 text-white md:py-24"
-  >
-    <div class="container">
+  <section class="relative overflow-hidden py-32">
+    <div class="absolute inset-0 bg-gradient-to-br from-red-600 to-[#120505]">
+    </div>
+    <div
+      class="pointer-events-none absolute inset-0 bg-[url('/images/noise.png')] opacity-20"
+    >
+    </div>
+
+    <div class="relative z-10 container">
       <div class="mx-auto max-w-4xl text-center">
-        <h2 class="mb-6 text-3xl font-bold md:text-4xl">
-          Bergabunglah dalam Gerakan Kedaulatan Digital
+        <h2
+          class="mb-8 text-5xl font-black tracking-tighter text-white uppercase md:text-7xl"
+        >
+          Join the <br />
+          <span class="text-rose-200 italic">Revolution</span>.
         </h2>
-        <p class="mb-8 text-xl opacity-90">
-          Kedaulatan tidak akan tercapai tanpa partisipasi aktif dari setiap
-          elemen bangsa. Mulai dari developer, entrepreneur, hingga policy maker
-          - setiap kontribusi berarti.
+        <p
+          class="mx-auto mb-12 max-w-2xl text-xl leading-relaxed font-medium text-rose-50/80"
+        >
+          Kedaulatan tidak akan tercapai tanpa partisipasi aktif setiap elemen
+          bangsa. Setiap kontribusi adalah langkah menuju kemandirian.
         </p>
 
-        <div class="mb-12 grid gap-6 md:grid-cols-3">
-          <div class="text-center">
-            <div
-              class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20"
-            >
-              <Icon name="heroicons:code-bracket" class="h-8 w-8 text-white" />
-            </div>
-            <h3 class="mb-2 text-lg font-bold">Untuk Developer</h3>
-            <p class="text-sm opacity-90">
-              Kontribusi pada project open source Indonesia
-            </p>
-          </div>
-          <div class="text-center">
-            <div
-              class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20"
-            >
-              <Icon
-                name="heroicons:building-office"
-                class="h-8 w-8 text-white"
-              />
-            </div>
-            <h3 class="mb-2 text-lg font-bold">Untuk Bisnis</h3>
-            <p class="text-sm opacity-90">
-              Investasi pada teknologi dan talent lokal
-            </p>
-          </div>
-          <div class="text-center">
-            <div
-              class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20"
-            >
-              <Icon name="heroicons:megaphone" class="h-8 w-8 text-white" />
-            </div>
-            <h3 class="mb-2 text-lg font-bold">Untuk Masyarakat</h3>
-            <p class="text-sm opacity-90">
-              Dukung produk teknologi dalam negeri
-            </p>
-          </div>
+        <div class="mb-16 grid gap-8 md:grid-cols-3">
+          {
+            [
+              {
+                label: "Engineering",
+                title: "Untuk Developer",
+                icon: "heroicons:code-bracket",
+              },
+              {
+                label: "Growth",
+                title: "Untuk Bisnis",
+                icon: "heroicons:building-office",
+              },
+              {
+                label: "Ecosystem",
+                title: "Untuk Masyarakat",
+                icon: "heroicons:megaphone",
+              },
+            ].map((role) => (
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-md">
+                <Icon
+                  name={role.icon}
+                  class="mx-auto mb-4 h-8 w-8 text-rose-300"
+                />
+                <h3 class="mb-2 text-lg font-black tracking-tight text-white uppercase">
+                  {role.title}
+                </h3>
+                <div class="text-[10px] font-bold tracking-widest text-rose-200/60 uppercase">
+                  {role.label}
+                </div>
+              </div>
+            ))
+          }
         </div>
 
-        <div class="flex flex-col justify-center gap-4 sm:flex-row">
+        <div class="flex flex-col justify-center gap-6 sm:flex-row">
           <a
             href="/contributors/join"
-            class="inline-flex items-center rounded-lg border border-white bg-white px-6 py-3 font-semibold text-red-600 transition-colors duration-200 hover:border-gray-100 hover:bg-gray-100"
+            class="rounded-xl bg-white px-8 py-4 font-black text-red-600 shadow-xl transition-all hover:bg-neutral-100"
           >
-            <Icon name="heroicons:user-plus" class="mr-2 h-5 w-5" />
-            Bergabung sebagai Kontributor
+            Bergabung Sekarang
           </a>
           <a
-            href="/blog"
-            class="inline-flex items-center rounded-lg border-2 border-white bg-transparent px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-white/10"
+            href="/projects"
+            class="rounded-xl border border-white/30 px-8 py-4 font-black text-white backdrop-blur-md transition-all hover:bg-white/10"
           >
-            <Icon name="heroicons:book-open" class="mr-2 h-5 w-5" />
-            Pelajari Lebih Lanjut
-          </a>
-          <a
-            href="/contact"
-            class="inline-flex items-center rounded-lg border-2 border-white bg-transparent px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-white/10"
-          >
-            <Icon name="heroicons:envelope" class="mr-2 h-5 w-5" />
-            Hubungi Kami
+            Lihat Lighthouse Projects
           </a>
         </div>
       </div>
     </div>
   </section>
-</ExtendedLayout>
+</UnifiedLayout>
 
 <style>
-  /* Smooth scroll behavior */
   html {
     scroll-behavior: smooth;
-  }
-
-  /* Hover animations */
-  .group:hover .group-hover\:scale-110 {
-    transform: scale(1.1);
-  }
-
-  /* Mobile responsive adjustments */
-  @media (max-width: 768px) {
-    .hero-section h1 {
-      font-size: 1.875rem;
-      line-height: 2.25rem;
-    }
-
-    .hero-section p {
-      font-size: 1.125rem;
-      line-height: 1.75rem;
-    }
   }
 </style>
