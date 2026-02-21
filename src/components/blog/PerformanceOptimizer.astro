@@ -108,16 +108,7 @@ const { class: className } = Astro.props;
       }
     }
 
-    private _supportsWebP(): boolean {
-      try {
-        const canvas = document.createElement("canvas");
-        canvas.width = 1;
-        canvas.height = 1;
-        return canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0;
-      } catch (e) {
-        return false;
-      }
-    }
+    /* Unused _supportsWebP removed */
 
     private handleImageError(img: HTMLImageElement): void {
       // Fallback to original format if WebP fails

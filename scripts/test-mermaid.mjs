@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* global Buffer */
 /**
  * test-mermaid.mjs — Mermaid Diagram Syntax Tester
  *
@@ -34,7 +35,9 @@ const define = (key, value) => {
   } catch {
     try {
       globalThis[key] = value;
-    } catch {}
+    } catch {
+      // Fallback if defineProperty fails
+    }
   }
 };
 

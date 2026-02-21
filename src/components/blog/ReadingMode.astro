@@ -442,13 +442,7 @@ const { className = "" } = Astro.props;
       this.saveSettings();
     }
 
-    private _supportsWebP(): boolean {
-      // Placeholder for WebP support detection logic
-      // The original content provided for this method was part of the 'toggle' method.
-      // This method is added as per the instruction, but its implementation is left empty
-      // to maintain syntactic correctness and avoid misplacing code.
-      return false;
-    }
+    /* Removing unused method to satisfy compiler hints */
 
     private toggle(state: boolean) {
       this.isActive = state;
@@ -550,17 +544,16 @@ const { className = "" } = Astro.props;
     private handlePrint() {
       const content = this.el["reading-body"]?.innerHTML;
       if (!content) return;
-      const win = window.open("", "", "width=900,height=600");
+
+      const html = `<!DOCTYPE html><html><head><title>KonXC Reader</title><style>body{padding:60px;font-family:serif;line-height:1.6;max-width:800px;margin:auto;}img{max-width:100%}</style></head><body>${content}</body></html>`;
+      const blob = new Blob([html], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const win = window.open(url, "_blank", "width=900,height=600");
       if (win) {
-        win.document.write(
-          `<!DOCTYPE html><html><head><title>KonXC Reader</title><style>body{padding:60px;font-family:serif;line-height:1.6;max-width:800px;margin:auto;}img{max-width:100%}</style></head><body>${content}</body></html>`,
-        );
-        win.document.close();
-        win.focus();
-        setTimeout(() => {
+        win.addEventListener("load", () => {
           win.print();
-          win.close();
-        }, 250);
+          URL.revokeObjectURL(url);
+        });
       }
     }
 

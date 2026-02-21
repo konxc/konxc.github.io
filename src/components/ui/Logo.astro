@@ -47,7 +47,7 @@ const currentVariant = variantConfig[variant];
             src="/logo-konxc.webp"
             alt="KonXC"
             class={`logo-image ${currentSize.image} rounded-lg object-cover`}
-            onerror="this.onerror=null; this.setAttribute('src', '/logo-konxc.png')"
+            data-fallback="/logo-konxc.png"
           />
           {showText && (
             <span
@@ -66,7 +66,7 @@ const currentVariant = variantConfig[variant];
           src="/logo-konxc.webp"
           alt="KonXC"
           class={`logo-image ${currentSize.image} rounded-lg object-cover`}
-          onerror="this.onerror=null; this.setAttribute('src', '/logo-konxc.jpg')"
+          data-fallback="/logo-konxc.png"
         />
         {showText && (
           <span
@@ -79,6 +79,35 @@ const currentVariant = variantConfig[variant];
     </div>
   )
 }
+
+<script>
+  // Robust image fallback handler
+  function handleImageFallbacks() {
+    document.querySelectorAll("img[data-fallback]").forEach((img) => {
+      const imgEl = img as HTMLImageElement;
+      if (imgEl.complete && imgEl.naturalWidth === 0) {
+        // Already failed
+        const fallback = imgEl.getAttribute("data-fallback");
+        if (fallback) imgEl.src = fallback;
+      }
+
+      imgEl.addEventListener(
+        "error",
+        () => {
+          const fallback = imgEl.getAttribute("data-fallback");
+          if (fallback && imgEl.src !== fallback) {
+            imgEl.src = fallback;
+          }
+        },
+        { once: true },
+      );
+    });
+  }
+
+  // Run on load and after swaps if using view transitions
+  handleImageFallbacks();
+  document.addEventListener("astro:after-swap", handleImageFallbacks);
+</script>
 
 <style>
   @reference "@/styles/global.css";

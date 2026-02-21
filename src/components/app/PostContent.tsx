@@ -6,7 +6,8 @@ interface PostContentProps {
 }
 
 // Singleton to store the loading promise. This ensures libraries are only fetched ONCE per page session.
-let sharedDepsPromise: Promise<any> | null = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let sharedDepsPromise: Promise<Record<string, any>> | null = null;
 
 const loadDependencies = () => {
   if (sharedDepsPromise) return sharedDepsPromise;
@@ -73,7 +74,8 @@ export const PostContent = component$<PostContentProps>(({ content, id }) => {
 
     // Trick: Wait for fonts to be ready
     if ("fonts" in document) {
-      await (document as any).fonts.ready;
+      await (document as unknown as { fonts: { ready: Promise<void> } }).fonts
+        .ready;
     }
 
     // 2. Pre-process math

@@ -410,7 +410,7 @@ if (demos.length === 0) return null;
     }
 
     private switchTab(tabId: string, updateHash: boolean = true): void {
-      if (!this.container) return;
+      if (!this.container || (this._activeTab === tabId && updateHash)) return;
 
       // Update active tab button
       this.tabs?.forEach((tab) => {

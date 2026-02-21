@@ -11,15 +11,15 @@ declare global {
         | undefined
         | null;
       user: import("better-auth").User | undefined | null;
-      [key: string]: any;
+      [key: string]: unknown;
     }
   }
 
-  function gtag(...args: any[]): void;
+  function gtag(...args: unknown[]): void;
 
   interface Window {
-    gtag?: (...args: any[]) => void;
-    Fuse?: any;
+    gtag?: (...args: unknown[]) => void;
+    Fuse?: unknown;
     closeSearchModal?: () => void;
     toggleDarkMode?: () => void;
     initializeDarkMode?: () => void;

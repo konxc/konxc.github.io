@@ -343,12 +343,14 @@ const testCategories = [
     }
 
     private toggle(state: boolean) {
+      if (this._isOpen === state) return;
       this._isOpen = state;
       this.elements.window?.classList.toggle("active", state);
       this.elements.trigger?.classList.toggle("hidden", state);
     }
 
     private switchTab(tab: string) {
+      if (this._currentTab === tab) return;
       this._currentTab = tab;
 
       this.navItems.forEach((item: HTMLElement) => {
@@ -412,7 +414,6 @@ const testCategories = [
       this.isRunningAll = true;
 
       const btn = this.elements.runAll;
-      const _originalText = btn?.querySelector("span")?.textContent;
       if (btn) btn.classList.add("loading");
 
       const tests = Array.from(
