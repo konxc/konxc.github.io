@@ -47,7 +47,7 @@ const currentVariant = variantConfig[variant];
             src="/logo-konxc.webp"
             alt="KonXC"
             class={`logo-image ${currentSize.image} rounded-lg object-cover`}
-            onerror="this.src='/logo-konxc.png'"
+            onerror="this.onerror=null; this.setAttribute('src', '/logo-konxc.png')"
           />
           {showText && (
             <span
@@ -66,7 +66,7 @@ const currentVariant = variantConfig[variant];
           src="/logo-konxc.webp"
           alt="KonXC"
           class={`logo-image ${currentSize.image} rounded-lg object-cover`}
-          onerror="this.src='/logo-konxc.jpg'"
+          onerror="this.onerror=null; this.setAttribute('src', '/logo-konxc.jpg')"
         />
         {showText && (
           <span

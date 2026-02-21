@@ -144,6 +144,7 @@ const tags = [...new Set(allPosts.flatMap((post) => post.data.tags))].slice(
 
   {/* Client-side Search Data Fallback */}
   <script
+    is:inline
     id="posts-data"
     type="application/json"
     set:html={JSON.stringify(

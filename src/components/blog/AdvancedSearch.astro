@@ -212,7 +212,7 @@ const { class: className } = Astro.props;
           this.open();
         }
         if (e.key === 'Escape' && !this.modal.classList.contains('hidden')) {
-          window.closeSearchModal();
+          (window as any).closeSearchModal?.();
         }
       });
       

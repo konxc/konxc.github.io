@@ -1,4 +1,5 @@
 import { component$, useSignal, $ } from "@builder.io/qwik";
+
 import { authClient } from "../../lib/auth-client";
 
 export const LoginForm = component$(() => {
@@ -24,7 +25,8 @@ export const LoginForm = component$(() => {
             window.location.href = "/app";
           },
           onError: (ctx: { error: { message?: string } }) => {
-            error.value = ctx.error?.message ?? "Login gagal. Periksa email dan password.";
+            error.value =
+              ctx.error?.message ?? "Login gagal. Periksa email dan password.";
             loading.value = false;
           },
         },

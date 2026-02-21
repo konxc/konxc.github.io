@@ -1,4 +1,5 @@
 import { component$, useStore, $ } from "@builder.io/qwik";
+
 import { PostContent } from "./PostContent";
 
 interface Post {
@@ -137,12 +138,12 @@ export const Feed = component$(() => {
           </button>
         </div>
         <div
-          class="flex items-center justify-between border-t px-4 pb-3 pt-2.5"
+          class="flex items-center justify-between border-t px-4 pt-2.5 pb-3"
           style="border-color: var(--app-border);"
         >
-          <div class="flex gap-0.5 min-w-0 overflow-x-auto hide-scrollbar">
+          <div class="hide-scrollbar flex min-w-0 gap-0.5 overflow-x-auto">
             <button
-              class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-all hover:text-app-600 app-action-label"
+              class="hover:text-app-600 app-action-label flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-all"
               style="color: var(--app-text-muted);"
               onMouseOver$={(e: MouseEvent) =>
                 ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -156,7 +157,7 @@ export const Feed = component$(() => {
               Media
             </button>
             <button
-              class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-all hover:text-app-600 app-action-label"
+              class="hover:text-app-600 app-action-label flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-all"
               style="color: var(--app-text-muted);"
               onMouseOver$={(e: MouseEvent) =>
                 ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -170,7 +171,7 @@ export const Feed = component$(() => {
               Literasi
             </button>
             <button
-              class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-all hover:text-app-600 app-action-label"
+              class="hover:text-app-600 app-action-label flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-all"
               style="color: var(--app-text-muted);"
               onMouseOver$={(e: MouseEvent) =>
                 ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -183,7 +184,7 @@ export const Feed = component$(() => {
               <span class="text-base">📈</span> Peluang
             </button>
             <button
-              class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-all hover:text-app-600 app-action-label"
+              class="hover:text-app-600 app-action-label flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-all"
               style="color: var(--app-text-muted);"
               onMouseOver$={(e: MouseEvent) =>
                 ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -196,7 +197,7 @@ export const Feed = component$(() => {
               <span class="text-base">📐</span> Rumus
             </button>
           </div>
-          <button class="rounded-full bg-app-600 px-5 py-2 text-white shadow-md shadow-app-200/50 transition-all hover:bg-app-700 active:scale-95 dark:shadow-none app-action-label">
+          <button class="bg-app-600 shadow-app-200/50 hover:bg-app-700 app-action-label rounded-full px-5 py-2 text-white shadow-md transition-all active:scale-95 dark:shadow-none">
             Posting
           </button>
         </div>
@@ -212,17 +213,17 @@ export const Feed = component$(() => {
             {/* Post Header */}
             <div class="flex items-start justify-between px-5 pt-5 pb-3">
               <div class="flex items-center gap-3.5">
-                <div class="h-11 w-11 flex-shrink-0 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 border-2 border-white shadow-sm dark:border-slate-800"></div>
+                <div class="h-11 w-11 flex-shrink-0 rounded-full border-2 border-white bg-gradient-to-br from-blue-400 to-indigo-500 shadow-sm dark:border-slate-800"></div>
                 <div>
-                  <div class="flex items-center gap-2 mb-0.5">
+                  <div class="mb-0.5 flex items-center gap-2">
                     <h3
-                      class="cursor-pointer app-title transition-colors hover:text-app-600"
+                      class="app-title hover:text-app-600 cursor-pointer transition-colors"
                       style="color: var(--app-text);"
                     >
                       {post.author}
                     </h3>
                     <span
-                      class="rounded-md px-1.5 py-0.5 app-badge-text"
+                      class="app-badge-text rounded-md px-1.5 py-0.5"
                       style="background-color: var(--app-surface); color: var(--app-text-muted); border: 1px solid var(--app-border);"
                     >
                       Lvl 2
@@ -234,7 +235,7 @@ export const Feed = component$(() => {
                 </div>
               </div>
               <button
-                class="p-1 rounded-lg transition-colors hover:text-app-600"
+                class="hover:text-app-600 rounded-lg p-1 transition-colors"
                 style="color: var(--app-text-dim);"
                 onMouseOver$={(e: MouseEvent) =>
                   ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -272,7 +273,7 @@ export const Feed = component$(() => {
               class="flex items-center justify-between border-t border-b px-5 py-2"
               style="border-color: var(--app-border);"
             >
-              <div class="flex items-center gap-2 app-meta">
+              <div class="app-meta flex items-center gap-2">
                 <span class="flex -space-x-1">
                   <span class="flex h-4 w-4 items-center justify-center rounded-full border border-white bg-blue-500 text-[8px] text-white shadow-xs dark:border-slate-900">
                     👍
@@ -283,7 +284,7 @@ export const Feed = component$(() => {
                 </span>
                 <span>{post.likes} terinspirasi</span>
               </div>
-              <div class="flex gap-3 app-meta">
+              <div class="app-meta flex gap-3">
                 <span>{post.comments} komentar</span>
                 <span>{post.shares} bagikan</span>
               </div>
@@ -293,7 +294,7 @@ export const Feed = component$(() => {
             <div class="grid grid-cols-3 divide-x divide-[var(--app-border)] border-t border-[var(--app-border)]">
               <button
                 onClick$={() => handleLike(post.id)}
-                class="flex items-center justify-center gap-2 py-3.5 transition-all hover:text-app-600 app-action-label"
+                class="hover:text-app-600 app-action-label flex items-center justify-center gap-2 py-3.5 transition-all"
                 style="color: var(--app-text-muted);"
                 onMouseOver$={(e: MouseEvent) =>
                   ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -320,7 +321,7 @@ export const Feed = component$(() => {
                 Suka
               </button>
               <button
-                class="flex items-center justify-center gap-2 py-3.5 transition-all hover:text-app-600 app-action-label"
+                class="hover:text-app-600 app-action-label flex items-center justify-center gap-2 py-3.5 transition-all"
                 style="color: var(--app-text-muted);"
                 onMouseOver$={(e: MouseEvent) =>
                   ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -346,7 +347,7 @@ export const Feed = component$(() => {
                 Komentar
               </button>
               <button
-                class="flex items-center justify-center gap-2 py-3.5 transition-all hover:text-app-600 app-action-label"
+                class="hover:text-app-600 app-action-label flex items-center justify-center gap-2 py-3.5 transition-all"
                 style="color: var(--app-text-muted);"
                 onMouseOver$={(e: MouseEvent) =>
                   ((e.currentTarget as HTMLElement).style.backgroundColor =

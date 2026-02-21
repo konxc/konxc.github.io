@@ -1,4 +1,5 @@
 import { component$, useSignal, $ } from "@builder.io/qwik";
+
 import { authClient } from "../../lib/auth-client";
 
 export const RegisterForm = component$(() => {
@@ -33,7 +34,8 @@ export const RegisterForm = component$(() => {
           },
           onError: (ctx: { error: { message?: string } }) => {
             error.value =
-              ctx.error?.message ?? "Pendaftaran gagal. Coba lagi atau gunakan email lain.";
+              ctx.error?.message ??
+              "Pendaftaran gagal. Coba lagi atau gunakan email lain.";
             loading.value = false;
           },
         },
@@ -53,9 +55,7 @@ export const RegisterForm = component$(() => {
       )}
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-gray-700">
-          Nama
-        </label>
+        <label class="mb-1 block text-sm font-medium text-gray-700">Nama</label>
         <input
           type="text"
           value={name.value}

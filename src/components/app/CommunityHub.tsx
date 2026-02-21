@@ -33,25 +33,25 @@ export const CommunityHub = component$(() => {
   ];
 
   return (
-    <div class="overflow-x-auto hide-scrollbar">
-      <div class="flex gap-4 min-w-max px-5 py-5">
+    <div class="hide-scrollbar overflow-x-auto">
+      <div class="flex min-w-max gap-4 px-5 py-5">
         {hubs.map((hub) => (
           <a
             key={hub.title}
             href={hub.link}
-            class="group relative w-52 overflow-hidden app-card p-5 shadow-xs transition-all app-card-hover border-[var(--app-border)]"
+            class="group app-card app-card-hover relative w-52 overflow-hidden border-[var(--app-border)] p-5 shadow-xs transition-all"
           >
             <div
-              class={`absolute top-0 right-0 -mr-3 -mt-3 h-16 w-16 rounded-full bg-gradient-to-br ${hub.color} opacity-10 transition-transform group-hover:scale-110`}
+              class={`absolute top-0 right-0 -mt-3 -mr-3 h-16 w-16 rounded-full bg-gradient-to-br ${hub.color} opacity-10 transition-transform group-hover:scale-110`}
             ></div>
             <div class="mb-4 text-3xl">{hub.icon}</div>
-            <h3 class="mb-1.5 text-xs font-black tracking-tight uppercase text-[var(--app-text)]">
+            <h3 class="mb-1.5 text-xs font-black tracking-tight text-[var(--app-text)] uppercase">
               {hub.title}
             </h3>
-            <p class="text-[11px] font-medium leading-normal line-clamp-2 text-[var(--app-text-muted)]">
+            <p class="line-clamp-2 text-[11px] leading-normal font-medium text-[var(--app-text-muted)]">
               {hub.description}
             </p>
-            <div class="mt-4 flex items-center text-[10px] font-black text-app-600 opacity-0 transition-opacity group-hover:opacity-100 uppercase tracking-widest">
+            <div class="text-app-600 mt-4 flex items-center text-[10px] font-black tracking-widest uppercase opacity-0 transition-opacity group-hover:opacity-100">
               Explore Hub
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,5 +73,5 @@ export const CommunityHub = component$(() => {
         ))}
       </div>
     </div>
-);
+  );
 });

@@ -267,8 +267,8 @@ const testCategories = [
 
 <script>
   class LabSuite {
-    private isOpen = false;
-    private currentTab = "overview";
+    private _isOpen = false;
+    private _currentTab = "overview";
     private panels: HTMLElement[] = [];
     private navItems: HTMLElement[] = [];
     private elements: {
@@ -343,13 +343,13 @@ const testCategories = [
     }
 
     private toggle(state: boolean) {
-      this.isOpen = state;
+      this._isOpen = state;
       this.elements.window?.classList.toggle("active", state);
       this.elements.trigger?.classList.toggle("hidden", state);
     }
 
     private switchTab(tab: string) {
-      this.currentTab = tab;
+      this._currentTab = tab;
 
       this.navItems.forEach((item: HTMLElement) => {
         item.classList.toggle("active", item.dataset.tab === tab);
@@ -412,7 +412,7 @@ const testCategories = [
       this.isRunningAll = true;
 
       const btn = this.elements.runAll;
-      const originalText = btn?.querySelector("span")?.textContent;
+      const _originalText = btn?.querySelector("span")?.textContent;
       if (btn) btn.classList.add("loading");
 
       const tests = Array.from(

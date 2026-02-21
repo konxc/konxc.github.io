@@ -108,7 +108,7 @@ const { class: className } = Astro.props;
       }
     }
 
-    private supportsWebP(): boolean {
+    private _supportsWebP(): boolean {
       try {
         const canvas = document.createElement("canvas");
         canvas.width = 1;

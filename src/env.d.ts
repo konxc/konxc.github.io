@@ -1,30 +1,29 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../.astro/types.d.ts" />
+/// <reference types="astro/client" />
 
-// Custom types declarations for KonXC project
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-declare namespace App {
-  interface Locals {
-    session?: { user: { id: string; name: string; email: string; image?: string }; session: { id: string } };
-    user?: { id: string; name: string; email: string; image?: string };
-    [key: string]: unknown;
-  }
-}
-
-// Extend global types if needed
 declare global {
-  // Google Analytics gtag (loaded via external script)
-  function gtag(...args: unknown[]): void;
+  namespace App {
+    interface Locals {
+      session:
+        | {
+            session: import("better-auth").Session;
+            user: import("better-auth").User;
+          }
+        | undefined
+        | null;
+      user: import("better-auth").User | undefined | null;
+      [key: string]: any;
+    }
+  }
+
+  function gtag(...args: any[]): void;
+
   interface Window {
-    gtag?: (...args: unknown[]) => void;
-    // Fuse.js may be loaded via CDN in some pages/components
-    Fuse?: unknown;
+    gtag?: (...args: any[]) => void;
+    Fuse?: any;
+    closeSearchModal?: () => void;
     toggleDarkMode?: () => void;
     initializeDarkMode?: () => void;
   }
-
-  // Fuse.js global constructor (when loaded via CDN)
-  const Fuse: unknown;
 }
 
 export {};

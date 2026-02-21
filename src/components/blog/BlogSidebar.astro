@@ -91,7 +91,7 @@ const { className, categories, tags } = Astro.props;
       </p>
       <form
         class="space-y-2"
-        onsubmit="event.preventDefault(); alert('Terima kasih telah berlangganan!');"
+        onsubmit="arguments[0].preventDefault(); alert('Terima kasih telah berlangganan!');"
       >
         <input
           type="email"

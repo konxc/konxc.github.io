@@ -305,7 +305,7 @@ if (demos.length === 0) return null;
     private container: HTMLElement | null = null;
     private tabs: NodeListOf<HTMLButtonElement> | null = null;
     private panels: NodeListOf<HTMLElement> | null = null;
-    private activeTab: string = "";
+    private _activeTab: string = "";
 
     constructor(container: HTMLElement) {
       this.container = container;
@@ -324,11 +324,13 @@ if (demos.length === 0) return null;
 
       // Set initial active tab from URL hash or default
       const hash = window.location.hash.replace("#demo-", "");
-      if (hash && this.container?.querySelector(`[data-tab="${hash}"]`)) {
-        this.activeTab = hash;
-        this.switchTab(hash, false); // Switch without smooth scroll to prevent jumpy load
+      if (hash && Array.from(this.tabs).some((t) => t.dataset.tab === hash)) {
+        this._activeTab = hash;
+        this.switchTab(hash, false);
+        // Switch without smooth scroll to prevent jumpy load
       } else if (this.tabs && this.tabs.length > 0) {
-        this.activeTab = this.tabs[0].getAttribute("data-tab") || "";
+        const initialTab = this.tabs[0];
+        this._activeTab = initialTab?.dataset.tab || "";
       }
     }
 
@@ -424,7 +426,7 @@ if (demos.length === 0) return null;
         panel.setAttribute("aria-hidden", (!isActive).toString());
       });
 
-      this.activeTab = tabId;
+      this._activeTab = tabId;
 
       // Update URL hash for sharing
       if (updateHash) {

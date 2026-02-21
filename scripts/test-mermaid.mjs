@@ -26,38 +26,47 @@ const jsdom = new JSDOM("<!DOCTYPE html><html><body></body></html>", {
 
 const define = (key, value) => {
   try {
-    Object.defineProperty(globalThis, key, { value, writable: true, configurable: true });
+    Object.defineProperty(globalThis, key, {
+      value,
+      writable: true,
+      configurable: true,
+    });
   } catch {
-    try { globalThis[key] = value; } catch {}
+    try {
+      globalThis[key] = value;
+    } catch {}
   }
 };
 
-define("window",          jsdom.window);
-define("document",        jsdom.window.document);
-define("navigator",       jsdom.window.navigator);
-define("location",        jsdom.window.location);
-define("HTMLElement",     jsdom.window.HTMLElement);
-define("SVGElement",      jsdom.window.SVGElement ?? class SVGElement {});
-define("Element",         jsdom.window.Element);
-define("Event",           jsdom.window.Event);
-define("CustomEvent",     jsdom.window.CustomEvent);
-define("MutationObserver",jsdom.window.MutationObserver);
-define("requestAnimationFrame",  (cb) => setTimeout(cb, 0));
-define("cancelAnimationFrame",   clearTimeout);
-define("getComputedStyle",       jsdom.window.getComputedStyle?.bind(jsdom.window) ?? (() => ({})));
+define("window", jsdom.window);
+define("document", jsdom.window.document);
+define("navigator", jsdom.window.navigator);
+define("location", jsdom.window.location);
+define("HTMLElement", jsdom.window.HTMLElement);
+define("SVGElement", jsdom.window.SVGElement ?? class SVGElement {});
+define("Element", jsdom.window.Element);
+define("Event", jsdom.window.Event);
+define("CustomEvent", jsdom.window.CustomEvent);
+define("MutationObserver", jsdom.window.MutationObserver);
+define("requestAnimationFrame", (cb) => setTimeout(cb, 0));
+define("cancelAnimationFrame", clearTimeout);
+define(
+  "getComputedStyle",
+  jsdom.window.getComputedStyle?.bind(jsdom.window) ?? (() => ({})),
+);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Colors
 // ─────────────────────────────────────────────────────────────────────────────
 const c = {
-  reset:  "\x1b[0m",
-  bold:   "\x1b[1m",
-  dim:    "\x1b[2m",
-  green:  "\x1b[32m",
-  red:    "\x1b[31m",
+  reset: "\x1b[0m",
+  bold: "\x1b[1m",
+  dim: "\x1b[2m",
+  green: "\x1b[32m",
+  red: "\x1b[31m",
   yellow: "\x1b[33m",
-  cyan:   "\x1b[36m",
-  gray:   "\x1b[90m",
+  cyan: "\x1b[36m",
+  gray: "\x1b[90m",
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -174,9 +183,15 @@ function base64Decode(b64) {
 // Main
 // ─────────────────────────────────────────────────────────────────────────────
 async function main() {
-  console.log(`\n${c.bold}${c.cyan}╔═══════════════════════════════════════════╗${c.reset}`);
-  console.log(`${c.bold}${c.cyan}║       Mermaid Diagram Syntax Tester       ║${c.reset}`);
-  console.log(`${c.bold}${c.cyan}╚═══════════════════════════════════════════╝${c.reset}\n`);
+  console.log(
+    `\n${c.bold}${c.cyan}╔═══════════════════════════════════════════╗${c.reset}`,
+  );
+  console.log(
+    `${c.bold}${c.cyan}║       Mermaid Diagram Syntax Tester       ║${c.reset}`,
+  );
+  console.log(
+    `${c.bold}${c.cyan}╚═══════════════════════════════════════════╝${c.reset}\n`,
+  );
 
   // Load mermaid after globals are set
   console.log(`${c.dim}Loading mermaid...${c.reset}`);
@@ -205,20 +220,24 @@ async function main() {
     const markedEncoded = simulateMarkedEncoding(source);
     const hasEntities = markedEncoded !== source;
     console.log(
-      `  ${c.dim}marked encoding:  ${hasEntities
-        ? c.yellow + "entities added (-->  becomes --&gt;)"
-        : c.green  + "no changes"
-      }${c.reset}`
+      `  ${c.dim}marked encoding:  ${
+        hasEntities
+          ? c.yellow + "entities added (-->  becomes --&gt;)"
+          : c.green + "no changes"
+      }${c.reset}`,
     );
 
     // ── Step 2: Entity decode (our renderer.code() fix) ──────────────────
     const decoded = decodeEntities(markedEncoded);
     const roundtripOk = decoded === source;
     console.log(
-      `  ${c.dim}entity decode:    ${roundtripOk
-        ? c.green + "✓ round-trip OK"
-        : c.red   + "✗ mismatch!\n    got: " + JSON.stringify(decoded.slice(0, 60))
-      }${c.reset}`
+      `  ${c.dim}entity decode:    ${
+        roundtripOk
+          ? c.green + "✓ round-trip OK"
+          : c.red +
+            "✗ mismatch!\n    got: " +
+            JSON.stringify(decoded.slice(0, 60))
+      }${c.reset}`,
     );
 
     // ── Step 3: Base64 pipeline ───────────────────────────────────────────
@@ -226,10 +245,9 @@ async function main() {
     const b64decoded = base64Decode(b64);
     const b64ok = b64decoded === source;
     console.log(
-      `  ${c.dim}base64 pipeline:  ${b64ok
-        ? c.green + "✓ round-trip OK"
-        : c.red   + "✗ mismatch!"
-      }${c.reset}`
+      `  ${c.dim}base64 pipeline:  ${
+        b64ok ? c.green + "✓ round-trip OK" : c.red + "✗ mismatch!"
+      }${c.reset}`,
     );
 
     // ── Step 4: mermaid.parse() ───────────────────────────────────────────
@@ -238,7 +256,9 @@ async function main() {
       const result = await mermaid.parse(b64decoded);
       console.log(`${c.green}${c.bold}✓ VALID${c.reset}`);
       if (result && typeof result === "object" && result.type) {
-        console.log(`  ${c.dim}  → parsed type: ${c.cyan}${result.type}${c.reset}`);
+        console.log(
+          `  ${c.dim}  → parsed type: ${c.cyan}${result.type}${c.reset}`,
+        );
       }
       passed++;
     } catch (err) {
@@ -257,14 +277,16 @@ async function main() {
   console.log(`${c.bold}═══════════════════════════════════════════${c.reset}`);
   console.log(
     `${c.bold}Results: ${c.green}${passed} passed${c.reset}` +
-    `${c.bold}, ${failed > 0 ? c.red : c.gray}${failed} failed${c.reset}` +
-    `${c.bold} / ${total} total${c.reset}`
+      `${c.bold}, ${failed > 0 ? c.red : c.gray}${failed} failed${c.reset}` +
+      `${c.bold} / ${total} total${c.reset}`,
   );
 
   if (failed === 0) {
     console.log(`\n${c.green}${c.bold}All diagrams valid! ✓${c.reset}\n`);
   } else {
-    console.log(`\n${c.red}${c.bold}${failed} diagram(s) have syntax errors ✗${c.reset}\n`);
+    console.log(
+      `\n${c.red}${c.bold}${failed} diagram(s) have syntax errors ✗${c.reset}\n`,
+    );
     process.exit(1);
   }
 }
