@@ -5,7 +5,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare namespace App {
   interface Locals {
-    // Add any custom locals types here
+    session?: { user: { id: string; name: string; email: string; image?: string }; session: { id: string } };
+    user?: { id: string; name: string; email: string; image?: string };
     [key: string]: unknown;
   }
 }
