@@ -1,0 +1,503 @@
+/* src/styles/app.css - Ecosystem Khusus untuk KonXC App */
+@import "tailwindcss";
+
+@theme {
+  /* Ecosystem Typography */
+  --font-sans: "Outfit", "Inter", system-ui, sans-serif;
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Typography Scale */
+  --text-display: 1.5rem;    /* 24px – Brand / Hero */
+  --text-title: 0.875rem;    /* 14px – Section titles */
+  --text-body: 0.8125rem;    /* 13px – Post content */
+  --text-label: 0.6875rem;   /* 11px – Labels, meta */
+  --text-micro: 0.625rem;    /* 10px – Badges, timestamps */
+  --text-nano: 0.5625rem;    /* 9px  – Ultra-small labels */
+
+  /* Line Heights */
+  --leading-tight: 1.3;
+  --leading-body: 1.65;
+  --leading-relaxed: 1.8;
+
+  /* Letter Spacing */
+  --tracking-display: -0.025em;
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0em;
+  --tracking-label: 0.04em;
+  --tracking-caps: 0.08em;    /* For UPPERCASE labels */
+  --tracking-wide: 0.12em;    /* For section headings */
+
+  /* Exclusive App Palette */
+  --color-app-50: #f5f7ff;
+  --color-app-100: #ebf0fe;
+  --color-app-200: #dae3ff;
+  --color-app-300: #bdcdff;
+  --color-app-400: #93acff;
+  --color-app-500: #6482ff;
+  --color-app-600: #4a5dff; /* Brand Primary */
+  --color-app-700: #3a47e6;
+  --color-app-800: #2f38bc;
+  --color-app-900: #2b3394;
+  --color-app-950: #1a1e56;
+
+  /* Neutral Slate for App Structure */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  /* App Special Gradients */
+  --bg-app-gradient: linear-gradient(135deg, #4a5dff 0%, #3a47e6 100%);
+  --bg-dark-surface: #0b0e14;
+  --bg-dark-card: #151921;
+}
+
+@layer base {
+  :root {
+    /* Core background & text */
+    --app-bg: #f1f5f9;
+    --app-text: #020617;
+    --app-text-muted: #475569;
+    --app-text-dim: #94a3b8;
+
+    /* Card & surface */
+    --app-card: #ffffff;
+    --app-surface: #f8fafc;
+
+    /* Borders */
+    --app-border: #e2e8f0;
+
+    /* Input-specific */
+    --app-input-bg: #f1f5f9;
+    --app-input-border: #cbd5e1;
+
+    /* Hover state */
+    --app-hover: #f8fafc;
+  }
+
+  .dark {
+    /* Core background & text */
+    --app-bg: #0a0d14;
+    --app-text: #f1f5f9;
+    --app-text-muted: #94a3b8;
+    --app-text-dim: #475569;
+
+    /* Card & surface */
+    --app-card: #111720;
+    --app-surface: #161d2a;
+
+    /* Borders */
+    --app-border: #1e293b;
+
+    /* Input-specific */
+    --app-input-bg: #1e293b;
+    --app-input-border: #334155;
+
+    /* Hover state */
+    --app-hover: #1e293b;
+  }
+
+  body {
+    @apply antialiased;
+    background-color: var(--app-bg);
+    color: var(--app-text);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+@layer components {
+  /* Standalone App Components */
+  .app-card {
+    @apply rounded-2xl border bg-[var(--app-card)] transition-all duration-300;
+    border-color: var(--app-border);
+  }
+
+  .app-card-hover {
+    @apply hover:border-app-300 hover:shadow-lg hover:shadow-app-100/50 dark:hover:border-app-900/50 dark:hover:shadow-black/50;
+  }
+
+  .app-input {
+    @apply rounded-xl border transition-all duration-300 outline-none;
+    background-color: var(--app-input-bg);
+    border-color: var(--app-input-border);
+    color: var(--app-text);
+
+    &::placeholder {
+      color: var(--app-text-dim);
+    }
+
+    &:focus {
+      background-color: var(--app-card);
+      border-color: #4a5dff;
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(74, 93, 255, 0.12);
+    }
+  }
+
+  .glass-effect {
+    @apply bg-white/80 backdrop-blur-md dark:bg-slate-950/80;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* ── Typography Utilities ─────────────────────────────────
+     Reference: Facebook, Threads, Instagram (Meta design system)
+     Key rules:
+       - MAX tracking: 0.04em (only for micro badges)
+       - NO uppercase on interactive elements
+       - MAX weight: 700 for headings, 600 for labels, 500 for actions
+     ────────────────────────────────────────────────────────── */
+
+  /* Section heading: "Market Insights", "Navigasi Cepat"
+     → Like Facebook's "People You May Know" label style */
+  .app-heading {
+    font-size: var(--text-micro);          /* 10px */
+    font-weight: 700;                      /* Bold, not Black */
+    letter-spacing: 0.02em;               /* Very subtle — was 0.12em (too much) */
+    text-transform: uppercase;            /* Keep for section dividers only */
+    line-height: var(--leading-tight);
+  }
+
+  /* Card/post author name, prominent labels */
+  .app-title {
+    font-size: var(--text-label);          /* 11px */
+    font-weight: 700;                      /* Bold */
+    letter-spacing: -0.01em;             /* Slightly tight = premium */
+    line-height: var(--leading-tight);
+  }
+
+  /* Post body content */
+  .app-body {
+    font-size: var(--text-body);           /* 13px */
+    font-weight: 400;
+    letter-spacing: 0em;                  /* Normal — no tracking on body text */
+    line-height: var(--leading-body);
+  }
+
+  /* Timestamp, subtitle, secondary info */
+  .app-meta {
+    font-size: var(--text-micro);          /* 10px */
+    font-weight: 400;                      /* Regular — was 500 (too emphasized) */
+    letter-spacing: 0em;
+    line-height: var(--leading-tight);
+    color: var(--app-text-dim);
+  }
+
+  /* Interactive labels: Suka, Komentar, Bagikan, Media, Posting
+     → Like Facebook's "Like · Comment · Share" buttons
+     Sentence case, semibold, ZERO tracking */
+  .app-action-label {
+    font-size: var(--text-label);          /* 11px */
+    font-weight: 600;                      /* Semibold — was 700+uppercase */
+    letter-spacing: 0em;                  /* ZERO — was 0.04em (too spaced) */
+    text-transform: none;                 /* Sentence case — was uppercase */
+  }
+
+  /* Navigation link labels: Beranda, Jaringan, etc. */
+  .app-label {
+    font-size: var(--text-label);          /* 11px */
+    font-weight: 500;                      /* Medium — was 700 */
+    letter-spacing: 0em;                  /* Normal */
+    text-transform: none;                 /* Sentence case */
+  }
+
+  /* Ultra-small badge only: LVL 2, PTS — ONLY place uppercase is ok */
+  .app-badge-text {
+    font-size: var(--text-nano);           /* 9px */
+    font-weight: 700;                      /* Bold — was 800 */
+    letter-spacing: 0.04em;              /* Subtle — was 0.08em */
+    text-transform: uppercase;
+  }
+
+  /* Surface button — hover-safe */
+  .app-surface-btn {
+    background-color: var(--app-surface);
+    color: var(--app-text-muted);
+    font-weight: 600;
+    letter-spacing: 0em;                  /* Remove any tracking from callers */
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background-color: #4a5dff;
+      color: #ffffff;
+    }
+
+    &:active {
+      background-color: #3a4de8;
+      color: #ffffff;
+    }
+  }
+}
+
+/* Scrollbar Styling for App */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-slate-200 dark:bg-slate-800;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-300 dark:bg-slate-700;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   POST CONTENT – Rich Markdown / Math / Code / Mermaid
+   ═══════════════════════════════════════════════════════════ */
+
+.post-content {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--app-text);
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  /* ── Headings ─────────────────────────────────────── */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--app-text);
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+  }
+  h1 { font-size: 1.25rem; }
+  h2 { font-size: 1.125rem; }
+  h3 { font-size: 1rem; }
+  h4 { font-size: var(--text-body); }
+
+  /* ── Paragraphs ───────────────────────────────────── */
+  p {
+    margin-bottom: 0.875em;
+    &:last-child { margin-bottom: 0; }
+  }
+
+  /* ── Links ────────────────────────────────────────── */
+  a {
+    color: #4a5dff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s;
+    &:hover { color: #6b7eff; }
+  }
+
+  /* ── Bold / Italic ────────────────────────────────── */
+  strong { font-weight: 700; color: var(--app-text); }
+  em { font-style: italic; color: var(--app-text-muted); }
+
+  /* ── Inline code ──────────────────────────────────── */
+  :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    font-weight: 500;
+    padding: 0.15em 0.45em;
+    border-radius: 6px;
+    background-color: var(--app-surface);
+    border: 1px solid var(--app-border);
+    color: #4a5dff;
+  }
+
+  /* ── Block code ───────────────────────────────────── */
+  .code-block {
+    margin: 1em 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--app-border);
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background-color: var(--app-surface);
+      border-bottom: 1px solid var(--app-border);
+
+      .code-lang {
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--app-text-dim);
+      }
+
+      .code-copy {
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--app-text-dim);
+        padding: 2px 8px;
+        border-radius: 6px;
+        border: 1px solid var(--app-border);
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+        &:hover {
+          color: #4a5dff;
+          border-color: #4a5dff;
+          background-color: rgba(74, 93, 255, 0.06);
+        }
+      }
+    }
+
+    pre {
+      margin: 0;
+      padding: 14px 16px;
+      overflow-x: auto;
+      background-color: var(--app-card);
+      font-size: 0.78rem;
+      line-height: 1.6;
+
+      code {
+        font-family: var(--font-mono);
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+        font-size: inherit;
+      }
+    }
+  }
+
+  /* ── Blockquote ───────────────────────────────────── */
+  blockquote {
+    margin: 1em 0;
+    padding: 0.75em 1em;
+    border-left: 3px solid #4a5dff;
+    background-color: rgba(74, 93, 255, 0.05);
+    border-radius: 0 8px 8px 0;
+    color: var(--app-text-muted);
+    font-style: italic;
+
+    p { margin-bottom: 0; }
+  }
+
+  /* ── Lists ────────────────────────────────────────── */
+  ul, ol {
+    padding-left: 1.5em;
+    margin-bottom: 0.875em;
+
+    li {
+      margin-bottom: 0.3em;
+      &::marker { color: #4a5dff; }
+    }
+  }
+  ul li { list-style-type: disc; }
+  ol li { list-style-type: decimal; }
+
+  /* ── Horizontal rule ──────────────────────────────── */
+  hr {
+    margin: 1.25em 0;
+    border: none;
+    border-top: 1px solid var(--app-border);
+  }
+
+  /* ── Table ────────────────────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    font-size: var(--text-micro);
+
+    th {
+      background-color: var(--app-surface);
+      font-weight: 700;
+      padding: 8px 12px;
+      text-align: left;
+      border: 1px solid var(--app-border);
+      color: var(--app-text);
+    }
+    td {
+      padding: 8px 12px;
+      border: 1px solid var(--app-border);
+      color: var(--app-text-muted);
+    }
+    tr:hover td { background-color: var(--app-surface); }
+  }
+
+  /* ── Math blocks (KaTeX) ──────────────────────────── */
+  .math-block {
+    overflow-x: auto;
+    padding: 1em 1.25em;
+    margin: 1em 0;
+    background-color: var(--app-surface);
+    border: 1px solid var(--app-border);
+    border-radius: 12px;
+    text-align: center;
+
+    .katex { font-size: 1.1em; }
+  }
+
+  .math-error {
+    padding: 0.5em 1em;
+    margin: 0.5em 0;
+    background-color: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    color: #ef4444;
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+  }
+
+  /* ── Mermaid diagrams ─────────────────────────────── */
+  .mermaid-pending {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    background-color: var(--app-surface);
+    border: 1px dashed var(--app-border);
+    border-radius: 12px;
+    color: var(--app-text-dim);
+    font-size: var(--text-micro);
+    font-weight: 600;
+    margin: 1em 0;
+
+    &::after { content: "Memuat diagram…"; }
+  }
+
+  .mermaid-rendered {
+    display: flex;
+    justify-content: center;
+    margin: 1em 0;
+    padding: 1em;
+    background-color: var(--app-surface);
+    border: 1px solid var(--app-border);
+    border-radius: 12px;
+    overflow-x: auto;
+
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .mermaid-error {
+    padding: 0.75em 1em;
+    background-color: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    color: #ef4444;
+    font-size: var(--text-micro);
+    font-family: var(--font-mono);
+    margin: 1em 0;
+  }
+}
