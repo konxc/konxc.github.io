@@ -1,0 +1,44 @@
+---
+export const prerender = false;
+
+import Head from "../components/Head.astro";
+import "@styles/global.css";
+import { RegisterForm } from "../components/auth/RegisterForm";
+
+if (Astro.locals.session) {
+  return Astro.redirect("/app");
+}
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <Head
+      title="Daftar | Konxc Community"
+      description="Bergabung dengan komunitas UMKM Konxc."
+    />
+  </head>
+  <body class="flex min-h-screen items-center justify-center bg-gray-50 p-4">
+    <div class="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl">
+      <div class="p-8">
+        <div class="mb-8 text-center">
+          <h1
+            class="mb-2 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-3xl font-bold text-transparent"
+          >
+            KonXC
+          </h1>
+          <p class="text-gray-500">Buat akun untuk mulai membangun koneksi</p>
+        </div>
+
+        <RegisterForm client:visible />
+
+        <div class="mt-6 text-center text-sm text-gray-500">
+          Sudah punya akun? <a
+            href="/login"
+            class="font-medium text-blue-600 hover:underline">Masuk disini</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
