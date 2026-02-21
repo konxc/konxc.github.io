@@ -29,6 +29,7 @@
                 fontFamily: "Outfit, system-ui, sans-serif",
                 // Trick 1: Disable useMaxWidth to let CSS handle it via overflow
                 // This prevents the SVG from being squashed/clipped incorrectly
+                // @ts-ignore - property exists at runtime to prevent scaling issues
                 useMaxWidth: false,
                 themeVariables: isDark
                     ? {

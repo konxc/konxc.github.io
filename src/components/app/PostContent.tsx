@@ -34,6 +34,7 @@ const loadDependencies = () => {
       theme: isDark ? "dark" : "default",
       securityLevel: "loose",
       fontFamily: "Outfit, system-ui, sans-serif",
+      // @ts-ignore - property exists at runtime to prevent scaling issues
       useMaxWidth: false,
       themeVariables: isDark 
         ? { primaryColor: "#4a5dff", primaryTextColor: "#f1f5f9", background: "#111720", mainBkg: "#161d2a", nodePadding: 15 } 
