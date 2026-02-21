@@ -43,7 +43,8 @@
     "test:smart-header:install": "pnpm install playwright && pnpx playwright install chromium",
     "test:smart-header:quick": "node scripts/quick-smart-header-test.js",
     "test:smart-header:html": "node scripts/test-smart-header-html.js",
-    "test:ecosystem": "node scripts/test-ecosystem-ui.js"
+    "test:ecosystem": "node scripts/test-ecosystem-ui.js",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",
@@ -91,6 +92,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-qwik": "^1.19.0",
+    "husky": "^9.1.7",
     "jsdom": "^28.1.0",
     "lighthouse": "^13.0.1",
     "playwright": "^1.40.0",
