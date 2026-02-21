@@ -1,0 +1,111 @@
+---
+import AppLayout from "../../../layouts/AppLayout.astro";
+
+export const prerender = false;
+
+const { username } = Astro.params;
+---
+
+<AppLayout title={`Profil ${username} | Konxc`}>
+  <div
+    class="mb-6 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
+  >
+    <!-- Banner -->
+    <div class="h-32 bg-gradient-to-r from-blue-400 to-indigo-500 md:h-48">
+    </div>
+
+    <div class="relative px-6 pb-6">
+      <!-- Avatar -->
+      <div
+        class="absolute -top-12 h-24 w-24 rounded-full border-4 border-white bg-gray-200 md:-top-16 md:h-32 md:w-32 dark:border-gray-800"
+      >
+      </div>
+
+      <div
+        class="mt-14 flex flex-col justify-between gap-4 md:mt-16 md:flex-row md:items-start"
+      >
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            @{username}
+          </h1>
+          <p class="mt-1 text-gray-600 dark:text-gray-400">
+            UMKM Digital Enthusiast • Membangun Ekonomi Rakyat
+          </p>
+          <div class="mt-3 flex items-center gap-2 text-sm text-gray-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-map-pin"
+              ><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"
+              ></path><circle cx="12" cy="10" r="3"></circle></svg
+            >
+            <span>Jakarta, Indonesia</span>
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          <button
+            class="rounded-full bg-blue-600 px-6 py-2 font-medium text-white shadow-sm transition-colors hover:bg-blue-700"
+          >
+            Koneksi
+          </button>
+          <button
+            class="rounded-full border border-gray-300 bg-white px-6 py-2 font-medium text-gray-700 transition-colors hover:bg-gray-50"
+          >
+            Pesan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+    <!-- About Section -->
+    <div class="space-y-6 md:col-span-2">
+      <div
+        class="rounded-xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+      >
+        <h2 class="mb-3 text-lg font-bold text-gray-900 dark:text-gray-100">
+          Tentang
+        </h2>
+        <p class="leading-relaxed text-gray-600 dark:text-gray-300">
+          Pemilik usaha kecil yang berfokus pada pengembangan produk lokal
+          berkualitas. Berpengalaman dalam manajemen rantai pasok dan pemasaran
+          digital untuk pasar niche.
+        </p>
+      </div>
+    </div>
+
+    <!-- Sidebar Info -->
+    <div class="space-y-6">
+      <div
+        class="rounded-xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+      >
+        <h2 class="mb-3 text-lg font-bold text-gray-900 dark:text-gray-100">
+          Keahlian
+        </h2>
+        <div class="flex flex-wrap gap-2">
+          <span
+            class="rounded-lg bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+            >Digital Marketing</span
+          >
+          <span
+            class="rounded-lg bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+            >UMKM</span
+          >
+          <span
+            class="rounded-lg bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+            >Leadership</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</AppLayout>
