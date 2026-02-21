@@ -12,6 +12,7 @@ import PerformanceOptimizer from "@components/blog/PerformanceOptimizer.astro";
 import RelatedArticles from "@components/blog/RelatedArticles.astro";
 import BlogPostHero from "@components/blog/BlogPostHero.astro";
 import BlogPostSidebar from "@components/blog/BlogPostSidebar.astro";
+import MermaidRenderer from "@components/blog/MermaidRenderer.astro";
 import BlogPostComments from "@components/blog/BlogPostComments.astro";
 import { getRelatedArticles } from "@utils/blog";
 
@@ -98,6 +99,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
   <ReadingAnalytics postSlug={post.slug} />
   <ReadingMode />
   <PerformanceOptimizer />
+  <MermaidRenderer />
 
   <!-- Footer Sections -->
   {
