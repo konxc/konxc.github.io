@@ -34,9 +34,10 @@ const loadDependencies = () => {
       theme: isDark ? "dark" : "default",
       securityLevel: "loose",
       fontFamily: "Outfit, system-ui, sans-serif",
+      useMaxWidth: false,
       themeVariables: isDark 
-        ? { primaryColor: "#4a5dff", primaryTextColor: "#f1f5f9", background: "#111720", mainBkg: "#161d2a" } 
-        : { primaryColor: "#4a5dff", primaryTextColor: "#1e293b", background: "#ffffff", mainBkg: "#f8fafc" },
+        ? { primaryColor: "#4a5dff", primaryTextColor: "#f1f5f9", background: "#111720", mainBkg: "#161d2a", nodePadding: 15 } 
+        : { primaryColor: "#4a5dff", primaryTextColor: "#1e293b", background: "#ffffff", mainBkg: "#f8fafc", nodePadding: 15 },
       flowchart: { htmlLabels: true, curve: "linear" },
     });
 
@@ -59,6 +60,11 @@ export const PostContent = component$<PostContentProps>(({ content, id }) => {
 
     // 1. Wait for shared singleton loader
     const { Marked, Renderer, markedHighlight, hljs, katex, mermaid } = await loadDependencies();
+
+    // Trick: Wait for fonts to be ready
+    if ("fonts" in document) {
+      await (document as any).fonts.ready;
+    }
 
     // 2. Pre-process math
     let processed = content;

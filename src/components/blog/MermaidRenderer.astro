@@ -27,18 +27,24 @@
                 theme: isDark ? "dark" : "default",
                 securityLevel: "loose",
                 fontFamily: "Outfit, system-ui, sans-serif",
+                // Trick 1: Disable useMaxWidth to let CSS handle it via overflow
+                // This prevents the SVG from being squashed/clipped incorrectly
+                useMaxWidth: false,
                 themeVariables: isDark
                     ? {
                           primaryColor: "#4a5dff",
                           primaryTextColor: "#f1f5f9",
                           background: "#111720",
                           mainBkg: "#161d2a",
+                          // Trick 2: Add padding to nodes to prevent text touching borders
+                          nodePadding: 15,
                       }
                     : {
                           primaryColor: "#4a5dff",
                           primaryTextColor: "#1e293b",
                           background: "#ffffff",
                           mainBkg: "#f8fafc",
+                          nodePadding: 15,
                       },
                 flowchart: { htmlLabels: true, curve: "linear" },
             });
@@ -50,6 +56,11 @@
     }
 
     async function renderDiagrams() {
+        // Trick 3: Wait for fonts to be ready so Mermaid calculates text width accurately
+        if ("fonts" in document) {
+            await (document as any).fonts.ready;
+        }
+
         const mermaid = await loadMermaid();
 
         // Find all potential diagrams.
@@ -61,7 +72,8 @@
 
         for (const codeEl of codeBlocks) {
             const preEl = codeEl.parentElement;
-            if (!preEl) continue;
+            if (!preEl || preEl.classList.contains("mermaid-processed"))
+                continue;
 
             // Extract text content and clean it
             const content = codeEl.textContent?.trim() || "";
@@ -82,6 +94,7 @@
                 codeEl.classList.contains("language-mermaid");
 
             if (isMermaid) {
+                preEl.classList.add("mermaid-processed");
                 const id = `mermaid-blog-${diagramCount++}`;
                 const container = document.createElement("div");
                 container.className =
@@ -92,24 +105,18 @@
                 preEl.style.display = "none";
                 preEl.insertAdjacentElement("afterend", container);
 
-                try {
-                    const { svg } = await mermaid.render(id, content);
-                    container.innerHTML = svg;
+                // Trick 4: Small delay to ensure container is in DOM
+                requestAnimationFrame(async () => {
+                    try {
+                        const { svg } = await mermaid.render(id, content);
+                        container.innerHTML = svg;
 
-                    // Optional: Add a label or caption if needed
-                } catch (error) {
-                    console.error(
-                        `[Mermaid Blog] Render error for ${id}:`,
-                        error,
-                    );
-                    container.innerHTML = `
-            <div class="p-4 bg-red-500/10 text-red-500 rounded text-xs">
-              <p class="font-bold mb-1">Diagram Syntax Error:</p>
-              <pre class="bg-black/20 p-2 mt-1 rounded whitespace-pre-wrap">${error instanceof Error ? error.message : String(error)}</pre>
-            </div>
-          `;
-                    // Keep showing pre block if render failed severely? No, better show the error.
-                }
+                        // Optional: Add a label or caption if needed
+                    } catch (error) {
+                        console.error(`[Mermaid Blog] Render error:`, error);
+                        container.innerHTML = `<div class="p-4 bg-red-500/10 text-red-500 rounded text-xs"><p class="font-bold mb-1">Diagram Error</p></div>`;
+                    }
+                });
             }
         }
     }
