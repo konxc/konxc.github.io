@@ -10,7 +10,7 @@ export const Sidebar = component$(() => {
     >
       <div class="flex items-center p-7 pb-6">
         <a
-          href="/app"
+          href="/app/feed"
           class="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-2xl font-black tracking-tight text-transparent select-none"
         >
           KonXC
@@ -19,7 +19,7 @@ export const Sidebar = component$(() => {
 
       <nav class="flex-1 space-y-1 overflow-y-auto px-4 py-2">
         <a
-          href="/app"
+          href="/app/feed"
           class="flex items-center gap-3 rounded-xl bg-blue-50/50 px-4 py-2.5 text-blue-600 transition-colors dark:bg-blue-900/20"
         >
           <svg

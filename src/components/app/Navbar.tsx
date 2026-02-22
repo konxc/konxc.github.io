@@ -1,10 +1,12 @@
 import { component$ } from "@builder.io/qwik";
 
+import { authClient } from "../../lib/auth-client";
+
 export const Navbar = component$(() => {
   const navItems = [
     {
       label: "Beranda",
-      href: "/app",
+      href: "/app/feed",
       icon: "M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z",
     },
     {
@@ -29,7 +31,7 @@ export const Navbar = component$(() => {
       <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div class="flex items-center gap-8">
           <a
-            href="/app"
+            href="/app/feed"
             class="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent select-none"
             style="font-size: var(--text-display); font-weight: 900; letter-spacing: var(--tracking-display);"
           >
@@ -187,7 +189,18 @@ export const Navbar = component$(() => {
               </span>
             </button>
 
-            <button class="ml-1 h-9 w-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 p-0.5">
+            <button
+              onClick$={async () => {
+                await authClient.signOut({
+                  fetchOptions: {
+                    onSuccess: () => {
+                      window.location.href = "/login";
+                    },
+                  },
+                });
+              }}
+              class="ml-1 h-9 w-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 p-0.5"
+            >
               <div
                 class="h-full w-full overflow-hidden rounded-full border-2 border-white"
                 style="background-color: var(--app-surface);"

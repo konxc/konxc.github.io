@@ -13,14 +13,35 @@ const loadDependencies = () => {
   if (sharedDepsPromise) return sharedDepsPromise;
 
   sharedDepsPromise = (async () => {
-    const [{ Marked, Renderer }, { markedHighlight }, hljs, katex, mermaid] =
-      await Promise.all([
-        import("marked"),
-        import("marked-highlight"),
-        import("highlight.js"),
-        import("katex"),
-        import("mermaid"),
-      ]);
+    const [
+      { Marked, Renderer },
+      hljs,
+      katex,
+      mermaid,
+      solidity,
+    ] = await (Promise.all([
+      import("marked"),
+      import("highlight.js"),
+      import("katex"),
+      import("mermaid"),
+      import("highlightjs-solidity"),
+    ]) as Promise<any[]>);
+
+    // Safe unwind for CJS vs ESM imports in Vite
+    const hljsInstance = hljs.default || hljs;
+    const solidityInstance = solidity.default || solidity;
+    const mermaidInstance = mermaid.default || mermaid;
+    const katexInstance = katex.default || katex;
+
+    if (!hljsInstance.inherit) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      hljsInstance.inherit = function (parent: any, obj: any) {
+        return Object.assign({}, parent, obj);
+      };
+    }
+    if (typeof solidityInstance === "function") {
+      solidityInstance(hljsInstance);
+    }
 
     const isDark = document.documentElement.classList.contains("dark");
 
@@ -49,12 +70,24 @@ const loadDependencies = () => {
             },
         flowchart: { htmlLabels: true, curve: "linear" },
       };
-    mermaid.default.initialize(config);
+
+    if (typeof mermaidInstance.initialize === "function") {
+      mermaidInstance.initialize(config);
+    }
 
     console.log(`[Mermaid] Singleton shared initialization complete.`);
 
-    return { Marked, Renderer, markedHighlight, hljs, katex, mermaid };
-  })();
+    return {
+      Marked,
+      Renderer,
+      hljsInstance,
+      katexInstance,
+      mermaidInstance,
+    };
+  })().catch((err) => {
+    console.error("Module loading failed:", err);
+    throw err;
+  });
 
   return sharedDepsPromise;
 };
@@ -66,118 +99,143 @@ export const PostContent = component$<PostContentProps>(({ content, id }) => {
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
     if (rendered.value) return;
-    rendered.value = true;
 
-    // 1. Wait for shared singleton loader
-    const { Marked, Renderer, markedHighlight, hljs, katex, mermaid } =
-      await loadDependencies();
+    try {
+      // 1. Wait for shared singleton loader
+      const {
+        Marked,
+        Renderer,
+        hljsInstance,
+        katexInstance,
+        mermaidInstance,
+      } = await loadDependencies();
 
-    // Trick: Wait for fonts to be ready
-    if ("fonts" in document) {
-      await (document as unknown as { fonts: { ready: Promise<void> } }).fonts
-        .ready;
-    }
-
-    // 2. Pre-process math
-    let processed = content;
-    processed = processed.replace(
-      /\$\$([\s\S]+?)\$\$/g,
-      (_match: string, math: string) => {
-        try {
-          const renderedMath = katex.default.renderToString(math.trim(), {
-            displayMode: true,
-            throwOnError: false,
-            output: "html",
-          });
-          return `<div class="math-block">${renderedMath}</div>`;
-        } catch {
-          return `<div class="math-error"><code>${math}</code></div>`;
-        }
-      },
-    );
-
-    processed = processed.replace(
-      /(?<!\$)\$(?!\$)([^$\n]+?)(?<!\$)\$(?!\$)/g,
-      (_match: string, math: string) => {
-        try {
-          return katex.default.renderToString(math.trim(), {
-            displayMode: false,
-            throwOnError: false,
-            output: "html",
-          });
-        } catch {
-          return `$${math}$`;
-        }
-      },
-    );
-
-    // 3. Setup Markdown
-    const renderer = new Renderer();
-    renderer.code = ({ text, lang }: { text: string; lang?: string }) => {
-      const raw = text
-        .replace(/&amp;/g, "&")
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">")
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'");
-      if (lang === "mermaid") {
-        const bytes = new TextEncoder().encode(raw);
-        const encoded = btoa(
-          Array.from(bytes, (byte) => String.fromCharCode(byte)).join(""),
-        );
-        return `<div class="mermaid-pending" data-diagram="${encoded}" data-post="${id}"></div>`;
+      // Trick: Wait for fonts to be ready
+      if ("fonts" in document) {
+        await (document as unknown as { fonts: { ready: Promise<void> } }).fonts
+          .ready;
       }
-      const language =
-        lang && hljs.default.getLanguage(lang) ? lang : "plaintext";
-      const highlighted = hljs.default.highlight(raw, { language }).value;
-      return `<div class="code-block"><div class="code-header"><span class="code-lang">${lang || "text"}</span><button class="code-copy" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').innerText)">Copy</button></div><pre><code class="hljs language-${language}">${highlighted}</code></pre></div>`;
-    };
 
-    const localMarked = new Marked(
-      markedHighlight({
-        highlight(code: string, lang: string) {
-          if (lang === "mermaid") return code;
-          const language = hljs.default.getLanguage(lang) ? lang : "plaintext";
-          return hljs.default.highlight(code, { language }).value;
+      // 2. Pre-process math
+      let processed = content;
+      processed = processed.replace(
+        /\$\$([\s\S]+?)\$\$/g,
+        (_match: string, math: string) => {
+          try {
+            const renderedMath = katexInstance.renderToString(math.trim(), {
+              displayMode: true,
+              throwOnError: false,
+              output: "html",
+            });
+            return `<div class="math-block">${renderedMath}</div>`;
+          } catch (e) {
+            console.warn("Katex block error:", e);
+            return `<div class="math-error"><code>${math}</code></div>`;
+          }
         },
-      }),
-    );
-    localMarked.use({ renderer });
+      );
 
-    html.value = await localMarked.parse(processed);
+      processed = processed.replace(
+        /(?<!\$)\$(?!\$)([^$\n]+?)(?<!\$)\$(?!\$)/g,
+        (_match: string, math: string) => {
+          try {
+            return katexInstance.renderToString(math.trim(), {
+              displayMode: false,
+              throwOnError: false,
+              output: "html",
+            });
+          } catch (e) {
+            console.warn("Katex inline error:", e);
+            return `$${math}$`;
+          }
+        },
+      );
 
-    // 4. Render Mermaid (Single execution context)
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    const pendingNodes = document.querySelectorAll<HTMLElement>(
-      `.mermaid-pending[data-post="${id}"]`,
-    );
+      // 3. Setup Markdown
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const renderer = new (Renderer as any)();
+      renderer.code = function ({
+        text,
+        lang,
+      }: {
+        text: string;
+        lang?: string;
+      }) {
+        const raw = text
+          .replace(/&amp;/g, "&")
+          .replace(/&lt;/g, "<")
+          .replace(/&gt;/g, ">")
+          .replace(/&quot;/g, '"')
+          .replace(/&#39;/g, "'");
+        
+        if (lang === "mermaid") {
+          const bytes = new TextEncoder().encode(raw);
+          const encoded = btoa(
+            Array.from(bytes, (byte) => String.fromCharCode(byte)).join(""),
+          );
+          return `<div class="mermaid-pending" data-diagram="${encoded}" data-post="${id}"></div>`;
+        }
 
-    let mermaidIdx = 0;
-    for (const el of pendingNodes) {
-      const b64 = el.getAttribute("data-diagram") || "";
-      let code: string;
-      try {
-        const binString = atob(b64);
-        const bytes = Uint8Array.from(binString, (m) => m.charCodeAt(0));
-        code = new TextDecoder().decode(bytes);
-      } catch {
-        code = b64;
+        const language =
+          lang && hljsInstance.getLanguage(lang) ? lang : "plaintext";
+        const highlighted = hljsInstance.highlight(raw, { language }).value;
+        
+        return `<div class="code-block"><div class="code-header"><span class="code-lang">${lang || "text"}</span><button class="code-copy" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').innerText)">Copy</button></div><pre><code class="hljs language-${language}">${highlighted}</code></pre></div>`;
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const localMarked = new (Marked as any)();
+      localMarked.use({ renderer });
+
+      html.value = await localMarked.parse(processed);
+      rendered.value = true;
+
+      // 4. Render Mermaid (Single execution context)
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      const pendingNodes = document.querySelectorAll<HTMLElement>(
+        `.mermaid-pending[data-post="${id}"]`,
+      );
+
+      let mermaidIdx = 0;
+      for (const el of pendingNodes) {
+        const b64 = el.getAttribute("data-diagram") || "";
+        let code: string;
+        try {
+          const binString = atob(b64);
+          const bytes = Uint8Array.from(binString, (m) => m.charCodeAt(0));
+          code = new TextDecoder().decode(bytes);
+        } catch {
+          code = b64;
+        }
+
+        const diagramId = `mermaid-${id}-${mermaidIdx++}`;
+        try {
+          if (typeof mermaidInstance.render === "function") {
+            const { svg } = await mermaidInstance.render(diagramId, code);
+            el.innerHTML = svg;
+            el.classList.remove("mermaid-pending");
+            el.classList.add("mermaid-rendered");
+          } else {
+            console.warn(
+              "[Mermaid] Render function not found on mermaid instance",
+            );
+          }
+        } catch (e) {
+          console.warn(`[Mermaid] Render failed:`, e);
+          el.classList.add("mermaid-error");
+          el.innerHTML = `<div class="p-4 bg-red-500/10 text-red-500 rounded text-xs"><p class="font-bold">Diagram Error:</p><pre>${e instanceof Error ? e.message : String(e)}</pre></div>`;
+        }
       }
-
-      const diagramId = `mermaid-${id}-${mermaidIdx++}`;
-      try {
-        const { svg } = await mermaid.default.render(diagramId, code);
-        el.innerHTML = svg;
-        el.classList.remove("mermaid-pending");
-        el.classList.add("mermaid-rendered");
-      } catch (e) {
-        console.warn(`[Mermaid] Render failed:`, e);
-        el.classList.add("mermaid-error");
-        el.innerHTML = `<div class="p-4 bg-red-500/10 text-red-500 rounded text-xs"><p class="font-bold">Diagram Error:</p><pre>${e instanceof Error ? e.message : String(e)}</pre></div>`;
-      }
+    } catch (error) {
+      console.error("PostContent rendering failed entirely:", error);
+      // Instead of leaving html.value empty causing the raw raw fallback, we display an error or just fallback to basic raw html structure
+      html.value = content
+        .split(/\n\n+/)
+        .map((p) => `<p>${p.replace(/\n/g, "<br>")}</p>`)
+        .join("");
+      rendered.value = true;
     }
   });
-
   const ssrFallback = content
     .split(/\n\n+/)
     .map((p: string) => `<p>${p.replace(/\n/g, "<br>")}</p>`)

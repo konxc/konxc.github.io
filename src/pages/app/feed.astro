@@ -1,0 +1,421 @@
+---
+import AppLayout from "../../layouts/AppLayout.astro";
+import { Feed as FeedComponent } from "../../components/app/Feed";
+import { CommunityHub } from "../../components/app/CommunityHub";
+
+export const prerender = false;
+// Protect this route via middleware (already configured)
+---
+
+<script>
+  import { authClient } from "../../lib/auth-client";
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            window.location.href = "/login";
+          },
+        },
+      });
+    });
+  }
+</script>
+
+<AppLayout title="Beranda | Konxc Community">
+  <div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+    <!-- Left Column: Business Profile & Mini Nav -->
+    <div class="space-y-4 lg:col-span-3">
+      <div class="app-card sticky top-[84px] overflow-hidden shadow-xs">
+        <!-- Cover Gradient -->
+        <div
+          class="h-14 bg-linear-to-r from-blue-700 via-blue-600 to-indigo-600"
+        >
+        </div>
+
+        <div class="relative -mt-10 flex flex-col items-center px-5 pb-5">
+          <!-- Avatar with Border -->
+          <div
+            class="mb-3 h-20 w-20 overflow-hidden rounded-full border-4 border-white bg-gray-100 shadow-sm dark:border-gray-900 dark:bg-gray-800"
+          >
+            <svg
+              class="h-full w-full text-gray-300"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
+              ></path>
+            </svg>
+          </div>
+
+          <h2 class="app-title text-center" style="color: var(--app-text);">
+            Guest User
+          </h2>
+          <p
+            class="app-meta mb-4 text-center"
+            style="color: var(--app-text-muted); letter-spacing: 0.06em; text-transform: uppercase;"
+          >
+            Owner @ Warung Kopi Senja
+          </p>
+
+          <div
+            class="w-full space-y-4 border-t border-[var(--app-border)] pt-6 text-[11px]"
+          >
+            <div
+              class="group flex cursor-pointer items-center justify-between px-1"
+            >
+              <span
+                class="group-hover:text-app-600 font-bold transition-colors"
+                style="color: var(--app-text-muted);">Koneksi Saya</span
+              >
+              <span
+                class="text-app-600 dark:text-app-400 font-black transition-transform group-hover:scale-110"
+                >42</span
+              >
+            </div>
+            <div
+              class="group flex cursor-pointer items-center justify-between px-1"
+            >
+              <span
+                class="group-hover:text-app-600 font-bold transition-colors"
+                style="color: var(--app-text-muted);">Postingan</span
+              >
+              <span
+                class="text-app-600 dark:text-app-400 font-black transition-transform group-hover:scale-110"
+                >12</span
+              >
+            </div>
+            <div
+              class="group flex cursor-pointer items-center justify-between px-1"
+            >
+              <span
+                class="group-hover:text-app-600 font-bold transition-colors"
+                style="color: var(--app-text-muted);">Poin Literasi</span
+              >
+              <div
+                class="flex items-center gap-1 font-black text-orange-600 transition-transform group-hover:scale-110 dark:text-orange-400"
+              >
+                <span>850</span>
+                <span
+                  class="rounded bg-orange-100 px-1.5 py-0.5 text-[8px] dark:bg-orange-900/40 dark:text-orange-300"
+                  >PTS</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="/app/in/me"
+            class="app-surface-btn app-label mt-6 block w-full shadow-xs"
+          >
+            Dashboard Bisnis
+          </a>
+
+          <button
+            id="logout-btn"
+            class="app-ghost-btn btn-danger app-label mt-2 block w-full text-red-600"
+          >
+            Keluar
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Navigation Shortcuts -->
+      <div class="app-card overflow-hidden shadow-xs">
+        <div class="p-5 pb-2">
+          <h3 class="app-heading" style="color: var(--app-text);">
+            Navigasi Cepat
+          </h3>
+        </div>
+        <nav class="pb-4">
+          <a
+            href="/app/groups"
+            class="hover:text-app-600 app-label flex items-center justify-between px-5 py-3 transition-colors"
+            style="color: var(--app-text-muted);"
+          >
+            <div class="flex items-center gap-3">
+              <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+              Grup Diskusi
+            </div>
+            <span
+              class="rounded bg-blue-50 px-1.5 py-0.5 text-[9px] text-blue-600 dark:bg-blue-900/30"
+              >12 Baru</span
+            >
+          </a>
+          <a
+            href="/app/events"
+            class="hover:text-app-600 app-label flex items-center justify-between px-5 py-3 transition-colors"
+            style="color: var(--app-text-muted);"
+          >
+            <div class="flex items-center gap-3">
+              <span
+                class="h-1.5 w-1.5 rounded-full bg-gray-300 dark:bg-gray-700"
+              ></span>
+              Event Literasi
+            </div>
+          </a>
+          <a
+            href="/app/jobs"
+            class="hover:text-app-600 app-label flex items-center justify-between px-5 py-3 transition-colors"
+            style="color: var(--app-text-muted);"
+          >
+            <div class="flex items-center gap-3">
+              <span
+                class="h-1.5 w-1.5 rounded-full bg-gray-300 dark:bg-gray-700"
+              ></span>
+              Peluang Kerja
+            </div>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Groups -->
+      <div class="app-card p-5 shadow-xs">
+        <h3 class="app-heading mb-4" style="color: var(--app-text);">
+          Grup Saya
+        </h3>
+        <ul class="space-y-4">
+          <li
+            class="group hover:text-app-600 flex cursor-pointer items-center gap-3 text-xs font-bold transition-colors"
+            style="color: var(--app-text-muted);"
+          >
+            <span
+              class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600 transition-transform group-hover:scale-110 dark:bg-blue-900/30"
+              >☕</span
+            >
+            <span class="font-bold">Kopi Enthusiast Indo</span>
+          </li>
+          <li
+            class="group hover:text-app-600 flex cursor-pointer items-center gap-3 text-xs font-bold transition-colors"
+            style="color: var(--app-text-muted);"
+          >
+            <span
+              class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 transition-transform group-hover:scale-110 dark:bg-indigo-900/30"
+              >🚀</span
+            >
+            <span class="font-bold">UMKM Go Digital</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Middle Column: Hubs & Feed -->
+    <main class="space-y-6 lg:col-span-6">
+      <div class="app-card overflow-hidden shadow-xs">
+        <div
+          class="flex items-center justify-between border-b border-[var(--app-border)] p-4 px-5"
+        >
+          <h3
+            class="app-heading flex items-center gap-2"
+            style="color: var(--app-text);"
+          >
+            <span class="bg-app-500 flex h-1.5 w-1.5 animate-pulse rounded-full"
+            ></span>
+            Hub Komunitas
+          </h3>
+          <span class="app-nano" style="color: var(--app-text-muted);"
+            >Terpopuler Hari Ini</span
+          >
+        </div>
+        <div class="">
+          <CommunityHub client:load />
+        </div>
+      </div>
+      <FeedComponent client:load />
+    </main>
+
+    <!-- Right Column: Market & Clouds -->
+    <aside class="sticky top-[84px] space-y-5 lg:col-span-3">
+      <!-- Market Insights Widget -->
+      <div class="app-card p-5 shadow-xs">
+        <div class="mb-4 flex items-center justify-between">
+          <h3 class="app-heading" style="color: var(--app-text);">
+            Market Insights
+          </h3>
+          <span class="flex h-1.5 w-1.5 animate-pulse rounded-full bg-green-500"
+          ></span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="group flex cursor-pointer items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">₿</span>
+              <span
+                class="app-body font-medium"
+                style="color: var(--app-text-muted);">Bitcoin (BTC)</span
+              >
+            </div>
+            <span class="text-[11px] font-bold text-green-600">+$2.4%</span>
+          </div>
+          <div class="group flex cursor-pointer items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">☁️</span>
+              <span
+                class="app-body font-medium"
+                style="color: var(--app-text-muted);">SaaS Consumption</span
+              >
+            </div>
+            <span class="text-app-600 dark:text-app-400 text-[11px] font-bold"
+              >Naik</span
+            >
+          </div>
+          <div class="group flex cursor-pointer items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">⚡</span>
+              <span
+                class="app-body font-medium"
+                style="color: var(--app-text-muted);">Koneksi Nodes</span
+              >
+            </div>
+            <span class="app-body font-bold" style="color: var(--app-text);"
+              >1.2k Active</span
+            >
+          </div>
+        </div>
+
+        <button class="app-surface-btn app-label mt-5 w-full">
+          Lihat Laporan Lengkap
+        </button>
+      </div>
+
+      <!-- Cloud Resources -->
+      <div
+        class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-700 to-indigo-800 p-5 text-white shadow-lg"
+      >
+        <div
+          class="absolute top-0 right-0 -mt-10 -mr-10 h-32 w-32 rounded-full bg-white/10 blur-2xl transition-all duration-500 group-hover:bg-white/20"
+        >
+        </div>
+        <div class="relative z-10">
+          <div class="mb-2 flex items-center gap-2">
+            <div class="rounded-lg bg-white/20 p-1.5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-white"
+              >
+                <path
+                  d="M17.5 19c.6 0 1.1-.4 1.3-.9 1.2-2.8.5-6.2-1.8-8.2-.3-.3-.7-.5-1.1-.6C14.5 5.2 10 5 10 5s-4 .2-5.9 4.3c-.4.1-.8.3-1.1.6-2.3 2-3 5.3-1.8 8.2.2.5.7.9 1.3.9h15Z"
+                ></path>
+              </svg>
+            </div>
+            <h3 class="text-sm font-bold">Koneksi Cloud</h3>
+          </div>
+          <p class="mb-4 text-[10px] leading-relaxed text-blue-100/80">
+            Infrastruktur cloud berbasis komunitas penggiat Awankinton siap
+            digunakan.
+          </p>
+          <div
+            class="flex items-center justify-between border-t border-white/20 pt-4"
+          >
+            <span
+              class="rounded-full bg-white/10 px-2 py-0.5 text-[9px] font-bold tracking-widest uppercase"
+              >Optimal</span
+            >
+            <a
+              href="/app/cloud"
+              class="group/btn relative flex items-center gap-1 overflow-hidden rounded-lg bg-white/10 px-3 py-1.5 text-[10px] font-bold transition-all hover:bg-white/20 active:scale-95"
+            >
+              <span
+                class="relative z-10 transition-transform group-hover/btn:translate-x-0.5"
+                >Kelola</span
+              >
+              <span
+                class="relative z-10 transition-transform group-hover/btn:translate-x-1"
+                >→</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Strategic Partners -->
+      <div class="app-card p-5 shadow-xs">
+        <h3
+          class="mb-4 text-[10px] font-black tracking-widest text-gray-400 uppercase"
+        >
+          UMKM Strategis
+        </h3>
+        <div class="space-y-4">
+          <div class="group flex cursor-pointer items-center gap-3">
+            <div
+              class="bg-app-50 text-app-600 dark:bg-app-900/30 dark:text-app-300 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded text-[9px] font-black transition-transform group-hover:scale-110"
+            >
+              Web3
+            </div>
+            <div class="min-w-0">
+              <h4 class="app-label truncate" style="color: var(--app-text);">
+                DevChain Solutions
+              </h4>
+              <p class="app-meta">Smart Contract Dev</p>
+            </div>
+            <button
+              class="text-app-600 hover:border-app-200 hover:bg-app-50 dark:text-app-400 dark:hover:border-app-900 dark:hover:bg-app-900/30 ml-auto rounded-xl border border-transparent p-2 transition-all active:scale-95"
+              title="Tambah Koneksi"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <line x1="19" x2="19" y1="8" y2="14"></line>
+                <line x1="16" x2="22" y1="11" y2="11"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="group flex cursor-pointer items-center gap-3">
+            <div
+              class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded bg-green-50 text-[9px] font-black text-green-600 transition-transform group-hover:scale-110 dark:bg-green-900/30"
+            >
+              SaaS
+            </div>
+            <div class="min-w-0">
+              <h4 class="app-label truncate" style="color: var(--app-text);">
+                KasirPintar.io
+              </h4>
+              <p class="app-meta">SaaS Inventory</p>
+            </div>
+            <button
+              class="ml-auto rounded-xl border border-transparent p-2 text-blue-600 transition-all hover:border-blue-100 hover:bg-blue-50 active:scale-95 dark:hover:border-blue-900 dark:hover:bg-blue-900/30"
+              title="Tambah Koneksi"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <line x1="19" x2="19" y1="8" y2="14"></line>
+                <line x1="16" x2="22" y1="11" y2="11"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</AppLayout>

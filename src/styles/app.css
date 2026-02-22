@@ -223,22 +223,41 @@
     text-transform: uppercase;
   }
 
-  /* Surface button — hover-safe */
+  /* Surface button — tactile & premium */
   .app-surface-btn {
+    @apply rounded-xl border px-4 py-2 text-center transition-all duration-200;
     background-color: var(--app-surface);
+    border-color: var(--app-border);
     color: var(--app-text-muted);
     font-weight: 600;
-    letter-spacing: 0em;                  /* Remove any tracking from callers */
-    transition: background-color 0.2s ease, color 0.2s ease;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
     &:hover {
-      background-color: #4a5dff;
-      color: #ffffff;
+      @apply -translate-y-0.5 shadow-sm;
+      background-color: var(--app-card);
+      border-color: #4a5dff;
+      color: #4a5dff;
     }
 
     &:active {
-      background-color: #3a4de8;
-      color: #ffffff;
+      @apply translate-y-0 shadow-none;
+      background-color: var(--app-surface);
+    }
+  }
+
+  /* Ghost button — subtle but clearly interactive */
+  .app-ghost-btn {
+    @apply rounded-xl px-4 py-2 text-center transition-all duration-200 border border-transparent;
+    font-weight: 500;
+
+    &:hover {
+      @apply bg-slate-100 dark:bg-slate-900/50;
+      border-color: var(--app-border);
+    }
+    
+    &.btn-danger:hover {
+      @apply bg-red-50 text-red-600 dark:bg-red-900/10;
+      border-color: rgba(239, 68, 68, 0.2);
     }
   }
 }

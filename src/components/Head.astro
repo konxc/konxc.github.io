@@ -47,8 +47,12 @@ const siteName = "KonXC - PT Koneksi Jaringan Indonesia";
 <link rel="apple-touch-icon" href="/logo-konxc.png" />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Preload critical images for faster loading -->
-<link rel="preload" href="/logo-konxc.webp" as="image" type="image/webp" />
+<!-- Preload critical images for faster loading (exclude apps without logo img) -->
+{
+  !Astro.url.pathname.startsWith("/app") && (
+    <link rel="preload" href="/logo-konxc.webp" as="image" type="image/webp" />
+  )
+}
 
 <!-- Content Security Policy -->
 <meta
