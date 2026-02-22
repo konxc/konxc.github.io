@@ -143,7 +143,7 @@ export const Feed = component$(() => {
         >
           <div class="hide-scrollbar flex min-w-0 gap-0.5 overflow-x-auto">
             <button
-              class="hover:text-app-600 app-action-label flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-all"
+              class="hover:text-app-600 hover:bg-app-50 dark:hover:bg-app-900/40 app-action-label flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-all active:scale-95"
               style="color: var(--app-text-muted);"
               onMouseOver$={(e: MouseEvent) =>
                 ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -197,7 +197,7 @@ export const Feed = component$(() => {
               <span class="text-base">📐</span> Rumus
             </button>
           </div>
-          <button class="bg-app-600 shadow-app-200/50 hover:bg-app-700 app-action-label rounded-full px-5 py-2 text-white shadow-md transition-all active:scale-95 dark:shadow-none">
+          <button class="bg-linear-to-r from-blue-600 to-indigo-600 shadow-blue-500/25 hover:shadow-blue-500/40 app-action-label rounded-full px-6 py-2 text-sm text-white shadow-lg transition-all hover:-translate-y-0.5 active:scale-95 active:translate-y-0">
             Posting
           </button>
         </div>
@@ -294,7 +294,7 @@ export const Feed = component$(() => {
             <div class="grid grid-cols-3 divide-x divide-[var(--app-border)] border-t border-[var(--app-border)]">
               <button
                 onClick$={() => handleLike(post.id)}
-                class="hover:text-app-600 app-action-label flex items-center justify-center gap-2 py-3.5 transition-all"
+                class="hover:text-app-600 group flex items-center justify-center gap-2 py-3.5 transition-all active:scale-95"
                 style="color: var(--app-text-muted);"
                 onMouseOver$={(e: MouseEvent) =>
                   ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -304,24 +304,26 @@ export const Feed = component$(() => {
                   ((e.currentTarget as HTMLElement).style.backgroundColor = "")
                 }
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M7 10v12" />
-                  <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z" />
-                </svg>
-                Suka
+                <div class="flex items-center justify-center rounded-lg p-1.5 transition-colors group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M7 10v12" />
+                    <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z" />
+                  </svg>
+                </div>
+                <span class="app-action-label">Suka</span>
               </button>
               <button
-                class="hover:text-app-600 app-action-label flex items-center justify-center gap-2 py-3.5 transition-all"
+                class="hover:text-app-600 group flex items-center justify-center gap-2 py-3.5 transition-all active:scale-95"
                 style="color: var(--app-text-muted);"
                 onMouseOver$={(e: MouseEvent) =>
                   ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -331,23 +333,25 @@ export const Feed = component$(() => {
                   ((e.currentTarget as HTMLElement).style.backgroundColor = "")
                 }
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-                Komentar
+                <div class="flex items-center justify-center rounded-lg p-1.5 transition-colors group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                  </svg>
+                </div>
+                <span class="app-action-label">Komentar</span>
               </button>
               <button
-                class="hover:text-app-600 app-action-label flex items-center justify-center gap-2 py-3.5 transition-all"
+                class="hover:text-app-600 group flex items-center justify-center gap-2 py-3.5 transition-all active:scale-95"
                 style="color: var(--app-text-muted);"
                 onMouseOver$={(e: MouseEvent) =>
                   ((e.currentTarget as HTMLElement).style.backgroundColor =
@@ -357,21 +361,23 @@ export const Feed = component$(() => {
                   ((e.currentTarget as HTMLElement).style.backgroundColor = "")
                 }
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                <div class="flex items-center justify-center rounded-lg p-1.5 transition-colors group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
                   <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
                   <polyline points="16 6 12 2 8 6" />
                   <line x1="12" x2="12" y1="2" y2="15" />
-                </svg>
+                  </svg>
+                </div>
                 Bagikan
               </button>
             </div>
