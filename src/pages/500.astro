@@ -1,0 +1,203 @@
+---
+import BlankLayout from "../layouts/BlankLayout.astro";
+
+export const prerender = false;
+
+interface Props {
+    error: unknown;
+}
+
+const { error } = Astro.props;
+const errorMessage = error instanceof Error ? error.message : String(error);
+const errorName = error instanceof Error ? error.name : "UNKNOWN_EXCEPTION";
+---
+
+<BlankLayout
+    title="SYSTEM_CRITICAL | Konxc Engine"
+    description="Diagnostic: Kernel panic or unexpected thread collapse."
+>
+    <div
+        class="relative flex h-screen min-h-[100dvh] w-full items-center justify-center overflow-hidden bg-[#0a0202] text-[#f0e0e0]"
+    >
+        <!-- Red Alert Background -->
+        <div class="pointer-events-none absolute inset-0 z-0">
+            <div
+                class="absolute inset-0 bg-[url('/images/grid.svg')] bg-[length:60px_60px] opacity-[0.05] invert"
+            >
+            </div>
+            <div
+                class="absolute top-[10%] left-[10%] h-[45rem] w-[45rem] animate-pulse rounded-full bg-red-600/[0.05] blur-[120px]"
+            >
+            </div>
+            <div
+                class="absolute right-[10%] bottom-[10%] h-[40rem] w-[40rem] animate-pulse rounded-full bg-orange-600/[0.05] blur-[120px]"
+                style="animation-delay: 2.5s;"
+            >
+            </div>
+            <div
+                class="animate-scanline absolute inset-0 bg-gradient-to-b from-transparent via-red-500/[0.02] to-transparent bg-[length:100%_4px]"
+            >
+            </div>
+        </div>
+
+        <div
+            class="relative z-10 container mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-2"
+        >
+            <div class="order-2 space-y-12 lg:order-1">
+                <div
+                    class="inline-flex items-center gap-4 rounded-full border border-red-500/20 bg-red-500/10 px-5 py-2.5 backdrop-blur-2xl"
+                >
+                    <div class="relative h-2 w-2">
+                        <div
+                            class="absolute inset-0 animate-ping rounded-full bg-red-600"
+                        >
+                        </div>
+                        <div class="relative h-2 w-2 rounded-full bg-red-600">
+                        </div>
+                    </div>
+                    <div class="h-4 w-px bg-red-500/20"></div>
+                    <span
+                        class="text-[9px] font-black tracking-[0.3em] text-red-500/60 uppercase"
+                        >KERNEL_PANIC_DETECTED</span
+                    >
+                </div>
+
+                <div class="space-y-6">
+                    <h1
+                        class="bg-gradient-to-b from-white via-white to-red-500/20 bg-clip-text text-5xl leading-tight font-black tracking-tighter text-transparent md:text-6xl lg:text-7xl xl:text-8xl"
+                    >
+                        ERR_500
+                    </h1>
+                    <div class="space-y-4">
+                        <h2
+                            class="text-2xl font-bold tracking-tight text-white md:text-3xl"
+                        >
+                            Anomali Struktural Terdeteksi
+                        </h2>
+                        <p
+                            class="max-w-xl text-lg leading-relaxed font-light text-white/50 md:text-xl"
+                        >
+                            Sistem mengalami kegagalan proses internal. Memori
+                            gagal mengalokasikan permintaan Anda ke sektor
+                            tujuan.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="max-w-lg space-y-3 overflow-hidden rounded-2xl border border-red-500/10 bg-black/60 p-6 font-mono text-[10px] shadow-2xl backdrop-blur-md md:text-[11px]"
+                >
+                    <div class="mb-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="ml-1 font-black text-red-500/40"
+                                >emergency_dump.stack</span
+                            >
+                        </div>
+                        <span
+                            class="text-[8px] font-black tracking-widest text-red-500/50 uppercase"
+                            >Memory_Dump</span
+                        >
+                    </div>
+                    <div class="space-y-2 opacity-80">
+                        <p class="text-red-400">$ stack trace initialized...</p>
+                        <p
+                            class="border-l border-red-500/10 pl-3 text-white/40 italic"
+                        >
+                            {errorName} detected in process thread
+                        </p>
+                        <p class="font-bold text-red-500/70">
+                            [CRITICAL] {errorMessage}
+                        </p>
+                        <p class="text-white/50">
+                            ... Emergency shutdown prevented by fallback
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-5 pt-4 sm:flex-row">
+                    <a
+                        href="/app/feed"
+                        class="flex items-center justify-center rounded-2xl bg-red-600 px-10 py-5 text-xs font-black tracking-[0.2em] text-white shadow-[0_0_20px_rgba(220,38,38,0.2)] transition-all duration-300 hover:bg-red-500"
+                    >
+                        INITIATE_RECOVERY
+                    </a>
+                    <button
+                        onclick="window.location.reload()"
+                        class="flex items-center justify-center rounded-2xl border border-red-500/20 bg-red-500/5 px-10 py-5 text-xs font-black tracking-[0.2em] text-red-500/60 backdrop-blur-md transition-all duration-300 hover:bg-red-500/10 hover:text-red-500"
+                    >
+                        RETRY_PROCESS.SYS
+                    </button>
+                </div>
+            </div>
+
+            <div
+                class="relative order-1 flex items-center justify-center py-10 lg:order-2 lg:py-0"
+            >
+                <div class="group relative w-full max-w-lg md:max-w-2xl">
+                    <div
+                        class="relative z-20 max-h-[60vh] overflow-hidden rounded-[4rem] border border-red-500/10 bg-red-500/[0.02] brightness-75 grayscale hue-rotate-[320deg] sepia backdrop-blur-3xl transition-all duration-1000"
+                    >
+                        <img
+                            src="/images/404/illustration.png"
+                            alt="Error Illustration"
+                            class="w-full opacity-60 mix-blend-lighten"
+                        />
+                        <div
+                            class="animate-high-scan pointer-events-none absolute inset-0 h-1/4 w-full bg-gradient-to-b from-transparent via-red-500/20 to-transparent"
+                        >
+                        </div>
+                    </div>
+
+                    <div
+                        class="animate-float absolute top-12 -right-8 z-30 rounded-xl bg-red-600 px-6 py-2.5 font-mono text-[10px] font-black tracking-[0.2em] text-white shadow-2xl"
+                    >
+                        SYSTEM_CRITICAL_LOG
+                    </div>
+                </div>
+                <div
+                    class="absolute inset-x-0 bottom-0 h-1 rounded-full bg-red-500/20 shadow-[0_0_100px_40px_rgba(220,38,38,0.1)] blur-[80px]"
+                >
+                </div>
+            </div>
+        </div>
+    </div>
+</BlankLayout>
+
+<style>
+    @keyframes scanline {
+        0% {
+            transform: translateY(-100%);
+        }
+        100% {
+            transform: translateY(100%);
+        }
+    }
+    .animate-scanline {
+        animation: scanline 12s linear infinite;
+    }
+
+    @keyframes high-scan {
+        0% {
+            transform: translateY(-100%);
+        }
+        100% {
+            transform: translateY(400%);
+        }
+    }
+    .animate-high-scan {
+        animation: high-scan 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+</style>
