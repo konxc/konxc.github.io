@@ -4,7 +4,8 @@ import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
-dotenv.config();
+const envPath = process.env.NODE_ENV === "production" ? ".env.production" : ".env";
+dotenv.config({ path: envPath });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
