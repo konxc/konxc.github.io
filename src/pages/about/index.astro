@@ -12,7 +12,7 @@ import { Icon } from "astro-icon/components";
 >
   <!-- Hero Section - Cinematic Dark Style -->
   <section
-    class="relative flex min-h-[90vh] items-center justify-center overflow-hidden bg-[#0a0a0c] pt-20"
+    class="relative flex min-h-[90vh] items-center justify-center overflow-hidden bg-[#0a0a0c] pt-28 lg:pt-36"
   >
     <!-- Tactical Background Layers -->
     <div class="absolute inset-0 z-0">
@@ -319,7 +319,8 @@ import { Icon } from "astro-icon/components";
               title: "Pilar SDM",
               subtitle: "Technical Mastery",
               icon: "heroicons:academic-cap",
-              color: "blue",
+              bg: "bg-blue-600/20",
+              text: "text-blue-500",
               desc: "Mempersiapkan talenta teknologi Indonesia yang world-class, mandiri, dan bangga pada karya lokal.",
               impact: "1M+ Talents by 2030",
             },
@@ -327,7 +328,8 @@ import { Icon } from "astro-icon/components";
               title: "Pilar Bisnis",
               subtitle: "Economic Growth",
               icon: "heroicons:building-office-2",
-              color: "emerald",
+              bg: "bg-emerald-600/20",
+              text: "text-emerald-500",
               desc: "Membangun ekosistem bisnis yang kondusif agar tech-startup lokal dapat bersaing dengan raksasa global.",
               impact: "Sustainable Ecosystem",
             },
@@ -335,7 +337,8 @@ import { Icon } from "astro-icon/components";
               title: "Pilar Politik",
               subtitle: "State Regulation",
               icon: "heroicons:building-library",
-              color: "red",
+              bg: "bg-red-600/20",
+              text: "text-red-500",
               desc: "Kebijakan politik yang berpihak pada kedaulatan digital melalui regulasi data dan infrastruktur nasional.",
               impact: "Data Sovereignty Law",
             },
@@ -343,7 +346,7 @@ import { Icon } from "astro-icon/components";
             <div class="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-1 transition-all hover:border-white/20">
               <div class="h-full rounded-[1.4rem] bg-[#0f0f12] p-8">
                 <div
-                  class={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-${pilar.color}-600/20 text-${pilar.color}-500 transition-all group-hover:scale-110`}
+                  class={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${pilar.bg} ${pilar.text} transition-all group-hover:scale-110`}
                 >
                   <Icon name={pilar.icon} class="h-8 w-8" />
                 </div>
@@ -351,7 +354,7 @@ import { Icon } from "astro-icon/components";
                   {pilar.title}
                 </h3>
                 <p
-                  class={`mb-4 text-sm font-bold text-${pilar.color}-500 tracking-widest uppercase`}
+                  class={`mb-4 text-sm font-bold ${pilar.text} tracking-widest uppercase`}
                 >
                   {pilar.subtitle}
                 </p>
@@ -362,7 +365,7 @@ import { Icon } from "astro-icon/components";
                   <div class="mb-1 text-[10px] font-black tracking-[0.2em] text-neutral-600 uppercase">
                     Projected Impact
                   </div>
-                  <div class={`text-lg font-black text-${pilar.color}-500`}>
+                  <div class={`text-lg font-black ${pilar.text}`}>
                     {pilar.impact}
                   </div>
                 </div>
@@ -372,60 +375,61 @@ import { Icon } from "astro-icon/components";
         }
       </div>
     </div>
-  </section>
-
-  <!-- Interconnection Visualization -->
-  <div class="mt-24 text-center">
-    <div
-      class="mx-auto max-w-3xl rounded-[2.5rem] border border-white/5 bg-white/2 p-12 backdrop-blur-sm"
-    >
-      <h4 class="mb-6 text-2xl font-black tracking-tight text-white uppercase">
-        Sinergi Tiga Pilar
-      </h4>
-      <p class="mb-10 leading-relaxed font-medium text-neutral-400">
-        Ketiga pilar ini saling terkait dan memperkuat. Tanpa salah satu,
-        kedaulatan digital hanyalah sekadar wacana.
-      </p>
-
-      <div class="flex items-center justify-center space-x-6">
-        <div
-          class="flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-600/20"
-        >
-          <Icon name="heroicons:academic-cap" class="h-7 w-7 text-blue-500" />
-        </div>
-        <Icon name="heroicons:plus" class="h-4 w-4 text-neutral-600" />
-        <div
-          class="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-500/30 bg-emerald-600/20"
-        >
-          <Icon
-            name="heroicons:building-office-2"
-            class="h-7 w-7 text-emerald-500"
-          />
-        </div>
-        <Icon name="heroicons:plus" class="h-4 w-4 text-neutral-600" />
-        <div
-          class="flex h-14 w-14 items-center justify-center rounded-2xl border border-red-500/30 bg-red-600/20"
-        >
-          <Icon
-            name="heroicons:building-library"
-            class="h-7 w-7 text-red-500"
-          />
-        </div>
-        <Icon name="heroicons:equals" class="h-4 w-4 text-neutral-600" />
-        <div
-          class="flex h-14 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-red-600 to-rose-700 shadow-[0_0_20px_rgba(220,38,38,0.3)]"
-        >
-          <Icon name="heroicons:flag" class="h-8 w-8 text-white" />
-        </div>
-      </div>
-
+    <!-- Interconnection Visualization -->
+    <div class="mt-24 text-center">
       <div
-        class="mt-8 text-[11px] font-black tracking-[0.3em] text-neutral-500 uppercase"
+        class="mx-auto max-w-3xl rounded-[2.5rem] border border-white/5 bg-white/2 p-12 backdrop-blur-sm"
       >
-        SDM + Bisnis + Politik = Kedaulatan Digital
+        <h4
+          class="mb-6 text-2xl font-black tracking-tight text-white uppercase"
+        >
+          Sinergi Tiga Pilar
+        </h4>
+        <p class="mb-10 leading-relaxed font-medium text-neutral-400">
+          Ketiga pilar ini saling terkait dan memperkuat. Tanpa salah satu,
+          kedaulatan digital hanyalah sekadar wacana.
+        </p>
+
+        <div class="flex items-center justify-center space-x-6">
+          <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-600/20"
+          >
+            <Icon name="heroicons:academic-cap" class="h-7 w-7 text-blue-500" />
+          </div>
+          <Icon name="heroicons:plus" class="h-4 w-4 text-neutral-600" />
+          <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-500/30 bg-emerald-600/20"
+          >
+            <Icon
+              name="heroicons:building-office-2"
+              class="h-7 w-7 text-emerald-500"
+            />
+          </div>
+          <Icon name="heroicons:plus" class="h-4 w-4 text-neutral-600" />
+          <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl border border-red-500/30 bg-red-600/20"
+          >
+            <Icon
+              name="heroicons:building-library"
+              class="h-7 w-7 text-red-500"
+            />
+          </div>
+          <Icon name="heroicons:equals" class="h-4 w-4 text-neutral-600" />
+          <div
+            class="flex h-14 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-red-600 to-rose-700 shadow-[0_0_20px_rgba(220,38,38,0.3)]"
+          >
+            <Icon name="heroicons:flag" class="h-8 w-8 text-white" />
+          </div>
+        </div>
+
+        <div
+          class="mt-8 text-[11px] font-black tracking-[0.3em] text-neutral-500 uppercase"
+        >
+          SDM + Bisnis + Politik = Kedaulatan Digital
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- Mengapa Kedaulatan Data Penting -->
   <section class="bg-[#0f0f12] py-24 md:py-32">
@@ -451,43 +455,49 @@ import { Icon } from "astro-icon/components";
             {
               title: "Keamanan Nasional",
               icon: "heroicons:shield-check",
-              color: "red",
+              bg: "bg-red-600/20",
+              text: "text-red-500",
               desc: "Data warga negara dan infrastruktur kritis harus berada di bawah jurisdiksi nasional.",
             },
             {
               title: "Ekonomi Digital",
               icon: "heroicons:currency-dollar",
-              color: "emerald",
+              bg: "bg-emerald-600/20",
+              text: "text-emerald-500",
               desc: "Nilai ekonomi data harus kembali ke Indonesia, bukan mengalir keluar tanpa kontribusi.",
             },
             {
               title: "Inovasi Lokal",
               icon: "heroicons:light-bulb",
-              color: "blue",
+              bg: "bg-blue-600/20",
+              text: "text-blue-500",
               desc: "Ketersediaan data lokal mendorong startup untuk membangun solusi yang relevan.",
             },
             {
               title: "Privasi Warga",
               icon: "heroicons:lock-closed",
-              color: "purple",
+              bg: "bg-purple-600/20",
+              text: "text-purple-500",
               desc: "Hak privasi dilindungi oleh hukum Indonesia, bukan kebijakan perusahaan asing.",
             },
             {
               title: "Ketahanan Tech",
               icon: "heroicons:server",
-              color: "orange",
+              bg: "bg-orange-600/20",
+              text: "text-orange-500",
               desc: "Kemandirian infrastruktur memastikan keberlangsungan layanan publik saat terjadi eskalasi.",
             },
             {
               title: "Daya Saing",
               icon: "heroicons:globe-asia-australia",
-              color: "teal",
+              bg: "bg-teal-600/20",
+              text: "text-teal-500",
               desc: "Indonesia tampil sebagai subjek teknologi di panggung global, bukan sekadar objek pasar.",
             },
           ].map((item) => (
             <div class="rounded-[2rem] border border-white/5 bg-white/2 p-8 transition-colors hover:bg-white/5">
               <div
-                class={`mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-${item.color}-600/20 text-${item.color}-500`}
+                class={`mb-6 flex h-12 w-12 items-center justify-center rounded-xl ${item.bg} ${item.text}`}
               >
                 <Icon name={item.icon} class="h-6 w-6" />
               </div>
@@ -580,10 +590,10 @@ import { Icon } from "astro-icon/components";
       </div>
     </div>
   </section>
-</UnifiedLayout>
 
-<style>
-  html {
-    scroll-behavior: smooth;
-  }
-</style>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</UnifiedLayout>
