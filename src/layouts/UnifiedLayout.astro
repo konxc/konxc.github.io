@@ -28,11 +28,12 @@ const {
   footerVariant = "extended",
   showSearch = true,
   showNewsletter = true,
+  theme,
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="id" class="">
+<html lang="id" class={theme === "dark" ? "dark" : ""}>
   <head>
     <Head
       title={title}
@@ -70,6 +71,7 @@ const {
   <!-- Theme Initialization Script (Prevents Flickering) -->
 
   <body>
+    <!-- Skip Links & Accessibility -->
     <SkipLinks />
     <FocusManager />
 
@@ -80,5 +82,21 @@ const {
     </main>
 
     <Footer variant={footerVariant} showNewsletter={showNewsletter} />
+
+    <!-- AOS (Animate On Scroll) Initialization -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script is:inline src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (typeof AOS !== "undefined") {
+          AOS.init({
+            duration: 800,
+            easing: "ease-in-out",
+            once: true,
+            offset: 50,
+          });
+        }
+      });
+    </script>
   </body>
 </html>

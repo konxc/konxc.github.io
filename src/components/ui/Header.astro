@@ -282,25 +282,66 @@ const serviceLinks = [
 <style>
   @reference "@/styles/global.css";
   .header {
-    @apply sticky top-0 z-50 border-b border-neutral-200 bg-white;
+    @apply sticky top-0 z-50 border-b border-neutral-200 bg-white transition-all duration-300;
   }
 
-  .header.transparent {
-    @apply border-transparent bg-transparent;
+  /* Default variant link colors */
+  .header:not(.transparent) .nav-link,
+  .header:not(.transparent) .search-toggle,
+  .header:not(.transparent) .mobile-menu-toggle {
+    @apply hover:text-primary-600 text-neutral-600;
   }
 
-  .header.transparent .nav-link,
-  .header.transparent .search-toggle,
-  .header.transparent .mobile-menu-toggle {
-    @apply text-white/90 hover:text-white;
+  .header:not(.transparent) .logo-text {
+    @apply text-neutral-900;
   }
 
-  .header.transparent .logo-text {
+  /* Transparent variant - Overlay over dark heroes */
+  .header.transparent:not(.scrolled) {
+    @apply absolute top-0 left-0 w-full border-transparent bg-transparent;
+  }
+
+  .header.transparent:not(.scrolled) .nav-link,
+  .header.transparent:not(.scrolled) .search-toggle,
+  .header.transparent:not(.scrolled) .mobile-menu-toggle {
+    @apply hover:text-primary-300 text-white;
+  }
+
+  .header.transparent:not(.scrolled) .logo-text {
     @apply text-white;
   }
 
-  .header.minimal {
-    @apply border-neutral-100 bg-neutral-50;
+  /* Scrolled state */
+  .header.scrolled {
+    @apply border-neutral-200/50 bg-white/80 shadow-lg backdrop-blur-md;
+  }
+
+  .header.transparent.scrolled .nav-link,
+  .header.transparent.scrolled .search-toggle,
+  .header.transparent.scrolled .mobile-menu-toggle {
+    @apply hover:text-primary-600 text-neutral-700;
+  }
+
+  .header.transparent.scrolled .logo-text {
+    @apply text-neutral-900;
+  }
+
+  /* Dark mode overrides */
+  .dark .header {
+    @apply border-neutral-800 bg-neutral-900;
+  }
+
+  .dark .header.scrolled {
+    @apply border-white/5 bg-neutral-900/80 shadow-2xl;
+  }
+
+  .dark .header.transparent:not(.scrolled) .nav-link,
+  .dark .header .nav-link {
+    @apply text-neutral-300 hover:text-white;
+  }
+
+  .dark .header.transparent:not(.scrolled) .nav-link {
+    @apply hover:text-primary-400 text-white;
   }
 
   .nav-container {
@@ -592,6 +633,17 @@ const serviceLinks = [
 <script>
   // Header functionality
   document.addEventListener("DOMContentLoaded", function () {
+    const header = document.querySelector(".header");
+    if (header) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+      });
+    }
+
     // Mobile menu toggle
     const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
     const mobileMenu = document.querySelector(".mobile-menu");
