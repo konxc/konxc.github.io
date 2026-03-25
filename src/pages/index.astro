@@ -1,384 +1,201 @@
 ---
 import UnifiedLayout from "@layouts/UnifiedLayout.astro";
-import Hero from "@components/sections/Hero.astro";
+import ModernHero from "@components/sections/ModernHero.astro";
+import PlatformShowcase from "@components/sections/PlatformShowcase.astro";
+import UmkmEmpowerment from "@components/sections/UmkmEmpowerment.astro";
 import Services from "@components/sections/Services.astro";
+import Button from "@components/ui/Button.astro";
 ---
 
 <UnifiedLayout
-  title="KonXC - Mitra Teknologi Terpercaya | PT Koneksi Jaringan Indonesia"
-  description="Solusi teknologi terintegrasi untuk UMKM hingga Enterprise. IT Support, Software Development, Branding Digital, Retail Teknologi, dan Cloud & SaaS."
+  title="KonXC - Ekosistem Digital Mitra Terpercaya UMKM Indonesia"
+  description="Solusi teknologi terintegrasi untuk UMKM. Platform diskusi, learning hub, dan layanan IT Support hingga Digital Branding terlengkap."
   showNewsletter={false}
   headerVariant="default"
   footerVariant="extended"
 >
-  <Hero />
-  <Services />
+  <!-- Main Hero -->
+  <ModernHero />
 
-  <!-- Ecosystem Platforms Section -->
-  <section class="section from-primary-50 to-accent-50 bg-linear-to-br">
+  <!-- Our Platforms -->
+  <PlatformShowcase />
+
+  <!-- Services Grid -->
+  <section class="bg-white py-24" id="services">
     <div class="container">
-      <div class="mb-16 text-center">
-        <h2 class="mb-4 text-3xl font-bold lg:text-4xl">
-          Ekosistem <span class="text-gradient">Koneksi</span>
-        </h2>
-        <p class="mx-auto max-w-3xl text-xl text-neutral-600">
-          Bergabunglah dengan ekosistem teknologi Indonesia yang terintegrasi.
-          Dari diskusi komunitas hingga pembelajaran dan kolaborasi bisnis.
-        </p>
-      </div>
-
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <!-- Platform Diskusi -->
-        <div class="card-featured group text-center">
-          <div class="mb-6">
-            <div class="mb-4 text-5xl">💬</div>
-            <h3 class="mb-2 text-xl font-bold">Platform Diskusi</h3>
-            <div class="text-primary-600 mb-4 text-sm font-semibold">
-              platform.konxc.space
-            </div>
-          </div>
-          <p class="mb-6 text-neutral-600">
-            Platform diskusi seperti Reddit untuk komunitas teknologi Indonesia.
-            Berbagi knowledge, bertanya, dan berkolaborasi dengan developer
-            lainnya.
-          </p>
-          <div class="mb-6 space-y-2 text-sm text-neutral-600">
-            <div>✓ Forum diskusi teknologi</div>
-            <div>✓ Q&A developer community</div>
-            <div>✓ Project collaboration</div>
-            <div>✓ Tech news & insights</div>
-          </div>
-          <a
-            href="https://platform.konxc.space"
-            target="_blank"
-            class="btn-primary group-hover:bg-primary-600 transition-colors"
-          >
-            Join Diskusi →
-          </a>
-        </div>
-
-        <!-- Learning Platform (Coming Soon) -->
-        <div class="card group text-center">
-          <div class="mb-6">
-            <div class="mb-4 text-5xl">🎓</div>
-            <h3 class="mb-2 text-xl font-bold">Learning Hub</h3>
-            <div class="text-secondary-600 mb-4 text-sm font-semibold">
-              learn.konxc.space
-            </div>
-          </div>
-          <p class="mb-6 text-neutral-600">
-            Platform pembelajaran teknologi dengan hands-on projects,
-            certification, dan mentorship dari praktisi industri.
-          </p>
-          <div class="mb-6 space-y-2 text-sm text-neutral-600">
-            <div>✓ Interactive coding tutorials</div>
-            <div>✓ Industry certifications</div>
-            <div>✓ Mentorship programs</div>
-            <div>✓ Career guidance</div>
-          </div>
-          <button class="btn-outline cursor-not-allowed opacity-75">
-            Coming Soon
-          </button>
-        </div>
-
-        <!-- Business Insights (Coming Soon) -->
-        <div class="card group text-center">
-          <div class="mb-6">
-            <div class="mb-4 text-5xl">📊</div>
-            <h3 class="mb-2 text-xl font-bold">Business Insights</h3>
-            <div class="text-accent-600 mb-4 text-sm font-semibold">
-              insights.konxc.space
-            </div>
-          </div>
-          <p class="mb-6 text-neutral-600">
-            Research, data, dan insights tentang industri teknologi Indonesia
-            untuk mendukung keputusan bisnis yang lebih baik.
-          </p>
-          <div class="mb-6 space-y-2 text-sm text-neutral-600">
-            <div>✓ Industry research reports</div>
-            <div>✓ Market analysis</div>
-            <div>✓ Tech trend insights</div>
-            <div>✓ Business intelligence</div>
-          </div>
-          <button class="btn-outline cursor-not-allowed opacity-75">
-            Coming Soon
-          </button>
-        </div>
-      </div>
-
-      <!-- Ecosystem Stats -->
-      <div class="mt-16 rounded-3xl bg-white p-8 shadow-xl">
-        <div class="mb-8 text-center">
-          <h3 class="mb-2 text-2xl font-bold">Ekosistem dalam Angka</h3>
-          <p class="text-neutral-600">
-            Membangun komunitas teknologi Indonesia yang kuat
-          </p>
-        </div>
-        <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
-          <div class="text-center">
-            <div class="text-primary-600 mb-2 text-3xl font-bold">500+</div>
-            <div class="text-sm text-neutral-600">Klien Aktif</div>
-          </div>
-          <div class="text-center">
-            <div class="text-secondary-600 mb-2 text-3xl font-bold">1K+</div>
-            <div class="text-sm text-neutral-600">Community Members</div>
-          </div>
-          <div class="text-center">
-            <div class="text-accent-600 mb-2 text-3xl font-bold">50+</div>
-            <div class="text-sm text-neutral-600">Tech Articles</div>
-          </div>
-          <div class="text-center">
-            <div class="text-primary-600 mb-2 text-3xl font-bold">24/7</div>
-            <div class="text-sm text-neutral-600">Community Support</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section class="section bg-neutral-50">
-    <div class="container">
-      <div class="grid items-center gap-12 lg:grid-cols-2">
-        <div>
-          <h2 class="mb-6 text-3xl font-bold lg:text-4xl">
-            Tentang <span class="text-gradient">Koneksi</span>
+      <div
+        class="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end"
+      >
+        <div class="max-w-2xl">
+          <h2 class="mb-4 text-3xl font-bold text-neutral-900 lg:text-5xl">
+            Layanan Terintegrasi <br />
+            <span class="text-gradient">End-to-End</span>
           </h2>
-          <p class="mb-6 text-xl text-neutral-600">
-            PT Koneksi Jaringan Indonesia - KonXC (dibaca: Koneksi) adalah
-            **rumah milik bersama** untuk komunitas teknologi Indonesia. Kami
-            membangun ekosistem teknologi terintegrasi yang menghubungkan
-            developer, bisnis, dan inovator.
+          <p class="text-xl text-neutral-600">
+            Dari pondasi infrastruktur hingga akselerasi branding digital. Kami
+            hadir di setiap titik sentuh bisnis Anda.
           </p>
-          <p class="mb-8 text-lg text-neutral-600">
-            Dengan 5 divisi yang terintegrasi dan platform komunitas
-            <a
-              href="https://platform.konxc.space"
-              class="text-primary-600 hover:text-primary-700 font-semibold"
-              target="_blank">platform.konxc.space</a
-            >, kami menyediakan solusi teknologi lengkap dari infrastruktur
-            hingga branding digital, khususnya untuk UMKM, sekolah, institusi,
-            dan startup.
-          </p>
-          <div class="flex flex-col gap-4 sm:flex-row">
-            <a href="#contact" class="btn-primary"> Hubungi Kami </a>
-            <a href="/blog" class="btn-secondary"> Baca Blog Kami </a>
-            <a href="/app" class="btn-accent"> Join Komunitas </a>
-          </div>
         </div>
-        <div class="rounded-3xl bg-white p-8 shadow-xl">
-          <div class="grid grid-cols-2 gap-6">
-            <div class="text-center">
-              <div class="text-primary-600 mb-2 text-3xl font-bold">500+</div>
-              <div class="text-sm text-neutral-600">Klien Puas</div>
+        <Button variant="outline" href="#contact">Diskusi Project</Button>
+      </div>
+      <div data-aos="fade-up">
+        <Services />
+      </div>
+    </div>
+  </section>
+
+  <!-- UMKM Focus -->
+  <UmkmEmpowerment />
+
+  <!-- About Highlight -->
+  <section class="relative overflow-hidden bg-neutral-900 py-24 text-white">
+    <div
+      class="bg-primary-600/10 absolute top-0 right-0 h-full w-1/3 rounded-full blur-[120px]"
+    >
+    </div>
+    <div class="relative z-10 container" data-aos="fade-up">
+      <div class="grid items-center gap-16 lg:grid-cols-2">
+        <div>
+          <h2 class="mb-8 text-3xl font-bold lg:text-5xl">
+            Rumah Bersama Komunitas <br /> Teknologi Indonesia
+          </h2>
+          <p class="mb-8 text-xl leading-relaxed text-neutral-400">
+            PT Koneksi Jaringan Indonesia (KonXC) bukan sekadar perusahaan IT.
+            Kami adalah ekosistem yang menghubungkan developer, inovator, dan
+            pebisnis untuk tumbuh bersama.
+          </p>
+          <div class="mb-10 grid grid-cols-2 gap-8">
+            <div>
+              <div class="text-primary-400 mb-1 text-3xl font-bold">
+                10+ Thn
+              </div>
+              <div class="text-sm text-neutral-500 uppercase">Pengalaman</div>
             </div>
-            <div class="text-center">
-              <div class="text-primary-600 mb-2 text-3xl font-bold">10+</div>
-              <div class="text-sm text-neutral-600">Tahun Pengalaman</div>
+            <div>
+              <div class="text-secondary-400 mb-1 text-3xl font-bold">5</div>
+              <div class="text-sm text-neutral-500 uppercase">
+                Divisi Khusus
+              </div>
             </div>
-            <div class="text-center">
-              <div class="text-primary-600 mb-2 text-3xl font-bold">5</div>
-              <div class="text-sm text-neutral-600">Divisi Layanan</div>
+          </div>
+          <Button variant="primary" href="/blog">Eksplorasi Knowledge</Button>
+        </div>
+        <div class="relative">
+          <div
+            class="flex aspect-video items-center justify-center overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-800/50 shadow-2xl"
+          >
+            <div class="p-8 text-center">
+              <div class="mb-4 text-6xl">🤝</div>
+              <div class="mb-2 text-2xl font-bold">Kolaborasi Tanpa Batas</div>
+              <p class="mx-auto max-w-xs text-neutral-500">
+                Membangun masa depan digital Indonesia melalui kekuatan
+                komunitas.
+              </p>
             </div>
-            <div class="text-center">
-              <div class="text-primary-600 mb-2 text-3xl font-bold">24/7</div>
-              <div class="text-sm text-neutral-600">Support</div>
-            </div>
+          </div>
+          <!-- Decorative elements -->
+          <div
+            class="bg-accent-500/20 absolute -right-6 -bottom-6 h-24 w-24 rounded-full blur-2xl"
+          >
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="section bg-white">
-    <div class="container">
-      <div class="mb-16 text-center">
-        <h2 class="mb-4 text-3xl font-bold lg:text-4xl">
-          Siap Memulai Proyek Anda?
-        </h2>
-        <p class="mx-auto max-w-2xl text-xl text-neutral-600">
-          Konsultasikan kebutuhan teknologi bisnis Anda dengan tim ahli kami.
-          Kami siap membantu mewujudkan visi digital Anda.
-        </p>
-      </div>
-
-      <div class="grid gap-12 lg:grid-cols-2">
-        <!-- Contact Form -->
-        <div
-          class="from-primary-50 to-secondary-50 rounded-3xl bg-linear-to-br p-8 shadow-sm lg:p-12"
-        >
-          <form id="contact-form" class="space-y-6">
-            <div class="grid gap-6 sm:grid-cols-2">
-              <div class="space-y-2">
-                <label
-                  for="first_name"
-                  class="text-sm font-semibold text-neutral-700"
-                  >Nama Depan</label
-                >
-                <input
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  required
-                  class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 transition-all outline-none focus:ring-4"
-                  placeholder="John"
-                />
-              </div>
-              <div class="space-y-2">
-                <label
-                  for="last_name"
-                  class="text-sm font-semibold text-neutral-700"
-                  >Nama Belakang</label
-                >
-                <input
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 transition-all outline-none focus:ring-4"
-                  placeholder="Doe"
-                />
-              </div>
-            </div>
-
-            <div class="space-y-2">
-              <label for="email" class="text-sm font-semibold text-neutral-700"
-                >Email Bisnis</label
-              >
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 transition-all outline-none focus:ring-4"
-                placeholder="email@perusahaan.com"
-              />
-            </div>
-
-            <div class="space-y-2">
-              <label
-                for="subject"
-                class="text-sm font-semibold text-neutral-700">Subjek</label
-              >
-              <select
-                id="subject"
-                name="subject"
-                class="focus:border-primary-500 focus:ring-primary-500/10 w-full appearance-none rounded-xl border border-neutral-200 bg-white px-4 py-3 transition-all outline-none focus:ring-4"
-                style='background-image: url("data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"%236B7280\" stroke-width=\"2\"%3E%3Cpath stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M19 9l-7 7-7-7\"%3E%3C/path%3E%3C/svg%3E"); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.25rem;'
-              >
-                <option value="consultation">Konsultasi Layanan</option>
-                <option value="collaboration">Kerjasama / Partnership</option>
-                <option value="contributor">Menjadi Kontributor</option>
-                <option value="other">Tanya Sesuatu yang Lain</option>
-              </select>
-            </div>
-
-            <div class="space-y-2">
-              <label
-                for="message"
-                class="text-sm font-semibold text-neutral-700">Pesan Anda</label
-              >
-              <textarea
-                id="message"
-                name="message"
-                rows="4"
-                required
-                class="focus:border-primary-500 focus:ring-primary-500/10 w-full resize-none rounded-xl border border-neutral-200 bg-white px-4 py-3 transition-all outline-none focus:ring-4"
-                placeholder="Ceritakan tentang project Anda atau pertanyaan Anda..."
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              class="group bg-primary-600 hover:bg-primary-700 relative w-full overflow-hidden rounded-xl px-6 py-4 font-bold text-white shadow-lg transition-all active:scale-95"
-            >
-              <div class="relative z-10 flex items-center justify-center gap-2">
-                <span>Kirim via WhatsApp</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-message-circle transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                >
-                  <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"></path>
-                </svg>
-              </div>
-              <div
-                class="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 group-hover:translate-x-full"
-              >
-              </div>
-            </button>
-          </form>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="space-y-8">
-          <div>
-            <h3 class="mb-6 text-2xl font-bold">Informasi Kontak</h3>
+  <!-- Contact CTA -->
+  <section id="contact" class="bg-white py-24 lg:py-40">
+    <div class="container" data-aos="fade-up">
+      <div class="mx-auto max-w-5xl">
+        <div class="grid items-center gap-12 lg:grid-cols-5">
+          <div class="lg:col-span-2">
+            <h2 class="mb-6 text-4xl font-bold text-neutral-900 lg:text-6xl">
+              Konsultasi <span class="text-gradient">Gratis</span>
+            </h2>
+            <p class="mb-8 text-xl text-neutral-600">
+              Punya ide cemerlang atau butuh solusi cepat? Tim ahli kami siap
+              mendengarkan tantangan bisnis Anda.
+            </p>
             <div class="space-y-4">
-              <div class="flex items-start gap-4">
-                <div class="text-primary-600 text-xl">📍</div>
-                <div>
-                  <div class="font-semibold">Alamat</div>
-                  <div class="text-neutral-600">Jakarta, Indonesia</div>
-                </div>
+              <div class="flex items-center gap-4 text-neutral-700">
+                <span class="text-primary-600 font-bold">📍</span> Jakarta, Indonesia
               </div>
-              <div class="flex items-start gap-4">
-                <div class="text-primary-600 text-xl">📞</div>
-                <div>
-                  <div class="font-semibold">Telepon</div>
-                  <div class="text-neutral-600">+62 882 0079 502010</div>
-                </div>
+              <div class="flex items-center gap-4 text-neutral-700">
+                <span class="text-primary-600 font-bold">✉️</span> info@konxc.space
               </div>
-              <div class="flex items-start gap-4">
-                <div class="text-primary-600 text-xl">✉️</div>
-                <div>
-                  <div class="font-semibold">Email</div>
-                  <div class="text-neutral-600">info@konxc.space</div>
-                </div>
-              </div>
-              <div class="flex items-start gap-4">
-                <div class="text-primary-600 text-xl">🕒</div>
-                <div>
-                  <div class="font-semibold">Jam Kerja</div>
-                  <div class="text-neutral-600">
-                    Senin - Jumat: 09:00 - 18:00
-                  </div>
-                </div>
+              <div class="flex items-center gap-4 font-bold text-neutral-700">
+                <span class="text-primary-600">📞</span> +62 882-0079-52010
               </div>
             </div>
           </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-lg">
-            <h4 class="mb-4 text-lg font-bold">Mengapa Memilih Koneksi?</h4>
-            <ul class="space-y-3 text-neutral-600">
-              <li class="flex items-center gap-3">
-                <span class="text-green-500">✓</span>
-                <span>Solusi teknologi terintegrasi</span>
-              </li>
-              <li class="flex items-center gap-3">
-                <span class="text-green-500">✓</span>
-                <span>Tim berpengalaman 10+ tahun</span>
-              </li>
-              <li class="flex items-center gap-3">
-                <span class="text-green-500">✓</span>
-                <span>Support 24/7</span>
-              </li>
-              <li class="flex items-center gap-3">
-                <span class="text-green-500">✓</span>
-                <span>Harga terjangkau untuk UMKM</span>
-              </li>
-              <li class="flex items-center gap-3">
-                <span class="text-green-500">✓</span>
-                <span>500+ klien puas</span>
-              </li>
-            </ul>
+          <div class="lg:col-span-3">
+            <div
+              class="relative overflow-hidden rounded-[2.5rem] border border-neutral-100 bg-neutral-50 p-8 shadow-xl lg:p-12"
+            >
+              <div
+                class="bg-primary-500/5 absolute top-0 right-0 h-32 w-32 translate-x-1/2 -translate-y-1/2 rounded-full"
+              >
+              </div>
+              <form id="contact-form" class="relative z-10 space-y-6">
+                <div class="grid gap-6 sm:grid-cols-2">
+                  <input
+                    type="text"
+                    name="first_name"
+                    placeholder="Nama Depan"
+                    required
+                    class="focus:ring-primary-500/10 w-full rounded-2xl border border-neutral-200 bg-white px-5 py-4 transition-all outline-none focus:ring-4"
+                  />
+                  <input
+                    type="text"
+                    name="last_name"
+                    placeholder="Nama Belakang"
+                    class="focus:ring-primary-500/10 w-full rounded-2xl border border-neutral-200 bg-white px-5 py-4 transition-all outline-none focus:ring-4"
+                  />
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email Bisnis"
+                  required
+                  class="focus:ring-primary-500/10 w-full rounded-2xl border border-neutral-200 bg-white px-5 py-4 transition-all outline-none focus:ring-4"
+                />
+                <select
+                  name="subject"
+                  class="focus:ring-primary-500/10 w-full cursor-pointer appearance-none rounded-2xl border border-neutral-200 bg-white px-5 py-4 transition-all outline-none focus:ring-4"
+                >
+                  <option value="consultation">Konsultasi Layanan</option>
+                  <option value="collaboration">Kerjasama / Partnership</option>
+                  <option value="other">Pertanyaan Umum</option>
+                </select>
+                <textarea
+                  name="message"
+                  rows="4"
+                  placeholder="Ceritakan kebutuhan Anda..."
+                  required
+                  class="focus:ring-primary-500/10 w-full resize-none rounded-2xl border border-neutral-200 bg-white px-5 py-4 transition-all outline-none focus:ring-4"
+                ></textarea>
+                <button
+                  type="submit"
+                  class="flex w-full items-center justify-center gap-3 rounded-2xl bg-neutral-900 py-5 font-bold text-white shadow-xl shadow-neutral-900/10 transition-all hover:bg-black active:scale-[0.98]"
+                >
+                  Kirim via WhatsApp
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-arrow-right"
+                    ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"
+                    ></path></svg
+                  >
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -395,42 +212,22 @@ import Services from "@components/sections/Services.astro";
       const formData = new FormData(form);
       const data = Object.fromEntries(formData);
 
-      // Construct WhatsApp message
-      const phoneNumber = "62882007952010"; // International format
+      const phoneNumber = "62882007952010";
       const fullName = `${data.first_name} ${data.last_name || ""}`.trim();
-      const subjectMap: Record<string, string> = {
-        consultation: "Konsultasi Layanan",
-        collaboration: "Kerjasama / Partnership",
-        contributor: "Menjadi Kontributor",
-        other: "Tanya Sesuatu yang Lain",
-      };
 
-      const subject =
-        subjectMap[data.subject as string] || (data.subject as string);
+      const message = `*Halo KonXC!*\n\n*Nama:* ${fullName}\n*Email:* ${data.email}\n*Subjek:* ${data.subject}\n\n*Pesan:*\n${data.message}`;
 
-      const message = `*Nama:* ${fullName}\n*Email:* ${data.email}\n*Subjek:* ${subject}\n\n*Pesan:*\n${data.message}`;
-
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-        "Halo KonXC, saya tertarik konsultasi:\n\n" + message,
-      )}`;
-
-      // Open WhatsApp
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, "_blank");
 
-      // Feedback UI
       const button = form.querySelector('button[type="submit"]');
       if (button) {
-        const originalContent = button.innerHTML;
-        button.innerHTML = "<span>Mengarahkan ke WhatsApp...</span>";
-        button.classList.remove("bg-primary-600");
-        button.classList.add("bg-green-600");
-
+        button.innerHTML = "Mengarahkan...";
         setTimeout(() => {
-          button.innerHTML = originalContent;
-          button.classList.remove("bg-green-600");
-          button.classList.add("bg-primary-600");
+          button.innerHTML =
+            'Kirim via WhatsApp <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
           form.reset();
-        }, 3000);
+        }, 2000);
       }
     });
   }

@@ -1,0 +1,103 @@
+---
+const pillars = [
+    {
+        title: "Pendampingan Teknologi",
+        description:
+            "Kami tidak hanya membangun sistem, tapi mendampingi implementasi di setiap langkah operasional harian Anda.",
+        icon: "🤝",
+        color: "primary",
+    },
+    {
+        title: "Biaya Terjangkau",
+        description:
+            "Model bisnis yang dirancang khusus untuk skala UMKM tanpa mengorbankan kualitas standar enterprise.",
+        icon: "💎",
+        color: "secondary",
+    },
+    {
+        title: "Support 24/7",
+        description:
+            "Tim teknis kami siap siaga membantu kapan pun kendala muncul, menjaga bisnis Anda tetap berjalan.",
+        icon: "⚡",
+        color: "accent",
+    },
+];
+---
+
+<section class="section relative bg-white lg:py-40">
+    <div class="container">
+        <div class="grid items-center gap-20 lg:grid-cols-2">
+            <div data-aos="fade-up">
+                <h2
+                    class="mb-8 text-4xl font-bold tracking-tight text-neutral-900 lg:text-5xl"
+                >
+                    Komitmen Kami untuk <span class="text-gradient"
+                        >UMKM Indonesia</span
+                    >
+                </h2>
+                <p class="mb-10 text-xl leading-relaxed text-neutral-600">
+                    Digitalisasi bukan sekadar tren, tapi kebutuhan untuk
+                    bertahan. KonXC hadir sebagai partner strategis yang
+                    menghilangkan hambatan teknologi bagi para pelaku usaha.
+                </p>
+
+                <div class="space-y-8">
+                    {
+                        pillars.map((pillar) => (
+                            <div class="group flex gap-6">
+                                <div
+                                    class={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-${pillar.color}-50 text-2xl transition-colors duration-300 group-hover:bg-${pillar.color}-100`}
+                                >
+                                    {pillar.icon}
+                                </div>
+                                <div>
+                                    <h3 class="mb-2 text-xl font-bold text-neutral-900">
+                                        {pillar.title}
+                                    </h3>
+                                    <p class="leading-relaxed text-neutral-600">
+                                        {pillar.description}
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div class="relative" data-aos="zoom-in">
+                <!-- Floating UI Mockup Representation -->
+                <div class="rounded-3xl bg-neutral-900 p-8 shadow-2xl lg:p-12">
+                    <div class="mb-10 flex items-center justify-between">
+                        <div class="h-3 w-20 rounded-full bg-neutral-700"></div>
+                        <div class="bg-primary-500 h-8 w-8 rounded-full"></div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="h-10 w-full rounded-xl bg-neutral-800">
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="h-24 rounded-xl bg-neutral-800"></div>
+                            <div class="h-24 rounded-xl bg-neutral-800"></div>
+                            <div class="h-24 rounded-xl bg-neutral-800"></div>
+                        </div>
+                        <div
+                            class="from-primary-500/20 to-secondary-500/20 h-40 w-full rounded-xl border border-neutral-700 bg-linear-to-br"
+                        >
+                        </div>
+                    </div>
+                    <div class="mt-10 flex justify-center">
+                        <div
+                            class="bg-primary-600 shadow-primary-500/20 h-12 w-40 rounded-full shadow-xl"
+                        >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decorative Glow -->
+                <div
+                    class="bg-primary-500/20 absolute inset-0 -z-10 translate-y-20 scale-110 rounded-full blur-[100px]"
+                >
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
