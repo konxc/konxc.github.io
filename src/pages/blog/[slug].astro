@@ -56,7 +56,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
   <BlogPostHero post={post} />
 
   <!-- Main Content Layout -->
-  <section class="bg-white py-10 md:py-14 dark:bg-[var(--dark-bg-primary)]">
+  <section class="bg-site py-10 md:py-14">
     <div class="container">
       <div class="mx-auto max-w-6xl">
         <ArticleSeries currentPostSlug={post.slug} />
@@ -121,7 +121,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
 
   /* Professional Blog Content Typography */
   .blog-content {
-    @apply text-neutral-800 antialiased;
+    @apply text-on-site antialiased;
     font-family: var(--font-body);
     font-size: 1.125rem;
     line-height: 1.55;
@@ -131,7 +131,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
   .blog-content :global(h2),
   .blog-content :global(h3),
   .blog-content :global(h4) {
-    @apply font-bold tracking-tight text-neutral-900;
+    @apply font-bold tracking-tight text-on-site;
     font-family: var(--font-heading);
     line-height: 1.2;
     margin-top: 1.25rem;
@@ -145,7 +145,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
   }
   .blog-content :global(h2) {
     @apply mt-6 text-2xl lg:text-3xl;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--color-border-site);
   }
   .blog-content :global(h3) {
     @apply mt-5 text-xl lg:text-2xl;
@@ -160,7 +160,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
 
   /* Lead paragraph special styling */
   .blog-content :global(p:first-of-type) {
-    @apply mb-4 text-lg leading-relaxed font-medium text-neutral-700 lg:text-xl;
+    @apply mb-4 text-lg leading-relaxed font-medium text-on-muted lg:text-xl;
   }
 
   /* Links */
@@ -190,10 +190,10 @@ const relatedArticles = await getRelatedArticles(post, 4);
 
   /* Blockquotes - Modern Minimalist */
   .blog-content :global(blockquote) {
-    @apply border-primary-500 my-4 rounded-r-2xl border-l-4 bg-neutral-50/50 px-5 py-3 italic;
+    @apply border-primary-500 my-4 rounded-r-2xl border-l-4 bg-muted px-5 py-3 italic;
     font-size: 1.1rem;
     line-height: 1.5;
-    color: var(--color-neutral-600);
+    @apply text-on-muted;
   }
 
   /* Code Blocks */
@@ -201,7 +201,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
     @apply mt-0 mb-4 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-sm text-neutral-200 shadow-lg;
   }
   .blog-content :global(code) {
-    @apply text-primary-700 rounded-md bg-neutral-100 px-1 py-0.5 font-mono text-xs font-medium;
+    @apply text-primary-700 rounded-md bg-muted px-1 py-0.5 font-mono text-xs font-medium;
   }
   .blog-content :global(pre code) {
     @apply bg-transparent p-0 text-inherit;
@@ -212,7 +212,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
     @apply my-5 h-auto w-full rounded-xl shadow-lg transition-transform duration-500 hover:scale-[1.005];
   }
   .blog-content :global(figcaption) {
-    @apply mt-2 text-center text-xs text-neutral-500 italic;
+    @apply mt-2 text-center text-xs text-on-muted italic;
   }
 
   /* Tables */
@@ -220,43 +220,15 @@ const relatedArticles = await getRelatedArticles(post, 4);
     @apply my-4 w-full border-collapse text-left text-sm;
   }
   .blog-content :global(th) {
-    @apply border-b border-neutral-200 bg-neutral-50/50 px-2 py-1.5 font-bold text-neutral-900;
+    @apply border-b border-border-site bg-muted px-2 py-1.5 font-bold text-on-site;
   }
   .blog-content :global(td) {
-    @apply border-b border-neutral-100 px-2 py-1.5 text-neutral-600;
+    @apply border-b border-border-site px-2 py-1.5 text-on-muted;
   }
 
-  /* Dark Mode Overrides */
-  .dark .blog-content {
-    @apply text-neutral-300;
-  }
-  .dark .blog-content :global(h1),
-  .dark .blog-content :global(h2),
-  .dark .blog-content :global(h3) {
-    @apply text-white;
-  }
-  .dark .blog-content :global(p:first-of-type) {
-    @apply text-neutral-200;
-  }
-  .dark .blog-content :global(blockquote) {
-    @apply border-primary-400 bg-white/5 text-neutral-400;
-  }
+  /* Dark Mode Overrides - Simplified by Tokens */
   .dark .blog-content :global(code) {
-    @apply text-primary-300 bg-white/10;
-  }
-  .dark .blog-content :global(th) {
-    @apply border-neutral-800 bg-white/5 text-white;
-  }
-  .dark .blog-content :global(td) {
-    @apply border-neutral-800 text-neutral-400;
-  }
-  .dark .blog-content :global(h2) {
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  /* Enhanced Dark Mode Links & Markers */
-  .dark .blog-content :global(a) {
-    @apply text-primary-400 decoration-primary-800 hover:text-primary-300 hover:decoration-primary-500;
+    @apply text-primary-300;
   }
   .dark .blog-content :global(li::marker) {
     @apply text-primary-400;

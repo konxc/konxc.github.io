@@ -10,11 +10,11 @@ const baseClasses =
   "transition-all duration-300 hover:-translate-y-2 hover:shadow-xl";
 
 const variantClasses = {
-  default: "bg-white rounded-2xl p-6 shadow-lg border border-neutral-100",
+  default: "bg-[var(--bg-base)] rounded-2xl p-6 shadow-[var(--shadow-base)] border border-[var(--border-base)]",
   featured:
-    "bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-8 shadow-lg border border-primary-100",
+    "card-featured rounded-2xl p-8 shadow-lg border border-primary-100 dark:border-primary-800/30",
   outline:
-    "bg-transparent rounded-2xl p-6 border-2 border-neutral-200 hover:border-primary-300",
+    "bg-transparent rounded-2xl p-6 border-2 border-[var(--border-base)] hover:border-primary-300 dark:hover:border-primary-700",
 };
 
 const classes = `${baseClasses} ${variantClasses[variant]} ${className}`;

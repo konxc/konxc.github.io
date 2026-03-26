@@ -231,165 +231,99 @@ const contactInfo = {
   </div>
 </footer>
 
-<style>
+<style is:global>
   @reference "@/styles/global.css";
-  .footer {
-    @apply bg-neutral-900 text-white;
-  }
-  
-  .footer.extended {
-    @apply bg-linear-to-b from-neutral-800 to-neutral-900;
-  }
-  
-  .footer.minimal {
-    @apply bg-neutral-800;
-  }
 
-  /* Newsletter Section - Now handled by NewsletterSection component */
+  /* === Footer Base — menggunakan semantic tokens — otomatis dark-aware === */
+  .footer {
+    background-color: var(--bg-muted);
+    color: var(--text-base);
+  }
+  .footer.extended {
+    background: linear-gradient(to bottom, var(--bg-subtle), var(--bg-muted));
+  }
+  .footer.minimal {
+    background-color: var(--bg-subtle);
+  }
 
   /* Main Footer */
-  .footer-main {
-    @apply py-16 md:py-20;
-  }
-  
-  .footer-content {
-    @apply grid lg:grid-cols-2;
-    gap: var(--spacing-content-gap);
-  }
-  
-  .footer-section {
-    margin-bottom: var(--spacing-content-gap);
-  }
+  .footer-main { @apply py-16 md:py-20; }
+  .footer-content { @apply grid lg:grid-cols-2; gap: var(--spacing-content-gap); }
+  .footer-section { margin-bottom: var(--spacing-content-gap); }
 
   /* Company Info */
-  .footer-brand {
-    @apply space-y-4;
-  }
-  
-  .brand-logo {
-    @apply flex items-center gap-3;
-  }
-  
-  .logo-image {
-    @apply w-8 h-8;
-  }
-  
-  .brand-name {
-    @apply text-2xl font-bold;
-  }
-  
+  .footer-brand    { @apply space-y-4; }
+  .brand-name      { @apply text-2xl font-bold; }
+
   .company-description {
-    @apply text-neutral-300 leading-relaxed;
-  }
-  
-  .contact-info {
-    @apply space-y-3;
-  }
-  
-  .contact-item {
-    @apply flex items-center gap-3;
-  }
-  
-  .contact-link {
-    @apply text-neutral-300 hover:text-white transition-colors;
-  }
-  
-  .contact-text {
-    @apply text-neutral-300;
+    @apply leading-relaxed;
+    color: var(--text-muted);
   }
 
+  .contact-info  { @apply space-y-3; }
+  .contact-item  { @apply flex items-center gap-3; }
+
+  .contact-link  {
+    @apply transition-colors;
+    color: var(--text-muted);
+    &:hover { color: var(--text-base); }
+  }
+
+  .contact-text  { color: var(--text-muted); }
+
   /* Quick Links */
-  .links-grid {
-    @apply grid grid-cols-2 md:grid-cols-4 gap-8;
+  .links-grid   { @apply grid grid-cols-2 md:grid-cols-4 gap-8; }
+  .links-column { @apply space-y-4; }
+  .links-list   { @apply space-y-2; }
+
+  .links-title  {
+    @apply font-semibold mb-4;
+    color: var(--text-base);
   }
-  
-  .links-column {
-    @apply space-y-4;
-  }
-  
-  .links-title {
-    @apply font-semibold text-white mb-4;
-  }
-  
-  .links-list {
-    @apply space-y-2;
-  }
-  
-  .footer-link {
-    @apply text-neutral-300 hover:text-white transition-colors block;
+
+  .footer-link  {
+    @apply transition-colors block;
+    color: var(--text-placeholder);
+    &:hover { color: var(--text-base); }
   }
 
   /* Footer Bottom */
   .footer-bottom {
-    @apply border-t border-neutral-700 py-6;
+    @apply border-t py-6;
+    border-color: var(--border-subtle);
   }
-  
-  .footer-bottom-content {
-    @apply flex flex-col md:flex-row justify-between items-center gap-4;
+
+  .footer-bottom-content { @apply flex flex-col md:flex-row justify-between items-center gap-4; }
+  .copyright             { @apply text-center md:text-left; }
+
+  .copyright p  { @apply mb-2; color: var(--text-placeholder); }
+
+  .legal-links  { @apply flex gap-4 text-sm; }
+  .legal-link   {
+    @apply transition-colors;
+    color: var(--text-placeholder);
+    &:hover { color: var(--text-base); }
   }
-  
-  .copyright {
-    @apply text-center md:text-left;
-  }
-  
-  .copyright p {
-    @apply text-neutral-400 mb-2;
-  }
-  
-  .legal-links {
-    @apply flex gap-4 text-sm;
-  }
-  
-  .legal-link {
-    @apply text-neutral-400 hover:text-white transition-colors;
-  }
-  
-  .social-links {
-    @apply flex items-center gap-4;
-  }
-  
-  .social-label {
-    @apply text-neutral-400 text-sm;
-  }
-  
-  .social-icons {
-    @apply flex gap-3;
-  }
-  
-  .social-icon {
-    @apply w-10 h-10 bg-neutral-700 rounded-lg flex items-center justify-center text-neutral-300 hover:bg-primary-600 hover:text-white transition-colors;
+
+  .social-links  { @apply flex items-center gap-4; }
+  .social-label  { @apply text-sm; color: var(--text-placeholder); }
+
+  .social-icons  { @apply flex gap-3; }
+  .social-icon   {
+    @apply w-10 h-10 rounded-lg flex items-center justify-center transition-colors;
+    background-color: var(--border-base);
+    color: var(--text-muted);
+    &:hover {
+      background-color: var(--color-primary-600);
+      color: #fff;
+    }
   }
 
   /* Responsive */
   @media (max-width: 768px) {
-    .newsletter-content {
-      @apply px-4;
-    }
-    
-    .form-group {
-      @apply flex-col;
-    }
-    
-    .newsletter-button {
-      @apply justify-center;
-    }
-    
-    .links-grid {
-      @apply grid-cols-2 gap-6;
-    }
-    
-    .footer-bottom-content {
-      @apply text-center;
-    }
-    
-    .legal-links {
-      @apply justify-center;
-    }
-  }
-
-  /* Dark mode (if needed) */
-  .dark .footer {
-    @apply bg-neutral-900;
+    .links-grid            { @apply grid-cols-2 gap-6; }
+    .footer-bottom-content { @apply text-center; }
+    .legal-links           { @apply justify-center; }
   }
 </style>
 

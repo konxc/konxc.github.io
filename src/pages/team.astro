@@ -31,13 +31,12 @@ const coreTeam = [
   description="Kenali barisan pemimpin dan spesialis di balik ekosistem digital KonXC."
   showNewsletter={false}
   headerVariant="transparent"
-  theme="dark"
 >
   <!-- 1. Hero Section -->
-  <section class="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-32">
-    <div class="absolute inset-0 -z-10 bg-[#0a0a0b]">
+  <section class="relative overflow-hidden bg-site pt-24 pb-20 md:pt-32 md:pb-32">
+    <div class="absolute inset-0 -z-10 overflow-hidden opacity-30">
       <div
-        class="bg-primary-600/10 absolute top-0 right-0 h-[400px] w-[400px] rounded-full blur-[150px]"
+        class="bg-primary-600/10 absolute top-0 right-0 h-[400px] w-[400px] rounded-full blur-[150px] dark:bg-primary-900/20"
       >
       </div>
     </div>
@@ -50,15 +49,12 @@ const coreTeam = [
           // The Core Crew
         </div>
         <h1
-          class="mb-8 text-5xl font-black tracking-tighter text-white uppercase md:text-8xl"
+          class="mb-8 text-5xl font-black tracking-tighter text-on-site uppercase md:text-8xl"
         >
           MODERN <br />
-          <span
-            class="from-primary-400 bg-gradient-to-r to-indigo-400 bg-clip-text text-transparent"
-            >ARCHITECTS</span
-          >.
+          <span class="text-gradient">ARCHITECTS</span>.
         </h1>
-        <p class="text-lg leading-relaxed text-neutral-400 md:text-xl">
+        <p class="text-lg leading-relaxed text-on-muted md:text-xl">
           Kami adalah tim kecil yang berfokus pada dampak besar. Berdedikasi
           untuk membangun solusi teknologi yang tidak hanya berfungsi, tapi juga
           menginspirasi.
@@ -68,31 +64,31 @@ const coreTeam = [
   </section>
 
   <!-- 2. Team Grid -->
-  <section class="bg-[#0a0a0b] py-24">
+  <section class="bg-site py-24">
     <div class="container">
       <div class="grid gap-8 md:grid-cols-3">
         {
           coreTeam.map((member) => (
-            <div class="group relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-white/5 p-10 transition-all hover:bg-white/10">
-              <div class="relative mb-8 h-32 w-32 overflow-hidden rounded-full bg-neutral-800">
+            <div class="group relative overflow-hidden rounded-[2.5rem] border border-border-site bg-surface p-10 transition-all hover:bg-muted">
+              <div class="relative mb-8 h-32 w-32 overflow-hidden rounded-full bg-muted">
                 {/* Placeholder Avatar */}
-                <div class="absolute inset-0 flex items-center justify-center text-4xl font-black text-white/10 uppercase">
+                <div class="absolute inset-0 flex items-center justify-center text-4xl font-black text-on-site/10 uppercase">
                   {member.name[0]}
                 </div>
               </div>
 
-              <h3 class="mb-2 text-2xl font-black text-white">{member.name}</h3>
-              <div class="text-primary-500 mb-6 text-xs font-black tracking-widest uppercase">
+              <h3 class="mb-2 text-2xl font-black text-on-site">{member.name}</h3>
+              <div class="text-primary-600 dark:text-primary-500 mb-6 text-xs font-black tracking-widest uppercase">
                 {member.role}
               </div>
 
-              <p class="mb-8 text-sm leading-relaxed text-neutral-400">
+              <p class="mb-8 text-sm leading-relaxed text-on-muted">
                 {member.bio}
               </p>
 
               <div class="mb-10 flex flex-wrap gap-2">
                 {member.expertise.map((skill) => (
-                  <span class="rounded-lg bg-white/5 px-3 py-1 text-[9px] font-bold text-nowrap text-neutral-300 uppercase ring-1 ring-white/10">
+                  <span class="rounded-lg bg-muted px-3 py-1 text-[9px] font-bold text-nowrap text-on-muted uppercase ring-1 ring-border-site">
                     {skill}
                   </span>
                 ))}
@@ -101,7 +97,7 @@ const coreTeam = [
               <div class="flex gap-4">
                 <a
                   href={member.social.github}
-                  class="text-neutral-500 transition-colors hover:text-white"
+                  class="text-on-muted transition-colors hover:text-primary-600 dark:hover:text-primary-400"
                 >
                   <span class="sr-only">GitHub</span>
                   <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -117,9 +113,8 @@ const coreTeam = [
   </section>
 
   <style>
-    @reference "@/styles/global.css";
-    :global(body) {
-      @apply bg-[#0a0a0b] antialiased;
+    section {
+      @apply relative overflow-hidden;
     }
   </style>
 </UnifiedLayout>

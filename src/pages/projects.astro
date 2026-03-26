@@ -59,13 +59,12 @@ const categories = [
   description="Koleksi proyek mercusuar dan solusi teknologi yang telah kami kembangkan untuk memberdayakan komunitas dan bisnis."
   showNewsletter={false}
   headerVariant="transparent"
-  theme="dark"
 >
   <!-- 1. Hero Section -->
-  <section class="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-32">
-    <div class="absolute inset-0 -z-10 bg-[#0a0a0b]">
+  <section class="relative overflow-hidden bg-site pt-24 pb-20 md:pt-32 md:pb-32">
+    <div class="absolute inset-0 -z-10 overflow-hidden opacity-30">
       <div
-        class="absolute right-1/4 bottom-0 h-[500px] w-[500px] rounded-full bg-teal-500/10 blur-[150px]"
+        class="absolute right-1/4 bottom-0 h-[500px] w-[500px] rounded-full bg-teal-500/10 blur-[150px] dark:bg-teal-900/20"
       >
       </div>
     </div>
@@ -80,14 +79,11 @@ const categories = [
           <span class="bg-primary-500 h-px w-8"></span>
         </div>
         <h1
-          class="mb-8 text-5xl font-black tracking-tight text-white md:text-8xl"
+          class="mb-8 text-5xl font-black tracking-tight text-on-site md:text-8xl"
         >
-          IMPACT BY <span
-            class="inline-block bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text px-2 text-transparent"
-            >CODE</span
-          >.
+          IMPACT BY <span class="text-gradient-accent px-2">CODE</span>.
         </h1>
-        <p class="mx-auto max-w-2xl text-lg text-neutral-400">
+        <p class="mx-auto max-w-2xl text-lg text-on-muted">
           Dari sistem pemerintahan desa hingga alat keamanan siber, kode kami
           membangun infrastruktur digital masa depan Indonesia.
         </p>
@@ -96,13 +92,13 @@ const categories = [
   </section>
 
   <!-- 2. Portfolio Grid -->
-  <section class="bg-[#0a0a0b] py-24">
+  <section class="bg-site py-24">
     <div class="container">
-      <!-- Category Filter (Visual Only for now) -->
+      <!-- Category Filter -->
       <div class="mb-16 flex flex-wrap justify-center gap-4">
         {
           categories.map((cat) => (
-            <button class="hover:border-primary-500 rounded-full border border-white/10 bg-white/5 px-6 py-2 text-xs font-black tracking-widest text-neutral-400 uppercase transition-all hover:text-white">
+            <button class="hover:border-primary-500 rounded-full border border-border-site bg-muted px-6 py-2 text-xs font-black tracking-widest text-on-muted uppercase transition-all hover:bg-surface hover:text-on-site">
               {cat}
             </button>
           ))
@@ -112,36 +108,36 @@ const categories = [
       <div class="grid gap-12 md:grid-cols-2">
         {
           projects.map((project) => (
-            <div class="group relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-white/5 transition-all duration-500 hover:bg-white/[0.08]">
+            <div class="group relative overflow-hidden rounded-[2.5rem] border border-border-site bg-surface transition-all duration-500 hover:bg-muted">
               {/* Project Image Placeholder/Preview */}
-              <div class="relative aspect-video overflow-hidden bg-neutral-800">
-                <div class="absolute inset-0 bg-gradient-to-t from-neutral-900 to-transparent opacity-60" />
-                <div class="absolute inset-0 flex rotate-12 items-center justify-center text-4xl font-black tracking-[0.5em] text-white/5 uppercase">
+              <div class="relative aspect-video overflow-hidden bg-muted">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-60" />
+                <div class="absolute inset-0 flex rotate-12 items-center justify-center text-4xl font-black tracking-[0.5em] text-on-site/5 uppercase">
                   {project.title.split(" ")[0]}
                 </div>
               </div>
 
               <div class="p-10">
                 <div class="mb-4 flex items-center justify-between">
-                  <span class="text-primary-400 text-[10px] font-black tracking-widest uppercase">
+                  <span class="text-primary-500 text-[10px] font-black tracking-widest uppercase">
                     {project.category}
                   </span>
-                  <span class="rounded-full bg-teal-500/10 px-3 py-1 text-[10px] font-black text-teal-400 uppercase ring-1 ring-teal-500/20">
+                  <span class="rounded-full bg-teal-500/10 px-3 py-1 text-[10px] font-black text-teal-600 dark:text-teal-400 uppercase ring-1 ring-teal-500/20">
                     {project.impact}
                   </span>
                 </div>
 
-                <h3 class="group-hover:text-primary-400 mb-4 text-3xl font-black tracking-tight text-white transition-colors">
+                <h3 class="group-hover:text-primary-600 mb-4 text-3xl font-black tracking-tight text-on-site transition-colors dark:group-hover:text-primary-400">
                   {project.title}
                 </h3>
 
-                <p class="mb-8 leading-relaxed text-neutral-400">
+                <p class="mb-8 leading-relaxed text-on-muted">
                   {project.description}
                 </p>
 
                 <div class="mb-10 flex flex-wrap gap-3">
                   {project.tags.map((tag) => (
-                    <span class="border-b border-white/10 pb-1 text-[9px] font-black tracking-widest text-neutral-500 uppercase">
+                    <span class="border-b border-border-site pb-1 text-[9px] font-black tracking-widest text-on-muted uppercase">
                       #{tag}
                     </span>
                   ))}
@@ -149,7 +145,7 @@ const categories = [
 
                 <a
                   href={project.link}
-                  class="group-hover:text-primary-400 inline-flex items-center gap-3 text-xs font-black tracking-[0.2em] text-white uppercase transition-all"
+                  class="group-hover:text-primary-600 inline-flex items-center gap-3 text-xs font-black tracking-[0.2em] text-on-site uppercase transition-all dark:group-hover:text-primary-400"
                 >
                   View Operations
                   <svg
@@ -175,19 +171,19 @@ const categories = [
   </section>
 
   <!-- 3. Collaboration CTA -->
-  <section class="bg-[#0a0a0b] py-24">
+  <section class="bg-muted py-24">
     <div class="container">
       <div class="flex flex-col items-center text-center">
-        <h2 class="mb-8 text-4xl font-black text-white md:text-6xl">
+        <h2 class="mb-8 text-4xl font-black text-on-site md:text-6xl">
           Building something <br /> disruptive?
         </h2>
-        <p class="mb-12 max-w-xl text-lg text-neutral-400">
+        <p class="mb-12 max-w-xl text-lg text-on-muted">
           Kami selalu mencari proyek inovatif berikutnya untuk dikolaborasikan.
           Mari buat dampak nyata bersama.
         </p>
         <a
           href="/contact"
-          class="from-primary-600 rounded-full bg-gradient-to-br to-indigo-700 px-12 py-5 font-black tracking-widest text-white transition-all hover:scale-105 hover:shadow-2xl"
+          class="bg-primary-600 rounded-full px-12 py-5 font-black tracking-widest text-white transition-all hover:scale-105 active:scale-95 hover:shadow-xl"
         >
           INITIATE CONTACT
         </a>
@@ -196,12 +192,6 @@ const categories = [
   </section>
 
   <style>
-    @reference "@/styles/global.css";
-
-    :global(body) {
-      @apply bg-[#0a0a0b] antialiased;
-    }
-
     section {
       @apply relative overflow-hidden;
     }

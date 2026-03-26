@@ -13,22 +13,24 @@ const description =
   footerVariant="extended"
   showNewsletter={false}
 >
-  <main class="min-h-screen bg-neutral-50">
+  <main class="min-h-screen bg-site text-on-site">
     <!-- Hero Section -->
-    <section class="section from-primary-50 to-secondary-50 bg-gradient-to-br">
+    <section
+      class="section bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-[var(--bg-base)] dark:to-[var(--bg-base)]"
+    >
       <div class="container">
         <div class="mx-auto max-w-4xl text-center">
           <h1 class="mb-6 text-4xl font-bold lg:text-5xl">
             Kebijakan <span class="text-gradient">Privasi</span>
           </h1>
-          <p class="mb-8 text-xl text-neutral-600">
+          <p class="mb-8 text-xl text-on-muted">
             Komitmen kami untuk melindungi privasi dan keamanan data pribadi
             Anda
           </p>
           <div
-            class="border-primary-100 rounded-2xl border bg-white p-6 shadow-lg"
+            class="rounded-2xl border border-border-site bg-surface p-6 shadow-lg"
           >
-            <p class="text-sm text-neutral-600">
+            <p class="text-sm text-on-muted">
               <strong>Terakhir diperbarui:</strong> 25 Oktober 2024
             </p>
           </div>
@@ -43,12 +45,12 @@ const description =
           <div class="prose prose-lg max-w-none">
             <!-- Introduction -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-4 text-2xl font-bold">
+              <h2 class="mb-4 text-2xl font-bold text-primary-600">
                 Pendahuluan
               </h2>
-              <p class="leading-relaxed text-neutral-600">
+              <p class="leading-relaxed text-on-muted">
                 PT Koneksi Jaringan Indonesia ("KonXC", "kami", "kita")
                 berkomitmen untuk melindungi privasi dan keamanan informasi
                 pribadi Anda. Kebijakan Privasi ini menjelaskan bagaimana kami
@@ -57,7 +59,7 @@ const description =
                   >konxc.space</strong
                 > dan layanan kami.
               </p>
-              <p class="mt-4 leading-relaxed text-neutral-600">
+              <p class="mt-4 leading-relaxed text-on-muted">
                 Dengan menggunakan layanan kami, Anda menyetujui pengumpulan dan
                 penggunaan informasi sesuai dengan kebijakan ini.
               </p>
@@ -65,16 +67,16 @@ const description =
 
             <!-- Information We Collect -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Informasi yang Kami Kumpulkan
               </h2>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 1. Informasi yang Anda Berikan
               </h3>
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   Nama lengkap dan informasi kontak (email, nomor telepon)
                 </li>
@@ -89,10 +91,10 @@ const description =
                 <li>Feedback, review, dan komentar yang Anda berikan</li>
               </ul>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 2. Informasi yang Dikumpulkan Otomatis
               </h3>
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>Alamat IP dan informasi perangkat</li>
                 <li>
                   Data penggunaan website (halaman yang dikunjungi, waktu
@@ -103,10 +105,10 @@ const description =
                 <li>Data analytics untuk meningkatkan layanan</li>
               </ul>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 3. Informasi dari Pihak Ketiga
               </h3>
-              <ul class="list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   Informasi dari platform media sosial (jika Anda menghubungkan
                   akun)
@@ -118,16 +120,16 @@ const description =
 
             <!-- How We Use Information -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Bagaimana Kami Menggunakan Informasi
               </h2>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Tujuan Penggunaan:
               </h3>
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   <strong>Penyediaan Layanan:</strong> Memberikan layanan IT, konsultasi,
                   dan solusi teknologi
@@ -153,10 +155,10 @@ const description =
                 </li>
               </ul>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Dasar Hukum Pemrosesan:
               </h3>
-              <ul class="list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="list-inside list-disc space-y-2 text-on-muted">
                 <li>Persetujuan yang Anda berikan</li>
                 <li>Pelaksanaan kontrak layanan</li>
                 <li>Kepentingan bisnis yang sah</li>
@@ -166,19 +168,19 @@ const description =
 
             <!-- Information Sharing -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Pembagian Informasi
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kami tidak menjual, menyewakan, atau memperdagangkan informasi
                 pribadi Anda kepada pihak ketiga. Kami hanya membagikan
                 informasi dalam situasi berikut:
               </p>
 
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   <strong>Penyedia Layanan:</strong> Partner teknologi yang membantu
                   operasional (hosting, analytics, email)
@@ -200,10 +202,8 @@ const description =
                 </li>
               </ul>
 
-              <div
-                class="bg-primary-50 border-primary-200 rounded-xl border p-4"
-              >
-                <p class="text-primary-700 font-medium">
+              <div class="callout-info">
+                <p class="font-medium">
                   <strong>Catatan:</strong> Semua pihak ketiga yang bekerja dengan
                   kami diwajibkan untuk menjaga kerahasiaan dan keamanan informasi
                   Anda sesuai dengan standar yang ketat.
@@ -213,22 +213,22 @@ const description =
 
             <!-- Data Security -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Keamanan Data
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kami menerapkan langkah-langkah keamanan teknis dan organisasi
                 yang sesuai untuk melindungi informasi pribadi Anda dari akses
                 yang tidak sah, perubahan, pengungkapan, atau penghancuran.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Langkah Keamanan:
               </h3>
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>Enkripsi data saat transmisi dan penyimpanan</li>
                 <li>Kontrol akses yang ketat dan autentikasi multi-faktor</li>
                 <li>Monitoring keamanan 24/7</li>
@@ -237,10 +237,8 @@ const description =
                 <li>Audit keamanan berkala</li>
               </ul>
 
-              <div
-                class="bg-warning-50 border-warning-200 rounded-xl border p-4"
-              >
-                <p class="text-warning-700 font-medium">
+              <div class="callout-warning">
+                <p class="font-medium">
                   <strong>Penting:</strong> Meskipun kami menerapkan langkah keamanan
                   terbaik, tidak ada sistem yang 100% aman. Kami tidak dapat menjamin
                   keamanan absolut data Anda.
@@ -250,17 +248,17 @@ const description =
 
             <!-- Your Rights -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Hak-Hak Anda
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Anda memiliki hak-hak berikut terkait informasi pribadi Anda:
               </p>
 
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   <strong>Hak Akses:</strong> Meminta salinan informasi pribadi yang
                   kami miliki
@@ -291,10 +289,8 @@ const description =
                 </li>
               </ul>
 
-              <div
-                class="bg-secondary-50 border-secondary-200 rounded-xl border p-4"
-              >
-                <p class="text-secondary-700 font-medium">
+              <div class="callout-success">
+                <p class="font-medium">
                   Untuk menggunakan hak-hak ini, hubungi kami di:
                   <a
                     href="mailto:privacy@konxc.space"
@@ -307,21 +303,21 @@ const description =
 
             <!-- Cookies -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Cookies dan Teknologi Pelacakan
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kami menggunakan cookies dan teknologi serupa untuk meningkatkan
                 pengalaman Anda di website kami.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Jenis Cookies:
               </h3>
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   <strong>Essential Cookies:</strong> Diperlukan untuk fungsi dasar
                   website
@@ -340,7 +336,7 @@ const description =
                 </li>
               </ul>
 
-              <p class="leading-relaxed text-neutral-600">
+              <p class="leading-relaxed text-on-muted">
                 Anda dapat mengontrol cookies melalui pengaturan browser Anda.
                 Untuk informasi lebih detail, lihat <a
                   href="/cookie-policy"
@@ -352,23 +348,23 @@ const description =
 
             <!-- Data Retention -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Penyimpanan Data
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kami menyimpan informasi pribadi Anda selama diperlukan untuk
                 tujuan yang dijelaskan dalam kebijakan ini, kecuali periode
                 penyimpanan yang lebih lama diwajibkan atau diizinkan oleh
                 hukum.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Periode Penyimpanan:
               </h3>
-              <ul class="list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   <strong>Data Pelanggan Aktif:</strong> Selama hubungan bisnis berlangsung
                 </li>
@@ -391,23 +387,23 @@ const description =
 
             <!-- International Transfers -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Transfer Data Internasional
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Beberapa penyedia layanan kami mungkin berlokasi di luar
                 Indonesia. Dalam hal ini, kami memastikan bahwa transfer data
                 dilakukan dengan perlindungan yang memadai sesuai dengan hukum
                 yang berlaku.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Perlindungan Transfer:
               </h3>
-              <ul class="list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="list-inside list-disc space-y-2 text-on-muted">
                 <li>Kontrak perlindungan data standar</li>
                 <li>Sertifikasi keamanan internasional</li>
                 <li>Adequacy decisions dari otoritas yang berwenang</li>
@@ -417,19 +413,19 @@ const description =
 
             <!-- Children's Privacy -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Privasi Anak-Anak
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Layanan kami tidak ditujukan untuk anak-anak di bawah usia 13
                 tahun. Kami tidak secara sengaja mengumpulkan informasi pribadi
                 dari anak-anak di bawah 13 tahun.
               </p>
 
-              <p class="leading-relaxed text-neutral-600">
+              <p class="leading-relaxed text-on-muted">
                 Jika Anda adalah orang tua atau wali dan mengetahui bahwa anak
                 Anda telah memberikan informasi pribadi kepada kami, silakan
                 hubungi kami. Kami akan segera menghapus informasi tersebut dari
@@ -439,29 +435,29 @@ const description =
 
             <!-- Changes to Policy -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Perubahan Kebijakan
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu
                 untuk mencerminkan perubahan dalam praktik kami atau untuk
                 alasan operasional, hukum, atau regulasi lainnya.
               </p>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Perubahan material akan diberitahukan melalui:
               </p>
 
-              <ul class="mb-4 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-4 list-inside list-disc space-y-2 text-on-muted">
                 <li>Pemberitahuan di website kami</li>
                 <li>Email kepada pengguna terdaftar</li>
                 <li>Notifikasi melalui layanan kami</li>
               </ul>
 
-              <p class="leading-relaxed text-neutral-600">
+              <p class="leading-relaxed text-on-muted">
                 Penggunaan berkelanjutan layanan kami setelah perubahan berlaku
                 menandakan persetujuan Anda terhadap kebijakan yang diperbarui.
               </p>
@@ -469,31 +465,31 @@ const description =
 
             <!-- Contact Information -->
             <div
-              class="from-primary-50 to-secondary-50 border-primary-200 rounded-2xl border bg-gradient-to-br p-8"
+              class="border-border-site rounded-2xl border bg-muted p-8"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Hubungi Kami
               </h2>
 
-              <p class="mb-6 leading-relaxed text-neutral-600">
+              <p class="mb-6 leading-relaxed text-on-muted">
                 Jika Anda memiliki pertanyaan tentang Kebijakan Privasi ini atau
                 ingin menggunakan hak-hak Anda, silakan hubungi kami:
               </p>
 
               <div class="grid gap-6 md:grid-cols-2">
                 <div>
-                  <h3 class="mb-2 font-semibold text-neutral-800">
+                  <h3 class="mb-2 font-semibold text-on-site">
                     PT Koneksi Jaringan Indonesia
                   </h3>
-                  <p class="mb-2 text-neutral-600">Jakarta, Indonesia</p>
-                  <p class="mb-2 text-neutral-600">
+                  <p class="mb-2 text-on-muted">Jakarta, Indonesia</p>
+                  <p class="mb-2 text-on-muted">
                     Email: <a
                       href="mailto:privacy@konxc.space"
                       class="text-primary-600 hover:text-primary-700 underline"
                       >privacy@konxc.space</a
                     >
                   </p>
-                  <p class="text-neutral-600">
+                  <p class="text-on-muted">
                     Phone: <a
                       href="tel:+6288200795020"
                       class="text-primary-600 hover:text-primary-700 underline"
@@ -502,17 +498,17 @@ const description =
                   </p>
                 </div>
                 <div>
-                  <h3 class="mb-2 font-semibold text-neutral-800">
+                  <h3 class="mb-2 font-semibold text-on-site">
                     Data Protection Officer
                   </h3>
-                  <p class="mb-2 text-neutral-600">
+                  <p class="mb-2 text-on-muted">
                     Email: <a
                       href="mailto:dpo@konxc.space"
                       class="text-primary-600 hover:text-primary-700 underline"
                       >dpo@konxc.space</a
                     >
                   </p>
-                  <p class="text-neutral-600">
+                  <p class="text-on-muted">
                     Response time: Maksimal 30 hari kerja
                   </p>
                 </div>

@@ -17,14 +17,14 @@ const {
 } = Astro.props;
 
 const baseClasses =
-  "inline-flex items-center justify-center font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary-100";
+  "inline-flex items-center justify-center font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary-500/10";
 
 const variantClasses = {
-  primary: "bg-primary-500 text-white hover:bg-primary-600",
+  primary: "bg-primary-600 text-white hover:bg-primary-700 shadow-md shadow-primary-500/10",
   secondary:
-    "bg-white text-primary-600 border-2 border-primary-500 hover:bg-primary-50",
+    "bg-surface text-text-on-site border-2 border-border-site hover:border-primary-500 hover:text-primary-600",
   outline:
-    "bg-transparent text-primary-600 border-2 border-primary-500 hover:bg-primary-500 hover:text-white",
+    "bg-transparent text-text-on-site border-2 border-border-site hover:border-primary-500 hover:text-primary-600",
 };
 
 const sizeClasses = {

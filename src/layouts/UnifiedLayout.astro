@@ -16,7 +16,6 @@ export interface Props {
   footerVariant?: "default" | "minimal" | "extended";
   showSearch?: boolean;
   showNewsletter?: boolean;
-  theme?: "light" | "dark" | "system";
 }
 
 const {
@@ -28,12 +27,11 @@ const {
   footerVariant = "extended",
   showSearch = true,
   showNewsletter = true,
-  theme,
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="id" class={theme === "dark" ? "dark" : ""}>
+<html lang="id">
   <head>
     <Head
       title={title}
@@ -41,33 +39,7 @@ const {
       image={image}
       canonical={canonical}
     />
-    {
-      /* Theme initialization disabled for production env
-    <script is:inline>
-      // Immediately invoked function to set the theme before the page renders
-      (function () {
-        try {
-          const savedTheme = localStorage.getItem("theme");
-          const systemPrefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)",
-          ).matches;
-
-          const shouldBeDark =
-            savedTheme === "dark" || (!savedTheme && systemPrefersDark);
-
-          if (shouldBeDark) {
-            document.documentElement.classList.add("dark");
-          } else {
-            document.documentElement.classList.remove("dark");
-          }
-        } catch (e) {
-          console.error("Theme initialization failed:", e);
-        }
-      })();
-    </script>
-    */
-    }</head
-  >
+  </head>
   <!-- Theme Initialization Script (Prevents Flickering) -->
 
   <body>

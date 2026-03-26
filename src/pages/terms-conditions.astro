@@ -13,21 +13,23 @@ const description =
   footerVariant="extended"
   showNewsletter={false}
 >
-  <main class="min-h-screen bg-neutral-50">
+  <main class="min-h-screen bg-site text-on-site">
     <!-- Hero Section -->
-    <section class="section from-primary-50 to-accent-50 bg-gradient-to-br">
+    <section
+      class="section bg-gradient-to-br from-primary-50 to-accent-50 dark:from-[var(--bg-base)] dark:to-[var(--bg-base)]"
+    >
       <div class="container">
         <div class="mx-auto max-w-4xl text-center">
           <h1 class="mb-6 text-4xl font-bold lg:text-5xl">
             Syarat & <span class="text-gradient">Ketentuan</span>
           </h1>
-          <p class="mb-8 text-xl text-neutral-600">
+          <p class="mb-8 text-xl text-on-muted">
             Ketentuan hukum yang mengatur penggunaan website dan layanan KonXC
           </p>
           <div
-            class="border-primary-100 rounded-2xl border bg-white p-6 shadow-lg"
+            class="rounded-2xl border border-border-site bg-surface p-6 shadow-lg"
           >
-            <p class="text-sm text-neutral-600">
+            <p class="text-sm text-on-muted">
               <strong>Terakhir diperbarui:</strong> 25 Oktober 2024
             </p>
           </div>
@@ -42,27 +44,25 @@ const description =
           <div class="prose prose-lg max-w-none">
             <!-- Introduction -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-4 text-2xl font-bold">
+              <h2 class="mb-4 text-2xl font-bold text-primary-600">
                 Pendahuluan
               </h2>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Selamat datang di <strong>konxc.space</strong>, website resmi PT
                 Koneksi Jaringan Indonesia ("KonXC", "kami", "kita"). Syarat dan
                 Ketentuan ini mengatur penggunaan Anda atas website dan layanan
                 yang kami sediakan.
               </p>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Dengan mengakses atau menggunakan layanan kami, Anda menyetujui
                 untuk terikat oleh Syarat dan Ketentuan ini. Jika Anda tidak
                 setuju dengan ketentuan ini, mohon untuk tidak menggunakan
                 layanan kami.
               </p>
-              <div
-                class="bg-primary-50 border-primary-200 rounded-xl border p-4"
-              >
-                <p class="text-primary-700 font-medium">
+              <div class="callout-info">
+                <p class="font-medium">
                   <strong>Penting:</strong> Harap baca dengan seksama sebelum menggunakan
                   layanan kami. Ketentuan ini memiliki kekuatan hukum yang mengikat.
                 </p>
@@ -71,14 +71,14 @@ const description =
 
             <!-- Definitions -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">Definisi</h2>
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">Definisi</h2>
 
               <dl class="space-y-4">
                 <div>
-                  <dt class="font-semibold text-neutral-800">"Layanan"</dt>
-                  <dd class="ml-4 text-neutral-600">
+                  <dt class="font-semibold text-on-site">"Layanan"</dt>
+                  <dd class="ml-4 text-on-muted">
                     Mengacu pada semua produk dan layanan yang disediakan oleh
                     KonXC, termasuk namun tidak terbatas pada IT Support,
                     Software Development, Branding Digital, Retail Teknologi,
@@ -86,24 +86,24 @@ const description =
                   </dd>
                 </div>
                 <div>
-                  <dt class="font-semibold text-neutral-800">
+                  <dt class="font-semibold text-on-site">
                     "Pengguna" atau "Anda"
                   </dt>
-                  <dd class="ml-4 text-neutral-600">
+                  <dd class="ml-4 text-on-muted">
                     Individu atau entitas yang mengakses atau menggunakan
                     layanan kami.
                   </dd>
                 </div>
                 <div>
-                  <dt class="font-semibold text-neutral-800">"Konten"</dt>
-                  <dd class="ml-4 text-neutral-600">
+                  <dt class="font-semibold text-on-site">"Konten"</dt>
+                  <dd class="ml-4 text-on-muted">
                     Semua informasi, data, teks, gambar, video, atau materi lain
                     yang tersedia melalui layanan kami.
                   </dd>
                 </div>
                 <div>
-                  <dt class="font-semibold text-neutral-800">"Platform"</dt>
-                  <dd class="ml-4 text-neutral-600">
+                  <dt class="font-semibold text-on-site">"Platform"</dt>
+                  <dd class="ml-4 text-on-muted">
                     Website konxc.space dan platform terkait seperti
                     platform.konxc.space, learn.konxc.space, dan subdomain
                     lainnya.
@@ -114,17 +114,17 @@ const description =
 
             <!-- Acceptance of Terms -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Penerimaan Ketentuan
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Dengan menggunakan layanan kami, Anda menyatakan bahwa:
               </p>
 
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   Anda berusia minimal 18 tahun atau memiliki izin dari orang
                   tua/wali
@@ -142,10 +142,8 @@ const description =
                 </li>
               </ul>
 
-              <div
-                class="bg-warning-50 border-warning-200 rounded-xl border p-4"
-              >
-                <p class="text-warning-700 font-medium">
+              <div class="callout-warning">
+                <p class="font-medium">
                   <strong>Perhatian:</strong> Jika Anda menggunakan layanan atas
                   nama perusahaan atau organisasi, Anda menyatakan bahwa Anda memiliki
                   wewenang untuk mengikat entitas tersebut.
@@ -155,58 +153,58 @@ const description =
 
             <!-- Services Description -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Deskripsi Layanan
               </h2>
 
-              <p class="mb-6 leading-relaxed text-neutral-600">
+              <p class="mb-6 leading-relaxed text-on-muted">
                 KonXC menyediakan berbagai layanan teknologi melalui 5 divisi
                 utama:
               </p>
 
               <div class="mb-6 grid gap-6 md:grid-cols-2">
-                <div class="bg-primary-50 rounded-xl p-4">
-                  <h3 class="text-primary-700 mb-2 font-semibold">
+                <div class="bg-primary-50 dark:bg-primary-900/10 rounded-xl p-4">
+                  <h3 class="text-primary-700 dark:text-primary-300 mb-2 font-semibold">
                     1. IT Support & Infrastructure
                   </h3>
-                  <p class="text-sm text-neutral-600">
+                  <p class="text-sm text-on-muted">
                     Dukungan teknis, maintenance sistem, dan pengelolaan
                     infrastruktur IT.
                   </p>
                 </div>
-                <div class="bg-secondary-50 rounded-xl p-4">
-                  <h3 class="text-secondary-700 mb-2 font-semibold">
+                <div class="bg-secondary-50 dark:bg-secondary-900/10 rounded-xl p-4">
+                  <h3 class="text-secondary-700 dark:text-secondary-300 mb-2 font-semibold">
                     2. Software Development
                   </h3>
-                  <p class="text-sm text-neutral-600">
+                  <p class="text-sm text-on-muted">
                     Pengembangan aplikasi web, mobile, dan sistem enterprise.
                   </p>
                 </div>
-                <div class="bg-accent-50 rounded-xl p-4">
-                  <h3 class="text-accent-700 mb-2 font-semibold">
+                <div class="bg-accent-50 dark:bg-accent-900/10 rounded-xl p-4">
+                  <h3 class="text-accent-700 dark:text-accent-300 mb-2 font-semibold">
                     3. Branding & Digital Marketing
                   </h3>
-                  <p class="text-sm text-neutral-600">
+                  <p class="text-sm text-on-muted">
                     Strategi branding, desain, dan pemasaran digital.
                   </p>
                 </div>
-                <div class="bg-success-50 rounded-xl p-4">
-                  <h3 class="text-success-700 mb-2 font-semibold">
+                <div class="bg-success-50 dark:bg-success-900/10 rounded-xl p-4">
+                  <h3 class="text-success-700 dark:text-success-300 mb-2 font-semibold">
                     4. Retail Teknologi
                   </h3>
-                  <p class="text-sm text-neutral-600">
+                  <p class="text-sm text-on-muted">
                     Penjualan hardware, software, dan solusi teknologi.
                   </p>
                 </div>
               </div>
 
-              <div class="rounded-xl bg-neutral-50 p-4">
-                <h3 class="mb-2 font-semibold text-neutral-700">
+              <div class="rounded-xl bg-muted p-4">
+                <h3 class="mb-2 font-semibold text-on-site">
                   5. Cloud & SaaS Solutions
                 </h3>
-                <p class="text-sm text-neutral-600">
+                <p class="text-sm text-on-muted">
                   Layanan cloud computing, hosting, dan software as a service.
                 </p>
               </div>
@@ -214,16 +212,16 @@ const description =
 
             <!-- User Obligations -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Kewajiban Pengguna
               </h2>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Penggunaan yang Diizinkan
               </h3>
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>Menggunakan layanan untuk tujuan bisnis yang sah</li>
                 <li>Mematuhi semua hukum dan regulasi yang berlaku</li>
                 <li>Menghormati hak kekayaan intelektual</li>
@@ -231,10 +229,10 @@ const description =
                 <li>Memberikan informasi yang akurat dan terkini</li>
               </ul>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Penggunaan yang Dilarang
               </h3>
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   Menggunakan layanan untuk aktivitas ilegal atau penipuan
                 </li>
@@ -253,8 +251,8 @@ const description =
                 </li>
               </ul>
 
-              <div class="rounded-xl border border-red-200 bg-red-50 p-4">
-                <p class="font-medium text-red-700">
+              <div class="callout-danger">
+                <p class="font-medium">
                   <strong>Peringatan:</strong> Pelanggaran terhadap ketentuan ini
                   dapat mengakibatkan penghentian layanan dan tindakan hukum.
                 </p>
@@ -263,32 +261,32 @@ const description =
 
             <!-- Intellectual Property -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Kekayaan Intelektual
               </h2>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Hak Milik KonXC
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Semua konten, desain, logo, merek dagang, dan kekayaan
                 intelektual lainnya yang terdapat dalam layanan kami adalah
                 milik KonXC atau pemberi lisensi kami dan dilindungi oleh hukum
                 kekayaan intelektual.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Lisensi Penggunaan
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kami memberikan Anda lisensi terbatas, non-eksklusif, dan tidak
                 dapat dialihkan untuk menggunakan layanan kami sesuai dengan
                 ketentuan ini. Lisensi ini tidak memberikan Anda hak untuk:
               </p>
 
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   Memodifikasi, menyalin, atau mendistribusikan konten kami
                 </li>
@@ -299,10 +297,10 @@ const description =
                 <li>Membuat karya turunan dari layanan kami</li>
               </ul>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Konten Pengguna
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Untuk konten yang Anda unggah atau kirimkan melalui layanan
                 kami, Anda memberikan KonXC lisensi non-eksklusif untuk
                 menggunakan, memodifikasi, dan menampilkan konten tersebut dalam
@@ -312,13 +310,13 @@ const description =
 
             <!-- Privacy and Data -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Privasi dan Data
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Perlindungan privasi dan data Anda adalah prioritas kami.
                 Pengumpulan, penggunaan, dan perlindungan informasi pribadi Anda
                 diatur dalam
@@ -330,10 +328,10 @@ const description =
                 kami yang merupakan bagian integral dari Syarat dan Ketentuan ini.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Keamanan Data
               </h3>
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   Kami menerapkan langkah keamanan teknis dan organisasi yang
                   sesuai
@@ -343,10 +341,10 @@ const description =
                 <li>Kami melakukan audit keamanan secara berkala</li>
               </ul>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Tanggung Jawab Pengguna
               </h3>
-              <p class="leading-relaxed text-neutral-600">
+              <p class="leading-relaxed text-on-muted">
                 Anda bertanggung jawab untuk menjaga kerahasiaan kredensial akun
                 Anda dan segera melaporkan jika terjadi penggunaan yang tidak
                 sah.
@@ -355,40 +353,38 @@ const description =
 
             <!-- Service Availability -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Ketersediaan Layanan
               </h2>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Uptime dan Maintenance
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kami berusaha menjaga layanan tersedia 24/7, namun tidak dapat
                 menjamin uptime 100%. Layanan dapat tidak tersedia karena:
               </p>
 
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>Maintenance terjadwal atau darurat</li>
                 <li>Masalah teknis atau infrastruktur</li>
                 <li>Faktor eksternal di luar kendali kami</li>
                 <li>Upgrade sistem atau keamanan</li>
               </ul>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Pemberitahuan
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kami akan berusaha memberikan pemberitahuan sebelumnya untuk
                 maintenance terjadwal melalui website, email, atau saluran
                 komunikasi lainnya.
               </p>
 
-              <div
-                class="bg-secondary-50 border-secondary-200 rounded-xl border p-4"
-              >
-                <p class="text-secondary-700 font-medium">
+              <div class="callout-success">
+                <p class="font-medium">
                   <strong>SLA:</strong> Untuk layanan enterprise, Service Level Agreement
                   (SLA) spesifik akan diatur dalam kontrak terpisah.
                 </p>
@@ -397,16 +393,16 @@ const description =
 
             <!-- Payment and Billing -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Pembayaran dan Penagihan
               </h2>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Harga dan Pembayaran
               </h3>
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>
                   Harga layanan akan dikomunikasikan sebelum penyediaan layanan
                 </li>
@@ -422,22 +418,22 @@ const description =
                 </li>
               </ul>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Keterlambatan Pembayaran
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Keterlambatan pembayaran dapat mengakibatkan:
               </p>
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>Pengenaan denda sesuai yang disepakati</li>
                 <li>Penangguhan atau penghentian layanan</li>
                 <li>Tindakan penagihan lebih lanjut</li>
               </ul>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Refund dan Pembatalan
               </h3>
-              <p class="leading-relaxed text-neutral-600">
+              <p class="leading-relaxed text-on-muted">
                 Kebijakan refund dan pembatalan akan diatur secara spesifik
                 dalam kontrak layanan atau statement of work (SOW)
                 masing-masing.
@@ -446,30 +442,30 @@ const description =
 
             <!-- Limitation of Liability -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Pembatasan Tanggung Jawab
               </h2>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Disclaimer
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Layanan kami disediakan "sebagaimana adanya" dan "sebagaimana
                 tersedia". Kami tidak memberikan jaminan bahwa layanan akan
                 memenuhi kebutuhan Anda atau bebas dari kesalahan.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Batasan Tanggung Jawab
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Dalam batas maksimal yang diizinkan hukum, KonXC tidak
                 bertanggung jawab atas:
               </p>
 
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>Kerugian tidak langsung, insidental, atau konsekuensial</li>
                 <li>Kehilangan data, profit, atau peluang bisnis</li>
                 <li>Gangguan layanan karena faktor eksternal</li>
@@ -477,10 +473,8 @@ const description =
                 <li>Force majeure (bencana alam, perang, pandemi, dll.)</li>
               </ul>
 
-              <div
-                class="bg-warning-50 border-warning-200 rounded-xl border p-4"
-              >
-                <p class="text-warning-700 font-medium">
+              <div class="callout-warning">
+                <p class="font-medium">
                   <strong>Catatan:</strong> Total tanggung jawab kami tidak akan
                   melebihi jumlah yang Anda bayarkan untuk layanan dalam 12 bulan
                   terakhir.
@@ -490,20 +484,20 @@ const description =
 
             <!-- Indemnification -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Ganti Rugi
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Anda setuju untuk membebaskan, membela, dan mengganti rugi KonXC
                 dari dan terhadap semua klaim, kerugian, kerusakan, kewajiban,
                 dan biaya (termasuk biaya pengacara) yang timbul dari atau
                 berkaitan dengan:
               </p>
 
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>Penggunaan layanan kami oleh Anda</li>
                 <li>Pelanggaran Anda terhadap Syarat dan Ketentuan ini</li>
                 <li>Pelanggaran Anda terhadap hak pihak ketiga</li>
@@ -511,7 +505,7 @@ const description =
                 <li>Kelalaian atau kesalahan Anda</li>
               </ul>
 
-              <p class="leading-relaxed text-neutral-600">
+              <p class="leading-relaxed text-on-muted">
                 Kewajiban ganti rugi ini akan tetap berlaku setelah berakhirnya
                 Syarat dan Ketentuan ini.
               </p>
@@ -519,29 +513,29 @@ const description =
 
             <!-- Termination -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Penghentian
               </h2>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Penghentian oleh Pengguna
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Anda dapat menghentikan penggunaan layanan kami kapan saja
                 dengan memberikan pemberitahuan tertulis sesuai dengan ketentuan
                 dalam kontrak layanan.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Penghentian oleh KonXC
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kami dapat menghentikan atau menangguhkan layanan jika:
               </p>
 
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>Anda melanggar Syarat dan Ketentuan ini</li>
                 <li>Terjadi keterlambatan pembayaran yang signifikan</li>
                 <li>Kami mencurigai aktivitas penipuan atau ilegal</li>
@@ -549,10 +543,10 @@ const description =
                 <li>Untuk melindungi keamanan sistem dan pengguna lain</li>
               </ul>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Akibat Penghentian
               </h3>
-              <p class="leading-relaxed text-neutral-600">
+              <p class="leading-relaxed text-on-muted">
                 Setelah penghentian, akses Anda ke layanan akan dihentikan dan
                 data Anda dapat dihapus sesuai dengan kebijakan retensi data
                 kami.
@@ -561,20 +555,20 @@ const description =
 
             <!-- Governing Law -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Hukum yang Berlaku
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Syarat dan Ketentuan ini diatur oleh dan ditafsirkan sesuai
                 dengan hukum Republik Indonesia. Setiap sengketa yang timbul
                 akan diselesaikan melalui:
               </p>
 
               <ol
-                class="mb-6 list-inside list-decimal space-y-2 text-neutral-600"
+                class="mb-6 list-inside list-decimal space-y-2 text-on-muted"
               >
                 <li>
                   <strong>Negosiasi:</strong> Upaya penyelesaian secara musyawarah
@@ -592,8 +586,8 @@ const description =
                 </li>
               </ol>
 
-              <div class="bg-accent-50 border-accent-200 rounded-xl border p-4">
-                <p class="text-accent-700 font-medium">
+              <div class="callout-accent-box">
+                <p class="font-medium">
                   <strong>Bahasa:</strong> Versi Bahasa Indonesia dari Syarat dan
                   Ketentuan ini adalah versi yang mengikat secara hukum.
                 </p>
@@ -602,31 +596,31 @@ const description =
 
             <!-- Changes to Terms -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Perubahan Ketentuan
               </h2>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kami berhak untuk mengubah Syarat dan Ketentuan ini dari waktu
                 ke waktu. Perubahan akan diberitahukan melalui:
               </p>
 
-              <ul class="mb-6 list-inside list-disc space-y-2 text-neutral-600">
+              <ul class="mb-6 list-inside list-disc space-y-2 text-on-muted">
                 <li>Pemberitahuan di website kami</li>
                 <li>Email kepada pengguna terdaftar</li>
                 <li>Notifikasi melalui platform layanan</li>
               </ul>
 
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Perubahan material akan diberitahukan minimal 30 hari sebelum
                 berlaku efektif. Penggunaan berkelanjutan layanan kami setelah
                 perubahan berlaku menandakan persetujuan Anda terhadap ketentuan
                 yang diperbarui.
               </p>
 
-              <p class="leading-relaxed text-neutral-600">
+              <p class="leading-relaxed text-on-muted">
                 Jika Anda tidak setuju dengan perubahan, Anda dapat menghentikan
                 penggunaan layanan sesuai dengan prosedur penghentian yang
                 berlaku.
@@ -635,42 +629,42 @@ const description =
 
             <!-- Miscellaneous -->
             <div
-              class="mb-8 rounded-2xl border border-neutral-100 bg-white p-8 shadow-lg"
+              class="mb-8 rounded-2xl border border-border-site bg-surface p-8 shadow-lg"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Ketentuan Lain-lain
               </h2>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Severability
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Jika ada bagian dari Syarat dan Ketentuan ini yang dianggap
                 tidak sah atau tidak dapat dilaksanakan, bagian tersebut akan
                 dipisahkan dan tidak mempengaruhi keabsahan bagian lainnya.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Waiver
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Kegagalan kami untuk menegakkan hak atau ketentuan tertentu
                 tidak akan dianggap sebagai pelepasan hak tersebut.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Assignment
               </h3>
-              <p class="mb-4 leading-relaxed text-neutral-600">
+              <p class="mb-4 leading-relaxed text-on-muted">
                 Anda tidak dapat mengalihkan hak atau kewajiban Anda tanpa
                 persetujuan tertulis dari kami. Kami dapat mengalihkan hak dan
                 kewajiban kami kepada pihak ketiga.
               </p>
 
-              <h3 class="mb-4 text-xl font-semibold text-neutral-800">
+              <h3 class="mb-4 text-xl font-semibold text-on-site">
                 Entire Agreement
               </h3>
-              <p class="leading-relaxed text-neutral-600">
+              <p class="leading-relaxed text-on-muted">
                 Syarat dan Ketentuan ini, bersama dengan Kebijakan Privasi dan
                 dokumen terkait lainnya, merupakan keseluruhan perjanjian antara
                 Anda dan KonXC.
@@ -679,31 +673,31 @@ const description =
 
             <!-- Contact Information -->
             <div
-              class="from-primary-50 to-accent-50 border-primary-200 rounded-2xl border bg-gradient-to-br p-8"
+              class="border-border-site rounded-2xl border bg-muted p-8"
             >
-              <h2 class="text-primary-700 mb-6 text-2xl font-bold">
+              <h2 class="mb-6 text-2xl font-bold text-primary-600">
                 Hubungi Kami
               </h2>
 
-              <p class="mb-6 leading-relaxed text-neutral-600">
+              <p class="mb-6 leading-relaxed text-on-muted">
                 Jika Anda memiliki pertanyaan tentang Syarat dan Ketentuan ini,
                 silakan hubungi kami:
               </p>
 
               <div class="grid gap-6 md:grid-cols-2">
                 <div>
-                  <h3 class="mb-2 font-semibold text-neutral-800">
+                  <h3 class="mb-2 font-semibold text-on-site">
                     PT Koneksi Jaringan Indonesia
                   </h3>
-                  <p class="mb-2 text-neutral-600">Jakarta, Indonesia</p>
-                  <p class="mb-2 text-neutral-600">
+                  <p class="mb-2 text-on-muted">Jakarta, Indonesia</p>
+                  <p class="mb-2 text-on-muted">
                     Email: <a
                       href="mailto:legal@konxc.space"
                       class="text-primary-600 hover:text-primary-700 underline"
                       >legal@konxc.space</a
                     >
                   </p>
-                  <p class="text-neutral-600">
+                  <p class="text-on-muted">
                     Phone: <a
                       href="tel:+6288200795020"
                       class="text-primary-600 hover:text-primary-700 underline"
@@ -712,17 +706,17 @@ const description =
                   </p>
                 </div>
                 <div>
-                  <h3 class="mb-2 font-semibold text-neutral-800">
+                  <h3 class="mb-2 font-semibold text-on-site">
                     Legal Department
                   </h3>
-                  <p class="mb-2 text-neutral-600">
+                  <p class="mb-2 text-on-muted">
                     Email: <a
                       href="mailto:legal@konxc.space"
                       class="text-primary-600 hover:text-primary-700 underline"
                       >legal@konxc.space</a
                     >
                   </p>
-                  <p class="text-neutral-600">
+                  <p class="text-on-muted">
                     Response time: Maksimal 5 hari kerja
                   </p>
                 </div>

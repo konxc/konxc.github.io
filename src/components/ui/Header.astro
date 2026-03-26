@@ -1,6 +1,7 @@
 ---
 // Header Component
 import Logo from "@components/ui/Logo.astro";
+import ThemeToggle from "@components/ui/ThemeToggle.astro";
 
 export interface Props {
   className?: string;
@@ -193,6 +194,9 @@ const serviceLinks = [
             <i class="i-mdi-arrow-right"></i>
           </a>
 
+          <!-- Theme Toggle -->
+          <ThemeToggle size="md" variant="icon" />
+
           <!-- Mobile Menu Toggle -->
           {
             showMobileMenu && (
@@ -270,6 +274,10 @@ const serviceLinks = [
                   <span>Hubungi Kami</span>
                   <i class="i-mdi-arrow-right" />
                 </a>
+                <div class="mt-4 flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
+                  <span>Tema:</span>
+                  <ThemeToggle size="sm" variant="icon" />
+                </div>
               </div>
             </div>
           </div>
@@ -279,10 +287,10 @@ const serviceLinks = [
   </nav>
 </header>
 
-<style>
+<style is:global>
   @reference "@/styles/global.css";
   .header {
-    @apply sticky top-0 z-50 border-b border-neutral-200 bg-white transition-all duration-300;
+    @apply sticky top-0 z-50 border-b border-neutral-200/70 bg-white/95 backdrop-blur-md transition-all duration-300;
   }
 
   /* Default variant link colors */
@@ -328,20 +336,21 @@ const serviceLinks = [
 
   /* Dark mode overrides */
   .dark .header {
-    @apply border-neutral-800 bg-neutral-900;
+    @apply border-site bg-header-site backdrop-blur-md;
   }
 
   .dark .header.scrolled {
-    @apply border-white/5 bg-neutral-900/80 shadow-2xl;
+    @apply border-site bg-header-site shadow-[0_4px_24px_rgba(0,0,0,0.4)];
   }
 
-  .dark .header.transparent:not(.scrolled) .nav-link,
-  .dark .header .nav-link {
-    @apply text-neutral-300 hover:text-white;
+  .dark .header:not(.transparent) .nav-link,
+  .dark .header:not(.transparent) .search-toggle,
+  .dark .header:not(.transparent) .mobile-menu-toggle {
+    @apply text-on-muted hover:text-white;
   }
 
   .dark .header.transparent:not(.scrolled) .nav-link {
-    @apply hover:text-primary-400 text-white;
+    @apply text-white/80 hover:text-white;
   }
 
   .nav-container {
@@ -401,23 +410,25 @@ const serviceLinks = [
   }
 
   .dropdown-content {
-    @apply rounded-lg border border-neutral-200 bg-white p-2 shadow-lg;
+    @apply rounded-lg border p-2 shadow-lg;
+    background-color: var(--bg-base);
+    border-color: var(--border-base);
+    box-shadow: var(--shadow-lg);
   }
 
   .dropdown-item {
-    @apply block rounded-md p-3 transition-colors hover:bg-neutral-50;
-  }
-
-  .dropdown-item-content {
-    @apply space-y-1;
+    @apply block rounded-md p-3 transition-colors;
+    &:hover { background-color: var(--bg-muted); }
   }
 
   .dropdown-item-title {
-    @apply text-sm font-semibold text-neutral-900;
+    @apply text-sm font-semibold;
+    color: var(--text-base);
   }
 
   .dropdown-item-description {
-    @apply text-xs text-neutral-600;
+    @apply text-xs;
+    color: var(--text-muted);
   }
 
   .nav-actions {
@@ -441,7 +452,9 @@ const serviceLinks = [
   }
 
   .search-form {
-    @apply rounded-lg border border-neutral-200 bg-white p-2 shadow-lg;
+    @apply rounded-lg border p-2 shadow-lg;
+    background-color: var(--bg-base);
+    border-color: var(--border-base);
   }
 
   .search-input-group {
@@ -449,7 +462,9 @@ const serviceLinks = [
   }
 
   .search-input {
-    @apply flex-1 border-0 px-3 py-2 text-sm outline-none;
+    @apply flex-1 border-0 bg-transparent px-3 py-2 text-sm outline-none;
+    color: var(--text-base);
+    &::placeholder { color: var(--text-placeholder); }
   }
 
   .search-submit {
@@ -461,7 +476,9 @@ const serviceLinks = [
   }
 
   .search-suggestion-item {
-    @apply flex cursor-pointer items-center gap-2 rounded px-3 py-2 text-sm text-neutral-600 hover:bg-neutral-50;
+    @apply flex cursor-pointer items-center gap-2 rounded px-3 py-2 text-sm;
+    color: var(--text-muted);
+    &:hover { background-color: var(--bg-muted); }
   }
 
   .cta-button {
@@ -497,11 +514,13 @@ const serviceLinks = [
   }
 
   .mobile-menu-content {
-    @apply flex h-full flex-col bg-white;
+    @apply flex h-full flex-col;
+    background-color: var(--bg-base);
   }
 
   .mobile-menu-header {
-    @apply flex items-center justify-between border-b border-neutral-200 p-4;
+    @apply flex items-center justify-between border-b p-4;
+    border-color: var(--border-base);
   }
 
   .mobile-menu-close {
@@ -517,39 +536,25 @@ const serviceLinks = [
   }
 
   .mobile-nav-item {
-    @apply border-b border-neutral-100 last:border-0;
+    @apply border-b last:border-0;
+    border-color: var(--border-subtle);
   }
 
   .mobile-nav-link {
-    @apply hover:text-primary-600 block py-4 font-medium text-neutral-700 transition-colors;
-  }
-
-  .mobile-nav-dropdown {
-    @apply space-y-2;
-  }
-
-  .mobile-dropdown-trigger {
-    @apply flex w-full items-center justify-between;
-  }
-
-  .mobile-dropdown-content {
-    @apply space-y-2 pl-4;
-  }
-
-  .mobile-dropdown-item {
-    @apply block py-2;
-  }
-
-  .mobile-dropdown-item-content {
-    @apply space-y-1;
+    @apply hover:text-primary-600 block py-4 font-medium transition-colors;
+    color: var(--text-secondary);
+    &:hover { color: var(--color-primary-600); }
+    .dark & { &:hover { color: #fff; } }
   }
 
   .mobile-dropdown-item-title {
-    @apply text-sm font-semibold text-neutral-900;
+    @apply text-sm font-semibold;
+    color: var(--text-base);
   }
 
   .mobile-dropdown-item-description {
-    @apply text-xs text-neutral-600;
+    @apply text-xs;
+    color: var(--text-muted);
   }
 
   .mobile-menu-actions {
@@ -560,74 +565,6 @@ const serviceLinks = [
     @apply bg-primary-600 hover:bg-primary-700 flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white transition-colors;
   }
 
-  /* Dark mode styles */
-  .dark .header {
-    @apply border-neutral-700 bg-neutral-900;
-  }
-
-  .dark .header.transparent {
-    @apply border-transparent bg-transparent;
-  }
-
-  .dark .header.minimal {
-    @apply border-neutral-700 bg-neutral-800;
-  }
-
-  .dark .nav-link {
-    @apply hover:text-primary-400 text-neutral-300;
-  }
-
-  .dark .dropdown-content {
-    @apply border-neutral-700 bg-neutral-800;
-  }
-
-  .dark .dropdown-item {
-    @apply hover:bg-neutral-700;
-  }
-
-  .dark .dropdown-item-title {
-    @apply text-neutral-100;
-  }
-
-  .dark .dropdown-item-description {
-    @apply text-neutral-400;
-  }
-
-  .dark .search-form {
-    @apply border-neutral-700 bg-neutral-800;
-  }
-
-  .dark .search-input {
-    @apply text-neutral-100 placeholder-neutral-400;
-  }
-
-  .dark .search-suggestion-item {
-    @apply text-neutral-400 hover:bg-neutral-700;
-  }
-
-  .dark .mobile-menu-content {
-    @apply bg-neutral-900;
-  }
-
-  .dark .mobile-menu-header {
-    @apply border-neutral-700;
-  }
-
-  .dark .mobile-nav-link {
-    @apply hover:text-primary-400 text-neutral-300;
-  }
-
-  .dark .mobile-nav-item {
-    @apply border-neutral-700;
-  }
-
-  .dark .mobile-dropdown-item-title {
-    @apply text-neutral-100;
-  }
-
-  .dark .mobile-dropdown-item-description {
-    @apply text-neutral-400;
-  }
 </style>
 
 <script>

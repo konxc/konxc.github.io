@@ -24,18 +24,18 @@ const pillars = [
 ];
 ---
 
-<section class="section relative bg-white lg:py-40">
+<section class="section relative bg-site lg:py-40">
     <div class="container">
         <div class="grid items-center gap-20 lg:grid-cols-2">
             <div data-aos="fade-up">
                 <h2
-                    class="mb-8 text-4xl font-bold tracking-tight text-neutral-900 lg:text-5xl"
+                    class="mb-8 text-4xl font-bold tracking-tight text-on-site lg:text-5xl"
                 >
                     Komitmen Kami untuk <span class="text-gradient"
                         >UMKM Indonesia</span
                     >
                 </h2>
-                <p class="mb-10 text-xl leading-relaxed text-neutral-600">
+                <p class="mb-10 text-xl leading-relaxed text-on-muted">
                     Digitalisasi bukan sekadar tren, tapi kebutuhan untuk
                     bertahan. KonXC hadir sebagai partner strategis yang
                     menghilangkan hambatan teknologi bagi para pelaku usaha.
@@ -46,15 +46,15 @@ const pillars = [
                         pillars.map((pillar) => (
                             <div class="group flex gap-6">
                                 <div
-                                    class={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-${pillar.color}-50 text-2xl transition-colors duration-300 group-hover:bg-${pillar.color}-100`}
+                                    class={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-${pillar.color}-50 dark:bg-${pillar.color}-900/30 text-2xl transition-colors duration-300 group-hover:bg-${pillar.color}-100`}
                                 >
                                     {pillar.icon}
                                 </div>
                                 <div>
-                                    <h3 class="mb-2 text-xl font-bold text-neutral-900">
+                                    <h3 class="mb-2 text-xl font-bold text-on-site">
                                         {pillar.title}
                                     </h3>
-                                    <p class="leading-relaxed text-neutral-600">
+                                    <p class="leading-relaxed text-on-muted">
                                         {pillar.description}
                                     </p>
                                 </div>
@@ -66,21 +66,21 @@ const pillars = [
 
             <div class="relative" data-aos="zoom-in">
                 <!-- Floating UI Mockup Representation -->
-                <div class="rounded-3xl bg-neutral-900 p-8 shadow-2xl lg:p-12">
+                <div class="rounded-3xl border border-border-site bg-surface p-8 shadow-2xl lg:p-12">
                     <div class="mb-10 flex items-center justify-between">
-                        <div class="h-3 w-20 rounded-full bg-neutral-700"></div>
+                        <div class="h-3 w-20 rounded-full bg-muted"></div>
                         <div class="bg-primary-500 h-8 w-8 rounded-full"></div>
                     </div>
                     <div class="space-y-6">
-                        <div class="h-10 w-full rounded-xl bg-neutral-800">
+                        <div class="h-10 w-full rounded-xl bg-site">
                         </div>
                         <div class="grid grid-cols-3 gap-4">
-                            <div class="h-24 rounded-xl bg-neutral-800"></div>
-                            <div class="h-24 rounded-xl bg-neutral-800"></div>
-                            <div class="h-24 rounded-xl bg-neutral-800"></div>
+                            <div class="h-24 rounded-xl bg-site"></div>
+                            <div class="h-24 rounded-xl bg-site"></div>
+                            <div class="h-24 rounded-xl bg-site"></div>
                         </div>
                         <div
-                            class="from-primary-500/20 to-secondary-500/20 h-40 w-full rounded-xl border border-neutral-700 bg-linear-to-br"
+                            class="from-primary-500/20 to-secondary-500/20 h-40 w-full rounded-xl border border-border-site bg-linear-to-br"
                         >
                         </div>
                     </div>
@@ -94,7 +94,7 @@ const pillars = [
 
                 <!-- Decorative Glow -->
                 <div
-                    class="bg-primary-500/20 absolute inset-0 -z-10 translate-y-20 scale-110 rounded-full blur-[100px]"
+                    class="bg-primary-500/20 absolute inset-0 -z-10 translate-y-20 scale-110 rounded-full blur-[100px] dark:bg-primary-900/10"
                 >
                 </div>
             </div>

@@ -3,7 +3,7 @@ import Button from "../ui/Button.astro";
 ---
 
 <section
-    class="relative overflow-hidden bg-white pt-12 pb-24 lg:pt-16 lg:pb-32"
+    class="relative overflow-hidden bg-[var(--bg-base)] pt-12 pb-24 lg:pt-16 lg:pb-32"
 >
     <!-- Sophisticated Mesh Gradient Background -->
     <div class="absolute inset-0 z-0">
@@ -36,14 +36,14 @@ import Button from "../ui/Button.astro";
                     <span class="mr-2">🚀</span> Pendamping Digital UMKM Indonesia
                 </div>
                 <h1
-                    class="mb-6 text-5xl leading-[1.1] font-black tracking-tight text-neutral-900 lg:text-8xl"
+                    class="mb-6 text-5xl leading-[1.1] font-black tracking-tight text-on-site lg:text-8xl"
                 >
                     Berdayakan Bisnis Anda dengan <span class="text-gradient"
                         >Ekosistem Digital</span
                     > Terintegrasi
                 </h1>
                 <p
-                    class="mb-8 text-xl leading-relaxed text-neutral-600 lg:text-2xl"
+                    class="mb-8 text-xl leading-relaxed text-on-muted lg:text-2xl"
                 >
                     KonXC menyediakan platform diskusi, pembelajaran, dan
                     infrastruktur teknologi yang didesain khusus untuk
@@ -68,36 +68,35 @@ import Button from "../ui/Button.astro";
                     </Button>
                 </div>
 
-                <!-- Stats Shortcut -->
                 <div
-                    class="mt-12 flex flex-wrap gap-8 border-t border-neutral-100 pt-12"
+                    class="mt-12 flex flex-wrap gap-8 border-t border-neutral-100 pt-12 dark:border-neutral-800"
                 >
                     <div>
-                        <div class="text-3xl font-bold text-neutral-900">
+                        <div class="text-3xl font-bold text-on-site">
                             500+
                         </div>
                         <div
-                            class="text-sm font-medium tracking-wider text-neutral-500 uppercase"
+                            class="text-sm font-medium tracking-wider text-on-muted uppercase"
                         >
                             UMKM Terbantu
                         </div>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-neutral-900">
+                        <div class="text-3xl font-bold text-on-site">
                             1K+
                         </div>
                         <div
-                            class="text-sm font-medium tracking-wider text-neutral-500 uppercase"
+                            class="text-sm font-medium tracking-wider text-on-muted uppercase"
                         >
                             Anggota Komunitas
                         </div>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-neutral-900">
+                        <div class="text-3xl font-bold text-on-site">
                             24/7
                         </div>
                         <div
-                            class="text-sm font-medium tracking-wider text-neutral-500 uppercase"
+                            class="text-sm font-medium tracking-wider text-on-muted uppercase"
                         >
                             Dukungan Teknis
                         </div>
@@ -109,68 +108,67 @@ import Button from "../ui/Button.astro";
             <div class="relative" data-aos="fade-left">
                 <!-- Main Card -->
                 <div
-                    class="relative z-10 overflow-hidden rounded-[2.5rem] border border-white/20 bg-white/40 shadow-2xl backdrop-blur-xl transition-transform duration-500 hover:scale-[1.02]"
+                    class="relative z-10 overflow-hidden rounded-[2.5rem] border border-white/20 bg-white/40 shadow-2xl backdrop-blur-xl transition-transform duration-500 hover:scale-[1.02] dark:border-white/10 dark:bg-white/5"
                 >
                     <div class="p-8 lg:p-12">
                         <div class="grid grid-cols-2 gap-6">
-                            <!-- Interactive elements representation -->
                             <div
-                                class="soft-hover shadow-soft rounded-3xl bg-white p-6"
+                                class="soft-hover shadow-[var(--shadow-base)] rounded-3xl bg-[var(--bg-subtle)] p-6 border border-[var(--border-base)]"
                             >
                                 <div
-                                    class="bg-primary-100 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
+                                    class="bg-primary-100 dark:bg-primary-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
                                 >
                                     💬
                                 </div>
-                                <div class="font-bold text-neutral-900">
+                                <div class="font-bold text-on-site">
                                     Forum Diskusi
                                 </div>
-                                <div class="text-xs text-neutral-500">
+                                <div class="text-xs text-on-muted">
                                     Knowledge Sharing
                                 </div>
                             </div>
                             <div
-                                class="soft-hover shadow-soft rounded-3xl bg-white p-6"
+                                class="soft-hover shadow-[var(--shadow-base)] rounded-3xl bg-[var(--bg-subtle)] p-6 border border-[var(--border-base)]"
                             >
                                 <div
-                                    class="bg-secondary-100 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
+                                    class="bg-secondary-100 dark:bg-secondary-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
                                 >
                                     🎓
                                 </div>
-                                <div class="font-bold text-neutral-900">
+                                <div class="font-bold text-on-site">
                                     Learning Hub
                                 </div>
-                                <div class="text-xs text-neutral-500">
+                                <div class="text-xs text-on-muted">
                                     Project Based
                                 </div>
                             </div>
                             <div
-                                class="soft-hover shadow-soft rounded-3xl bg-white p-6"
+                                class="soft-hover shadow-[var(--shadow-base)] rounded-3xl bg-[var(--bg-subtle)] p-6 border border-[var(--border-base)]"
                             >
                                 <div
-                                    class="bg-accent-100 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
+                                    class="bg-accent-100 dark:bg-accent-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
                                 >
                                     📊
                                 </div>
-                                <div class="font-bold text-neutral-900">
+                                <div class="font-bold text-on-site">
                                     Business Insights
                                 </div>
-                                <div class="text-xs text-neutral-500">
+                                <div class="text-xs text-on-muted">
                                     Data Driven
                                 </div>
                             </div>
                             <div
-                                class="soft-hover shadow-soft rounded-3xl bg-white p-6"
+                                class="soft-hover shadow-[var(--shadow-base)] rounded-3xl bg-[var(--bg-subtle)] p-6 border border-[var(--border-base)]"
                             >
                                 <div
-                                    class="bg-success-100 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
+                                    class="bg-success-100 dark:bg-success-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
                                 >
                                     ☁️
                                 </div>
-                                <div class="font-bold text-neutral-900">
+                                <div class="font-bold text-on-site">
                                     Cloud Support
                                 </div>
-                                <div class="text-xs text-neutral-500">
+                                <div class="text-xs text-on-muted">
                                     Scalable Infrastructure
                                 </div>
                             </div>

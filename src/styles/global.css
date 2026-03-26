@@ -3,6 +3,21 @@
 @import "tailwindcss";
 
 @theme {
+  /* Unified Semantic Tokens - Tailwind v4 Theme Mapping */
+  /* Unified Semantic Tokens for Tailwind v4 (Role-based) */
+  /* === Semantic Role Tokens (pointer vars ke CSS custom props di :root/.dark) ===
+   * Catatan: var() di dalam @theme diresolvasi di runtime oleh browser, bukan saat build.
+   * Token ini HARUS mereferensikan custom property yang ada di :root atau .dark.
+   */
+  --color-site:       var(--bg-base);         /* Usage: bg-site */
+  --color-on-site:    var(--text-base);        /* Usage: text-on-site */
+  --color-muted:      var(--bg-muted);         /* Usage: bg-muted */
+  --color-on-muted:   var(--text-muted);       /* Usage: text-on-muted */
+  --color-surface:    var(--bg-subtle);        /* Usage: bg-surface */
+  --color-on-surface: var(--text-secondary);   /* Usage: text-on-surface */
+  --color-header-site: var(--bg-overlay-glass); /* Usage: bg-header-site */
+  --color-border-site: var(--border-base);      /* Usage: border-site */
+
   /* Primary Colors - Soft Blue */
   --color-primary-50: #f0f4ff;
   --color-primary-100: #e0e7ff;
@@ -204,39 +219,31 @@
   --border-cream-strong: rgba(148, 163, 184, 0.2);
   --border-focus: rgba(107, 114, 128, 0.35);
 
-  /* Typography Tokens */
-  --text-primary: var(--color-elegant-700);
-  --text-secondary: var(--color-elegant-600);
-  --text-muted: var(--color-elegant-500);
-  --text-placeholder: var(--color-elegant-400);
+  /* Typography Tokens — Cream/Light Design System Only
+   * PERINGATAN: Token ini statis (hanya light mode).
+   * Untuk dark-aware text, gunakan --text-base, --text-secondary, --text-muted
+   * yang didefinisikan di :root dan di-override oleh .dark.
+   */
+  --cream-text-primary: var(--color-elegant-700);
+  --cream-text-secondary: var(--color-elegant-600);
+  --cream-text-muted: var(--color-elegant-500);
+  --cream-text-placeholder: var(--color-elegant-400);
 
-  /* Dark Mode Colors - Professional Dark Theme */
-  --dark-bg-primary: #0f1419;
-  --dark-bg-secondary: #1a1f2e;
-  --dark-bg-tertiary: #252a3a;
+  /* === Dark Mode Reference Values (untuk gradient/shadow definitions) ===
+   * BUKAN untuk digunakan langsung di komponen.
+   * Gunakan semantic tokens: bg-base, bg-subtle, bg-muted, dll. yang
+   * secara otomatis berubah saat .dark aktif melalui :root di bawah.
+   */
+  --dark-bg-base:     #0f1419;
+  --dark-bg-subtle:   #1a1f2e;
+  --dark-bg-muted:    #252a3a;
   --dark-bg-elevated: #2d3748;
-  --dark-bg-overlay: #374151;
 
-  --dark-text-primary: #f7fafc;
-  --dark-text-secondary: #e2e8f0;
-  --dark-text-muted: #a0aec0;
-  --dark-text-placeholder: #718096;
-
-  --dark-border-primary: rgba(255, 255, 255, 0.1);
-  --dark-border-secondary: rgba(255, 255, 255, 0.05);
   --dark-border-focus: rgba(99, 102, 241, 0.4);
 
   /* Dark Mode Gradients */
-  --dark-gradient-primary: linear-gradient(
-    135deg,
-    var(--dark-bg-secondary) 0%,
-    var(--dark-bg-tertiary) 100%
-  );
-  --dark-gradient-elevated: linear-gradient(
-    135deg,
-    var(--dark-bg-tertiary) 0%,
-    var(--dark-bg-elevated) 100%
-  );
+  --dark-gradient-subtle: linear-gradient(135deg, #1a1f2e 0%, #252a3a 100%);
+  --dark-gradient-elevated: linear-gradient(135deg, #252a3a 0%, #2d3748 100%);
 
   /* Dark Mode Shadows */
   --dark-shadow-soft:
@@ -253,26 +260,26 @@
   --spacing-component-margin: 2rem;
 
   /* Section Spacing Tokens - Blog Layout */
-  --spacing-section-xs: 2rem; /* 32px - tight sections */
-  --spacing-section-sm: 3rem; /* 48px - small sections */
-  --spacing-section-md: 4rem; /* 64px - medium sections */
-  --spacing-section-lg: 5rem; /* 80px - large sections */
-  --spacing-section-xl: 6rem; /* 96px - extra large sections */
-  --spacing-section-2xl: 8rem; /* 128px - hero sections */
+  --spacing-section-xs: 2rem;
+  --spacing-section-sm: 3rem;
+  --spacing-section-md: 4rem;
+  --spacing-section-lg: 5rem;
+  --spacing-section-xl: 6rem;
+  --spacing-section-2xl: 8rem;
 
   /* Mobile Section Spacing */
-  --spacing-section-xs-mobile: 1.5rem; /* 24px */
-  --spacing-section-sm-mobile: 2rem; /* 32px */
-  --spacing-section-md-mobile: 2.5rem; /* 40px */
-  --spacing-section-lg-mobile: 3rem; /* 48px */
-  --spacing-section-xl-mobile: 4rem; /* 64px */
-  --spacing-section-2xl-mobile: 5rem; /* 80px */
+  --spacing-section-xs-mobile: 1.5rem;
+  --spacing-section-sm-mobile: 2rem;
+  --spacing-section-md-mobile: 2.5rem;
+  --spacing-section-lg-mobile: 3rem;
+  --spacing-section-xl-mobile: 4rem;
+  --spacing-section-2xl-mobile: 5rem;
 
   /* Content Spacing Tokens */
-  --spacing-content-gap: 1.5rem; /* 24px - between content blocks */
-  --spacing-content-gap-mobile: 1rem; /* 16px - mobile content blocks */
-  --spacing-paragraph: 1rem; /* 16px - paragraph spacing */
-  --spacing-heading: 2rem; /* 32px - heading margins */
+  --spacing-content-gap: 1.5rem;
+  --spacing-content-gap-mobile: 1rem;
+  --spacing-paragraph: 1rem;
+  --spacing-heading: 2rem;
 
   /* Animation Tokens */
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -286,16 +293,75 @@
   --animate-float: float 3s ease-in-out infinite;
 }
 
-/* Base Styles - Minimal custom CSS, let Tailwind handle most styling */
-html {
-  scroll-behavior: smooth;
+@layer base {
+  :root {
+    /* Backgrounds - Website (Light/Cream) */
+    --bg-base:        #ffffff;
+    --bg-subtle:      var(--color-cream-50);
+    --bg-muted:       var(--color-cream-100);
+    --bg-elevated:    #ffffff;
+    --bg-overlay-glass: rgba(255, 255, 255, 0.95);
+
+    /* Text */
+    --text-base:      var(--color-neutral-900);
+    --text-secondary: var(--color-neutral-700);
+    --text-muted:     var(--color-neutral-600);
+    --text-placeholder: var(--color-neutral-400);
+
+    /* Borders */
+    --border-base:    var(--color-neutral-200);
+    --border-subtle:  var(--color-neutral-100);
+    --border-strong:  var(--color-neutral-300);
+
+    /* Shadow tokens derived from system */
+    --shadow-base:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+    --shadow-md:      0 4px 12px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.05);
+    --shadow-lg:      0 10px 25px rgba(0,0,0,.1), 0 4px 10px rgba(0,0,0,.06);
+
+    color-scheme: light;
+  }
+
+  .dark {
+    /* Backgrounds - App Ecosystem / Dark Website */
+    --bg-base:        #0f1419;
+    --bg-subtle:      #1a1f2e;
+    --bg-muted:       #252a3a;
+    --bg-elevated:    #2d3748;
+    --bg-overlay-glass: rgba(15, 20, 25, 0.95);
+
+    /* Text */
+    --text-base:      #f7fafc;
+    --text-secondary: #e2e8f0;
+    --text-muted:     #a0aec0;
+    --text-placeholder: #718096;
+
+    /* Borders */
+    --border-base:    rgba(255, 255, 255, 0.1);
+    --border-subtle:  rgba(255, 255, 255, 0.05);
+    --border-strong:  rgba(255, 255, 255, 0.15);
+
+    /* Shadow tokens dark mode */
+    --shadow-base:    0 1px 3px rgba(0,0,0,.4), 0 1px 2px rgba(0,0,0,.3);
+    --shadow-md:      0 4px 12px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.3);
+    --shadow-lg:      0 10px 25px rgba(0,0,0,.6), 0 4px 10px rgba(0,0,0,.4);
+
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-base);   /* ✅ token yang benar */
+    color: var(--text-base);            /* ✅ token yang benar */
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 }
 
-body {
-  font-family: theme("fontFamily.body");
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
 /* Essential Utility Classes - Only what Tailwind can't handle */
 .container {
@@ -311,8 +377,18 @@ body {
 .text-gradient {
   background: linear-gradient(
     135deg,
-    theme("colors.primary.600"),
-    theme("colors.secondary.600")
+    var(--color-primary-600),
+    var(--color-secondary-600)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dark .text-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-400),
+    var(--color-secondary-400)
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -322,8 +398,18 @@ body {
 .text-gradient-accent {
   background: linear-gradient(
     135deg,
-    theme("colors.primary.600"),
-    theme("colors.accent.600")
+    var(--color-primary-600),
+    var(--color-accent-600)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dark .text-gradient-accent {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-400),
+    var(--color-accent-400)
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -333,12 +419,19 @@ body {
 /* Design Token Utility Classes - Tailwind v4 Compatible */
 
 /* Component Classes - Use @apply for Tailwind utilities */
+/* === COMPONENT CLASSES — fully theme-aware via CSS vars === */
+
 .btn-primary {
   @apply bg-primary-500 hover:bg-primary-600 focus:ring-primary-100 rounded-xl px-6 py-3 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:ring-4 focus:outline-none;
 }
 
 .btn-secondary {
-  @apply text-primary-600 border-primary-200 hover:bg-primary-50 hover:border-primary-300 focus:ring-primary-100 rounded-xl border-2 bg-white px-6 py-3 font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:ring-4 focus:outline-none;
+  @apply rounded-xl border-2 px-6 py-3 font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:ring-4 focus:outline-none;
+  color: var(--text-base);
+  background-color: var(--bg-base);
+  border-color: var(--border-base);
+  &:hover { border-color: var(--color-primary-500); color: var(--color-primary-600); }
+  &:focus { ring-color: var(--color-primary-100); }
 }
 
 .btn-accent {
@@ -346,19 +439,152 @@ body {
 }
 
 .btn-outline {
-  @apply text-primary-600 border-primary-300 hover:bg-primary-500 hover:border-primary-500 focus:ring-primary-100 rounded-xl border-2 bg-transparent px-6 py-3 font-semibold transition-all duration-300 hover:-translate-y-1 hover:text-white hover:shadow-lg focus:ring-4 focus:outline-none;
+  @apply rounded-xl border-2 bg-transparent px-6 py-3 font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:ring-4 focus:outline-none;
+  color: var(--text-base);
+  border-color: var(--border-base);
+  &:hover { background-color: var(--color-primary-500); border-color: var(--color-primary-500); color: #fff; }
 }
 
 .btn-success {
   @apply bg-success-500 hover:bg-success-600 focus:ring-success-100 rounded-xl px-6 py-3 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:ring-4 focus:outline-none;
 }
 
+/* Card — theme-aware: background, border, shadow berubah otomatis di dark mode */
 .card {
-  @apply rounded-2xl border border-neutral-100 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl;
+  @apply rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl;
+  background-color: var(--bg-base);
+  border: 1px solid var(--border-base);
+  box-shadow: var(--shadow-base);
+}
+
+/* ============================================================
+   CALLOUT / ALERT BOXES — fully theme-aware
+   Gunakan di legal pages (privacy-policy, terms-conditions, cookie-policy)
+   dan halaman lain yang butuh highlight box semantik.
+   ============================================================ */
+
+.callout {
+  @apply rounded-xl border p-4;
+  color: var(--text-base);
+  background-color: var(--bg-subtle);
+  border-color: var(--border-base);
+}
+
+/* Info / Primary */
+.callout-info {
+  @apply rounded-xl border p-4;
+  background-color: color-mix(in srgb, var(--color-primary-500) 8%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary-500) 25%, transparent);
+  color: var(--text-base);
+}
+.callout-info strong,
+.callout-info .callout-accent {
+  color: var(--color-primary-600);
+}
+.dark .callout-info strong,
+.dark .callout-info .callout-accent {
+  color: var(--color-primary-400);
+}
+
+/* Warning / Amber */
+.callout-warning {
+  @apply rounded-xl border p-4;
+  background-color: color-mix(in srgb, var(--color-warning-500) 8%, transparent);
+  border-color: color-mix(in srgb, var(--color-warning-500) 25%, transparent);
+  color: var(--text-base);
+}
+.callout-warning strong,
+.callout-warning .callout-accent {
+  color: var(--color-warning-600);
+}
+.dark .callout-warning strong,
+.dark .callout-warning .callout-accent {
+  color: var(--color-warning-400);
+}
+
+/* Danger / Red */
+.callout-danger {
+  @apply rounded-xl border p-4;
+  background-color: color-mix(in srgb, var(--color-error-500) 8%, transparent);
+  border-color: color-mix(in srgb, var(--color-error-500) 25%, transparent);
+  color: var(--text-base);
+}
+.callout-danger strong,
+.callout-danger .callout-accent {
+  color: #dc2626;
+}
+.dark .callout-danger strong,
+.dark .callout-danger .callout-accent {
+  color: #f87171;
+}
+
+/* Success / Secondary/Teal */
+.callout-success {
+  @apply rounded-xl border p-4;
+  background-color: color-mix(in srgb, var(--color-secondary-500) 8%, transparent);
+  border-color: color-mix(in srgb, var(--color-secondary-500) 25%, transparent);
+  color: var(--text-base);
+}
+.callout-success strong,
+.callout-success .callout-accent {
+  color: var(--color-secondary-700);
+}
+.dark .callout-success strong,
+.dark .callout-success .callout-accent {
+  color: var(--color-secondary-400);
+}
+
+/* Accent / Purple */
+.callout-accent-box {
+  @apply rounded-xl border p-4;
+  background-color: color-mix(in srgb, var(--color-accent-500) 8%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent-500) 25%, transparent);
+  color: var(--text-base);
+}
+.callout-accent-box strong,
+.callout-accent-box .callout-accent {
+  color: var(--color-accent-700);
+}
+.dark .callout-accent-box strong,
+.dark .callout-accent-box .callout-accent {
+  color: var(--color-accent-400);
+}
+
+/* Inline colored info boxes — cookie-policy & mobile sections */
+.callout-blue {
+  @apply rounded-lg p-3;
+  background-color: color-mix(in srgb, #3b82f6 8%, transparent);
+  color: var(--text-base);
+}
+.callout-blue strong,
+.callout-blue .callout-accent {
+  color: #2563eb;
+}
+.dark .callout-blue strong,
+.dark .callout-blue .callout-accent {
+  color: #93c5fd;
+}
+
+.callout-green {
+  @apply rounded-lg p-3;
+  background-color: color-mix(in srgb, #22c55e 8%, transparent);
+  color: var(--text-base);
+}
+.callout-green strong,
+.callout-green .callout-accent {
+  color: #16a34a;
+}
+.dark .callout-green strong,
+.dark .callout-green .callout-accent {
+  color: #86efac;
 }
 
 .card-featured {
-  @apply border-primary-100 hover:border-primary-200 rounded-2xl border-2 bg-white p-8 shadow-xl transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl;
+  @apply rounded-2xl p-8 border-2 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl;
+  background: linear-gradient(135deg, var(--color-primary-50), var(--color-secondary-50));
+  border-color: var(--color-primary-100);
+  box-shadow: var(--shadow-md);
+  /* dark mode dihandle di bawah karena butuh override gradient khusus */
 }
 
 .form-input {
@@ -470,7 +696,7 @@ body {
 
 .cream-input {
   @apply w-full rounded-lg border-2 px-4 py-3 font-medium;
-  color: var(--text-primary);
+  color: var(--cream-text-primary);
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.95) 0%,
@@ -482,7 +708,7 @@ body {
 }
 
 .cream-input::placeholder {
-  color: var(--text-placeholder);
+  color: var(--cream-text-placeholder);
 }
 
 .cream-input:focus {
@@ -511,7 +737,7 @@ body {
 
 .cream-button-secondary {
   @apply flex items-center gap-2 rounded-lg border-2 px-6 py-3 font-semibold;
-  color: var(--text-secondary);
+  color: var(--cream-text-secondary);
   background: var(--color-cream-100);
   border-color: var(--border-cream-strong);
   box-shadow: var(--shadow-cream-soft);
@@ -525,7 +751,7 @@ body {
 
 .cream-action-button {
   @apply flex items-center gap-1 rounded-lg px-3 py-1 text-sm font-medium;
-  color: var(--text-secondary);
+  color: var(--cream-text-secondary);
   background: var(--color-cream-100);
   border: 1px solid var(--border-cream-strong);
   box-shadow: var(--shadow-cream-soft);
@@ -537,15 +763,15 @@ body {
 }
 
 .cream-text-primary {
-  color: var(--text-primary);
+  color: var(--cream-text-primary);
 }
 
 .cream-text-secondary {
-  color: var(--text-secondary);
+  color: var(--cream-text-secondary);
 }
 
 .cream-text-muted {
-  color: var(--text-muted);
+  color: var(--cream-text-muted);
 }
 
 .cream-avatar {
@@ -554,7 +780,73 @@ body {
   box-shadow: var(--shadow-sophisticated);
 }
 
+/* ============================================================
+   CREAM CLASSES — DARK MODE OVERRIDES
+   Karena .cream-* menggunakan warna cream statis (light-only),
+   di dark mode kita override agar menggunakan semantic tokens.
+   ============================================================ */
+
+.dark .cream-container {
+  background: var(--bg-muted);
+  border-color: var(--border-base);
+  box-shadow: var(--shadow-md);
+}
+
+.dark .cream-card {
+  background: var(--bg-subtle);
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-base);
+}
+
+.dark .cream-input {
+  color: var(--text-base);
+  background: var(--bg-muted);
+  border-color: var(--border-base);
+  box-shadow: none;
+}
+
+.dark .cream-input::placeholder {
+  color: var(--text-placeholder);
+}
+
+.dark .cream-input:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.dark .cream-button {
+  box-shadow: var(--shadow-md);
+}
+
+.dark .cream-button-secondary {
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border-color: var(--border-base);
+  box-shadow: none;
+}
+
+.dark .cream-button-secondary:hover {
+  background: var(--bg-muted);
+  border-color: var(--border-strong);
+}
+
+.dark .cream-action-button {
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border-color: var(--border-base);
+  box-shadow: none;
+}
+
+.dark .cream-action-button:hover {
+  background: var(--bg-muted);
+}
+
+.dark .cream-text-primary  { color: var(--text-base); }
+.dark .cream-text-secondary { color: var(--text-secondary); }
+.dark .cream-text-muted    { color: var(--text-muted); }
+
 /* Animation Classes - Minimal custom animations */
+
 .fade-in {
   @apply translate-y-5 opacity-0 transition-all duration-500 ease-out;
 }
@@ -671,189 +963,222 @@ body {
   }
 }
 
-/* Dark Mode Implementation */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-  }
+/* ============================================================
+   TAILWIND UTILITY OVERRIDES — ensuring third-party or legacy
+   classes switch correctly without manual dark: tagging.
+   ============================================================ */
+
+/* ============================================================
+   BASE ELEMENT STYLES — use semantic tokens
+   ============================================================ */
+body {
+  background-color: var(--bg-base);
+  color: var(--text-base);
+  /* transition ditangani oleh @layer base body di atas */
 }
 
-/* Dark mode class-based implementation */
-.dark {
-  color-scheme: dark;
+/* Cegah flash transisi saat tema pertama kali diaplikasikan */
+.no-theme-transition,
+.no-theme-transition *,
+.no-theme-transition *::before,
+.no-theme-transition *::after {
+  transition: none !important;
+  animation-duration: 0.01ms !important;
 }
 
-/* Dark mode styles */
-.dark body {
-  background: var(--dark-bg-primary);
-  color: var(--dark-text-primary);
-}
+/* ============================================================
+   DARK MODE — Tailwind utility overrides
+   ============================================================ */
 
-.dark .bg-white {
-  background: var(--dark-bg-secondary) !important;
-}
+/* Backgrounds */
+.dark .bg-white          { background-color: var(--bg-subtle) !important; }
+.dark .bg-neutral-50     { background-color: var(--bg-muted) !important; }
+.dark .bg-neutral-100    { background-color: var(--bg-elevated) !important; }
+.dark .bg-neutral-900    { background-color: #0a0e14 !important; }
 
-.dark .bg-gray-50,
-.dark .bg-neutral-50 {
-  background: var(--dark-bg-tertiary) !important;
-}
+/* Text */
+.dark .text-neutral-900  { color: var(--text-base) !important; }
+.dark .text-neutral-800  { color: var(--text-base) !important; }
+.dark .text-neutral-700  { color: var(--text-secondary) !important; }
+.dark .text-neutral-600  { color: var(--text-muted) !important; }
+.dark .text-neutral-500  { color: var(--text-placeholder) !important; }
+.dark .text-neutral-400  { color: #718096 !important; }
 
-.dark .bg-gray-100,
-.dark .bg-neutral-100 {
-  background: var(--dark-bg-elevated) !important;
-}
+/* Borders */
+.dark .border-neutral-100 { border-color: var(--border-subtle) !important; }
+.dark .border-neutral-200 { border-color: var(--border-base) !important; }
+.dark .border-neutral-300 { border-color: var(--border-strong) !important; }
+.dark .border-white\/20   { border-color: rgba(255,255,255,.08) !important; }
 
-.dark .text-gray-900,
-.dark .text-neutral-900 {
-  color: var(--dark-text-primary) !important;
-}
+/* Cards — tidak perlu override lagi karena .card menggunakan CSS vars langsung */
+/* .dark .card { ... } — removed, now handled by var(--bg-base) in .card definition */
 
-.dark .text-gray-700,
-.dark .text-neutral-700 {
-  color: var(--dark-text-secondary) !important;
-}
-
-.dark .text-gray-600,
-.dark .text-neutral-600 {
-  color: var(--dark-text-muted) !important;
-}
-
-.dark .text-gray-500,
-.dark .text-neutral-500 {
-  color: var(--dark-text-placeholder) !important;
-}
-
-.dark .border-gray-200,
-.dark .border-neutral-200 {
-  border-color: var(--dark-border-primary) !important;
-}
-
-.dark .border-gray-300,
-.dark .border-neutral-300 {
-  border-color: var(--dark-border-secondary) !important;
-}
-
-/* Dark mode shadows */
-.dark .shadow-lg {
-  box-shadow: var(--dark-shadow-medium) !important;
-}
-
-.dark .shadow-md {
-  box-shadow: var(--dark-shadow-soft) !important;
-}
-
-/* Dark mode gradients */
-.dark .bg-linear-to-br {
-  background: var(--dark-gradient-primary) !important;
-}
-
-.dark .bg-linear-to-r {
-  background: var(--dark-gradient-elevated) !important;
-}
-
-/* Dark mode cards and components */
-.dark .card,
-.dark .newsletter-section,
-.dark .comments-section {
-  background: var(--dark-bg-secondary);
-  border-color: var(--dark-border-primary);
-  box-shadow: var(--dark-shadow-soft);
-}
-
-.dark .card:hover {
-  background: var(--dark-bg-tertiary);
-  box-shadow: var(--dark-shadow-medium);
-}
-
-/* Dark mode forms */
+/* Forms */
 .dark input,
 .dark textarea,
 .dark select {
-  background: var(--dark-bg-tertiary);
-  border-color: var(--dark-border-primary);
-  color: var(--dark-text-primary);
+  background-color: var(--bg-muted);
+  border-color: var(--border-base);
+  color: var(--text-base);
 }
-
 .dark input:focus,
 .dark textarea:focus,
 .dark select:focus {
-  border-color: var(--dark-border-focus);
-  box-shadow: var(--dark-shadow-focus);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(99,102,241,.2);
 }
-
 .dark input::placeholder,
-.dark textarea::placeholder {
-  color: var(--dark-text-placeholder);
-}
+.dark textarea::placeholder { color: var(--text-placeholder); }
 
-/* Dark mode buttons */
-.dark .btn-primary {
-  background: var(--color-primary-600);
-  border-color: var(--color-primary-700);
-}
-
-.dark .btn-primary:hover {
-  background: var(--color-primary-700);
-  border-color: var(--color-primary-800);
-}
-
-.dark .btn-secondary {
-  background: var(--dark-bg-elevated);
-  border-color: var(--dark-border-primary);
-  color: var(--dark-text-primary);
-}
-
+/* Buttons — .btn-secondary dan .btn-outline sekarang menggunakan CSS vars langsung,
+   tidak perlu dark override terpisah. Hanya .btn-secondary:hover perlu satu koreksi: */
 .dark .btn-secondary:hover {
-  background: var(--dark-bg-overlay);
-  border-color: var(--dark-border-secondary);
+  background-color: var(--bg-muted);
 }
 
-/* Dark mode navigation */
-.dark nav,
-.dark header {
-  background: var(--dark-bg-secondary);
-  border-color: var(--dark-border-primary);
-}
-
-.dark footer {
-  background: var(--dark-bg-tertiary);
-  border-color: var(--dark-border-primary);
-}
-
-/* Dark mode code blocks */
+/* Code blocks */
 .dark pre,
 .dark code {
-  background: var(--dark-bg-elevated) !important;
-  border-color: var(--dark-border-primary) !important;
+  background-color: var(--bg-elevated) !important;
+  border-color: var(--border-base) !important;
+}
+.dark .prose pre { background-color: var(--bg-elevated) !important; }
+
+/* Shadows */
+.dark .shadow-soft,
+.dark .shadow-soft-lg { box-shadow: var(--shadow-md) !important; }
+.dark .shadow-xl       { box-shadow: var(--shadow-lg) !important; }
+.dark .shadow-2xl      { box-shadow: 0 20px 40px rgba(0,0,0,.7) !important; }
+
+/* Glassmorphism / backdrop */
+.dark .bg-white\/40     { background-color: rgba(26,31,46,.6) !important; }
+.dark .bg-white\/80     { background-color: rgba(15,20,25,.85) !important; }
+.dark .bg-neutral-800\/50 { background-color: rgba(45,55,72,.5) !important; }
+
+/* Gradient blobs — tone down in dark mode */
+.dark .bg-primary-100\/40  { background-color: rgba(99,102,241,.08) !important; }
+.dark .bg-secondary-100\/30 { background-color: rgba(20,184,166,.06) !important; }
+.dark .bg-accent-100\/20   { background-color: rgba(168,85,247,.05) !important; }
+.dark .bg-primary-50\/50   { background-color: rgba(99,102,241,.06) !important; }
+.dark .bg-secondary-50\/30 { background-color: rgba(20,184,166,.04) !important; }
+
+/* Icon boxes — solid color variants */
+.dark .bg-primary-50   { background-color: rgba(99,102,241,.12) !important; }
+.dark .bg-primary-100  { background-color: rgba(99,102,241,.15) !important; }
+.dark .bg-secondary-50  { background-color: rgba(20,184,166,.10) !important; }
+.dark .bg-secondary-100 { background-color: rgba(20,184,166,.15) !important; }
+.dark .bg-accent-50    { background-color: rgba(168,85,247,.10) !important; }
+.dark .bg-accent-100   { background-color: rgba(168,85,247,.15) !important; }
+.dark .bg-success-50   { background-color: rgba(34,197,94,.10) !important; }
+.dark .bg-success-100  { background-color: rgba(34,197,94,.15) !important; }
+.dark .bg-warning-50   { background-color: rgba(234,179,8,.10) !important; }
+.dark .bg-warning-100  { background-color: rgba(234,179,8,.15) !important; }
+.dark .bg-error-50     { background-color: rgba(239,68,68,.10) !important; }
+.dark .bg-error-100    { background-color: rgba(239,68,68,.15) !important; }
+
+/* Icon text colors — keep vibrant in dark mode */
+.dark .text-primary-600  { color: rgba(129,140,248,1) !important; }
+.dark .text-primary-700  { color: rgba(99,102,241,1) !important; }
+.dark .text-secondary-600 { color: rgba(45,212,191,1) !important; }
+.dark .text-secondary-700 { color: rgba(20,184,166,1) !important; }
+.dark .text-accent-600   { color: rgba(192,132,252,1) !important; }
+.dark .text-accent-700   { color: rgba(168,85,247,1) !important; }
+.dark .text-success-600  { color: rgba(74,222,128,1) !important; }
+.dark .text-success-700  { color: rgba(34,197,94,1) !important; }
+
+/* Section backgrounds */
+.dark section.bg-white,
+.dark .section.bg-white { background-color: var(--bg-base) !important; }
+
+/* Decorative inner cards (hero grid cards) */
+.dark .shadow-soft.rounded-3xl.bg-white {
+  background-color: var(--bg-muted) !important;
+  border: 1px solid var(--border-base);
 }
 
-.dark .prose pre {
-  background: var(--dark-bg-elevated) !important;
+/* Dropdown menus */
+.dark .dropdown-content {
+  background-color: var(--bg-subtle);
+  border-color: var(--border-base);
+}
+.dark .dropdown-item:hover { background-color: var(--bg-muted); }
+.dark .dropdown-item-title  { color: var(--text-base); }
+.dark .dropdown-item-description { color: var(--text-muted); }
+
+/* Search */
+.dark .search-form {
+  background-color: var(--bg-subtle);
+  border-color: var(--border-base);
+}
+.dark .search-input { color: var(--text-base); }
+.dark .search-suggestion-item {
+  color: var(--text-muted);
+}
+.dark .search-suggestion-item:hover { background-color: var(--bg-muted); }
+
+/* Mobile menu */
+.dark .mobile-menu-content { background-color: var(--bg-subtle); }
+.dark .mobile-menu-header  { border-color: var(--border-base); }
+.dark .mobile-nav-item     { border-color: var(--border-subtle); }
+.dark .mobile-nav-link     { color: var(--text-secondary); }
+
+/* Footer */
+.dark footer { background-color: var(--bg-subtle); border-color: var(--border-base); }
+
+/* Prose / blog content */
+.dark .prose {
+  color: var(--text-secondary);
+}
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4 { color: var(--text-base); }
+.dark .prose a   { color: var(--color-primary-400); }
+.dark .prose strong { color: var(--text-base); }
+.dark .prose blockquote {
+  border-color: var(--border-strong);
+  color: var(--text-muted);
+}
+.dark .prose hr { border-color: var(--border-base); }
+
+/* Contact form card */
+.dark .rounded-\[2\.5rem\].bg-neutral-50 {
+  background-color: var(--bg-subtle) !important;
+  border-color: var(--border-base) !important;
 }
 
-/* Dark mode utilities */
-.dark-bg-primary {
-  background: var(--dark-bg-primary);
+/* Featured card gradient override — Tailwind gradient classes di dark mode */
+.dark .bg-gradient-to-br.from-primary-50.to-secondary-50,
+.dark .bg-linear-to-br.from-primary-50.to-secondary-50 {
+  background-image: none !important;
+  background-color: var(--bg-subtle) !important;
 }
 
-.dark-bg-secondary {
-  background: var(--dark-bg-secondary);
+/* .card-featured dark mode override — gradient tidak bisa dipakai di dark */
+.dark .card-featured {
+  background: var(--bg-subtle);
+  border-color: rgba(99,102,241,.2) !important;
 }
 
-.dark-bg-tertiary {
-  background: var(--dark-bg-tertiary);
+/* About Highlight Band — intentionally dark section on homepage.
+   Uses a deep charcoal in light mode, deeper background in dark mode. */
+.about-highlight-band {
+  background-color: #1e293b; /* slate-800 — dark even in light mode */
+}
+.dark .about-highlight-band {
+  background-color: var(--bg-elevated); /* deeper dark in dark mode */
 }
 
-.dark-text-primary {
-  color: var(--dark-text-primary);
-}
-
-.dark-text-secondary {
-  color: var(--dark-text-secondary);
-}
-
-.dark-text-muted {
-  color: var(--dark-text-muted);
+/* ============================================================
+   GLOBAL SMOOTH TRANSITION — untuk pergantian tema
+   Dikecualikan selama inisialisasi via class .no-theme-transition
+   ============================================================ */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 /* Accessibility utilities */

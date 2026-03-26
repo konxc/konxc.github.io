@@ -59,15 +59,15 @@ const faqs = [
 >
   <!-- Hero Section -->
   <section
-    class="relative overflow-hidden bg-white pt-24 pb-16 lg:pt-32 lg:pb-24"
+    class="relative overflow-hidden bg-site pt-24 pb-16 lg:pt-32 lg:pb-24"
   >
     <div class="absolute inset-0 z-0">
       <div
-        class="bg-primary-100/30 absolute top-0 left-1/4 h-64 w-64 rounded-full blur-3xl"
+        class="bg-primary-100/30 dark:bg-primary-900/10 absolute top-0 left-1/4 h-64 w-64 rounded-full blur-3xl"
       >
       </div>
       <div
-        class="bg-secondary-100/30 absolute right-1/4 bottom-0 h-64 w-64 rounded-full blur-3xl"
+        class="bg-secondary-100/30 dark:bg-secondary-900/10 absolute right-1/4 bottom-0 h-64 w-64 rounded-full blur-3xl"
       >
       </div>
     </div>
@@ -75,15 +75,12 @@ const faqs = [
     <div class="relative z-10 container">
       <div class="mx-auto max-w-3xl text-center">
         <h1
-          class="mb-6 text-4xl font-bold tracking-tight text-neutral-900 md:text-5xl lg:text-6xl"
+          class="mb-6 text-4xl font-bold tracking-tight text-on-site md:text-5xl lg:text-6xl"
         >
           Mari Membangun <br />
-          <span
-            class="from-primary-600 to-secondary-600 bg-linear-to-r bg-clip-text text-transparent"
-            >Masa Depan Digital</span
-          > Bersama
+          <span class="text-gradient">Masa Depan Digital</span> Bersama
         </h1>
-        <p class="text-xl leading-relaxed text-neutral-600">
+        <p class="text-xl leading-relaxed text-on-muted">
           Punya pertanyaan tentang layanan kami, ingin berkolaborasi, atau
           sekadar ingin menyapa? Tim kami siap mendengarkan aspirasi Anda.
         </p>
@@ -92,25 +89,25 @@ const faqs = [
   </section>
 
   <!-- Contact Form & Info -->
-  <section class="bg-neutral-50 py-16 lg:py-24">
+  <section class="bg-muted py-16 lg:py-24">
     <div class="container">
       <div class="grid gap-12 lg:grid-cols-2 lg:items-start">
         <!-- Contact Information -->
         <div class="space-y-12">
           <div>
-            <h2 class="mb-8 text-3xl font-bold text-neutral-900">
+            <h2 class="mb-8 text-3xl font-bold text-on-site">
               Informasi Kontak
             </h2>
             <div class="space-y-6">
               <div class="flex items-start gap-4">
                 <div
-                  class="bg-primary-100 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                  class="bg-primary-100 dark:bg-primary-900/40 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
                 >
                   <Icon name="heroicons:map-pin" class="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 class="font-semibold text-neutral-900">Kantor Kami</h3>
-                  <p class="text-neutral-600">
+                  <h3 class="font-semibold text-on-site">Kantor Kami</h3>
+                  <p class="text-on-muted">
                     {contactInfo.address}
                   </p>
                 </div>
@@ -118,15 +115,15 @@ const faqs = [
 
               <div class="flex items-start gap-4">
                 <div
-                  class="bg-primary-100 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                  class="bg-primary-100 dark:bg-primary-900/40 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
                 >
                   <Icon name="heroicons:envelope" class="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 class="font-semibold text-neutral-900">Email</h3>
+                  <h3 class="font-semibold text-on-site">Email</h3>
                   <a
                     href={`mailto:${contactInfo.email}`}
-                    class="hover:text-primary-600 text-neutral-600 transition-colors"
+                    class="hover:text-primary-600 text-on-muted transition-colors"
                   >
                     {contactInfo.email}
                   </a>
@@ -135,18 +132,18 @@ const faqs = [
 
               <div class="flex items-start gap-4">
                 <div
-                  class="bg-primary-100 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                  class="bg-primary-100 dark:bg-primary-900/40 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
                 >
                   <Icon name="heroicons:phone" class="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 class="font-semibold text-neutral-900">
+                  <h3 class="font-semibold text-on-site">
                     Telepon / WhatsApp
                   </h3>
                   <a
                     href={contactInfo.whatsapp}
                     target="_blank"
-                    class="hover:text-primary-600 text-neutral-600 transition-colors"
+                    class="hover:text-primary-600 text-on-muted transition-colors"
                   >
                     {contactInfo.phone}
                   </a>
@@ -155,13 +152,13 @@ const faqs = [
 
               <div class="flex items-start gap-4">
                 <div
-                  class="bg-primary-100 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                  class="bg-primary-100 dark:bg-primary-900/40 text-primary-600 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
                 >
                   <Icon name="heroicons:clock" class="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 class="font-semibold text-neutral-900">Jam Kerja</h3>
-                  <p class="text-neutral-600">
+                  <h3 class="font-semibold text-on-site">Jam Kerja</h3>
+                  <p class="text-on-muted">
                     {contactInfo.workingHours}
                   </p>
                 </div>
@@ -170,7 +167,7 @@ const faqs = [
           </div>
 
           <div>
-            <h3 class="mb-6 text-xl font-bold text-neutral-900">Ikuti Kami</h3>
+            <h3 class="mb-6 text-xl font-bold text-on-site">Ikuti Kami</h3>
             <div class="flex gap-4">
               {
                 contactInfo.socials.map((social) => (
@@ -178,7 +175,7 @@ const faqs = [
                     href={social.href}
                     target="_blank"
                     aria-label={social.name}
-                    class="hover:bg-primary-600 hover:border-primary-600 flex h-12 w-12 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-600 shadow-sm transition-all hover:text-white"
+                    class="hover:bg-primary-600 hover:border-primary-600 flex h-12 w-12 items-center justify-center rounded-lg border border-border-site bg-site text-on-muted shadow-sm transition-all hover:text-white"
                   >
                     <Icon name={social.icon} class="h-6 w-6" />
                   </a>
@@ -190,15 +187,15 @@ const faqs = [
 
         <!-- Contact Form -->
         <div
-          class="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm lg:p-12"
+          class="rounded-3xl border border-border-site bg-surface p-8 shadow-sm lg:p-12"
         >
-          <h2 class="mb-6 text-2xl font-bold text-neutral-900">Kirim Pesan</h2>
+          <h2 class="mb-6 text-2xl font-bold text-on-site">Kirim Pesan</h2>
           <form id="contact-form" class="space-y-6">
             <div class="grid gap-6 sm:grid-cols-2">
               <div class="space-y-2">
                 <label
                   for="first_name"
-                  class="text-sm font-semibold text-neutral-700"
+                  class="text-sm font-semibold text-on-site/80"
                   >Nama Depan</label
                 >
                 <input
@@ -206,28 +203,28 @@ const faqs = [
                   id="first_name"
                   name="first_name"
                   required
-                  class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 transition-all outline-none focus:bg-white focus:ring-4"
+                  class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-border-site bg-site px-4 py-3 text-on-site transition-all outline-none focus:bg-surface focus:ring-4 placeholder-text-muted"
                   placeholder="John"
                 />
               </div>
               <div class="space-y-2">
                 <label
                   for="last_name"
-                  class="text-sm font-semibold text-neutral-700"
+                  class="text-sm font-semibold text-on-site/80"
                   >Nama Belakang</label
                 >
                 <input
                   type="text"
                   id="last_name"
                   name="last_name"
-                  class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 transition-all outline-none focus:bg-white focus:ring-4"
+                  class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-border-site bg-site px-4 py-3 text-on-site transition-all outline-none focus:bg-surface focus:ring-4 placeholder-text-muted"
                   placeholder="Doe"
                 />
               </div>
             </div>
 
             <div class="space-y-2">
-              <label for="email" class="text-sm font-semibold text-neutral-700"
+              <label for="email" class="text-sm font-semibold text-on-site/80"
                 >Email Bisnis</label
               >
               <input
@@ -235,7 +232,7 @@ const faqs = [
                 id="email"
                 name="email"
                 required
-                class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 transition-all outline-none focus:bg-white focus:ring-4"
+                class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-border-site bg-site px-4 py-3 text-on-site transition-all outline-none focus:bg-surface focus:ring-4 placeholder-text-muted"
                 placeholder="email@perusahaan.com"
               />
             </div>
@@ -243,12 +240,12 @@ const faqs = [
             <div class="space-y-2">
               <label
                 for="subject"
-                class="text-sm font-semibold text-neutral-700">Subjek</label
+                class="text-sm font-semibold text-on-site/80">Subjek</label
               >
               <select
                 id="subject"
                 name="subject"
-                class="focus:border-primary-500 focus:ring-primary-500/10 w-full appearance-none rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 transition-all outline-none focus:bg-white focus:ring-4"
+                class="focus:border-primary-500 focus:ring-primary-500/10 w-full appearance-none rounded-xl border border-border-site bg-site px-4 py-3 text-on-site transition-all outline-none focus:bg-surface focus:ring-4"
               >
                 <option value="consultation">Konsultasi Layanan</option>
                 <option value="collaboration">Kerjasama / Partnership</option>
@@ -260,14 +257,14 @@ const faqs = [
             <div class="space-y-2">
               <label
                 for="message"
-                class="text-sm font-semibold text-neutral-700">Pesan Anda</label
+                class="text-sm font-semibold text-on-site/80">Pesan Anda</label
               >
               <textarea
                 id="message"
                 name="message"
                 rows="5"
                 required
-                class="focus:border-primary-500 focus:ring-primary-500/10 w-full resize-none rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 transition-all outline-none focus:bg-white focus:ring-4"
+                class="focus:border-primary-500 focus:ring-primary-500/10 w-full resize-none rounded-xl border border-border-site bg-site px-4 py-3 text-on-site transition-all outline-none focus:bg-surface focus:ring-4 placeholder-text-muted"
                 placeholder="Ceritakan tentang project Anda atau pertanyaan Anda..."
               ></textarea>
             </div>
@@ -288,7 +285,7 @@ const faqs = [
               >
               </div>
             </button>
-            <p class="text-center text-xs text-neutral-500">
+            <p class="text-center text-xs text-on-muted">
               Dengan mengirimkan form ini, Anda menyetujui <a
                 href="/privacy-policy"
                 class="hover:text-primary-600 underline">Kebijakan Privasi</a
@@ -301,13 +298,13 @@ const faqs = [
   </section>
 
   <!-- FAQ Section -->
-  <section class="bg-white py-16 lg:py-24">
+  <section class="bg-site py-16 lg:py-24">
     <div class="container">
       <div class="mb-16 text-center">
-        <h2 class="mb-4 text-3xl font-bold text-neutral-900">
+        <h2 class="mb-4 text-3xl font-bold text-on-site">
           Pertanyaan yang Sering Diajukan
         </h2>
-        <p class="text-lg text-neutral-600">
+        <p class="text-lg text-on-muted">
           Cari jawaban cepat untuk pertanyaan umum Anda
         </p>
       </div>
@@ -316,21 +313,21 @@ const faqs = [
         {
           faqs.map((faq, index) => (
             <details
-              class="group rounded-2xl border border-neutral-200 bg-white shadow-sm transition-all duration-300"
+              class="group rounded-2xl border border-border-site bg-surface shadow-sm transition-all duration-300"
               open={index === 0}
             >
               <summary class="flex cursor-pointer list-none items-center justify-between p-6 outline-none">
-                <h3 class="pr-6 text-lg font-bold text-neutral-900">
+                <h3 class="pr-6 text-lg font-bold text-on-site">
                   {faq.question}
                 </h3>
-                <div class="group-open:bg-primary-600 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors group-open:text-white">
+                <div class="group-open:bg-primary-600 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-on-muted transition-colors group-open:text-white">
                   <Icon
                     name="heroicons:chevron-down"
                     class="h-5 w-5 transition-transform group-open:rotate-180"
                   />
                 </div>
               </summary>
-              <div class="px-6 pb-6 leading-relaxed text-neutral-600">
+              <div class="px-6 pb-6 leading-relaxed text-on-muted">
                 {faq.answer}
               </div>
             </details>
@@ -341,14 +338,14 @@ const faqs = [
   </section>
 
   <!-- Final CTA -->
-  <section class="bg-neutral-900 py-16 text-white lg:py-24">
+  <section class="about-highlight-band py-16 text-white lg:py-24">
     <div class="container text-center">
       <h2
-        class="mb-8 bg-linear-to-r from-neutral-50 to-neutral-400 bg-clip-text text-3xl font-bold text-neutral-900 text-transparent lg:text-4xl"
+        class="mb-8 bg-linear-to-r from-neutral-50 to-neutral-400 bg-clip-text text-3xl font-bold text-transparent lg:text-4xl"
       >
         Siap bertransformasi ke level berikutnya?
       </h2>
-      <p class="mx-auto mb-10 max-w-2xl text-lg text-neutral-400">
+      <p class="mx-auto mb-10 max-w-2xl text-lg text-white/70">
         Kunjungi blog kami untuk wawasan teknologi terbaru atau lihat kontribusi
         tim kami untuk ekosistem digital Indonesia.
       </p>
@@ -361,7 +358,7 @@ const faqs = [
         </a>
         <a
           href="/contributors"
-          class="inline-flex items-center justify-center rounded-xl border border-neutral-700 bg-transparent px-8 py-4 font-bold text-white transition-all hover:bg-neutral-800 active:scale-95"
+          class="inline-flex items-center justify-center rounded-xl border border-white/20 bg-transparent px-8 py-4 font-bold text-white transition-all hover:bg-white/10 active:scale-95"
         >
           Lihat Kontributor
         </a>

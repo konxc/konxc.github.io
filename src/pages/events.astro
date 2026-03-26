@@ -133,37 +133,41 @@ const eventCategories = [
   headerVariant="default"
   footerVariant="extended"
 >
-  <main class="min-h-screen bg-neutral-50">
+  <main class="min-h-screen bg-site">
     
     <!-- Hero Section -->
-    <section class="section bg-linear-to-br from-primary-50 to-secondary-50">
-      <div class="container">
+    <section class="section relative overflow-hidden bg-muted">
+      <div class="absolute inset-0 -z-10 overflow-hidden opacity-30">
+        <div class="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-primary-500/10 blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 h-64 w-64 rounded-full bg-secondary-500/10 blur-3xl"></div>
+      </div>
+      <div class="container relative z-10">
         <div class="max-w-4xl mx-auto text-center">
-          <h1 class="text-4xl lg:text-5xl font-bold mb-6">
+          <h1 class="text-4xl lg:text-5xl font-bold mb-6 text-on-site">
             Events & <span class="text-gradient">Networking</span>
           </h1>
-          <p class="text-xl text-neutral-600 mb-8">
+          <p class="text-xl text-on-muted mb-8">
             Bergabunglah dengan komunitas teknologi Indonesia. Bangun koneksi, 
             pelajari skill baru, dan kembangkan bisnis Anda bersama kami.
           </p>
           
           <!-- Quick Stats -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 bg-white rounded-2xl p-6 shadow-lg border border-primary-100">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 bg-surface rounded-2xl p-6 shadow-lg border border-border-site">
             <div class="text-center">
-              <div class="text-2xl font-bold text-primary-600 mb-1">15+</div>
-              <div class="text-sm text-neutral-600">Events per Year</div>
+              <div class="text-2xl font-bold text-primary-600 dark:text-primary-500 mb-1">15+</div>
+              <div class="text-sm text-on-muted">Events per Year</div>
             </div>
             <div class="text-center">
-              <div class="text-2xl font-bold text-secondary-600 mb-1">500+</div>
-              <div class="text-sm text-neutral-600">Total Attendees</div>
+              <div class="text-2xl font-bold text-secondary-600 dark:text-secondary-500 mb-1">500+</div>
+              <div class="text-sm text-on-muted">Total Attendees</div>
             </div>
             <div class="text-center">
-              <div class="text-2xl font-bold text-accent-600 mb-1">50+</div>
-              <div class="text-sm text-neutral-600">Expert Speakers</div>
+              <div class="text-2xl font-bold text-accent-600 dark:text-accent-500 mb-1">50+</div>
+              <div class="text-sm text-on-muted">Expert Speakers</div>
             </div>
             <div class="text-center">
-              <div class="text-2xl font-bold text-success-600 mb-1">100%</div>
-              <div class="text-sm text-neutral-600">Free Networking</div>
+              <div class="text-2xl font-bold text-green-600 dark:text-green-500 mb-1">100%</div>
+              <div class="text-sm text-on-muted">Free Networking</div>
             </div>
           </div>
         </div>
@@ -171,16 +175,16 @@ const eventCategories = [
     </section>
 
     <!-- Event Categories Filter -->
-    <section class="py-8 bg-white border-b border-neutral-200">
+    <section class="py-8 bg-site border-b border-border-site">
       <div class="container">
         <div class="flex flex-wrap justify-center gap-4">
           {eventCategories.map(category => (
             <button 
-              class="px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary-100 bg-white text-neutral-600 border-2 border-neutral-200 hover:border-primary-300 hover:text-primary-600"
+              class="px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary-500/10 bg-surface text-on-muted border-2 border-border-site hover:border-primary-500 hover:text-on-site"
               data-category={category.slug}
             >
               {category.name}
-              <span class="ml-2 text-xs bg-neutral-100 text-neutral-600 px-2 py-1 rounded-full">
+              <span class="ml-2 text-xs bg-muted text-on-muted px-2 py-1 rounded-full">
                 {category.count}
               </span>
             </button>
@@ -193,10 +197,10 @@ const eventCategories = [
     <section class="section">
       <div class="container">
         <div class="text-center mb-12">
-          <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+          <h2 class="text-3xl lg:text-4xl font-bold mb-4 text-on-site">
             Upcoming <span class="text-gradient">Events</span>
           </h2>
-          <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
+          <p class="text-xl text-on-muted max-w-3xl mx-auto">
             Jangan lewatkan kesempatan untuk belajar, bernetworking, dan berkembang 
             bersama komunitas teknologi Indonesia.
           </p>
@@ -204,21 +208,21 @@ const eventCategories = [
 
         <div class="space-y-8">
           {upcomingEvents.map(event => (
-            <div class={`${event.featured ? 'card-featured' : 'card'} overflow-hidden`} data-event-category={event.category.toLowerCase()}>
+            <div class={`rounded-3xl border ${event.featured ? 'border-primary-500 bg-surface ring-4 ring-primary-500/10 shadowed-premium' : 'border-border-site bg-surface'} overflow-hidden p-8`} data-event-category={event.category.toLowerCase()}>
               <div class="grid lg:grid-cols-3 gap-8">
                 
                 <!-- Event Image -->
                 <div class="lg:col-span-1">
-                  <div class="aspect-video bg-linear-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center">
+                  <div class="aspect-video bg-muted rounded-xl flex items-center justify-center">
                     <div class="text-center">
                       <div class="text-4xl mb-2">🎪</div>
-                      <div class="text-sm text-neutral-600">Event Image</div>
+                      <div class="text-sm text-on-muted">Event Image</div>
                     </div>
                   </div>
                   
                   {event.featured && (
                     <div class="mt-4 text-center">
-                      <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                      <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900/40 dark:text-primary-300">
                         ⭐ Featured Event
                       </span>
                     </div>
@@ -228,31 +232,31 @@ const eventCategories = [
                 <!-- Event Details -->
                 <div class="lg:col-span-2">
                   <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium">
+                    <span class="px-3 py-1 bg-primary-100 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300 rounded-full text-sm font-medium">
                       {event.category}
                     </span>
-                    <span class="px-3 py-1 bg-secondary-100 text-secondary-700 rounded-full text-sm font-medium">
+                    <span class="px-3 py-1 bg-secondary-100 text-secondary-700 dark:bg-secondary-900/40 dark:text-secondary-300 rounded-full text-sm font-medium">
                       {event.type}
                     </span>
-                    <span class="px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-sm font-medium">
+                    <span class="px-3 py-1 bg-muted text-on-muted rounded-full text-sm font-medium">
                       {event.price}
                     </span>
                   </div>
 
-                  <h3 class="text-2xl font-bold text-neutral-800 mb-2">
+                  <h3 class="text-2xl font-bold text-on-site mb-2">
                     {event.title}
                   </h3>
-                  <p class="text-lg text-primary-600 font-medium mb-4">
+                  <p class="text-lg text-primary-600 dark:text-primary-400 font-medium mb-4">
                     {event.subtitle}
                   </p>
-                  <p class="text-neutral-600 mb-6">
+                  <p class="text-on-muted mb-6">
                     {event.description}
                   </p>
 
                   <!-- Event Meta -->
                   <div class="grid md:grid-cols-2 gap-4 mb-6">
                     <div class="space-y-2">
-                      <div class="flex items-center text-neutral-600">
+                      <div class="flex items-center text-on-muted">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
@@ -263,13 +267,13 @@ const eventCategories = [
                           day: 'numeric' 
                         })}
                       </div>
-                      <div class="flex items-center text-neutral-600">
+                      <div class="flex items-center text-on-muted">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         {event.time}
                       </div>
-                      <div class="flex items-center text-neutral-600">
+                      <div class="flex items-center text-on-muted">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -278,13 +282,13 @@ const eventCategories = [
                       </div>
                     </div>
                     <div class="space-y-2">
-                      <div class="flex items-center text-neutral-600">
+                      <div class="flex items-center text-on-muted">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                         {event.attendees}/{event.maxAttendees} peserta
                       </div>
-                      <div class="flex items-center text-neutral-600">
+                      <div class="flex items-center text-on-muted">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                         </svg>
@@ -296,18 +300,18 @@ const eventCategories = [
                   <!-- Speakers -->
                   {event.speakers && event.speakers.length > 0 && (
                     <div class="mb-6">
-                      <h4 class="font-semibold text-neutral-800 mb-3">Speakers:</h4>
+                      <h4 class="font-semibold text-on-site mb-3">Speakers:</h4>
                       <div class="flex flex-wrap gap-4">
                         {event.speakers.map(speaker => (
-                          <div class="flex items-center bg-neutral-50 rounded-lg p-3">
-                            <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center mr-3">
-                              <span class="text-primary-600 font-semibold text-sm">
+                          <div class="flex items-center bg-muted rounded-lg p-3">
+                            <div class="w-10 h-10 bg-primary-100 dark:bg-primary-900/40 rounded-full flex items-center justify-center mr-3">
+                              <span class="text-primary-600 dark:text-primary-300 font-semibold text-sm">
                                 {speaker.name.split(' ').map(n => n[0]).join('')}
                               </span>
                             </div>
                             <div>
-                              <div class="font-medium text-neutral-800">{speaker.name}</div>
-                              <div class="text-sm text-neutral-600">{speaker.role}, {speaker.company}</div>
+                              <div class="font-medium text-on-site">{speaker.name}</div>
+                              <div class="text-sm text-on-muted">{speaker.role}, {speaker.company}</div>
                             </div>
                           </div>
                         ))}
@@ -320,7 +324,7 @@ const eventCategories = [
                     <a 
                       href={event.registrationUrl}
                       target="_blank"
-                      class="btn-primary flex-1 text-center inline-flex items-center justify-center"
+                      class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-4 rounded-xl font-bold transition-all shadow-lg active:scale-95 flex-1 text-center inline-flex items-center justify-center"
                     >
                       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
@@ -328,7 +332,7 @@ const eventCategories = [
                       Daftar Sekarang
                     </a>
                     <button 
-                      class="btn-secondary flex-1 inline-flex items-center justify-center"
+                      class="bg-muted hover:bg-surface text-on-site px-6 py-4 rounded-xl font-bold transition-all border border-border-site flex-1 inline-flex items-center justify-center"
                       data-agenda-toggle={`agenda-${event.id}`}
                     >
                       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -337,7 +341,7 @@ const eventCategories = [
                       Lihat Agenda
                     </button>
                     <button 
-                      class="btn-outline inline-flex items-center justify-center"
+                      class="bg-surface hover:bg-muted text-on-site px-6 py-4 rounded-xl font-bold transition-all border border-border-site inline-flex items-center justify-center"
                       data-share-event={event.title}
                       data-share-url={event.registrationUrl}
                     >
@@ -349,15 +353,15 @@ const eventCategories = [
                   </div>
 
                   <!-- Collapsible Agenda -->
-                  <div id={`agenda-${event.id}`} class="hidden mt-6 bg-neutral-50 rounded-xl p-6">
-                    <h4 class="font-semibold text-neutral-800 mb-4">Event Agenda:</h4>
+                  <div id={`agenda-${event.id}`} class="hidden mt-6 bg-muted rounded-xl p-6">
+                    <h4 class="font-semibold text-on-site mb-4">Event Agenda:</h4>
                     <div class="space-y-3">
                       {event.agenda.map(item => (
                         <div class="flex items-start">
-                          <div class="bg-primary-100 text-primary-700 px-3 py-1 rounded-lg text-sm font-medium mr-4 shrink-0">
+                          <div class="bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 px-3 py-1 rounded-lg text-sm font-medium mr-4 shrink-0">
                             {item.time}
                           </div>
-                          <div class="text-neutral-700">{item.title}</div>
+                          <div class="text-on-muted">{item.title}</div>
                         </div>
                       ))}
                     </div>
@@ -370,22 +374,22 @@ const eventCategories = [
 
         <!-- Call to Action -->
         <div class="text-center mt-12">
-          <div class="bg-linear-to-br from-primary-50 to-secondary-50 rounded-2xl p-8 border border-primary-100">
-            <h3 class="text-2xl font-bold text-neutral-800 mb-4">
+          <div class="bg-muted rounded-2xl p-8 border border-border-site">
+            <h3 class="text-2xl font-bold text-on-site mb-4">
               Ingin Mengadakan Event Bersama?
             </h3>
-            <p class="text-neutral-600 mb-6 max-w-2xl mx-auto">
+            <p class="text-on-muted mb-6 max-w-2xl mx-auto">
               Kami terbuka untuk kolaborasi event dengan komunitas, perusahaan, atau institusi 
               yang memiliki visi sama untuk membangun Indonesia yang lebih baik.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/contact" class="btn-primary inline-flex items-center justify-center">
+              <a href="/contact" class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg active:scale-95 inline-flex items-center justify-center">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
                 Propose Event
               </a>
-              <a href="https://platform.konxc.space" target="_blank" class="btn-secondary inline-flex items-center justify-center">
+              <a href="https://platform.konxc.space" target="_blank" class="bg-surface hover:bg-muted text-on-site px-8 py-4 rounded-xl font-bold transition-all border border-border-site inline-flex items-center justify-center">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
@@ -398,13 +402,13 @@ const eventCategories = [
     </section>
 
     <!-- Past Events -->
-    <section class="section bg-white">
+    <section class="section bg-muted/30">
       <div class="container">
         <div class="text-center mb-12">
-          <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+          <h2 class="text-3xl lg:text-4xl font-bold mb-4 text-on-site">
             Past <span class="text-gradient">Events</span>
           </h2>
-          <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
+          <p class="text-xl text-on-muted max-w-3xl mx-auto">
             Lihat kembali event-event yang telah kami selenggarakan dan 
             tonton recording untuk mendapatkan insights berharga.
           </p>
@@ -412,32 +416,32 @@ const eventCategories = [
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {pastEvents.map(event => (
-            <div class="card">
-              <div class="aspect-video bg-linear-to-br from-neutral-100 to-primary-50 rounded-xl mb-4 flex items-center justify-center">
+            <div class="rounded-3xl border border-border-site bg-surface p-8 shadowed-premium">
+              <div class="aspect-video bg-muted rounded-xl mb-4 flex items-center justify-center">
                 <div class="text-center">
                   <div class="text-3xl mb-2">📹</div>
-                  <div class="text-sm text-neutral-600">Event Recording</div>
+                  <div class="text-sm text-on-muted">Event Recording</div>
                 </div>
               </div>
               
               <div class="flex items-center justify-between mb-3">
-                <span class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm font-medium">
+                <span class="px-3 py-1 bg-muted text-on-muted rounded-full text-sm font-medium">
                   {event.type}
                 </span>
-                <span class="text-sm text-neutral-500">
+                <span class="text-sm text-on-muted/60">
                   {new Date(event.date).toLocaleDateString('id-ID')}
                 </span>
               </div>
 
-              <h3 class="text-xl font-bold text-neutral-800 mb-3">
+              <h3 class="text-xl font-bold text-on-site mb-3">
                 {event.title}
               </h3>
-              <p class="text-neutral-600 mb-4">
+              <p class="text-on-muted mb-4">
                 {event.description}
               </p>
 
-              <div class="flex items-center justify-between">
-                <div class="flex items-center text-neutral-600">
+              <div class="flex items-center justify-between border-t border-border-site pt-4">
+                <div class="flex items-center text-on-muted">
                   <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                   </svg>
@@ -446,7 +450,7 @@ const eventCategories = [
                 <a 
                   href={event.recordingUrl}
                   target="_blank"
-                  class="text-primary-600 hover:text-primary-700 font-medium text-sm flex items-center"
+                  class="text-primary-600 dark:text-primary-500 hover:underline font-medium text-sm flex items-center"
                 >
                   Watch Recording
                   <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -458,8 +462,8 @@ const eventCategories = [
           ))}
         </div>
 
-        <div class="text-center mt-8">
-          <a href="https://youtube.com/@konxc" target="_blank" class="btn-outline inline-flex items-center justify-center">
+        <div class="text-center mt-12">
+          <a href="https://youtube.com/@konxc" target="_blank" class="bg-surface hover:bg-muted text-on-site px-8 py-4 rounded-xl font-bold transition-all border border-border-site inline-flex items-center justify-center">
             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
               <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
             </svg>
@@ -470,30 +474,31 @@ const eventCategories = [
     </section>
 
     <!-- Newsletter Signup -->
-    <section class="section bg-linear-to-br from-primary-50 to-secondary-50">
-      <div class="container">
+    <section class="section relative overflow-hidden bg-muted">
+      <div class="absolute inset-0 -z-10 bg-linear-to-br from-primary-500/5 to-secondary-500/5"></div>
+      <div class="container relative z-10">
         <div class="max-w-4xl mx-auto text-center">
-          <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+          <h2 class="text-3xl lg:text-4xl font-bold mb-4 text-on-site">
             Jangan Lewatkan <span class="text-gradient">Event Terbaru</span>
           </h2>
-          <p class="text-xl text-neutral-600 mb-8">
+          <p class="text-xl text-on-muted mb-8">
             Subscribe newsletter kami untuk mendapatkan informasi event terbaru, 
             early bird tickets, dan konten eksklusif lainnya.
           </p>
           
-          <div class="bg-white rounded-2xl p-8 shadow-lg border border-primary-100 max-w-2xl mx-auto">
+          <div class="bg-surface rounded-3xl p-8 shadow-xl border border-border-site max-w-2xl mx-auto">
             <form class="flex flex-col sm:flex-row gap-4">
               <input 
                 type="email" 
                 placeholder="Masukkan email Anda"
-                class="form-input flex-1"
+                class="flex-1 bg-site border border-border-site rounded-xl px-4 py-3 text-on-site focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 outline-none transition-all"
                 required
               >
-              <button type="submit" class="btn-primary whitespace-nowrap">
+              <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95 whitespace-nowrap">
                 Subscribe
               </button>
             </form>
-            <p class="text-sm text-neutral-500 mt-4">
+            <p class="text-sm text-on-muted/60 mt-4">
               Dengan subscribe, Anda menyetujui <a href="/privacy-policy" class="text-primary-600 underline">Privacy Policy</a> kami.
             </p>
           </div>
@@ -501,8 +506,7 @@ const eventCategories = [
       </div>
     </section>
 
-  </main>
-</UnifiedLayout>
+  </UnifiedLayout>
 
   <!-- JavaScript for Interactive Features -->
   <script>
@@ -587,8 +591,8 @@ const eventCategories = [
           btn.getAttribute('data-category') === 'all'
         );
         if (allEventsButton) {
-          allEventsButton.classList.remove('bg-white', 'text-neutral-600', 'border-neutral-200');
-          allEventsButton.classList.add('bg-primary-500', 'text-white', 'border-primary-500');
+          allEventsButton.classList.remove('bg-surface', 'text-on-muted', 'border-border-site');
+          allEventsButton.classList.add('bg-primary-600', 'text-white', 'border-primary-600');
         }
       }
 
@@ -599,12 +603,12 @@ const eventCategories = [
           
           // Update active button
           categoryButtons.forEach(btn => {
-            btn.classList.remove('bg-primary-500', 'text-white', 'border-primary-500');
-            btn.classList.add('bg-white', 'text-neutral-600', 'border-neutral-200');
+            btn.classList.remove('bg-primary-600', 'text-white', 'border-primary-600');
+            btn.classList.add('bg-surface', 'text-on-muted', 'border-border-site');
           });
           
-          target.classList.remove('bg-white', 'text-neutral-600', 'border-neutral-200');
-          target.classList.add('bg-primary-500', 'text-white', 'border-primary-500');
+          target.classList.remove('bg-surface', 'text-on-muted', 'border-border-site');
+          target.classList.add('bg-primary-600', 'text-white', 'border-primary-600');
 
           // Filter events with smooth animation
           eventCards.forEach(card => {
