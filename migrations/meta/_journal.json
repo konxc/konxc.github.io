@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1771573892327,
-      "tag": "0000_bitter_wind_dancer",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1771621005940,
-      "tag": "0001_outstanding_stepford_cuckoos",
+      "when": 1774456745184,
+      "tag": "0000_plain_scarecrow",
       "breakpoints": true
     }
   ]

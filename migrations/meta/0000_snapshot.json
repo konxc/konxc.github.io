@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "a6d0b102-0fce-43d7-8316-b353e96d09c2",
+  "id": "bb7aec5c-3dd0-4666-805b-b85a610a97ca",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "accounts": {
@@ -69,6 +69,22 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch())"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch())"
         }
       },
       "indexes": {},
@@ -411,8 +427,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "verifications": {
-      "name": "verifications",
+    "verification": {
+      "name": "verification",
       "columns": {
         "id": {
           "name": "id",

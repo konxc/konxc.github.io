@@ -1,16 +1,27 @@
 import { defineConfig } from "drizzle-kit";
-import * as dotenv from "dotenv";
+import {
+  IS_PRODUCTION,
+  getOptionalEnv,
+  loadServerEnv,
+} from "./src/lib/server-env";
 
-// Load appropriate .env file
-const envPath = process.env.NODE_ENV === "production" ? ".env.production" : ".env";
-dotenv.config({ path: envPath });
-dotenv.config({ path: ".env.local", override: true });
+loadServerEnv();
+
+const url =
+  getOptionalEnv("TURSO_DATABASE_URL") ??
+  (IS_PRODUCTION ? undefined : "file:local.db");
+
+if (!url) {
+  throw new Error(
+    "[env] TURSO_DATABASE_URL is required for drizzle in production mode.",
+  );
+}
 
 export default defineConfig({
   schema: "./src/db/schema.ts",
   out: "./migrations",
   dialect: "sqlite",
   dbCredentials: {
-    url: process.env.TURSO_DATABASE_URL || "file:local.db",
+    url,
   },
 });

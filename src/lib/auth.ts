@@ -3,15 +3,67 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
 import { db } from "../db";
 import * as schema from "../db/schema";
+import {
+  getListEnv,
+  getOptionalEnv,
+  getRequiredEnv,
+  getRequiredUrlEnv,
+  validateServerRuntimeEnv,
+} from "./server-env";
 
-export const auth = betterAuth({
-  secret: process.env.BETTER_AUTH_SECRET || "konxc_stable_secret_2024_01_30_xyz",
-  baseURL: process.env.BETTER_AUTH_BASE_URL || "http://localhost:4321",
-  trustedOrigins: [
+validateServerRuntimeEnv();
+
+const baseURL =
+  getRequiredUrlEnv("BETTER_AUTH_BASE_URL", {
+    requiredInProduction: true,
+    fallback: "http://localhost:4321",
+  }) ?? "http://localhost:4321";
+
+const trustedOriginsFromEnv = getListEnv("BETTER_AUTH_TRUSTED_ORIGINS");
+const trustedOrigins = Array.from(
+  new Set([
+    baseURL,
+    ...trustedOriginsFromEnv,
+    "http://localhost:4321",
     "https://www.konxc.space",
     "https://konxc.space",
-    "http://localhost:4321",
-  ],
+  ]),
+);
+
+const githubClientId = getOptionalEnv("GITHUB_CLIENT_ID");
+const githubClientSecret = getOptionalEnv("GITHUB_CLIENT_SECRET");
+const googleClientId = getOptionalEnv("GOOGLE_CLIENT_ID");
+const googleClientSecret = getOptionalEnv("GOOGLE_CLIENT_SECRET");
+
+const socialProviders: Record<
+  string,
+  {
+    clientId: string;
+    clientSecret: string;
+  }
+> = {};
+
+if (githubClientId && githubClientSecret) {
+  socialProviders.github = {
+    clientId: githubClientId,
+    clientSecret: githubClientSecret,
+  };
+}
+
+if (googleClientId && googleClientSecret) {
+  socialProviders.google = {
+    clientId: googleClientId,
+    clientSecret: googleClientSecret,
+  };
+}
+
+export const auth = betterAuth({
+  secret:
+    getRequiredEnv("BETTER_AUTH_SECRET", {
+      requiredInProduction: true,
+    }) ?? "local_dev_secret_change_me",
+  baseURL,
+  trustedOrigins,
   database: drizzleAdapter(db, {
     provider: "sqlite",
     schema: {
@@ -24,15 +76,6 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  socialProviders: {
-    github: {
-      clientId: process.env.GITHUB_CLIENT_ID || "",
-      clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
-    },
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-    },
-  },
+  socialProviders,
   plugins: [],
 });

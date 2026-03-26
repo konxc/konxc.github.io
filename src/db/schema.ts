@@ -87,3 +87,63 @@ export const posts = sqliteTable("posts", {
     .notNull()
     .default(sql`(unixepoch())`),
 });
+
+export const appPostComments = sqliteTable("app_post_comments", {
+  id: text("id").primaryKey(),
+  postId: text("post_id")
+    .notNull()
+    .references(() => posts.id, { onDelete: "cascade" }),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  parentId: text("parent_id"),
+  content: text("content").notNull(),
+  likesCount: integer("likes_count").default(0),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .default(sql`(unixepoch())`),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .default(sql`(unixepoch())`),
+});
+
+export const appPostLikes = sqliteTable("app_post_likes", {
+  id: text("id").primaryKey(),
+  postId: text("post_id")
+    .notNull()
+    .references(() => posts.id, { onDelete: "cascade" }),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .default(sql`(unixepoch())`),
+});
+
+export const blogComments = sqliteTable("blog_comments", {
+  id: text("id").primaryKey(),
+  postSlug: text("post_slug").notNull(),
+  parentId: text("parent_id"),
+  author: text("author").notNull(),
+  email: text("email").notNull(),
+  content: text("content").notNull(),
+  status: text("status").notNull().default("approved"),
+  likesCount: integer("likes_count").default(0),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .default(sql`(unixepoch())`),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .default(sql`(unixepoch())`),
+});
+
+export const blogCommentLikes = sqliteTable("blog_comment_likes", {
+  id: text("id").primaryKey(),
+  commentId: text("comment_id")
+    .notNull()
+    .references(() => blogComments.id, { onDelete: "cascade" }),
+  userKey: text("user_key").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .default(sql`(unixepoch())`),
+});
