@@ -98,6 +98,7 @@ export const RegisterForm = component$(() => {
       </div>
 
       <button
+        type="button"
         onClick$={handleRegister}
         disabled={loading.value}
         class="flex w-full justify-center rounded-lg bg-blue-600 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
@@ -139,6 +140,7 @@ export const RegisterForm = component$(() => {
 
       <div class="grid grid-cols-2 gap-3">
         <button
+          type="button"
           onClick$={$(() => {
             loading.value = true;
             error.value = "";
@@ -162,6 +164,7 @@ export const RegisterForm = component$(() => {
           <span class="text-sm font-medium text-gray-600">Github</span>
         </button>
         <button
+          type="button"
           onClick$={$(() => {
             loading.value = true;
             error.value = "";

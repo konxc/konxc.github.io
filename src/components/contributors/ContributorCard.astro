@@ -45,7 +45,7 @@ const activeGradient =
   class={`group relative overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
     variant === "featured"
       ? "bg-neutral-800/95 backdrop-blur-md border border-white/15 p-8"
-      : "bg-neutral-800/90 backdrop-blur-md border border-white/15 p-6 shadow-lg hover:shadow-xl shadow-black/20"
+      : "bg-white border border-neutral-200 p-6 shadow-sm hover:shadow-md dark:bg-neutral-800/90 dark:border-white/10 dark:shadow-black/20 dark:backdrop-blur-md"
   } ${className || ""}`}
   data-contributor-id={contributor.slug}
 >
@@ -87,11 +87,11 @@ const activeGradient =
       <div class="min-w-0 flex-1">
         <div class="mb-1 flex flex-wrap items-center gap-2">
           <h3
-            class={`font-black tracking-tight ${variant === "featured" ? "text-3xl text-white" : "text-xl text-white"}`}
+            class={`font-black tracking-tight ${variant === "featured" ? "text-3xl text-white" : "text-xl text-neutral-900 dark:text-white"}`}
           >
             <a
               href={`/contributors/${contributor.slug}`}
-              class="hover:text-primary-300 text-white transition-colors"
+              class={`transition-colors ${variant === "featured" ? "hover:text-primary-300 text-white" : "text-neutral-900 hover:text-primary-600 dark:text-white dark:hover:text-primary-300"}`}
               >{data.name}</a
             >
           </h3>
@@ -107,14 +107,14 @@ const activeGradient =
           class={`inline-block rounded-lg px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest ${
             variant === "featured"
               ? "bg-primary-500/25 text-primary-200 ring-1 ring-primary-400/30"
-              : "bg-white/15 text-neutral-200 ring-1 ring-white/20"
+              : "bg-neutral-100 text-neutral-600 ring-1 ring-neutral-200 dark:bg-white/15 dark:text-neutral-200 dark:ring-white/20"
           }`}
         >
           {data.role.replace(/-/g, " ")}
         </span>
         {
           data.location && (
-            <p class="mt-2 flex items-center gap-1 text-xs font-bold text-neutral-300">
+            <p class={`mt-2 flex items-center gap-1 text-xs font-bold ${variant === "featured" ? "text-neutral-300" : "text-neutral-500 dark:text-neutral-300"}`}>
               📍 {data.location}
             </p>
           )
@@ -174,7 +174,7 @@ const activeGradient =
 
     {/* Footer / Social - Dynamic Reveal on Featured, Static on Default */}
     <div
-      class="mt-8 flex items-center justify-between border-t border-white/10 pt-6"
+      class={`mt-8 flex items-center justify-between border-t pt-6 ${variant === "featured" ? "border-white/10" : "border-neutral-200 dark:border-white/10"}`}
     >
       <div class="flex gap-3">
         {
@@ -193,7 +193,7 @@ const activeGradient =
                 <a
                   href={data[s.key as keyof typeof data] as string}
                   target="_blank"
-                  class={`transition-all hover:scale-110 ${variant === "featured" ? "text-neutral-300 hover:text-white" : "hover:text-primary-400 text-neutral-300 dark:text-neutral-300"}`}
+                  class={`transition-all hover:scale-110 ${variant === "featured" ? "text-neutral-300 hover:text-white" : "text-neutral-400 hover:text-primary-600 dark:text-neutral-300 dark:hover:text-primary-400"}`}
                 >
                   <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
                     <path d={s.icon} />
@@ -209,7 +209,7 @@ const activeGradient =
         class={`group/btn flex items-center gap-2 text-xs font-black tracking-widest uppercase transition-all ${
           variant === "featured"
             ? "text-white hover:text-primary-300"
-            : "text-neutral-200 hover:text-white"
+            : "text-neutral-500 hover:text-primary-600 dark:text-neutral-200 dark:hover:text-white"
         }`}
       >
         Profile Details

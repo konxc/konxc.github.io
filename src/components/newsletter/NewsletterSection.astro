@@ -233,6 +233,8 @@ const config = variantConfig[variant];
   /* Base Newsletter Section */
   .newsletter-section {
     @apply relative overflow-hidden;
+    background-color: var(--bg-site);
+    color: var(--text-base);
   }
 
   /* Honeypot - Hidden spam protection */
@@ -240,71 +242,41 @@ const config = variantConfig[variant];
     @apply absolute left-[-9999px] h-0 w-0 opacity-0;
   }
 
-  /* Default Variant - Premium Cream/Latte Style */
+  /* Default Variant - Premium Adaptive Style */
   .newsletter-section-default {
     @apply relative overflow-hidden py-24 md:py-32;
-    background: var(--gradient-cream-elegant);
+    background: var(--bg-muted);
   }
 
   .newsletter-section-default::before {
     content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(
-        circle at 15% 85%,
-        rgba(194, 154, 108, 0.08) 0%,
-        transparent 60%
-      ),
-      radial-gradient(
-        circle at 85% 15%,
-        rgba(160, 126, 84, 0.06) 0%,
-        transparent 60%
-      ),
-      radial-gradient(
-        circle at 50% 50%,
-        rgba(139, 110, 74, 0.04) 0%,
-        transparent 70%
-      );
-    pointer-events: none;
-  }
-
-  .newsletter-section-default::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      45deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      transparent 100%
-    );
-    pointer-events: none;
+    @apply absolute inset-0 pointer-events-none;
+    background: 
+      radial-gradient(circle at 15% 85%, color-mix(in srgb, var(--color-primary-500) 5%, transparent) 0%, transparent 60%),
+      radial-gradient(circle at 85% 15%, color-mix(in srgb, var(--color-accent-500) 5%, transparent) 0%, transparent 60%);
   }
 
   .newsletter-content-default {
-    @apply relative z-10 mx-auto max-w-4xl text-center;
+    @apply relative z-10 mx-auto max-w-4xl text-center px-4;
   }
 
   .newsletter-section-default .newsletter-title {
-    @apply mb-4 text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl;
-    background: var(--gradient-sophisticated);
+    @apply mb-4 text-3xl font-black tracking-tight md:text-5xl lg:text-6xl;
+    background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-accent-600) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 2px 4px rgba(107, 91, 115, 0.1);
+  }
+
+  :global(.dark) .newsletter-section-default .newsletter-title {
+    background: linear-gradient(135deg, var(--color-primary-400) 0%, var(--color-accent-400) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
   }
 
   .newsletter-section-default .newsletter-subtitle {
-    @apply mx-auto mb-8 max-w-xl text-base leading-relaxed font-medium md:text-lg;
-    color: var(--text-secondary);
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    @apply mx-auto mb-8 max-w-2xl text-lg leading-relaxed font-medium md:text-xl;
+    color: var(--text-muted);
   }
 
   .newsletter-section-default .newsletter-form {
@@ -312,21 +284,13 @@ const config = variantConfig[variant];
   }
 
   .newsletter-section-default .form-group {
-    @apply mb-6 flex flex-col items-center gap-2 sm:flex-row;
+    @apply mb-6 flex flex-col items-center gap-4 sm:flex-row;
   }
 
   .newsletter-section-default .newsletter-input {
-    @apply w-full flex-1 rounded-xl border-2 px-5 py-4 text-base font-medium;
-    color: var(--text-primary);
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.95) 0%,
-      var(--color-cream-200) 100%
-    );
-    border-color: var(--border-cream-strong);
-    box-shadow: var(--shadow-cream-soft);
-    transition: var(--transition-smooth);
-    min-height: 56px;
+    @apply w-full flex-1 rounded-2xl border border-border-site px-6 py-4 text-base font-medium transition-all duration-300;
+    color: var(--text-base);
+    background: var(--bg-surface);
   }
 
   .newsletter-section-default .newsletter-input::placeholder {
@@ -334,313 +298,85 @@ const config = variantConfig[variant];
   }
 
   .newsletter-section-default .newsletter-input:focus {
-    outline: none;
-    border-color: var(--border-focus);
-    box-shadow: var(--shadow-cream-focus);
+    @apply outline-none ring-4 border-primary-500/50;
+    ring-color: color-mix(in srgb, var(--color-primary-500) 10%, transparent);
   }
 
   .newsletter-section-default .newsletter-button {
-    @apply flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-semibold text-white focus:outline-none;
-    background: var(--gradient-sophisticated);
-    box-shadow: var(--shadow-sophisticated);
-    transition: var(--transition-smooth);
-    transform: scale(1);
-    height: 56px;
+    @apply flex items-center justify-center gap-2 rounded-2xl px-10 py-4 text-base font-bold text-white transition-all duration-300 shadow-lg;
+    background: var(--color-primary-600);
+    height: 58px;
     min-width: 180px;
   }
 
   .newsletter-section-default .newsletter-button:hover {
-    background: var(--gradient-sophisticated-hover);
-    box-shadow: var(--shadow-sophisticated-hover);
-    transform: scale(1.02);
+    @apply scale-[1.02] -translate-y-0.5;
+    background: var(--color-primary-700);
+    box-shadow: 0 10px 20px -5px color-mix(in srgb, var(--color-primary-600) 40%, transparent);
   }
 
-  .newsletter-section-default .newsletter-button:active {
-    transform: scale(0.98);
-  }
-
-  .newsletter-section-default .newsletter-button:focus {
-    @apply ring-2;
-    ring-color: rgba(107, 91, 115, 0.4);
-    box-shadow: var(--shadow-sophisticated-hover);
-  }
-
-  /* Compact Variant - Refined Compact Style */
+  /* Compact Variant */
   .newsletter-section-compact {
     @apply relative overflow-hidden py-16 md:py-20;
-    background: var(--gradient-cream-soft);
-  }
-
-  .newsletter-section-compact::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(
-        circle at 25% 75%,
-        rgba(180, 142, 96, 0.06) 0%,
-        transparent 55%
-      ),
-      radial-gradient(
-        circle at 75% 25%,
-        rgba(160, 126, 84, 0.05) 0%,
-        transparent 55%
-      );
-    pointer-events: none;
-  }
-
-  .newsletter-section-compact::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.08) 50%,
-      transparent 100%
-    );
-    pointer-events: none;
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-base);
+    border-bottom: 1px solid var(--border-base);
   }
 
   .newsletter-content-compact {
-    @apply relative z-10 mx-auto max-w-3xl text-center;
+    @apply relative z-10 mx-auto max-w-3xl text-center px-4;
   }
 
   .newsletter-section-compact .newsletter-title {
-    @apply mb-3 text-xl font-bold tracking-tight md:text-2xl lg:text-3xl;
-    background: linear-gradient(
-      135deg,
-      #3c2e26 0%,
-      #5d4037 30%,
-      #4a2c20 70%,
-      #2d1810 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 1px 3px rgba(60, 46, 38, 0.1);
+    @apply mb-3 text-2xl font-bold tracking-tight md:text-3xl;
+    color: var(--text-base);
   }
 
   .newsletter-section-compact .newsletter-subtitle {
-    @apply mx-auto mb-6 max-w-lg text-sm leading-relaxed font-medium text-amber-900/75 md:text-base;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
-  }
-
-  .newsletter-section-compact .newsletter-form {
-    @apply mx-auto max-w-md;
+    @apply mx-auto mb-6 max-w-lg text-base font-medium;
+    color: var(--text-muted);
   }
 
   .newsletter-section-compact .form-group {
-    @apply mb-4 flex flex-col gap-2 sm:flex-row;
+    @apply mb-4 flex flex-col gap-3 sm:flex-row max-w-md mx-auto;
   }
 
   .newsletter-section-compact .newsletter-input {
-    @apply w-full flex-1 rounded-lg border-2 bg-linear-to-br from-white/90 to-amber-50/80 px-4 py-3 text-sm font-medium text-amber-900 placeholder-amber-700/45 backdrop-blur-sm transition-all duration-300 md:text-base;
-    border-color: rgba(194, 154, 108, 0.18);
-    box-shadow:
-      0 3px 10px rgba(194, 154, 108, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.8),
-      inset 0 -1px 0 rgba(194, 154, 108, 0.08);
-    height: 48px;
-  }
-
-  .newsletter-section-compact .newsletter-input:focus {
-    @apply ring-2 outline-none;
-    border-color: rgba(160, 126, 84, 0.35);
-    ring-color: rgba(160, 126, 84, 0.25);
-    box-shadow:
-      0 6px 18px rgba(194, 154, 108, 0.12),
-      0 0 0 3px rgba(160, 126, 84, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    @apply w-full flex-1 rounded-xl border border-border-site bg-site px-4 py-3 text-base font-medium transition-all duration-300;
+    height: 52px;
   }
 
   .newsletter-section-compact .newsletter-button {
-    @apply flex transform items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.02] focus:outline-none active:scale-[0.98] md:text-base;
-    background: linear-gradient(
-      135deg,
-      #8b6914 0%,
-      #a0751a 30%,
-      #b8860b 70%,
-      #cd9a1b 100%
-    );
-    box-shadow:
-      0 4px 16px rgba(139, 105, 20, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.08);
-    height: 48px;
-    min-width: 160px;
+    @apply flex items-center justify-center gap-2 rounded-xl px-8 py-3 text-base font-bold text-white transition-all duration-300;
+    background: var(--color-primary-600);
+    height: 52px;
   }
 
-  .newsletter-section-compact .newsletter-button:hover {
-    background: linear-gradient(
-      135deg,
-      #7a5c12 0%,
-      #8f6818 30%,
-      #a6790a 70%,
-      #bb8919 100%
-    );
-    box-shadow:
-      0 6px 22px rgba(139, 105, 20, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.12);
-  }
-
-  .newsletter-section-compact .newsletter-button:focus {
-    @apply ring-2;
-    ring-color: rgba(218, 165, 32, 0.35);
-    box-shadow:
-      0 6px 22px rgba(139, 105, 20, 0.28),
-      0 0 0 3px rgba(218, 165, 32, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-
-  /* Sidebar Variant - Premium Card Style */
+  /* Sidebar Variant */
   .newsletter-section-sidebar {
-    @apply relative overflow-hidden rounded-2xl border;
-    background: linear-gradient(
-      135deg,
-      #fefdfb 0%,
-      #faf8f4 30%,
-      #f6f2ed 70%,
-      #f2ede6 100%
-    );
-    border-color: rgba(194, 154, 108, 0.15);
-    box-shadow:
-      0 10px 25px rgba(194, 154, 108, 0.08),
-      0 4px 10px rgba(194, 154, 108, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  }
-
-  .newsletter-section-sidebar::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(
-        circle at 80% 20%,
-        rgba(180, 142, 96, 0.04) 0%,
-        transparent 55%
-      ),
-      radial-gradient(
-        circle at 20% 80%,
-        rgba(160, 126, 84, 0.03) 0%,
-        transparent 55%
-      );
-    pointer-events: none;
-  }
-
-  .newsletter-section-sidebar::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.06) 50%,
-      transparent 100%
-    );
-    pointer-events: none;
-  }
-
-  .newsletter-content-sidebar {
-    @apply relative z-10 p-6;
+    @apply relative overflow-hidden rounded-3xl border border-border-site p-6;
+    background-color: var(--bg-surface);
   }
 
   .newsletter-section-sidebar .newsletter-title {
-    @apply mb-3 text-lg font-bold tracking-tight md:text-xl;
-    background: linear-gradient(
-      135deg,
-      #3c2e26 0%,
-      #5d4037 40%,
-      #4a2c20 80%,
-      #2d1810 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 1px 2px rgba(60, 46, 38, 0.08);
+    @apply mb-2 text-xl font-bold;
+    color: var(--text-base);
   }
 
   .newsletter-section-sidebar .newsletter-subtitle {
-    @apply mb-4 text-xs leading-relaxed font-medium text-amber-900/70 md:text-sm;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
-  }
-
-  .newsletter-section-sidebar .form-group {
-    @apply space-y-2;
+    @apply text-sm font-medium mb-4;
+    color: var(--text-muted);
   }
 
   .newsletter-section-sidebar .newsletter-input {
-    @apply w-full rounded-lg border-2 bg-linear-to-br from-white/85 to-amber-50/75 px-4 py-3 text-sm font-medium text-amber-900 placeholder-amber-700/40 backdrop-blur-sm transition-all duration-300;
-    border-color: rgba(194, 154, 108, 0.15);
-    box-shadow:
-      0 2px 8px rgba(194, 154, 108, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7),
-      inset 0 -1px 0 rgba(194, 154, 108, 0.06);
-    height: 44px;
-  }
-
-  .newsletter-section-sidebar .newsletter-input:focus {
-    @apply ring-2 outline-none;
-    border-color: rgba(160, 126, 84, 0.3);
-    ring-color: rgba(160, 126, 84, 0.2);
-    box-shadow:
-      0 4px 14px rgba(194, 154, 108, 0.1),
-      0 0 0 3px rgba(160, 126, 84, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    @apply w-full rounded-xl border border-border-site bg-site px-4 py-3 text-sm font-medium mb-3 transition-all duration-300;
+    height: 48px;
   }
 
   .newsletter-section-sidebar .newsletter-button {
-    @apply flex w-full transform items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.01] focus:outline-none active:scale-[0.99];
-    background: linear-gradient(
-      135deg,
-      #8b6914 0%,
-      #a0751a 25%,
-      #b8860b 50%,
-      #cd9a1b 75%,
-      #daa520 100%
-    );
-    box-shadow:
-      0 3px 12px rgba(139, 105, 20, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.06);
-    height: 44px;
-  }
-
-  .newsletter-section-sidebar .newsletter-button:hover {
-    background: linear-gradient(
-      135deg,
-      #7a5c12 0%,
-      #8f6818 25%,
-      #a6790a 50%,
-      #bb8919 75%,
-      #c8971e 100%
-    );
-    box-shadow:
-      0 5px 18px rgba(139, 105, 20, 0.25),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  }
-
-  .newsletter-section-sidebar .newsletter-button:focus {
-    @apply ring-2;
-    ring-color: rgba(218, 165, 32, 0.3);
-    box-shadow:
-      0 5px 18px rgba(139, 105, 20, 0.25),
-      0 0 0 3px rgba(218, 165, 32, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    @apply w-full rounded-xl bg-primary-600 py-3 text-sm font-bold text-white transition-all duration-300;
+    background: var(--color-primary-600);
+    height: 48px;
   }
 
   /* Common Form Elements */
@@ -649,135 +385,42 @@ const config = variantConfig[variant];
   }
 
   .input-validation {
-    @apply absolute top-full left-0 mt-1 text-xs;
-  }
-
-  .newsletter-section-default .input-validation,
-  .newsletter-section-compact .input-validation,
-  .newsletter-section-sidebar .input-validation {
-    @apply font-medium text-red-600;
-  }
-
-  .button-icon {
-    @apply flex h-4 w-4 items-center justify-center;
-  }
-
-  .icon-arrow,
-  .icon-loading,
-  .icon-success {
-    @apply h-4 w-4 transition-all duration-200;
-  }
-
-  .icon-loading {
-    @apply animate-spin;
+    @apply absolute top-full left-0 mt-1 text-xs font-medium text-error-500;
   }
 
   /* Status Messages */
   .newsletter-status {
-    @apply mt-2 text-sm;
+    @apply mt-4 text-sm font-semibold;
   }
 
   .status-success {
-    @apply font-semibold text-emerald-700;
+    @apply text-success-500;
   }
 
   .status-error {
-    @apply font-semibold text-red-700;
+    @apply text-error-500;
   }
 
   /* Disclaimer */
   .newsletter-disclaimer {
-    @apply mt-3 text-xs opacity-80;
-  }
-
-  .newsletter-section-default .newsletter-disclaimer,
-  .newsletter-section-compact .newsletter-disclaimer {
-    @apply text-amber-800/60;
-  }
-
-  .newsletter-section-sidebar .newsletter-disclaimer {
-    @apply text-amber-800/50;
+    @apply mt-6 text-xs font-medium text-on-muted opacity-60;
   }
 
   .disclaimer-link {
-    @apply underline transition-all duration-200 hover:no-underline;
+    @apply underline hover:text-primary-500 transition-colors;
   }
 
-  .newsletter-section-default .disclaimer-link,
-  .newsletter-section-compact .disclaimer-link {
-    @apply text-amber-800/70 hover:text-amber-800/90;
-  }
-
-  .newsletter-section-sidebar .disclaimer-link {
-    @apply text-amber-700/70 hover:text-amber-700/90;
-  }
-
-  /* Button States */
-  .newsletter-button:disabled {
-    @apply cursor-not-allowed opacity-75;
-  }
-
-  .newsletter-button.loading .icon-arrow {
-    @apply hidden;
-  }
-
-  .newsletter-button.loading .icon-loading {
-    @apply block;
-  }
-
-  .newsletter-button.success .icon-arrow,
-  .newsletter-button.success .icon-loading {
-    @apply hidden;
-  }
-
-  .newsletter-button.success .icon-success {
-    @apply block;
-  }
-
-  /* Responsive Design */
+  /* Responsive Design Overrides */
   @media (max-width: 640px) {
-    .newsletter-section-default .form-group,
-    .newsletter-section-compact .form-group {
-      @apply flex-col items-stretch gap-3;
-    }
-
     .newsletter-section-default .newsletter-button,
     .newsletter-section-compact .newsletter-button {
-      @apply w-full justify-center;
-    }
-
-    .newsletter-content-default,
-    .newsletter-content-compact {
-      @apply px-4;
-    }
-
-    .newsletter-section-default .newsletter-form {
-      @apply mx-auto max-w-sm;
-    }
-
-    .newsletter-section-compact .newsletter-form {
-      @apply mx-auto max-w-xs;
-    }
-
-    .newsletter-section-default .newsletter-input,
-    .newsletter-section-compact .newsletter-input {
-      @apply text-base;
-    }
-
-    .newsletter-section-default .newsletter-button,
-    .newsletter-section-compact .newsletter-button {
-      @apply py-4 text-base;
+      @apply w-full;
     }
   }
 
   /* Utility Classes */
-  .hidden {
-    @apply hidden;
-  }
-
-  .block {
-    @apply block;
-  }
+  .hidden { @apply hidden; }
+  .block { @apply block; }
 </style>
 
 <script>

@@ -12,8 +12,10 @@ Production deployment and operational procedures.
 | Document | Purpose | Status |
 |----------|---------|--------|
 | [DEPLOY_MANUAL.md](./DEPLOY_MANUAL.md) | Complete deployment procedures | ✅ Active |
+| [ENV_HARDENING_CHECKLIST.md](./ENV_HARDENING_CHECKLIST.md) | Production env and auth hardening checklist | ✅ Active |
 | [DEPLOYMENT_WORKFLOW.md](./DEPLOYMENT_WORKFLOW.md) | Deployment workflow and automation | ✅ Active |
 | [MAINTENANCE_CHECKLIST.md](./MAINTENANCE_CHECKLIST.md) | Regular maintenance tasks | ✅ Active |
+| [TECHNICAL_AUDIT_2026-03-26.md](./TECHNICAL_AUDIT_2026-03-26.md) | Deep technical audit and refactor priorities | ✅ Active |
 
 ### **🔌 API & Integrations**
 API documentation and third-party integrations.

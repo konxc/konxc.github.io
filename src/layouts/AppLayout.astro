@@ -44,9 +44,9 @@ const { title, hideNavbar = false } = Astro.props;
       const getTheme = () => {
         if (
           typeof localStorage !== "undefined" &&
-          localStorage.getItem("app-theme")
+          localStorage.getItem("theme")
         ) {
-          return localStorage.getItem("app-theme");
+          return localStorage.getItem("theme");
         }
         return window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "dark"
@@ -67,7 +67,7 @@ const { title, hideNavbar = false } = Astro.props;
           if (ld) ld.media = "all";
           if (dd) dd.media = "not all";
         }
-        window.localStorage.setItem("app-theme", theme);
+        window.localStorage.setItem("theme", theme);
       };
 
       applyTheme(getTheme());

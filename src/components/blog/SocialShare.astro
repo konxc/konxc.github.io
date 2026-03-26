@@ -11,7 +11,7 @@ const encodedUrl = encodeURIComponent(url);
 ---
 
 <div class="social-share">
-  <h4 class="mb-4 text-lg font-semibold text-neutral-800 dark:text-neutral-100">
+  <h4 class="mb-4 text-lg font-semibold text-on-site">
     Bagikan Artikel Ini
   </h4>
   <div class="flex flex-wrap gap-3">
@@ -151,8 +151,7 @@ const encodedUrl = encodeURIComponent(url);
 <style>
   @reference "@/styles/global.css";
   .social-share {
-    @apply from-primary-50 to-secondary-50 border-primary-100 rounded-2xl border bg-linear-to-br p-6;
-    @apply dark:from-primary-900/30 dark:to-secondary-900/30 dark:border-primary-800;
+    @apply bg-muted border-border-site rounded-2xl border p-6;
   }
 
   .social-share-btn {
@@ -160,28 +159,27 @@ const encodedUrl = encodeURIComponent(url);
   }
 
   .social-share-btn.twitter {
-    @apply bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700;
-    @apply dark:bg-blue-900/50 dark:text-blue-200 dark:hover:bg-blue-900/80 dark:hover:text-blue-100;
+    @apply bg-primary-900/10 text-primary-600 hover:bg-primary-900/20 hover:text-primary-700;
+    @apply dark:text-primary-400 dark:hover:text-primary-300;
   }
 
   .social-share-btn.linkedin {
-    @apply bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800;
-    @apply dark:bg-blue-900/50 dark:text-blue-200 dark:hover:bg-blue-900/80 dark:hover:text-blue-100;
+    @apply bg-primary-900/10 text-primary-600 hover:bg-primary-900/20 hover:text-primary-700;
+    @apply dark:text-primary-400 dark:hover:text-primary-300;
   }
 
   .social-share-btn.facebook {
-    @apply bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700;
-    @apply dark:bg-blue-900/50 dark:text-blue-200 dark:hover:bg-blue-900/80 dark:hover:text-blue-100;
+    @apply bg-primary-900/10 text-primary-600 hover:bg-primary-900/20 hover:text-primary-700;
+    @apply dark:text-primary-400 dark:hover:text-primary-300;
   }
 
   .social-share-btn.whatsapp {
-    @apply bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-700;
-    @apply dark:bg-green-900/50 dark:text-green-200 dark:hover:bg-green-900/80 dark:hover:text-green-100;
+    @apply bg-green-900/10 text-green-600 hover:bg-green-900/20 hover:text-green-700;
+    @apply dark:text-green-400 dark:hover:text-green-300;
   }
 
   .social-share-btn.copy-link {
-    @apply bg-neutral-50 text-neutral-600 hover:bg-neutral-100 hover:text-neutral-700;
-    @apply dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:hover:text-neutral-200;
+    @apply bg-muted text-on-muted hover:text-on-site hover:bg-neutral-500/10;
   }
 
   .social-share-btn.copied {

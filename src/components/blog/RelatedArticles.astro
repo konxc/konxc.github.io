@@ -46,20 +46,20 @@ const getArticleUrl = (article: Article) => {
     <!-- Header with Left Alignment -->
     <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
       <div class="header-content">
-        <span class="eyebrow text-primary-600 mb-2 block text-[10px] font-bold tracking-[0.2em] uppercase dark:text-primary-400">
+        <span class="eyebrow text-primary-600 mb-2 block text-[10px] font-bold tracking-[0.2em] uppercase">
           Eksplorasi Lainnya
         </span>
-        <h2 class="text-3xl font-black tracking-tight text-neutral-900 md:text-4xl dark:text-neutral-100">
-          {title}<span class="text-primary-600 dark:text-primary-400">.</span>
+        <h2 class="text-3xl font-black tracking-tight text-on-site md:text-4xl">
+          {title}<span class="text-primary-600">.</span>
         </h2>
       </div>
       
       <!-- Custom Scroll Navigation Indicators -->
       <div class="hidden md:flex items-center gap-2">
-        <div class="h-1 w-10 rounded-full bg-neutral-100 overflow-hidden">
+        <div class="h-1 w-10 rounded-full bg-border-site overflow-hidden">
           <div class="h-full w-1/4 bg-primary-600 rounded-full"></div>
         </div>
-        <span class="text-[9px] font-bold text-neutral-400 uppercase tracking-widest italic dark:text-neutral-500">Geser Eksplorasi</span>
+        <span class="text-[9px] font-bold text-on-muted uppercase tracking-widest italic">Geser Eksplorasi</span>
       </div>
     </div>
 
@@ -118,7 +118,7 @@ const getArticleUrl = (article: Article) => {
       </div>
     ) : (
       <div class="py-12 text-center">
-        <p class="text-sm font-medium text-neutral-400">Belum ada artikel terkait.</p>
+        <p class="text-sm font-medium text-on-muted">Belum ada artikel terkait.</p>
       </div>
     )}
   </div>
@@ -128,8 +128,7 @@ const getArticleUrl = (article: Article) => {
   @reference "@/styles/global.css";
 
   .related-articles-section {
-    @apply relative bg-neutral-50/50 border-t border-neutral-100 overflow-hidden;
-    @apply dark:bg-black/20 dark:border-neutral-800;
+    @apply relative bg-muted border-t border-border-site overflow-hidden;
   }
 
   .carousel-scroll {
