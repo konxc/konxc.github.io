@@ -348,53 +348,58 @@ const serviceLinks = [
   .dark .header:not(.transparent) .mobile-menu-toggle {
     @apply text-on-muted hover:text-white;
   }
-
-  .dark .header.transparent:not(.scrolled) .nav-link {
-    @apply text-white/80 hover:text-white;
+  .header.scrolled {
+    @apply border-b-2;
+    background-color: var(--bg-base);
+    border-color: var(--border-base);
   }
 
+  /* Navigation */
   .nav-container {
-    @apply w-full;
+    @apply mx-auto max-w-[1400px];
   }
 
   .nav-content {
-    @apply flex h-16 items-center justify-between lg:h-20;
+    @apply flex h-20 items-center justify-between px-4 lg:px-8;
   }
 
   .nav-brand {
-    @apply shrink-0;
+    @apply flex h-full items-center pr-8 lg:border-r-2;
+    border-color: var(--border-base);
   }
 
   .brand-link {
-    @apply flex items-center transition-opacity hover:opacity-80;
+    @apply flex items-center gap-2;
   }
 
   .nav-desktop {
-    @apply hidden flex-1 justify-center lg:flex;
+    @apply hidden h-full flex-1 items-center pl-8 lg:flex;
   }
 
   .nav-links {
-    @apply flex items-center space-x-8;
+    @apply flex h-full items-center gap-6;
   }
 
   .nav-item {
-    @apply relative;
+    @apply relative flex h-full items-center;
   }
 
   .nav-link {
-    @apply hover:text-primary-600 text-sm font-medium text-neutral-700 transition-colors;
+    @apply hover:text-primary-600 flex items-center gap-1 px-2 font-mono text-sm font-bold tracking-widest uppercase transition-colors;
+    color: var(--text-base);
   }
 
+  /* Dropdown styles */
   .nav-dropdown {
-    @apply relative;
+    @apply relative flex h-full items-center;
   }
 
   .dropdown-trigger {
-    @apply flex items-center gap-1;
+    @apply cursor-pointer;
   }
 
   .dropdown-icon {
-    @apply text-xs transition-transform;
+    @apply text-[1.25em] transition-transform duration-200;
   }
 
   .dropdown-trigger[aria-expanded="true"] .dropdown-icon {
@@ -402,43 +407,46 @@ const serviceLinks = [
   }
 
   .dropdown-menu {
-    @apply invisible absolute top-full left-0 mt-2 w-80 opacity-0 transition-all duration-200;
-  }
-
-  .dropdown-trigger[aria-expanded="true"] + .dropdown-menu {
-    @apply visible opacity-100;
+    @apply invisible absolute top-full left-0 mt-0 w-[480px] border-2 border-t-0 opacity-0 shadow-2xl transition-all duration-200;
+    background-color: var(--bg-base);
+    border-color: var(--border-base);
   }
 
   .dropdown-content {
-    @apply rounded-lg border p-2 shadow-lg;
-    background-color: var(--bg-base);
-    border-color: var(--border-base);
-    box-shadow: var(--shadow-lg);
+    @apply grid grid-cols-1 p-0 md:grid-cols-2;
   }
 
   .dropdown-item {
-    @apply block rounded-md p-3 transition-colors;
-    &:hover {
-      background-color: var(--bg-muted);
-    }
+    @apply hover:bg-primary-600 flex items-start gap-3 border-r-2 border-b-2 p-6 transition-colors last:border-b-0 hover:text-white;
+    border-color: var(--border-base);
+  }
+  .dropdown-item:nth-child(even) {
+    @apply border-r-0;
+  }
+
+  .dropdown-item-content {
+    @apply flex flex-col;
   }
 
   .dropdown-item-title {
-    @apply text-sm font-semibold;
-    color: var(--text-base);
+    @apply mb-1 font-mono text-sm font-bold uppercase;
+    color: inherit;
   }
 
   .dropdown-item-description {
-    @apply text-xs;
-    color: var(--text-muted);
+    @apply font-sans text-xs;
+    color: inherit;
+    opacity: 0.8;
   }
 
   .nav-actions {
-    @apply flex items-center gap-3;
+    @apply flex h-full items-center gap-4 border-l-2 pl-4;
+    border-color: var(--border-base);
   }
 
   .search-container {
-    @apply relative;
+    @apply relative flex h-full items-center border-r-2 pr-4;
+    border-color: var(--border-base);
   }
 
   .search-toggle {
@@ -446,7 +454,9 @@ const serviceLinks = [
   }
 
   .search-dropdown {
-    @apply invisible absolute top-full right-0 mt-2 w-80 opacity-0 transition-all duration-200;
+    @apply invisible absolute top-full right-0 mt-0 w-80 border-2 border-t-0 opacity-0 transition-all duration-200;
+    background-color: var(--bg-base);
+    border-color: var(--border-base);
   }
 
   .search-toggle[aria-expanded="true"] + .search-dropdown {
@@ -454,17 +464,17 @@ const serviceLinks = [
   }
 
   .search-form {
-    @apply rounded-lg border p-2 shadow-lg;
+    @apply border-b-2 p-4;
     background-color: var(--bg-base);
     border-color: var(--border-base);
   }
 
   .search-input-group {
-    @apply flex items-center;
+    @apply border-border-site flex items-center border-2;
   }
 
   .search-input {
-    @apply flex-1 border-0 bg-transparent px-3 py-2 text-sm outline-none;
+    @apply flex-1 border-0 bg-transparent px-3 py-2 font-mono text-sm outline-none;
     color: var(--text-base);
     &::placeholder {
       color: var(--text-placeholder);
@@ -472,23 +482,24 @@ const serviceLinks = [
   }
 
   .search-submit {
-    @apply hover:text-primary-600 p-2 text-neutral-600 transition-colors;
+    @apply hover:text-primary-600 bg-surface border-border-site border-l-2 p-2 text-neutral-600 transition-colors;
   }
 
   .search-suggestions {
-    @apply mt-2 space-y-1;
+    @apply space-y-2 p-4;
   }
 
   .search-suggestion-item {
-    @apply flex cursor-pointer items-center gap-2 rounded px-3 py-2 text-sm;
+    @apply flex cursor-pointer items-center gap-2 px-3 py-2 font-mono text-sm tracking-wider uppercase;
     color: var(--text-muted);
     &:hover {
-      background-color: var(--bg-muted);
+      background-color: var(--primary-600);
+      color: white;
     }
   }
 
   .cta-button {
-    @apply bg-primary-600 hover:bg-primary-700 hidden items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors sm:flex;
+    @apply hover:bg-primary-600 dark:hover:bg-primary-500 hidden items-center gap-2 border-2 border-black bg-black px-6 py-3 font-mono font-bold tracking-wider text-white uppercase transition-colors sm:flex dark:border-white dark:bg-white dark:text-black;
   }
 
   .mobile-menu-toggle {
@@ -520,52 +531,44 @@ const serviceLinks = [
   }
 
   .mobile-menu-content {
-    @apply flex h-full flex-col;
+    @apply border-border-site flex h-full flex-col border-l-2;
     background-color: var(--bg-base);
   }
 
   .mobile-menu-header {
-    @apply flex items-center justify-between border-b p-4;
+    @apply flex items-center justify-between border-b-2 p-6;
     border-color: var(--border-base);
   }
 
   .mobile-menu-close {
-    @apply hover:text-primary-600 p-2 text-neutral-600 transition-colors;
+    @apply hover:text-primary-600 border-border-site border-2 p-2 text-neutral-600 transition-colors;
   }
 
   .mobile-menu-body {
-    @apply flex-1 overflow-y-auto p-4;
+    @apply flex-1 overflow-y-auto p-6;
   }
 
   .mobile-nav-links {
-    @apply space-y-2;
+    @apply border-border-site space-y-0 border-2 border-b-0;
   }
 
   .mobile-nav-item {
-    @apply border-b last:border-0;
-    border-color: var(--border-subtle);
+    @apply border-b-2;
+    border-color: var(--border-base);
   }
 
   .mobile-nav-link {
-    @apply hover:text-primary-600 block py-4 font-medium transition-colors;
-    color: var(--text-secondary);
-    &:hover {
-      color: var(--color-primary-600);
-    }
-    .dark & {
-      &:hover {
-        color: #fff;
-      }
-    }
+    @apply hover:bg-primary-600 block p-4 font-mono font-bold tracking-widest uppercase transition-colors hover:text-white;
+    color: var(--text-base);
   }
 
   .mobile-dropdown-item-title {
-    @apply text-sm font-semibold;
+    @apply font-mono text-sm font-bold uppercase;
     color: var(--text-base);
   }
 
   .mobile-dropdown-item-description {
-    @apply text-xs;
+    @apply mt-1 text-xs;
     color: var(--text-muted);
   }
 
@@ -574,7 +577,7 @@ const serviceLinks = [
   }
 
   .mobile-cta-button {
-    @apply bg-primary-600 hover:bg-primary-700 flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white transition-colors;
+    @apply hover:bg-primary-600 dark:hover:bg-primary-500 flex items-center justify-center gap-2 border-2 border-black bg-black px-4 py-4 font-mono font-bold tracking-wider text-white uppercase transition-colors dark:border-white dark:bg-white dark:text-black;
   }
 </style>
 

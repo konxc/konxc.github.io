@@ -238,7 +238,7 @@ const contactInfo = {
   .footer {
     background-color: var(--bg-base);
     color: var(--text-base);
-    border-top: none;
+    border-top: 2px solid var(--border-base);
   }
 
   /* Membuat Newsletter di dalam footer menyatu sempurna (Seamless unity) */
@@ -259,29 +259,29 @@ const contactInfo = {
   }
 
   /* Main Footer */
-  .footer-main { @apply py-16 md:py-20; }
+  .footer-main { @apply py-16 md:py-20 border-b-2; border-color: var(--border-base); }
   .footer-content { @apply grid lg:grid-cols-2; gap: var(--spacing-content-gap); }
   .footer-section { margin-bottom: var(--spacing-content-gap); }
 
   /* Company Info */
-  .footer-brand    { @apply space-y-4; }
-  .brand-name      { @apply text-2xl font-bold; }
+  .footer-brand    { @apply space-y-4 mb-8; }
+  .brand-name      { @apply text-2xl font-bold font-mono tracking-widest uppercase; }
 
   .company-description {
-    @apply leading-relaxed;
+    @apply leading-relaxed font-sans max-w-sm;
     color: var(--text-muted);
   }
 
-  .contact-info  { @apply space-y-3; }
+  .contact-info  { @apply space-y-3 font-mono text-sm; }
   .contact-item  { @apply flex items-center gap-3; }
 
   .contact-link  {
-    @apply transition-colors;
+    @apply transition-colors font-bold;
     color: var(--text-muted);
     &:hover { color: var(--text-base); }
   }
 
-  .contact-text  { color: var(--text-muted); }
+  .contact-text  { color: var(--text-muted); font-bold: true; }
 
   /* Quick Links */
   .links-grid   { @apply grid grid-cols-2 md:grid-cols-4 gap-8; }
@@ -289,41 +289,42 @@ const contactInfo = {
   .links-list   { @apply space-y-2; }
 
   .links-title  {
-    @apply font-semibold mb-4;
+    @apply font-mono font-bold uppercase tracking-wider mb-4 border-b-2 pb-2;
     color: var(--text-base);
+    border-color: var(--border-base);
   }
 
   .footer-link  {
-    @apply transition-colors block;
+    @apply transition-colors block font-mono text-sm uppercase;
     color: var(--text-placeholder);
-    &:hover { color: var(--text-base); }
+    &:hover { color: var(--primary-600); }
   }
 
   /* Footer Bottom */
   .footer-bottom {
-    @apply border-t py-6;
-    border-color: var(--border-subtle);
+    @apply py-6 bg-surface;
   }
 
   .footer-bottom-content { @apply flex flex-col md:flex-row justify-between items-center gap-4; }
-  .copyright             { @apply text-center md:text-left; }
+  .copyright             { @apply text-center md:text-left font-mono text-xs uppercase tracking-widest; }
 
-  .copyright p  { @apply mb-2; color: var(--text-placeholder); }
+  .copyright p  { @apply mb-2 font-bold; color: var(--text-base); }
 
-  .legal-links  { @apply flex gap-4 text-sm; }
+  .legal-links  { @apply flex gap-4 text-xs font-mono uppercase tracking-wider; }
   .legal-link   {
-    @apply transition-colors;
+    @apply transition-colors font-bold;
     color: var(--text-placeholder);
-    &:hover { color: var(--text-base); }
+    &:hover { color: var(--primary-600); }
   }
 
   .social-links  { @apply flex items-center gap-4; }
-  .social-label  { @apply text-sm; color: var(--text-placeholder); }
+  .social-label  { @apply text-xs font-mono uppercase font-bold; color: var(--text-base); }
 
-  .social-icons  { @apply flex gap-3; }
+  .social-icons  { @apply flex gap-0 border-2; border-color: var(--border-base); }
   .social-icon   {
-    @apply w-10 h-10 rounded-lg flex items-center justify-center transition-colors;
-    background-color: var(--border-base);
+    @apply w-12 h-12 flex items-center justify-center transition-colors border-r-2 last:border-r-0;
+    background-color: var(--bg-base);
+    border-color: var(--border-base);
     color: var(--text-muted);
     &:hover {
       background-color: var(--color-primary-600);
