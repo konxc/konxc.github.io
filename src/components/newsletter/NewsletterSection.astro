@@ -232,8 +232,8 @@ const config = variantConfig[variant];
 
   /* Base Newsletter Section */
   .newsletter-section {
-    @apply relative overflow-hidden;
-    background-color: var(--bg-site);
+    @apply border-border-site relative border-y-2;
+    background-color: var(--bg-surface);
     color: var(--text-base);
   }
 
@@ -242,26 +242,9 @@ const config = variantConfig[variant];
     @apply absolute left-[-9999px] h-0 w-0 opacity-0;
   }
 
-  /* Default Variant - Premium Adaptive Style */
+  /* Default Variant */
   .newsletter-section-default {
-    @apply relative overflow-hidden py-24 md:py-32;
-    background: var(--bg-muted);
-  }
-
-  .newsletter-section-default::before {
-    content: "";
-    @apply pointer-events-none absolute inset-0;
-    background:
-      radial-gradient(
-        circle at 15% 85%,
-        color-mix(in srgb, var(--color-primary-500) 5%, transparent) 0%,
-        transparent 60%
-      ),
-      radial-gradient(
-        circle at 85% 15%,
-        color-mix(in srgb, var(--color-accent-500) 5%, transparent) 0%,
-        transparent 60%
-      );
+    @apply border-border-site bg-site relative overflow-hidden border-y-2 py-16 md:py-24;
   }
 
   .newsletter-content-default {
@@ -269,75 +252,49 @@ const config = variantConfig[variant];
   }
 
   .newsletter-section-default .newsletter-title {
-    @apply mb-4 text-3xl font-black tracking-tight md:text-5xl lg:text-6xl;
-    background: linear-gradient(
-      135deg,
-      var(--color-primary-600) 0%,
-      var(--color-accent-600) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  :global(.dark) .newsletter-section-default .newsletter-title {
-    background: linear-gradient(
-      135deg,
-      var(--color-primary-400) 0%,
-      var(--color-accent-400) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
+    @apply mb-6 text-4xl font-black tracking-tight uppercase md:text-6xl;
+    color: var(--text-base);
   }
 
   .newsletter-section-default .newsletter-subtitle {
-    @apply mx-auto mb-8 max-w-2xl text-lg leading-relaxed font-medium md:text-xl;
+    @apply mx-auto mb-10 max-w-2xl font-mono text-sm leading-relaxed font-bold tracking-wider uppercase;
     color: var(--text-muted);
   }
 
   .newsletter-section-default .newsletter-form {
-    @apply mx-auto max-w-lg;
+    @apply mx-auto max-w-2xl;
   }
 
   .newsletter-section-default .form-group {
-    @apply mb-6 flex flex-col items-center gap-4 sm:flex-row;
+    @apply border-border-site mb-6 flex flex-col gap-0 border-2 shadow-[8px_8px_0px_0px_var(--border-site)] sm:flex-row;
+  }
+
+  .newsletter-section-default .input-wrapper {
+    @apply bg-surface relative flex-1;
   }
 
   .newsletter-section-default .newsletter-input {
-    @apply border-border-site w-full flex-1 rounded-2xl border px-6 py-4 text-base font-medium transition-all duration-300;
+    @apply h-full min-h-[64px] w-full border-0 bg-transparent px-6 font-mono text-base font-bold uppercase outline-none;
     color: var(--text-base);
-    background: var(--bg-surface);
   }
 
   .newsletter-section-default .newsletter-input::placeholder {
     color: var(--text-placeholder);
   }
 
-  .newsletter-section-default .newsletter-input:focus {
-    @apply border-primary-500/50 ring-4 outline-none;
-    ring-color: color-mix(in srgb, var(--color-primary-500) 10%, transparent);
-  }
-
   .newsletter-section-default .newsletter-button {
-    @apply flex items-center justify-center gap-2 rounded-2xl px-10 py-4 text-base font-bold text-white shadow-lg transition-all duration-300;
-    background: var(--color-primary-600);
-    height: 58px;
-    min-width: 180px;
+    @apply border-border-site flex items-center justify-center gap-3 border-l-2 bg-black px-10 py-4 font-mono font-black tracking-widest text-white uppercase transition-all dark:bg-white dark:text-black;
+    min-width: 200px;
+    height: 64px;
   }
 
   .newsletter-section-default .newsletter-button:hover {
-    @apply -translate-y-0.5 scale-[1.02];
-    background: var(--color-primary-700);
-    box-shadow: 0 10px 20px -5px
-      color-mix(in srgb, var(--color-primary-600) 40%, transparent);
+    @apply bg-primary-600 dark:bg-primary-500 text-white;
   }
 
   /* Compact Variant */
   .newsletter-section-compact {
-    @apply relative overflow-hidden py-16 md:py-20;
-    background-color: var(--bg-surface);
-    border-top: 1px solid var(--border-base);
-    border-bottom: 1px solid var(--border-base);
+    @apply border-border-site bg-surface relative overflow-hidden border-y-2 py-12;
   }
 
   .newsletter-content-compact {
@@ -345,102 +302,110 @@ const config = variantConfig[variant];
   }
 
   .newsletter-section-compact .newsletter-title {
-    @apply mb-3 text-2xl font-bold tracking-tight md:text-3xl;
+    @apply mb-4 text-2xl font-black tracking-wider uppercase;
     color: var(--text-base);
   }
 
   .newsletter-section-compact .newsletter-subtitle {
-    @apply mx-auto mb-6 max-w-lg text-base font-medium;
+    @apply mb-8 font-mono text-xs font-bold uppercase;
     color: var(--text-muted);
   }
 
+  .newsletter-section-compact .newsletter-form {
+    @apply mx-auto max-w-xl;
+  }
+
   .newsletter-section-compact .form-group {
-    @apply mx-auto mb-4 flex max-w-md flex-col gap-3 sm:flex-row;
+    @apply border-border-site flex flex-col gap-0 border-2 shadow-[4px_4px_0px_0px_var(--border-site)] sm:flex-row;
+  }
+
+  .newsletter-section-compact .input-wrapper {
+    @apply bg-site relative flex-1;
   }
 
   .newsletter-section-compact .newsletter-input {
-    @apply border-border-site bg-site w-full flex-1 rounded-xl border px-4 py-3 text-base font-medium transition-all duration-300;
-    height: 52px;
+    @apply h-[52px] w-full border-0 bg-transparent px-4 font-mono text-sm uppercase outline-none;
+    color: var(--text-base);
   }
 
   .newsletter-section-compact .newsletter-button {
-    @apply flex items-center justify-center gap-2 rounded-xl px-8 py-3 text-base font-bold text-white transition-all duration-300;
-    background: var(--color-primary-600);
-    height: 52px;
+    @apply border-border-site hover:bg-primary-600 flex h-[52px] items-center justify-center border-l-2 bg-black px-8 font-mono font-bold text-white uppercase transition-colors hover:text-white dark:bg-white dark:text-black;
   }
 
   /* Sidebar Variant */
   .newsletter-section-sidebar {
-    @apply border-border-site relative overflow-hidden rounded-3xl border p-6;
-    background-color: var(--bg-surface);
+    @apply bg-surface border-border-site border-2 p-6 shadow-[4px_4px_0px_0px_var(--border-site)];
   }
 
   .newsletter-section-sidebar .newsletter-title {
-    @apply mb-2 text-xl font-bold;
+    @apply mb-2 text-lg font-black uppercase;
     color: var(--text-base);
   }
 
   .newsletter-section-sidebar .newsletter-subtitle {
-    @apply mb-4 text-sm font-medium;
+    @apply mb-6 font-mono text-xs font-bold uppercase;
     color: var(--text-muted);
   }
 
+  .newsletter-section-sidebar .form-group {
+    @apply flex flex-col gap-4;
+  }
+
+  .newsletter-section-sidebar .input-wrapper {
+    @apply relative;
+  }
+
   .newsletter-section-sidebar .newsletter-input {
-    @apply border-border-site bg-site mb-3 w-full rounded-xl border px-4 py-3 text-sm font-medium transition-all duration-300;
-    height: 48px;
+    @apply border-border-site bg-site focus:border-primary-600 w-full border-2 px-4 py-3 font-mono text-sm uppercase outline-none;
   }
 
   .newsletter-section-sidebar .newsletter-button {
-    @apply bg-primary-600 w-full rounded-xl py-3 text-sm font-bold text-white transition-all duration-300;
-    background: var(--color-primary-600);
-    height: 48px;
+    @apply hover:bg-primary-600 flex w-full items-center justify-center border-2 border-transparent bg-black py-3 font-mono font-bold text-white uppercase transition-colors hover:text-white dark:bg-white dark:text-black;
   }
 
-  /* Common Form Elements */
-  .input-wrapper {
-    @apply relative w-full flex-1;
+  /* Shared Interactive Elements */
+  .button-icon {
+    @apply h-5 w-5;
   }
 
+  .newsletter-button.loading .icon-arrow,
+  .newsletter-button.success .icon-arrow {
+    @apply hidden;
+  }
+
+  .newsletter-button.loading .icon-loading {
+    @apply block animate-spin;
+  }
+
+  .newsletter-button.success .icon-success {
+    @apply block text-green-400;
+  }
+
+  /* Validation & Status */
   .input-validation {
-    @apply text-error-500 absolute top-full left-0 mt-1 text-xs font-medium;
+    @apply absolute -bottom-5 left-0 font-mono text-xs font-bold uppercase;
   }
 
-  /* Status Messages */
   .newsletter-status {
-    @apply mt-4 text-sm font-semibold;
+    @apply mt-6 font-mono text-sm font-bold uppercase;
   }
 
   .status-success {
-    @apply text-success-500;
+    @apply border-2 border-green-500 bg-green-50 p-3 text-green-600 dark:bg-green-900/30 dark:text-green-400;
   }
 
   .status-error {
-    @apply text-error-500;
+    @apply border-2 border-red-500 bg-red-50 p-3 text-red-600 dark:bg-red-900/30 dark:text-red-400;
   }
 
   /* Disclaimer */
   .newsletter-disclaimer {
-    @apply text-on-muted mt-6 text-xs font-medium opacity-60;
+    @apply mt-6 text-center font-mono text-[10px] font-bold uppercase;
+    color: var(--text-placeholder);
   }
 
   .disclaimer-link {
-    @apply hover:text-primary-500 underline transition-colors;
-  }
-
-  /* Responsive Design Overrides */
-  @media (max-width: 640px) {
-    .newsletter-section-default .newsletter-button,
-    .newsletter-section-compact .newsletter-button {
-      @apply w-full;
-    }
-  }
-
-  /* Utility Classes */
-  .hidden {
-    @apply hidden;
-  }
-  .block {
-    @apply block;
+    @apply hover:text-primary-600 underline transition-colors;
   }
 </style>
 
