@@ -10,7 +10,7 @@ export async function GET() {
       description: post.data.description,
       tags: post.data.tags,
       category: post.data.category,
-      slug: post.slug,
+      slug: post.id,
       publishDate: post.data.publishDate,
       readingTime: post.data.readingTime,
       author: post.data.author,

@@ -1,11 +1,13 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro:schema";
 
 const blog = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    publishDate: z.coerce.date().optional().default(new Date()), // ✅ More flexible
+    publishDate: z.any().optional(),
     author: z.string().optional().default("Unknown Author"),
     category: z
       .enum([
@@ -44,7 +46,6 @@ const blog = defineCollection({
           interactive: z.boolean().optional(),
           icon: z.string().optional(),
           featured: z.boolean().optional(),
-          metadata: z.record(z.any()).optional(),
         }),
       )
       .optional()
@@ -53,7 +54,7 @@ const blog = defineCollection({
 });
 
 const contributors = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/contributors" }),
   schema: z.object({
     name: z.string(),
     bio: z.string(),

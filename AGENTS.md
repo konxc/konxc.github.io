@@ -8,7 +8,7 @@ Bangun perubahan yang aman untuk production, kecil cakupannya, dan mudah direvie
 
 ## Engineering Guardrails
 
-- Gunakan `pnpm` untuk semua command.
+- Gunakan `bun` untuk semua command.
 - Hindari refactor besar jika tidak diminta.
 - Hindari perubahan visual lintas halaman kecuali task memang desain/UI.
 - Jangan commit atau menulis ulang file env sensitif.
@@ -42,20 +42,20 @@ Bangun perubahan yang aman untuk production, kecil cakupannya, dan mudah direvie
 Minimal setelah perubahan:
 
 ```bash
-pnpm run validate
+bun run validate
 ```
 
 Jika perubahan menyentuh build/runtime/auth/env:
 
 ```bash
-pnpm run build
+bun run build
 ```
 
 Jika perubahan menyentuh schema/database:
 
 ```bash
-pnpm run db:generate
-pnpm run db:migrate
+bun run db:generate
+bun run db:migrate
 ```
 
 ## Documentation Protocol
@@ -69,6 +69,6 @@ pnpm run db:migrate
 Perubahan dianggap selesai jika:
 
 1. Scope task tercapai.
-2. Tidak merusak validasi (`pnpm run validate` lolos).
+2. Tidak merusak validasi (`bun run validate` lolos).
 3. Tidak menurunkan posture security (khususnya auth/env).
 4. Dokumentasi relevan ikut diperbarui.

@@ -37,7 +37,7 @@ const {
 const displayArticles = articles.slice(0, maxArticles);
 
 const getArticleUrl = (article: Article) => {
-  return article.href || `${baseUrl}/${article.slug}`;
+  return article.href || `${baseUrl}/${article.id}`;
 };
 ---
 

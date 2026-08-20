@@ -161,7 +161,7 @@ type Props = {
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post: CollectionEntry<'blog'>) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: { post },
   }));
 }

@@ -1,0 +1,176 @@
+---
+import "@styles/global.css";
+import Head from "@components/Head.astro";
+
+// This view is intended for konxc.github.io (GitHub Pages)
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <Head
+      title="PT Koneksi Jaringan Indonesia | Open Source"
+      description="PT Koneksi - Membangun ekosistem digital Indonesia yang kompetitif dan sehat melalui gotong royong. Open Source Portfolio."
+    />
+  </head>
+  <body class="bg-gray-900">
+    <main
+      class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 p-4 text-white"
+    >
+      <!-- Background Gradient Animation -->
+      <div class="absolute inset-0 z-0">
+        <div
+          class="absolute top-0 left-0 h-full w-full animate-pulse bg-cover bg-center opacity-20"
+          style="background-image: url('/images/bg-pattern.svg');"
+        >
+        </div>
+        <div
+          class="animate-blob absolute -top-40 -left-40 h-80 w-80 rounded-full bg-blue-500 opacity-30 mix-blend-screen blur-xl filter"
+        >
+        </div>
+        <div
+          class="animate-blob animation-delay-2000 absolute -right-20 -bottom-20 h-96 w-96 rounded-full bg-purple-500 opacity-30 mix-blend-screen blur-xl filter"
+        >
+        </div>
+        <div
+          class="animate-blob animation-delay-4000 absolute top-1/4 right-1/4 h-72 w-72 rounded-full bg-indigo-500 opacity-30 mix-blend-screen blur-xl filter"
+        >
+        </div>
+      </div>
+
+      <section class="relative z-10 mx-auto w-full max-w-5xl text-center">
+        <!-- Logo or Icon -->
+        <div class="mb-8 flex justify-center">
+          <div
+            class="flex h-24 w-24 items-center justify-center rounded-3xl bg-white/10 shadow-2xl backdrop-blur-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-blue-300"
+            >
+              <path
+                d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+              ></path>
+              <path d="M9 18c-4.51 2-5-2-7-2"></path>
+            </svg>
+          </div>
+        </div>
+
+        <h1
+          class="animate-fade-in mb-4 bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-5xl font-extrabold text-transparent lg:text-7xl"
+        >
+          KonXC Open Source
+        </h1>
+        <p
+          class="animate-fade-in animation-delay-500 mx-auto mb-12 max-w-2xl text-xl font-light text-blue-100/80"
+        >
+          Gotong Royong Digital untuk Ekosistem Inovasi Indonesia. Selamat
+          datang di Repositori Publik PT Koneksi Jaringan Indonesia.
+        </p>
+
+        <!-- Ecosystem Links -->
+        <div
+          class="animate-fade-in animation-delay-1000 mb-16 flex flex-wrap justify-center gap-6"
+        >
+          <a
+            href="https://github.com/konxc"
+            target="_blank"
+            class="flex items-center gap-3 rounded-full bg-white/10 px-8 py-4 font-semibold text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20"
+          >
+            <span class="text-2xl">🐙</span> Kunjungi GitHub
+          </a>
+          <a
+            href="https://we-will-shine.konxc.space"
+            class="flex items-center gap-3 rounded-full border border-blue-400/20 bg-blue-500/20 px-8 py-4 font-semibold text-blue-100 shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-blue-500/30"
+          >
+            <span class="text-2xl">🎓</span> We Will Shine
+          </a>
+          <a
+            href="https://konxc.space"
+            class="flex items-center gap-3 rounded-full border border-purple-400/20 bg-purple-500/20 px-8 py-4 font-semibold text-purple-100 shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-purple-500/30"
+          >
+            <span class="text-2xl">🚀</span> konxc.space
+          </a>
+        </div>
+
+        <!-- Featured Projects / Notice -->
+        <div
+          class="animate-fade-in animation-delay-1500 mx-auto grid max-w-4xl gap-6 text-left md:grid-cols-2"
+        >
+          <!-- Project 1 -->
+          <div
+            class="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:bg-white/10"
+          >
+            <div class="mb-4 flex items-center justify-between">
+              <h3 class="text-2xl font-bold text-white">konxc.github.io</h3>
+              <span
+                class="rounded-full border border-blue-500/30 bg-blue-500/20 px-3 py-1 text-xs text-blue-200"
+                >Astro</span
+              >
+            </div>
+            <p class="mb-6 line-clamp-2 text-blue-100/70">
+              Website utama dan landing page PT Koneksi Jaringan Indonesia
+              dengan arsitektur Dual Deployment (Corporate & Portfolio).
+            </p>
+            <a
+              href="https://github.com/konxc/konxc.github.io"
+              class="flex items-center gap-2 text-sm font-semibold text-blue-300 hover:text-white"
+            >
+              Lihat Source Code &rarr;
+            </a>
+          </div>
+
+          <!-- Project 2 -->
+          <div
+            class="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:bg-white/10"
+          >
+            <div class="mb-4 flex items-center justify-between">
+              <h3 class="text-2xl font-bold text-white">TrackMe</h3>
+              <span
+                class="rounded-full border border-green-500/30 bg-green-500/20 px-3 py-1 text-xs text-green-200"
+                >Ecosystem</span
+              >
+            </div>
+            <p class="mb-6 line-clamp-2 text-blue-100/70">
+              Ekosistem pelacakan dan analitik logistik untuk monitoring supply
+              chain UMKM dengan aman dan transparan.
+            </p>
+            <a
+              href="https://konxc.github.io/trackme"
+              class="flex items-center gap-2 text-sm font-semibold text-blue-300 hover:text-white"
+            >
+              Pelajari Lebih Lanjut &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+          class="animate-fade-in animation-delay-2000 mt-16 flex justify-center gap-8 border-t border-white/10 pt-8"
+        >
+          <a
+            href="mailto:info@konxc.space"
+            class="text-blue-200/50 transition-colors hover:text-white"
+          >
+            info@konxc.space
+          </a>
+          <span class="text-blue-200/30">&bull;</span>
+          <a
+            href="https://github.com/konxc"
+            class="text-blue-200/50 transition-colors hover:text-white"
+          >
+            PT Koneksi Jaringan Indonesia
+          </a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

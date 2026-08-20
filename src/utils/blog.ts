@@ -12,7 +12,7 @@ export async function getRelatedArticles(
   const currentCategory = currentPost.data.category;
 
   return allPosts
-    .filter((p) => p.slug !== currentPost.slug)
+    .filter((p) => p.id !== currentPost.id)
     .map((p) => {
       let score = 0;
       if (p.data.category === currentCategory) score += 10;
@@ -34,12 +34,12 @@ export async function getRelatedArticles(
     .sort((a, b) => b.score - a.score)
     .slice(0, maxArticles)
     .map(({ post: p }) => ({
-      id: p.slug,
+      id: p.id,
       title: p.data.title,
       excerpt: p.data.description,
       category: p.data.category,
       image: p.data.coverImage,
       readTime: `${p.data.readingTime || Math.ceil((p.body?.length || 1000) / 750)} Menit`,
-      slug: p.slug,
+      slug: p.id,
     }));
 }

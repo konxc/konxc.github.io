@@ -32,7 +32,7 @@ const {
 const allPosts = await getCollection("blog");
 
 // Get current post data
-const currentPost = allPosts.find((post) => post.slug === currentPostSlug);
+const currentPost = allPosts.find((post) => post.id === currentPostSlug);
 
 // Generate recommendations based on algorithm
 let recommendations: typeof allPosts = [];
@@ -81,7 +81,7 @@ function getSimilarityRecommendations(
   max: number,
 ) {
   return posts
-    .filter((post) => post.slug !== currentPost.slug)
+    .filter((post) => post.id !== currentPost.id)
     .map((post) => ({
       ...post,
       similarityScore: calculateSimilarity(currentPost, post),
@@ -96,7 +96,7 @@ function getPopularityRecommendations(
   max: number,
 ) {
   return posts
-    .filter((post) => post.slug !== excludeSlug)
+    .filter((post) => post.id !== excludeSlug)
     .sort((a, b) => (b.data.views || 0) - (a.data.views || 0))
     .slice(0, max);
 }
@@ -107,7 +107,7 @@ function getRecentRecommendations(
   max: number,
 ) {
   return posts
-    .filter((post) => post.slug !== excludeSlug)
+    .filter((post) => post.id !== excludeSlug)
     .sort(
       (a, b) =>
         new Date(b.data.publishDate).getTime() -
@@ -137,7 +137,7 @@ function getHybridRecommendations(
   const combined = [...similarityRecs, ...popularityRecs];
   const unique = combined.filter(
     (post, index, self) =>
-      index === self.findIndex((p) => p.slug === post.slug),
+      index === self.findIndex((p) => p.id === post.id),
   );
 
   return unique.slice(0, max);
@@ -233,7 +233,7 @@ const config = contextConfig[context];
           >
             {recommendations.map((post) => (
               <Card class="group transition-all hover:shadow-lg">
-                <a href={`/blog/${post.slug}`} class="block">
+                <a href={`/blog/${post.id}`} class="block">
                   {post.data.coverImage && (
                     <img
                       src={post.data.coverImage}

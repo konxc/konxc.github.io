@@ -13,7 +13,7 @@ posts.forEach((post) => {
     }
     seriesMap[post.data.series].push({
       ...post.data,
-      slug: post.slug,
+      slug: post.id,
     });
   }
 });
@@ -47,12 +47,12 @@ let currentPostIndex = -1;
 let currentSeriesName = "";
 
 if (currentPostSlug) {
-  const currentPost = posts.find((post) => post.slug === currentPostSlug);
+  const currentPost = posts.find((post) => post.id === currentPostSlug);
   if (currentPost?.data.series) {
     currentSeriesName = currentPost.data.series;
     currentSeries = seriesMap[currentSeriesName] || [];
     currentPostIndex = currentSeries.findIndex(
-      (post) => post.slug === currentPostSlug,
+      (post) => post.id === currentPostSlug,
     );
   }
 }
@@ -116,7 +116,7 @@ const hasSeries = currentSeries.length > 0;
                     {index === currentPostIndex ? (
                       <span class="current-post">{post.title}</span>
                     ) : (
-                      <a href={`/blog/${post.slug}`} class="post-link">
+                      <a href={`/blog/${post.id}`} class="post-link">
                         {post.title}
                       </a>
                     )}
@@ -138,7 +138,7 @@ const hasSeries = currentSeries.length > 0;
           <div class="series-controls">
             {currentPostIndex > 0 && (
               <a
-                href={`/blog/${currentSeries[currentPostIndex - 1].slug}`}
+                href={`/blog/${currentSeries[currentPostIndex - 1].id}`}
                 class="series-nav-btn prev"
               >
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,7 +155,7 @@ const hasSeries = currentSeries.length > 0;
 
             {currentPostIndex < currentSeries.length - 1 && (
               <a
-                href={`/blog/${currentSeries[currentPostIndex + 1].slug}`}
+                href={`/blog/${currentSeries[currentPostIndex + 1].id}`}
                 class="series-nav-btn next"
               >
                 Selanjutnya

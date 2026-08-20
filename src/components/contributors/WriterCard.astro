@@ -91,7 +91,7 @@ const { data } = writer;
       {showActions && (
         <div class="flex gap-2">
           <a 
-            href={`/contributors/${writer.slug}`}
+            href={`/contributors/${writer.id}`}
             class="flex-1 rounded-md bg-primary-600 px-3 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-primary-700"
           >
             Lihat Profil
@@ -133,7 +133,7 @@ const { data } = writer;
       <!-- Action -->
       {showActions && (
         <a 
-          href={`/contributors/${writer.slug}`}
+          href={`/contributors/${writer.id}`}
           class="rounded-md bg-primary-600 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-primary-700"
         >
           Lihat

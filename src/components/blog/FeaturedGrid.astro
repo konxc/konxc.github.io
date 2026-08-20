@@ -26,7 +26,7 @@ const formatDate = (date: Date) => {
       <div
         class="group relative h-full overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:bg-neutral-800"
       >
-        <a href={`/blog/${featuredPost.slug}`} class="block h-full">
+        <a href={`/blog/${featuredPost.id}`} class="block h-full">
           <div
             class="relative aspect-[16/9] w-full overflow-hidden sm:aspect-[2/1] lg:aspect-auto lg:h-full"
           >
@@ -34,7 +34,7 @@ const formatDate = (date: Date) => {
               title={featuredPost.data.title}
               category={featuredPost.data.category}
               image={featuredPost.data.coverImage}
-              slug={featuredPost.slug}
+              slug={featuredPost.id}
               class="h-full w-full"
             />
             <div
@@ -100,13 +100,13 @@ const formatDate = (date: Date) => {
       {
         secondaryPosts.map((post) => (
           <div class="group relative flex-1 overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:bg-neutral-800">
-            <a href={`/blog/${post.slug}`} class="block h-full">
+            <a href={`/blog/${post.id}`} class="block h-full">
               <div class="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:aspect-square">
                 <PostVisual
                   title={post.data.title}
                   category={post.data.category}
                   image={post.data.coverImage}
-                  slug={post.slug}
+                  slug={post.id}
                   class="absolute inset-0 h-full w-full"
                 />
                 <div class="absolute inset-0 z-[2] bg-gradient-to-t from-black/95 via-black/40 to-transparent" />

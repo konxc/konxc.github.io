@@ -251,7 +251,7 @@ const { class: className } = Astro.props;
             ${post.readingTime ? `<span class="result-reading-time">${post.readingTime} min read</span>` : ""}
           </div>
           <h3 class="result-title">
-            <a href="/blog/${post.slug}">${post.title}</a>
+            <a href="/blog/${post.id}">${post.title}</a>
           </h3>
           <p class="result-description">${post.description}</p>
           <div class="result-tags">

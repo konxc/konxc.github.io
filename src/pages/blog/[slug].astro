@@ -1,5 +1,5 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import BlogSlugLayout from "@layouts/BlogSlugLayout.astro";
 import SocialShare from "@components/blog/SocialShare.astro";
 
@@ -27,14 +27,14 @@ type Props = {
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  return posts.map((post: CollectionEntry<"blog">) => ({
-    params: { slug: post.slug },
+  return posts.map((post) => ({
+    params: { slug: post.id },
     props: { post },
   }));
 }
 
 const { post }: Props = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 // Generate full URL for SEO/Social
 const fullUrl = new URL(Astro.url.pathname, Astro.site).toString();
@@ -59,7 +59,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
   <section class="bg-site py-10 md:py-14">
     <div class="container">
       <div class="mx-auto max-w-6xl">
-        <ArticleSeries currentPostSlug={post.slug} />
+        <ArticleSeries currentPostSlug={post.id} />
 
         <div class="grid gap-12 lg:grid-cols-4">
           <!-- Main Article Area -->
@@ -96,7 +96,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
 
   <!-- Support Components -->
   <SmartBlogTestingSuite />
-  <ReadingAnalytics postSlug={post.slug} />
+  <ReadingAnalytics postSlug={post.id} />
   <ReadingMode />
   <PerformanceOptimizer />
   <MermaidRenderer />
@@ -113,7 +113,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
     )
   }
 
-  <BlogPostComments postSlug={post.slug} />
+  <BlogPostComments postSlug={post.id} />
 </BlogSlugLayout>
 
 <style>

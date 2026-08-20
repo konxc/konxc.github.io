@@ -43,7 +43,7 @@ export const GET: APIRoute = async ({ site }) => {
     .join("\n")}
   ${blogPosts
     .map((post) => {
-      const url = `${site.href}blog/${post.slug}`;
+      const url = `${site.href}blog/${post.id}`;
       const lastmod = post.data.publishDate.toISOString().split("T")[0];
 
       return `  <url>
@@ -56,7 +56,7 @@ export const GET: APIRoute = async ({ site }) => {
     .join("\n")}
   ${contributors
     .map((contributor) => {
-      const url = `${site.href}contributors/${contributor.slug}`;
+      const url = `${site.href}contributors/${contributor.id}`;
 
       return `  <url>
     <loc>${url}</loc>

@@ -295,7 +295,7 @@ const { class: className } = Astro.props;
        if (recentContainer && this.allPosts.length) {
           const recent = this.allPosts.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()).slice(0, 4);
           recentContainer.innerHTML = recent.map(post => `
-             <a href="/blog/${post.slug}" class="flex items-start gap-3 p-3 rounded-xl hover:bg-neutral-100 transition-colors group">
+             <a href="/blog/${post.id}" class="flex items-start gap-3 p-3 rounded-xl hover:bg-neutral-100 transition-colors group">
                <div class="h-12 w-12 flex-shrink-0 bg-neutral-200 rounded-lg overflow-hidden">
                    <!-- Image Placeholder or Actual Image -->
                     <div class="w-full h-full bg-primary-100 flex items-center justify-center text-primary-500 font-bold">
@@ -324,7 +324,7 @@ const { class: className } = Astro.props;
        this.emptyState.classList.add('hidden');
        
        this.resultsContainer.innerHTML = results.map(post => `
-         <a href="/blog/${post.slug}" class="flex flex-col sm:flex-row gap-4 p-4 rounded-xl bg-white border border-neutral-100 hover:border-primary-500 hover:shadow-md transition-all group">
+         <a href="/blog/${post.id}" class="flex flex-col sm:flex-row gap-4 p-4 rounded-xl bg-white border border-neutral-100 hover:border-primary-500 hover:shadow-md transition-all group">
             <div class="min-w-0 flex-1">
                <div class="flex items-center gap-2 mb-1">
                   <span class="inline-flex items-center rounded-md bg-neutral-50 px-2 py-1 text-xs font-medium text-neutral-600 ring-1 ring-inset ring-neutral-500/10">

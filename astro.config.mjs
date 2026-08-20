@@ -3,7 +3,6 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import node from "@astrojs/node";
-import svelte from "@astrojs/svelte";
 import qwik from "@qwikdev/astro";
 import astroIcon from "astro-icon";
 import { visualizer } from "rollup-plugin-visualizer";
@@ -12,17 +11,17 @@ import { visualizer } from "rollup-plugin-visualizer";
 export default defineConfig({
   site: "https://www.konxc.space",
 
-  integrations: [sitemap(), svelte(), qwik(), astroIcon()],
+  integrations: [sitemap(), qwik(), astroIcon()],
 
   vite: {
     plugins: [
       tailwindcss(),
-      visualizer({
+      /** @type {any} */ (visualizer({
         filename: "dist/bundle-analysis.html",
-        open: false,
+        template: "treemap", // treemap, sunburst, or network
         gzipSize: true,
         brotliSize: true,
-      }),
+      })),
     ],
   },
 

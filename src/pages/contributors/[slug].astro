@@ -11,7 +11,7 @@ type Props = {
 export async function getStaticPaths() {
   const contributors = await getCollection("contributors");
   return contributors.map((contributor: CollectionEntry<"contributors">) => ({
-    params: { slug: contributor.slug },
+    params: { slug: contributor.id },
     props: { contributor },
   }));
 }
@@ -35,7 +35,7 @@ const joinDate = new Date(data.joinDate).toLocaleDateString("id-ID", {
 
 const allContributors = await getCollection("contributors");
 const relatedContributors = allContributors
-  .filter((c) => c.slug !== contributor.slug)
+  .filter((c) => c.id !== contributor.id)
   .filter((c) => c.data.role === data.role)
   .slice(0, 3);
 

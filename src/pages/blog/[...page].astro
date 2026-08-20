@@ -147,7 +147,7 @@ const tags = [...new Set(allPosts.flatMap((post) => post.data.tags))].slice(
       sortedAllPosts.map((p) => ({
         title: p.data.title,
         description: p.data.description,
-        slug: p.slug,
+        slug: p.id,
         publishDate: p.data.publishDate,
         tags: p.data.tags,
         category: p.data.category,

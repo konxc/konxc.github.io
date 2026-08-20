@@ -1,5 +1,5 @@
 // src/utils/markdownParser.ts
-import type { CollectionEntry } from "astro:content";
+import { render, type CollectionEntry } from "astro:content";
 
 export interface InteractiveDemo {
   id: string;
@@ -75,16 +75,16 @@ export async function parseBlogPost(
     const frontmatter = post.data;
 
     if (!frontmatter) {
-      throw new Error(`Frontmatter is undefined for post: ${post.slug}`);
+      throw new Error(`Frontmatter is undefined for post: ${post.id}`);
     }
 
-    await post.render();
+    await render(post);
 
     // Get raw content untuk parsing demos
     const rawContent = post.body;
 
     if (!rawContent) {
-      throw new Error(`Body content is undefined for post: ${post.slug}`);
+      throw new Error(`Body content is undefined for post: ${post.id}`);
     }
 
     // Parse interactive demos
@@ -104,7 +104,7 @@ export async function parseBlogPost(
 
     return result;
   } catch (error) {
-    console.error("Error parsing post:", post.slug, error);
+    console.error("Error parsing post:", post.id, error);
     throw error;
   }
 }
