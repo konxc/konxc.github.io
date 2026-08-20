@@ -75,7 +75,10 @@ export const GET: APIRoute = async ({ url }) => {
     const rootRows = visibleRows.filter((row) => !row.parentId);
     const replies = visibleRows.filter((row) => row.parentId);
 
-    const repliesByParent = new Map<string, ReturnType<typeof sanitizeCommentOutput>[]>();
+    const repliesByParent = new Map<
+      string,
+      ReturnType<typeof sanitizeCommentOutput>[]
+    >();
     for (const reply of replies) {
       if (!reply.parentId) continue;
       const bucket = repliesByParent.get(reply.parentId) ?? [];
@@ -110,12 +113,16 @@ export const POST: APIRoute = async ({ request }) => {
     const data = await request.json();
     const postSlug = String(data?.postSlug ?? "").trim();
     const author = String(data?.author ?? "").trim();
-    const email = String(data?.email ?? "").trim().toLowerCase();
+    const email = String(data?.email ?? "")
+      .trim()
+      .toLowerCase();
     const content = String(data?.content ?? "").trim();
     const parentId = String(data?.parentId ?? "").trim() || null;
 
     if (!postSlug || !author || !email || !content) {
-      return badRequest("Missing required fields: postSlug, author, email, content");
+      return badRequest(
+        "Missing required fields: postSlug, author, email, content",
+      );
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -216,7 +223,10 @@ export async function processCommentLike(request: Request) {
       .select({ id: blogCommentLikes.id })
       .from(blogCommentLikes)
       .where(
-        and(eq(blogCommentLikes.commentId, id), eq(blogCommentLikes.userKey, userKey)),
+        and(
+          eq(blogCommentLikes.commentId, id),
+          eq(blogCommentLikes.userKey, userKey),
+        ),
       )
       .limit(1);
 
@@ -271,7 +281,7 @@ export async function processCommentLike(request: Request) {
       headers: { "Content-Type": "application/json" },
     });
   }
-};
+}
 
 export const PUT: APIRoute = async ({ request }) => {
   return processCommentLike(request);

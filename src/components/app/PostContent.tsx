@@ -13,19 +13,14 @@ const loadDependencies = () => {
   if (sharedDepsPromise) return sharedDepsPromise;
 
   sharedDepsPromise = (async () => {
-    const [
-      { Marked, Renderer },
-      hljs,
-      katex,
-      mermaid,
-      solidity,
-    ] = await (Promise.all([
-      import("marked"),
-      import("highlight.js"),
-      import("katex"),
-      import("mermaid"),
-      import("highlightjs-solidity"),
-    ]) as Promise<any[]>);
+    const [{ Marked, Renderer }, hljs, katex, mermaid, solidity] =
+      await (Promise.all([
+        import("marked"),
+        import("highlight.js"),
+        import("katex"),
+        import("mermaid"),
+        import("highlightjs-solidity"),
+      ]) as Promise<any[]>);
 
     // Safe unwind for CJS vs ESM imports in Vite
     const hljsInstance = hljs.default || hljs;
@@ -102,13 +97,8 @@ export const PostContent = component$<PostContentProps>(({ content, id }) => {
 
     try {
       // 1. Wait for shared singleton loader
-      const {
-        Marked,
-        Renderer,
-        hljsInstance,
-        katexInstance,
-        mermaidInstance,
-      } = await loadDependencies();
+      const { Marked, Renderer, hljsInstance, katexInstance, mermaidInstance } =
+        await loadDependencies();
 
       // Trick: Wait for fonts to be ready
       if ("fonts" in document) {
@@ -167,7 +157,7 @@ export const PostContent = component$<PostContentProps>(({ content, id }) => {
           .replace(/&gt;/g, ">")
           .replace(/&quot;/g, '"')
           .replace(/&#39;/g, "'");
-        
+
         if (lang === "mermaid") {
           const bytes = new TextEncoder().encode(raw);
           const encoded = btoa(
@@ -179,7 +169,7 @@ export const PostContent = component$<PostContentProps>(({ content, id }) => {
         const language =
           lang && hljsInstance.getLanguage(lang) ? lang : "plaintext";
         const highlighted = hljsInstance.highlight(raw, { language }).value;
-        
+
         return `<div class="code-block"><div class="code-header"><span class="code-lang">${lang || "text"}</span><button class="code-copy" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').innerText)">Copy</button></div><pre><code class="hljs language-${language}">${highlighted}</code></pre></div>`;
       };
 

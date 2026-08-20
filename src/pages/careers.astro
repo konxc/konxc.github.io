@@ -10,7 +10,7 @@ const categories = ["Engineering", "Design", "Operations", "Content"];
   showNewsletter={false}
   headerVariant="transparent"
 >
-  <section class="relative overflow-hidden bg-site pt-24 pb-20 md:pt-32">
+  <section class="bg-site relative overflow-hidden pt-24 pb-20 md:pt-32">
     <div class="absolute inset-0 -z-10 overflow-hidden opacity-30">
       <div
         class="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-indigo-600/10 blur-[120px] dark:bg-indigo-900/20"
@@ -26,14 +26,12 @@ const categories = ["Engineering", "Design", "Operations", "Content"];
           // Recruitment Operations
         </div>
         <h1
-          class="mb-8 text-6xl font-black tracking-tight text-on-site uppercase md:text-9xl"
+          class="text-on-site mb-8 text-6xl font-black tracking-tight uppercase md:text-9xl"
         >
           WORK ON <br />
           <span class="text-gradient px-4 italic">PURPOSE</span>.
         </h1>
-        <p
-          class="max-w-2xl text-lg leading-relaxed text-on-muted md:text-xl"
-        >
+        <p class="text-on-muted max-w-2xl text-lg leading-relaxed md:text-xl">
           Bekerja di KonXC bukan hanya tentang menulis kode atau mendesain
           pixel. Ini tentang membangun kedaulatan digital dan memberikan dampak
           nyata bagi jutaan pengguna.
@@ -44,7 +42,7 @@ const categories = ["Engineering", "Design", "Operations", "Content"];
         <div class="mb-12 flex flex-wrap gap-4">
           {
             categories.map((cat) => (
-              <button class="hover:border-primary-500 rounded-full border border-border-site bg-muted px-8 py-3 text-xs font-black tracking-widest text-on-muted uppercase transition-all hover:bg-surface hover:text-on-site">
+              <button class="hover:border-primary-500 border-border-site bg-muted text-on-muted hover:bg-surface hover:text-on-site rounded-full border px-8 py-3 text-xs font-black tracking-widest uppercase transition-all">
                 {cat}
               </button>
             ))
@@ -52,12 +50,12 @@ const categories = ["Engineering", "Design", "Operations", "Content"];
         </div>
 
         <div
-          class="rounded-[3rem] border border-border-site bg-surface p-12 text-center backdrop-blur-md"
+          class="border-border-site bg-surface rounded-[3rem] border p-12 text-center backdrop-blur-md"
         >
-          <h3 class="mb-4 text-2xl font-black text-on-site uppercase">
+          <h3 class="text-on-site mb-4 text-2xl font-black uppercase">
             Looking for something specific?
           </h3>
-          <p class="mx-auto mb-8 max-w-xl text-on-muted">
+          <p class="text-on-muted mx-auto mb-8 max-w-xl">
             Posisi terbuka akan diperbarui secara berkala. Jika Anda merasa
             memiliki kemampuan yang bisa memperkuat Squad kami, jangan ragu
             untuk mengirimkan profil Anda.

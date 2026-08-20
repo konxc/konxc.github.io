@@ -23,9 +23,14 @@ const docCategories = [
   headerVariant="transparent"
 >
   <!-- 1. Docs Hero -->
-  <section class="relative overflow-hidden bg-site pt-24 pb-20 md:pt-32 md:pb-32">
+  <section
+    class="bg-site relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-32"
+  >
     <div class="absolute inset-0 -z-10 overflow-hidden opacity-30">
-        <div class="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-primary-500/10 blur-[120px] dark:bg-primary-900/20"></div>
+      <div
+        class="bg-primary-500/10 dark:bg-primary-900/20 absolute top-0 right-1/4 h-96 w-96 rounded-full blur-[120px]"
+      >
+      </div>
     </div>
 
     <div class="relative z-10 container">
@@ -36,7 +41,7 @@ const docCategories = [
           // Knowledge Base
         </div>
         <h1
-          class="mb-8 text-5xl font-black tracking-tighter text-on-site uppercase md:text-8xl"
+          class="text-on-site mb-8 text-5xl font-black tracking-tighter uppercase md:text-8xl"
         >
           Build with <span class="text-gradient px-2 italic">Precision</span>.
         </h1>
@@ -44,11 +49,9 @@ const docCategories = [
           <input
             type="text"
             placeholder="Search documentation..."
-            class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-2xl border border-border-site bg-surface px-8 py-5 text-on-site backdrop-blur-md focus:ring-4 focus:outline-none"
+            class="focus:border-primary-500 focus:ring-primary-500/10 border-border-site bg-surface text-on-site w-full rounded-2xl border px-8 py-5 backdrop-blur-md focus:ring-4 focus:outline-none"
           />
-          <div
-            class="absolute top-1/2 right-6 -translate-y-1/2 text-on-muted"
-          >
+          <div class="text-on-muted absolute top-1/2 right-6 -translate-y-1/2">
             <svg
               class="h-6 w-6"
               fill="none"
@@ -76,7 +79,7 @@ const docCategories = [
           {
             docCategories.map((cat) => (
               <div>
-                <h4 class="mb-6 text-xs font-black tracking-[0.2em] text-on-site uppercase">
+                <h4 class="text-on-site mb-6 text-xs font-black tracking-[0.2em] uppercase">
                   {cat.title}
                 </h4>
                 <ul class="space-y-4">
@@ -84,7 +87,7 @@ const docCategories = [
                     <li>
                       <a
                         href="#"
-                        class="hover:text-primary-600 dark:hover:text-primary-400 text-sm text-on-muted transition-colors"
+                        class="hover:text-primary-600 dark:hover:text-primary-400 text-on-muted text-sm transition-colors"
                       >
                         {link}
                       </a>
@@ -99,41 +102,41 @@ const docCategories = [
         <!-- Content Preview -->
         <div class="space-y-16">
           <div
-            class="rounded-[3rem] border border-border-site bg-surface p-12 md:p-20"
+            class="border-border-site bg-surface rounded-[3rem] border p-12 md:p-20"
           >
-            <h2 class="mb-8 text-4xl font-black tracking-tight text-on-site">
+            <h2 class="text-on-site mb-8 text-4xl font-black tracking-tight">
               Introduction to KonXC Core.
             </h2>
-            <div
-              class="max-w-none leading-relaxed font-medium text-on-muted"
-            >
+            <div class="text-on-muted max-w-none leading-relaxed font-medium">
               <p class="mb-6">
                 Selamat datang di dokumentasi resmi KonXC. Panduan ini dirancang
                 untuk membantu Anda memahami standar arsitektur dan metodologi
                 kerja kami.
               </p>
-              <p class="mb-8 font-bold text-on-site/80 italic">
+              <p class="text-on-site/80 mb-8 font-bold italic">
                 "Efficiency through standardization, innovation through
                 collaboration."
               </p>
 
               <div class="mt-12 grid gap-6 md:grid-cols-2">
                 <div
-                  class="rounded-3xl border border-border-site bg-muted p-8 transition-all hover:bg-surface"
+                  class="border-border-site bg-muted hover:bg-surface rounded-3xl border p-8 transition-all"
                 >
-                  <h4 class="mb-2 font-bold text-on-site">Technical Standards</h4>
-                  <p class="text-sm text-on-muted">
+                  <h4 class="text-on-site mb-2 font-bold">
+                    Technical Standards
+                  </h4>
+                  <p class="text-on-muted text-sm">
                     Pelajari konvensi penulisan kode dan standar keamanan yang
                     kami terapkan pada seluruh proyek.
                   </p>
                 </div>
                 <div
-                  class="rounded-3xl border border-border-site bg-muted p-8 transition-all hover:bg-surface"
+                  class="border-border-site bg-muted hover:bg-surface rounded-3xl border p-8 transition-all"
                 >
-                  <h4 class="mb-2 font-bold text-on-site">
+                  <h4 class="text-on-site mb-2 font-bold">
                     Architecture Patterns
                   </h4>
-                  <p class="text-sm text-on-muted">
+                  <p class="text-on-muted text-sm">
                     Eksplorasi bagaimana kami membangun sistem terdistribusi
                     yang skalabel dan resilien.
                   </p>

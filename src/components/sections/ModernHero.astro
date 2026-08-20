@@ -3,214 +3,185 @@ import Button from "../ui/Button.astro";
 ---
 
 <section
-    class="relative overflow-hidden bg-[var(--bg-base)] pt-12 pb-24 lg:pt-16 lg:pb-32"
+  class="relative overflow-hidden bg-[var(--bg-base)] pt-12 pb-24 lg:pt-16 lg:pb-32"
 >
-    <!-- Sophisticated Mesh Gradient Background -->
-    <div class="absolute inset-0 z-0">
-        <div
-            class="bg-primary-100/40 absolute -top-20 -left-20 h-[600px] w-[600px] rounded-full blur-[120px]"
-        >
-        </div>
-        <div
-            class="bg-secondary-100/30 absolute -right-20 bottom-0 h-[500px] w-[500px] rounded-full blur-[100px]"
-        >
-        </div>
-        <div
-            class="bg-accent-100/20 absolute top-1/2 left-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[80px]"
-        >
-        </div>
-        <!-- Grid pattern overlay -->
-        <div
-            class="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-center opacity-[0.03]"
-        >
-        </div>
+  <!-- Sophisticated Mesh Gradient Background -->
+  <div class="absolute inset-0 z-0">
+    <div
+      class="bg-primary-100/40 absolute -top-20 -left-20 h-[600px] w-[600px] rounded-full blur-[120px]"
+    >
     </div>
-
-    <div class="relative z-10 container">
-        <div class="grid items-center gap-16 lg:grid-cols-2">
-            <!-- Text Content -->
-            <div class="max-w-2xl" data-aos="fade-right">
-                <div
-                    class="bg-primary-50 text-primary-600 ring-primary-100 mb-5 inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold ring-1 ring-inset"
-                >
-                    <span class="mr-2">🚀</span> Pendamping Digital UMKM Indonesia
-                </div>
-                <h1
-                    class="mb-6 text-5xl leading-[1.1] font-black tracking-tight text-on-site lg:text-8xl"
-                >
-                    Berdayakan Bisnis Anda dengan <span class="text-gradient"
-                        >Ekosistem Digital</span
-                    > Terintegrasi
-                </h1>
-                <p
-                    class="mb-8 text-xl leading-relaxed text-on-muted lg:text-2xl"
-                >
-                    KonXC menyediakan platform diskusi, pembelajaran, dan
-                    infrastruktur teknologi yang didesain khusus untuk
-                    mengakselerasi pertumbuhan UMKM.
-                </p>
-                <div class="flex flex-col gap-4 sm:flex-row">
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        href="#platforms"
-                        class="shadow-primary-500/20 px-8 shadow-xl"
-                    >
-                        Mulai Sekarang
-                    </Button>
-                    <Button
-                        variant="secondary"
-                        size="lg"
-                        href="#services"
-                        class="px-8"
-                    >
-                        Eksplor Layanan
-                    </Button>
-                </div>
-
-                <div
-                    class="mt-12 flex flex-wrap gap-8 border-t border-neutral-100 pt-12 dark:border-neutral-800"
-                >
-                    <div>
-                        <div class="text-3xl font-bold text-on-site">
-                            500+
-                        </div>
-                        <div
-                            class="text-sm font-medium tracking-wider text-on-muted uppercase"
-                        >
-                            UMKM Terbantu
-                        </div>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-bold text-on-site">
-                            1K+
-                        </div>
-                        <div
-                            class="text-sm font-medium tracking-wider text-on-muted uppercase"
-                        >
-                            Anggota Komunitas
-                        </div>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-bold text-on-site">
-                            24/7
-                        </div>
-                        <div
-                            class="text-sm font-medium tracking-wider text-on-muted uppercase"
-                        >
-                            Dukungan Teknis
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hero Visual -->
-            <div class="relative" data-aos="fade-left">
-                <!-- Main Card -->
-                <div
-                    class="relative z-10 overflow-hidden rounded-[2.5rem] border border-white/20 bg-white/40 shadow-2xl backdrop-blur-xl transition-transform duration-500 hover:scale-[1.02] dark:border-white/10 dark:bg-white/5"
-                >
-                    <div class="p-8 lg:p-12">
-                        <div class="grid grid-cols-2 gap-6">
-                            <div
-                                class="soft-hover shadow-[var(--shadow-base)] rounded-3xl bg-[var(--bg-subtle)] p-6 border border-[var(--border-base)]"
-                            >
-                                <div
-                                    class="bg-primary-100 dark:bg-primary-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
-                                >
-                                    💬
-                                </div>
-                                <div class="font-bold text-on-site">
-                                    Forum Diskusi
-                                </div>
-                                <div class="text-xs text-on-muted">
-                                    Knowledge Sharing
-                                </div>
-                            </div>
-                            <div
-                                class="soft-hover shadow-[var(--shadow-base)] rounded-3xl bg-[var(--bg-subtle)] p-6 border border-[var(--border-base)]"
-                            >
-                                <div
-                                    class="bg-secondary-100 dark:bg-secondary-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
-                                >
-                                    🎓
-                                </div>
-                                <div class="font-bold text-on-site">
-                                    Learning Hub
-                                </div>
-                                <div class="text-xs text-on-muted">
-                                    Project Based
-                                </div>
-                            </div>
-                            <div
-                                class="soft-hover shadow-[var(--shadow-base)] rounded-3xl bg-[var(--bg-subtle)] p-6 border border-[var(--border-base)]"
-                            >
-                                <div
-                                    class="bg-accent-100 dark:bg-accent-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
-                                >
-                                    📊
-                                </div>
-                                <div class="font-bold text-on-site">
-                                    Business Insights
-                                </div>
-                                <div class="text-xs text-on-muted">
-                                    Data Driven
-                                </div>
-                            </div>
-                            <div
-                                class="soft-hover shadow-[var(--shadow-base)] rounded-3xl bg-[var(--bg-subtle)] p-6 border border-[var(--border-base)]"
-                            >
-                                <div
-                                    class="bg-success-100 dark:bg-success-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
-                                >
-                                    ☁️
-                                </div>
-                                <div class="font-bold text-on-site">
-                                    Cloud Support
-                                </div>
-                                <div class="text-xs text-on-muted">
-                                    Scalable Infrastructure
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Floating Decorations -->
-                <div
-                    class="animate-float from-primary-400 to-primary-600 shadow-primary-500/30 absolute -top-10 -right-10 z-20 h-24 w-24 rounded-3xl bg-linear-to-br shadow-xl"
-                >
-                </div>
-                <div
-                    class="animate-float from-secondary-400 to-secondary-600 shadow-secondary-500/30 absolute -bottom-10 -left-10 z-20 h-16 w-16 rounded-2xl bg-linear-to-br shadow-xl delay-700"
-                >
-                </div>
-
-                <!-- Abstract Circles -->
-                <div
-                    class="border-primary-200/50 absolute -top-20 -left-20 h-64 w-64 rounded-full border"
-                >
-                </div>
-                <div
-                    class="border-secondary-200/50 absolute -right-20 -bottom-20 h-48 w-48 rounded-full border"
-                >
-                </div>
-            </div>
-        </div>
+    <div
+      class="bg-secondary-100/30 absolute -right-20 bottom-0 h-[500px] w-[500px] rounded-full blur-[100px]"
+    >
     </div>
+    <div
+      class="bg-accent-100/20 absolute top-1/2 left-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[80px]"
+    >
+    </div>
+    <!-- Grid pattern overlay -->
+    <div
+      class="absolute inset-0 bg-center opacity-[0.03]"
+      style="background-image: url('/images/grid-pattern.svg');"
+    >
+    </div>
+  </div>
+
+  <div class="relative z-10 container">
+    <div class="grid items-center gap-16 lg:grid-cols-2">
+      <!-- Text Content -->
+      <div class="max-w-2xl" data-aos="fade-right">
+        <div
+          class="bg-primary-50 text-primary-600 ring-primary-100 mb-5 inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold ring-1 ring-inset"
+        >
+          <span class="mr-2">🚀</span> Pendamping Digital UMKM Indonesia
+        </div>
+        <h1
+          class="text-on-site mb-6 text-5xl leading-[1.1] font-black tracking-tight lg:text-8xl"
+        >
+          Berdayakan Bisnis Anda dengan <span class="text-gradient"
+            >Ekosistem Digital</span
+          > Terintegrasi
+        </h1>
+        <p class="text-on-muted mb-8 text-xl leading-relaxed lg:text-2xl">
+          KonXC menyediakan platform diskusi, pembelajaran, dan infrastruktur
+          teknologi yang didesain khusus untuk mengakselerasi pertumbuhan UMKM.
+        </p>
+        <div class="flex flex-col gap-4 sm:flex-row">
+          <Button
+            variant="primary"
+            size="lg"
+            href="#platforms"
+            class="shadow-primary-500/20 px-8 shadow-xl"
+          >
+            Mulai Sekarang
+          </Button>
+          <Button variant="secondary" size="lg" href="#services" class="px-8">
+            Eksplor Layanan
+          </Button>
+        </div>
+
+        <div
+          class="mt-12 flex flex-wrap gap-8 border-t border-neutral-100 pt-12 dark:border-neutral-800"
+        >
+          <div>
+            <div class="text-on-site text-3xl font-bold">500+</div>
+            <div
+              class="text-on-muted text-sm font-medium tracking-wider uppercase"
+            >
+              UMKM Terbantu
+            </div>
+          </div>
+          <div>
+            <div class="text-on-site text-3xl font-bold">1K+</div>
+            <div
+              class="text-on-muted text-sm font-medium tracking-wider uppercase"
+            >
+              Anggota Komunitas
+            </div>
+          </div>
+          <div>
+            <div class="text-on-site text-3xl font-bold">24/7</div>
+            <div
+              class="text-on-muted text-sm font-medium tracking-wider uppercase"
+            >
+              Dukungan Teknis
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual -->
+      <div class="relative" data-aos="fade-left">
+        <!-- Main Card -->
+        <div
+          class="relative z-10 overflow-hidden rounded-[2.5rem] border border-white/20 bg-white/40 shadow-2xl backdrop-blur-xl transition-transform duration-500 hover:scale-[1.02] dark:border-white/10 dark:bg-white/5"
+        >
+          <div class="p-8 lg:p-12">
+            <div class="grid grid-cols-2 gap-6">
+              <div
+                class="soft-hover rounded-3xl border border-[var(--border-base)] bg-[var(--bg-subtle)] p-6 shadow-[var(--shadow-base)]"
+              >
+                <div
+                  class="bg-primary-100 dark:bg-primary-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
+                >
+                  💬
+                </div>
+                <div class="text-on-site font-bold">Forum Diskusi</div>
+                <div class="text-on-muted text-xs">Knowledge Sharing</div>
+              </div>
+              <div
+                class="soft-hover rounded-3xl border border-[var(--border-base)] bg-[var(--bg-subtle)] p-6 shadow-[var(--shadow-base)]"
+              >
+                <div
+                  class="bg-secondary-100 dark:bg-secondary-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
+                >
+                  🎓
+                </div>
+                <div class="text-on-site font-bold">Learning Hub</div>
+                <div class="text-on-muted text-xs">Project Based</div>
+              </div>
+              <div
+                class="soft-hover rounded-3xl border border-[var(--border-base)] bg-[var(--bg-subtle)] p-6 shadow-[var(--shadow-base)]"
+              >
+                <div
+                  class="bg-accent-100 dark:bg-accent-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
+                >
+                  📊
+                </div>
+                <div class="text-on-site font-bold">Business Insights</div>
+                <div class="text-on-muted text-xs">Data Driven</div>
+              </div>
+              <div
+                class="soft-hover rounded-3xl border border-[var(--border-base)] bg-[var(--bg-subtle)] p-6 shadow-[var(--shadow-base)]"
+              >
+                <div
+                  class="bg-success-100 dark:bg-success-900/40 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
+                >
+                  ☁️
+                </div>
+                <div class="text-on-site font-bold">Cloud Support</div>
+                <div class="text-on-muted text-xs">Scalable Infrastructure</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating Decorations -->
+        <div
+          class="animate-float from-primary-400 to-primary-600 shadow-primary-500/30 absolute -top-10 -right-10 z-20 h-24 w-24 rounded-3xl bg-linear-to-br shadow-xl"
+        >
+        </div>
+        <div
+          class="animate-float from-secondary-400 to-secondary-600 shadow-secondary-500/30 absolute -bottom-10 -left-10 z-20 h-16 w-16 rounded-2xl bg-linear-to-br shadow-xl delay-700"
+        >
+        </div>
+
+        <!-- Abstract Circles -->
+        <div
+          class="border-primary-200/50 absolute -top-20 -left-20 h-64 w-64 rounded-full border"
+        >
+        </div>
+        <div
+          class="border-secondary-200/50 absolute -right-20 -bottom-20 h-48 w-48 rounded-full border"
+        >
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <style>
-    .animate-float {
-        animation: float 6s ease-in-out infinite;
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0);
     }
-    @keyframes float {
-        0%,
-        100% {
-            transform: translateY(0) rotate(0);
-        }
-        50% {
-            transform: translateY(-20px) rotate(5deg);
-        }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
     }
+  }
 </style>

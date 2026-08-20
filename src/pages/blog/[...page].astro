@@ -77,10 +77,10 @@ const tags = [...new Set(allPosts.flatMap((post) => post.data.tags))].slice(
             </div>
             <button
               onclick="document.getElementById('advanced-search-modal').classList.remove('hidden'); document.getElementById('advanced-search-input').focus();"
-              class="group hover:border-primary-500 hover:text-primary-600 flex items-center gap-2 rounded-full border border-border-site bg-surface px-5 py-2.5 text-sm font-medium text-on-muted transition-all hover:shadow-md"
+              class="group hover:border-primary-500 hover:text-primary-600 border-border-site bg-surface text-on-muted flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium transition-all hover:shadow-md"
             >
               <svg
-                class="group-hover:text-primary-500 h-4 w-4 text-on-muted"
+                class="group-hover:text-primary-500 text-on-muted h-4 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -93,7 +93,7 @@ const tags = [...new Set(allPosts.flatMap((post) => post.data.tags))].slice(
                 />
               </svg>
               <span>Pencarian Cepat...</span>
-              <kbd class="hidden rounded border border-border-site bg-muted px-1.5 py-0.5 text-xs text-on-muted sm:inline-block">
+              <kbd class="border-border-site bg-muted text-on-muted hidden rounded border px-1.5 py-0.5 text-xs sm:inline-block">
                 ⌘K
               </kbd>
             </button>
@@ -116,11 +116,7 @@ const tags = [...new Set(allPosts.flatMap((post) => post.data.tags))].slice(
         <div class="lg:col-span-8">
           <div class="mb-12">
             <div class="mb-8">
-              <h2
-                class="text-2xl font-bold text-on-site"
-              >
-                Artikel Terbaru
-              </h2>
+              <h2 class="text-on-site text-2xl font-bold">Artikel Terbaru</h2>
             </div>
 
             <PostsGrid

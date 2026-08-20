@@ -41,7 +41,11 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const postRows = await db.select({ id: posts.id }).from(posts).where(eq(posts.id, postId)).limit(1);
+  const postRows = await db
+    .select({ id: posts.id })
+    .from(posts)
+    .where(eq(posts.id, postId))
+    .limit(1);
   if (postRows.length === 0) {
     return new Response(JSON.stringify({ error: "Post not found" }), {
       status: 404,
@@ -52,7 +56,12 @@ export const POST: APIRoute = async ({ request }) => {
   const existingLike = await db
     .select({ id: appPostLikes.id })
     .from(appPostLikes)
-    .where(and(eq(appPostLikes.postId, postId), eq(appPostLikes.userId, session.user.id)))
+    .where(
+      and(
+        eq(appPostLikes.postId, postId),
+        eq(appPostLikes.userId, session.user.id),
+      ),
+    )
     .limit(1);
 
   let liked = false;
@@ -60,7 +69,10 @@ export const POST: APIRoute = async ({ request }) => {
     await db
       .delete(appPostLikes)
       .where(
-        and(eq(appPostLikes.postId, postId), eq(appPostLikes.userId, session.user.id)),
+        and(
+          eq(appPostLikes.postId, postId),
+          eq(appPostLikes.userId, session.user.id),
+        ),
       );
 
     await db.run(sql`

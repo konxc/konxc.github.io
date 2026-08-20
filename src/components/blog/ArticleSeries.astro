@@ -318,7 +318,7 @@ const hasSeries = currentSeries.length > 0;
   @reference "@/styles/global.css";
 
   .article-series {
-    @apply mb-8 rounded-2xl border p-6 shadow-lg bg-muted border-border-site;
+    @apply bg-muted border-border-site mb-8 rounded-2xl border p-6 shadow-lg;
   }
 
   .series-header {
@@ -334,7 +334,7 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .series-header h3 {
-    @apply text-lg font-bold text-on-site;
+    @apply text-on-site text-lg font-bold;
   }
 
   .series-description {
@@ -359,7 +359,7 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .series-progress-text {
-    @apply text-sm font-medium text-on-muted;
+    @apply text-on-muted text-sm font-medium;
   }
 
   .series-navigation {
@@ -371,25 +371,25 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .series-post {
-    @apply flex flex-col gap-2 rounded-xl border border-border-site bg-surface p-4 transition-all hover:shadow-md;
+    @apply border-border-site bg-surface flex flex-col gap-2 rounded-xl border p-4 transition-all hover:shadow-md;
   }
   .series-post:hover {
     @apply border-primary-500 -translate-y-0.5;
   }
 
   .nav-card {
-    @apply flex flex-col gap-2 rounded-xl border border-border-site bg-surface p-4 transition-all hover:shadow-md;
+    @apply border-border-site bg-surface flex flex-col gap-2 rounded-xl border p-4 transition-all hover:shadow-md;
   }
   .nav-card:hover {
     @apply border-primary-500;
   }
 
   .series-post.current {
-    @apply bg-primary-900/10 shadow-sm border-primary-500/50;
+    @apply bg-primary-900/10 border-primary-500/50 shadow-sm;
   }
 
   .series-post.completed {
-    @apply bg-green-900/10 border-green-500/30;
+    @apply border-green-500/30 bg-green-900/10;
   }
 
   .post-number {
@@ -417,20 +417,20 @@ const hasSeries = currentSeries.length > 0;
   }
 
   .post-title {
-    @apply mb-1 text-lg font-semibold text-on-site;
+    @apply text-on-site mb-1 text-lg font-semibold;
   }
 
   .nav-label {
-    @apply text-xs font-semibold tracking-wider text-on-muted uppercase;
+    @apply text-on-muted text-xs font-semibold tracking-wider uppercase;
   }
 
   .post-link {
-    @apply text-primary-600 transition-colors hover:text-primary-700;
+    @apply text-primary-600 hover:text-primary-700 transition-colors;
     @apply dark:text-primary-400 dark:hover:text-primary-300;
   }
 
   .current-post {
-    @apply text-primary-600 font-bold dark:text-primary-400;
+    @apply text-primary-600 dark:text-primary-400 font-bold;
   }
 
   .post-meta {

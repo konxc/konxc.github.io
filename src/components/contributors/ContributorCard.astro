@@ -114,7 +114,9 @@ const activeGradient =
         </span>
         {
           data.location && (
-            <p class={`mt-2 flex items-center gap-1 text-xs font-bold ${variant === "featured" ? "text-neutral-300" : "text-neutral-500 dark:text-neutral-300"}`}>
+            <p
+              class={`mt-2 flex items-center gap-1 text-xs font-bold ${variant === "featured" ? "text-neutral-300" : "text-neutral-500 dark:text-neutral-300"}`}
+            >
               📍 {data.location}
             </p>
           )
@@ -193,7 +195,7 @@ const activeGradient =
                 <a
                   href={data[s.key as keyof typeof data] as string}
                   target="_blank"
-                  class={`transition-all hover:scale-110 ${variant === "featured" ? "text-neutral-300 hover:text-white" : "text-neutral-400 hover:text-primary-600 dark:text-neutral-300 dark:hover:text-primary-400"}`}
+                  class={`transition-all hover:scale-110 ${variant === "featured" ? "text-neutral-300 hover:text-white" : "hover:text-primary-600 dark:hover:text-primary-400 text-neutral-400 dark:text-neutral-300"}`}
                 >
                   <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
                     <path d={s.icon} />

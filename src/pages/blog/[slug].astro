@@ -131,7 +131,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
   .blog-content :global(h2),
   .blog-content :global(h3),
   .blog-content :global(h4) {
-    @apply font-bold tracking-tight text-on-site;
+    @apply text-on-site font-bold tracking-tight;
     font-family: var(--font-heading);
     line-height: 1.2;
     margin-top: 1.25rem;
@@ -160,7 +160,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
 
   /* Lead paragraph special styling */
   .blog-content :global(p:first-of-type) {
-    @apply mb-4 text-lg leading-relaxed font-medium text-on-muted lg:text-xl;
+    @apply text-on-muted mb-4 text-lg leading-relaxed font-medium lg:text-xl;
   }
 
   /* Links */
@@ -190,7 +190,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
 
   /* Blockquotes - Modern Minimalist */
   .blog-content :global(blockquote) {
-    @apply border-primary-500 my-4 rounded-r-2xl border-l-4 bg-muted px-5 py-3 italic;
+    @apply border-primary-500 bg-muted my-4 rounded-r-2xl border-l-4 px-5 py-3 italic;
     font-size: 1.1rem;
     line-height: 1.5;
     @apply text-on-muted;
@@ -201,7 +201,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
     @apply mt-0 mb-4 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-sm text-neutral-200 shadow-lg;
   }
   .blog-content :global(code) {
-    @apply text-primary-700 rounded-md bg-muted px-1 py-0.5 font-mono text-xs font-medium;
+    @apply text-primary-700 bg-muted rounded-md px-1 py-0.5 font-mono text-xs font-medium;
   }
   .blog-content :global(pre code) {
     @apply bg-transparent p-0 text-inherit;
@@ -212,7 +212,7 @@ const relatedArticles = await getRelatedArticles(post, 4);
     @apply my-5 h-auto w-full rounded-xl shadow-lg transition-transform duration-500 hover:scale-[1.005];
   }
   .blog-content :global(figcaption) {
-    @apply mt-2 text-center text-xs text-on-muted italic;
+    @apply text-on-muted mt-2 text-center text-xs italic;
   }
 
   /* Tables */
@@ -220,10 +220,10 @@ const relatedArticles = await getRelatedArticles(post, 4);
     @apply my-4 w-full border-collapse text-left text-sm;
   }
   .blog-content :global(th) {
-    @apply border-b border-border-site bg-muted px-2 py-1.5 font-bold text-on-site;
+    @apply border-border-site bg-muted text-on-site border-b px-2 py-1.5 font-bold;
   }
   .blog-content :global(td) {
-    @apply border-b border-border-site px-2 py-1.5 text-on-muted;
+    @apply border-border-site text-on-muted border-b px-2 py-1.5;
   }
 
   /* Dark Mode Overrides - Simplified by Tokens */

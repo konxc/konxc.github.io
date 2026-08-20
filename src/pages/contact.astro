@@ -59,7 +59,7 @@ const faqs = [
 >
   <!-- Hero Section -->
   <section
-    class="relative overflow-hidden bg-site pt-24 pb-16 lg:pt-32 lg:pb-24"
+    class="bg-site relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-24"
   >
     <div class="absolute inset-0 z-0">
       <div
@@ -75,12 +75,12 @@ const faqs = [
     <div class="relative z-10 container">
       <div class="mx-auto max-w-3xl text-center">
         <h1
-          class="mb-6 text-4xl font-bold tracking-tight text-on-site md:text-5xl lg:text-6xl"
+          class="text-on-site mb-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl"
         >
           Mari Membangun <br />
           <span class="text-gradient">Masa Depan Digital</span> Bersama
         </h1>
-        <p class="text-xl leading-relaxed text-on-muted">
+        <p class="text-on-muted text-xl leading-relaxed">
           Punya pertanyaan tentang layanan kami, ingin berkolaborasi, atau
           sekadar ingin menyapa? Tim kami siap mendengarkan aspirasi Anda.
         </p>
@@ -95,7 +95,7 @@ const faqs = [
         <!-- Contact Information -->
         <div class="space-y-12">
           <div>
-            <h2 class="mb-8 text-3xl font-bold text-on-site">
+            <h2 class="text-on-site mb-8 text-3xl font-bold">
               Informasi Kontak
             </h2>
             <div class="space-y-6">
@@ -106,7 +106,7 @@ const faqs = [
                   <Icon name="heroicons:map-pin" class="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 class="font-semibold text-on-site">Kantor Kami</h3>
+                  <h3 class="text-on-site font-semibold">Kantor Kami</h3>
                   <p class="text-on-muted">
                     {contactInfo.address}
                   </p>
@@ -120,7 +120,7 @@ const faqs = [
                   <Icon name="heroicons:envelope" class="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 class="font-semibold text-on-site">Email</h3>
+                  <h3 class="text-on-site font-semibold">Email</h3>
                   <a
                     href={`mailto:${contactInfo.email}`}
                     class="hover:text-primary-600 text-on-muted transition-colors"
@@ -137,9 +137,7 @@ const faqs = [
                   <Icon name="heroicons:phone" class="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 class="font-semibold text-on-site">
-                    Telepon / WhatsApp
-                  </h3>
+                  <h3 class="text-on-site font-semibold">Telepon / WhatsApp</h3>
                   <a
                     href={contactInfo.whatsapp}
                     target="_blank"
@@ -157,7 +155,7 @@ const faqs = [
                   <Icon name="heroicons:clock" class="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 class="font-semibold text-on-site">Jam Kerja</h3>
+                  <h3 class="text-on-site font-semibold">Jam Kerja</h3>
                   <p class="text-on-muted">
                     {contactInfo.workingHours}
                   </p>
@@ -167,7 +165,7 @@ const faqs = [
           </div>
 
           <div>
-            <h3 class="mb-6 text-xl font-bold text-on-site">Ikuti Kami</h3>
+            <h3 class="text-on-site mb-6 text-xl font-bold">Ikuti Kami</h3>
             <div class="flex gap-4">
               {
                 contactInfo.socials.map((social) => (
@@ -175,7 +173,7 @@ const faqs = [
                     href={social.href}
                     target="_blank"
                     aria-label={social.name}
-                    class="hover:bg-primary-600 hover:border-primary-600 flex h-12 w-12 items-center justify-center rounded-lg border border-border-site bg-site text-on-muted shadow-sm transition-all hover:text-white"
+                    class="hover:bg-primary-600 hover:border-primary-600 border-border-site bg-site text-on-muted flex h-12 w-12 items-center justify-center rounded-lg border shadow-sm transition-all hover:text-white"
                   >
                     <Icon name={social.icon} class="h-6 w-6" />
                   </a>
@@ -187,15 +185,15 @@ const faqs = [
 
         <!-- Contact Form -->
         <div
-          class="rounded-3xl border border-border-site bg-surface p-8 shadow-sm lg:p-12"
+          class="border-border-site bg-surface rounded-3xl border p-8 shadow-sm lg:p-12"
         >
-          <h2 class="mb-6 text-2xl font-bold text-on-site">Kirim Pesan</h2>
+          <h2 class="text-on-site mb-6 text-2xl font-bold">Kirim Pesan</h2>
           <form id="contact-form" class="space-y-6">
             <div class="grid gap-6 sm:grid-cols-2">
               <div class="space-y-2">
                 <label
                   for="first_name"
-                  class="text-sm font-semibold text-on-site/80"
+                  class="text-on-site/80 text-sm font-semibold"
                   >Nama Depan</label
                 >
                 <input
@@ -203,28 +201,28 @@ const faqs = [
                   id="first_name"
                   name="first_name"
                   required
-                  class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-border-site bg-site px-4 py-3 text-on-site transition-all outline-none focus:bg-surface focus:ring-4 placeholder-text-muted"
+                  class="focus:border-primary-500 focus:ring-primary-500/10 border-border-site bg-site text-on-site focus:bg-surface placeholder-text-muted w-full rounded-xl border px-4 py-3 transition-all outline-none focus:ring-4"
                   placeholder="John"
                 />
               </div>
               <div class="space-y-2">
                 <label
                   for="last_name"
-                  class="text-sm font-semibold text-on-site/80"
+                  class="text-on-site/80 text-sm font-semibold"
                   >Nama Belakang</label
                 >
                 <input
                   type="text"
                   id="last_name"
                   name="last_name"
-                  class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-border-site bg-site px-4 py-3 text-on-site transition-all outline-none focus:bg-surface focus:ring-4 placeholder-text-muted"
+                  class="focus:border-primary-500 focus:ring-primary-500/10 border-border-site bg-site text-on-site focus:bg-surface placeholder-text-muted w-full rounded-xl border px-4 py-3 transition-all outline-none focus:ring-4"
                   placeholder="Doe"
                 />
               </div>
             </div>
 
             <div class="space-y-2">
-              <label for="email" class="text-sm font-semibold text-on-site/80"
+              <label for="email" class="text-on-site/80 text-sm font-semibold"
                 >Email Bisnis</label
               >
               <input
@@ -232,20 +230,19 @@ const faqs = [
                 id="email"
                 name="email"
                 required
-                class="focus:border-primary-500 focus:ring-primary-500/10 w-full rounded-xl border border-border-site bg-site px-4 py-3 text-on-site transition-all outline-none focus:bg-surface focus:ring-4 placeholder-text-muted"
+                class="focus:border-primary-500 focus:ring-primary-500/10 border-border-site bg-site text-on-site focus:bg-surface placeholder-text-muted w-full rounded-xl border px-4 py-3 transition-all outline-none focus:ring-4"
                 placeholder="email@perusahaan.com"
               />
             </div>
 
             <div class="space-y-2">
-              <label
-                for="subject"
-                class="text-sm font-semibold text-on-site/80">Subjek</label
+              <label for="subject" class="text-on-site/80 text-sm font-semibold"
+                >Subjek</label
               >
               <select
                 id="subject"
                 name="subject"
-                class="focus:border-primary-500 focus:ring-primary-500/10 w-full appearance-none rounded-xl border border-border-site bg-site px-4 py-3 text-on-site transition-all outline-none focus:bg-surface focus:ring-4"
+                class="focus:border-primary-500 focus:ring-primary-500/10 border-border-site bg-site text-on-site focus:bg-surface w-full appearance-none rounded-xl border px-4 py-3 transition-all outline-none focus:ring-4"
               >
                 <option value="consultation">Konsultasi Layanan</option>
                 <option value="collaboration">Kerjasama / Partnership</option>
@@ -255,16 +252,15 @@ const faqs = [
             </div>
 
             <div class="space-y-2">
-              <label
-                for="message"
-                class="text-sm font-semibold text-on-site/80">Pesan Anda</label
+              <label for="message" class="text-on-site/80 text-sm font-semibold"
+                >Pesan Anda</label
               >
               <textarea
                 id="message"
                 name="message"
                 rows="5"
                 required
-                class="focus:border-primary-500 focus:ring-primary-500/10 w-full resize-none rounded-xl border border-border-site bg-site px-4 py-3 text-on-site transition-all outline-none focus:bg-surface focus:ring-4 placeholder-text-muted"
+                class="focus:border-primary-500 focus:ring-primary-500/10 border-border-site bg-site text-on-site focus:bg-surface placeholder-text-muted w-full resize-none rounded-xl border px-4 py-3 transition-all outline-none focus:ring-4"
                 placeholder="Ceritakan tentang project Anda atau pertanyaan Anda..."
               ></textarea>
             </div>
@@ -285,7 +281,7 @@ const faqs = [
               >
               </div>
             </button>
-            <p class="text-center text-xs text-on-muted">
+            <p class="text-on-muted text-center text-xs">
               Dengan mengirimkan form ini, Anda menyetujui <a
                 href="/privacy-policy"
                 class="hover:text-primary-600 underline">Kebijakan Privasi</a
@@ -301,10 +297,10 @@ const faqs = [
   <section class="bg-site py-16 lg:py-24">
     <div class="container">
       <div class="mb-16 text-center">
-        <h2 class="mb-4 text-3xl font-bold text-on-site">
+        <h2 class="text-on-site mb-4 text-3xl font-bold">
           Pertanyaan yang Sering Diajukan
         </h2>
-        <p class="text-lg text-on-muted">
+        <p class="text-on-muted text-lg">
           Cari jawaban cepat untuk pertanyaan umum Anda
         </p>
       </div>
@@ -313,21 +309,21 @@ const faqs = [
         {
           faqs.map((faq, index) => (
             <details
-              class="group rounded-2xl border border-border-site bg-surface shadow-sm transition-all duration-300"
+              class="group border-border-site bg-surface rounded-2xl border shadow-sm transition-all duration-300"
               open={index === 0}
             >
               <summary class="flex cursor-pointer list-none items-center justify-between p-6 outline-none">
-                <h3 class="pr-6 text-lg font-bold text-on-site">
+                <h3 class="text-on-site pr-6 text-lg font-bold">
                   {faq.question}
                 </h3>
-                <div class="group-open:bg-primary-600 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-on-muted transition-colors group-open:text-white">
+                <div class="group-open:bg-primary-600 bg-muted text-on-muted flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors group-open:text-white">
                   <Icon
                     name="heroicons:chevron-down"
                     class="h-5 w-5 transition-transform group-open:rotate-180"
                   />
                 </div>
               </summary>
-              <div class="px-6 pb-6 leading-relaxed text-on-muted">
+              <div class="text-on-muted px-6 pb-6 leading-relaxed">
                 {faq.answer}
               </div>
             </details>

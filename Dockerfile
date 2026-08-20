@@ -3,6 +3,16 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Build-time envs to satisfy production validation during `astro build`.
+# Runtime values are still injected from docker-compose env_file.
+ARG BETTER_AUTH_BASE_URL=https://www.konxc.space
+ARG BETTER_AUTH_SECRET=build_time_only_secret_please_override_in_runtime_012345
+ARG TURSO_DATABASE_URL=file:local.db
+ENV NODE_ENV=production
+ENV BETTER_AUTH_BASE_URL=${BETTER_AUTH_BASE_URL}
+ENV BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+ENV TURSO_DATABASE_URL=${TURSO_DATABASE_URL}
+
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 

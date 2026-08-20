@@ -27,11 +27,11 @@ import Button from "@components/ui/Button.astro";
         class="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end"
       >
         <div class="max-w-2xl">
-          <h2 class="mb-4 text-3xl font-bold text-on-site lg:text-5xl">
+          <h2 class="text-on-site mb-4 text-3xl font-bold lg:text-5xl">
             Layanan Terintegrasi <br />
             <span class="text-gradient">End-to-End</span>
           </h2>
-          <p class="text-xl text-on-muted">
+          <p class="text-on-muted text-xl">
             Dari pondasi infrastruktur hingga akselerasi branding digital. Kami
             hadir di setiap titik sentuh bisnis Anda.
           </p>
@@ -47,33 +47,54 @@ import Button from "@components/ui/Button.astro";
   <!-- UMKM Focus -->
   <UmkmEmpowerment />
 
-  <!-- About Highlight -->
-  <section class="about-highlight-band relative overflow-hidden bg-site py-24 text-on-site">
+  <!-- About Highlight - Premium Community Section -->
+  <section
+    class="bg-site text-on-site border-border-site/30 relative overflow-hidden border-y py-24 dark:border-none"
+  >
+    <!-- Decorative Background Elements -->
     <div
-      class="bg-primary-600/10 absolute top-0 right-0 h-full w-1/3 rounded-full blur-[120px]"
+      class="bg-primary-600/5 dark:bg-primary-600/10 absolute top-0 right-0 h-full w-1/2 rounded-full blur-[120px]"
     >
     </div>
+    <div
+      class="bg-secondary-600/5 dark:bg-secondary-600/10 absolute bottom-0 left-0 h-2/3 w-1/3 rounded-full blur-[120px]"
+    >
+    </div>
+
     <div class="relative z-10 container" data-aos="fade-up">
       <div class="grid items-center gap-16 lg:grid-cols-2">
         <div>
-          <h2 class="mb-8 text-3xl font-bold lg:text-5xl">
-            Rumah Bersama Komunitas <br /> Teknologi Indonesia
+          <h2 class="mb-8 text-4xl font-bold tracking-tight lg:text-5xl">
+            Rumah Bersama Komunitas <br />
+            <span class="text-gradient">Teknologi Indonesia</span>
           </h2>
-          <p class="mb-8 text-xl leading-relaxed text-on-muted">
+          <p class="text-on-muted mb-10 text-xl leading-relaxed">
             PT Koneksi Jaringan Indonesia (KonXC) bukan sekadar perusahaan IT.
             Kami adalah ekosistem yang menghubungkan developer, inovator, dan
             pebisnis untuk tumbuh bersama.
           </p>
-          <div class="mb-10 grid grid-cols-2 gap-8">
+          <div class="mb-12 grid grid-cols-2 gap-10">
             <div>
-              <div class="text-primary-600 dark:text-primary-400 mb-1 text-3xl font-bold">
+              <div
+                class="text-primary-600 dark:text-primary-400 mb-2 text-4xl font-bold"
+              >
                 10+ Thn
               </div>
-              <div class="text-sm text-on-muted uppercase">Pengalaman</div>
+              <div
+                class="text-on-muted text-sm font-semibold tracking-wider uppercase"
+              >
+                Pengalaman
+              </div>
             </div>
             <div>
-              <div class="text-secondary-600 dark:text-secondary-400 mb-1 text-3xl font-bold">5</div>
-              <div class="text-sm text-on-muted uppercase">
+              <div
+                class="text-secondary-600 dark:text-secondary-400 mb-2 text-4xl font-bold"
+              >
+                5
+              </div>
+              <div
+                class="text-on-muted text-sm font-semibold tracking-wider uppercase"
+              >
                 Divisi Khusus
               </div>
             </div>
@@ -81,21 +102,28 @@ import Button from "@components/ui/Button.astro";
           <Button variant="primary" href="/blog">Eksplorasi Knowledge</Button>
         </div>
         <div class="relative">
+          <!-- Floating Interactive Card Representation -->
           <div
-            class="flex aspect-video items-center justify-center overflow-hidden rounded-3xl border border-border-site bg-surface shadow-2xl"
+            class="border-border-site bg-surface shadow-soft-xl flex aspect-video items-center justify-center overflow-hidden rounded-[2.5rem] border dark:shadow-2xl"
           >
-            <div class="p-8 text-center">
-              <div class="mb-4 text-6xl">🤝</div>
-              <div class="mb-2 text-2xl font-bold">Kolaborasi Tanpa Batas</div>
-              <p class="mx-auto max-w-xs text-on-muted">
+            <div class="p-10 text-center">
+              <div
+                class="bg-primary-50 dark:bg-primary-900/30 mb-6 inline-flex h-20 w-20 items-center justify-center rounded-3xl text-5xl"
+              >
+                🤝
+              </div>
+              <div class="text-on-site mb-3 text-2xl font-bold">
+                Kolaborasi Tanpa Batas
+              </div>
+              <p class="text-on-muted mx-auto max-w-xs">
                 Membangun masa depan digital Indonesia melalui kekuatan
                 komunitas.
               </p>
             </div>
           </div>
-          <!-- Decorative elements -->
+          <!-- Floating decorative glow -->
           <div
-            class="bg-accent-500/20 absolute -right-6 -bottom-6 h-24 w-24 rounded-full blur-2xl"
+            class="bg-accent-500 absolute -right-4 -bottom-4 h-20 w-20 rounded-3xl opacity-20 blur-3xl dark:opacity-40"
           >
           </div>
         </div>
@@ -103,35 +131,34 @@ import Button from "@components/ui/Button.astro";
     </div>
   </section>
 
-
   <!-- Contact CTA -->
   <section id="contact" class="bg-site py-24 lg:py-40">
     <div class="container" data-aos="fade-up">
       <div class="mx-auto max-w-5xl">
         <div class="grid items-center gap-12 lg:grid-cols-5">
           <div class="lg:col-span-2">
-          <h2 class="mb-6 text-4xl font-bold text-on-site lg:text-6xl">
+            <h2 class="text-on-site mb-6 text-4xl font-bold lg:text-6xl">
               Konsultasi <span class="text-gradient">Gratis</span>
             </h2>
-            <p class="mb-8 text-xl text-on-muted">
+            <p class="text-on-muted mb-8 text-xl">
               Punya ide cemerlang atau butuh solusi cepat? Tim ahli kami siap
               mendengarkan tantangan bisnis Anda.
             </p>
             <div class="space-y-4">
-              <div class="flex items-center gap-4 text-on-site">
+              <div class="text-on-site flex items-center gap-4">
                 <span class="text-primary-600 font-bold">📍</span> Jakarta, Indonesia
               </div>
-              <div class="flex items-center gap-4 text-on-site">
+              <div class="text-on-site flex items-center gap-4">
                 <span class="text-primary-600 font-bold">✉️</span> info@konxc.space
               </div>
-              <div class="flex items-center gap-4 font-bold text-on-site">
+              <div class="text-on-site flex items-center gap-4 font-bold">
                 <span class="text-primary-600">📞</span> +62 882-0079-52010
               </div>
             </div>
           </div>
           <div class="lg:col-span-3">
             <div
-              class="relative overflow-hidden rounded-[2.5rem] border border-border-site bg-surface p-8 shadow-xl lg:p-12"
+              class="border-border-site bg-surface relative overflow-hidden rounded-[2.5rem] border p-8 shadow-xl lg:p-12"
             >
               <div
                 class="bg-primary-500/5 absolute top-0 right-0 h-32 w-32 translate-x-1/2 -translate-y-1/2 rounded-full"
@@ -144,13 +171,13 @@ import Button from "@components/ui/Button.astro";
                     name="first_name"
                     placeholder="Nama Depan"
                     required
-                    class="focus:ring-primary-500/10 w-full rounded-2xl border border-border-site bg-site px-5 py-4 text-on-site transition-all outline-none focus:ring-4 placeholder-text-muted"
+                    class="focus:ring-primary-500/10 border-border-site bg-site text-on-site placeholder-text-muted w-full rounded-2xl border px-5 py-4 transition-all outline-none focus:ring-4"
                   />
                   <input
                     type="text"
                     name="last_name"
                     placeholder="Nama Belakang"
-                    class="focus:ring-primary-500/10 w-full rounded-2xl border border-border-site bg-site px-5 py-4 text-on-site transition-all outline-none focus:ring-4 placeholder-text-muted"
+                    class="focus:ring-primary-500/10 border-border-site bg-site text-on-site placeholder-text-muted w-full rounded-2xl border px-5 py-4 transition-all outline-none focus:ring-4"
                   />
                 </div>
                 <input
@@ -158,11 +185,11 @@ import Button from "@components/ui/Button.astro";
                   name="email"
                   placeholder="Email Bisnis"
                   required
-                  class="focus:ring-primary-500/10 w-full rounded-2xl border border-border-site bg-site px-5 py-4 text-on-site transition-all outline-none focus:ring-4 placeholder-text-muted"
+                  class="focus:ring-primary-500/10 border-border-site bg-site text-on-site placeholder-text-muted w-full rounded-2xl border px-5 py-4 transition-all outline-none focus:ring-4"
                 />
                 <select
                   name="subject"
-                  class="focus:ring-primary-500/10 w-full cursor-pointer appearance-none rounded-2xl border border-border-site bg-site px-5 py-4 text-on-site transition-all outline-none focus:ring-4"
+                  class="focus:ring-primary-500/10 border-border-site bg-site text-on-site w-full cursor-pointer appearance-none rounded-2xl border px-5 py-4 transition-all outline-none focus:ring-4"
                 >
                   <option value="consultation">Konsultasi Layanan</option>
                   <option value="collaboration">Kerjasama / Partnership</option>
@@ -173,11 +200,11 @@ import Button from "@components/ui/Button.astro";
                   rows="4"
                   placeholder="Ceritakan kebutuhan Anda..."
                   required
-                  class="focus:ring-primary-500/10 w-full resize-none rounded-2xl border border-border-site bg-site px-5 py-4 text-on-site transition-all outline-none focus:ring-4 placeholder-text-muted"
+                  class="focus:ring-primary-500/10 border-border-site bg-site text-on-site placeholder-text-muted w-full resize-none rounded-2xl border px-5 py-4 transition-all outline-none focus:ring-4"
                 ></textarea>
                 <button
                   type="submit"
-                  class="flex w-full items-center justify-center gap-3 rounded-2xl bg-neutral-900 py-5 font-bold text-white shadow-xl shadow-neutral-900/10 transition-all hover:bg-black active:scale-[0.98] dark:bg-primary-600 dark:hover:bg-primary-700"
+                  class="dark:bg-primary-600 dark:hover:bg-primary-700 flex w-full items-center justify-center gap-3 rounded-2xl bg-neutral-900 py-5 font-bold text-white shadow-xl shadow-neutral-900/10 transition-all hover:bg-black active:scale-[0.98]"
                 >
                   Kirim via WhatsApp
                   <svg

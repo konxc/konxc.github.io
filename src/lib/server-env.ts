@@ -21,7 +21,12 @@ function loadDotenvFiles() {
   }
 
   // Development/test: local files may override shared defaults.
-  const dotenvFiles = [`.env.${NODE_ENV}.local`, ".env.local", `.env.${NODE_ENV}`, ".env"];
+  const dotenvFiles = [
+    `.env.${NODE_ENV}.local`,
+    ".env.local",
+    `.env.${NODE_ENV}`,
+    ".env",
+  ];
   for (const path of dotenvFiles) {
     dotenv.config({ path, override: path.endsWith(".local") });
   }

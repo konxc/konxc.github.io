@@ -8,12 +8,12 @@
   --font-mono: "JetBrains Mono", monospace;
 
   /* Typography Scale */
-  --text-display: 1.5rem;    /* 24px – Brand / Hero */
-  --text-title: 0.875rem;    /* 14px – Section titles */
-  --text-body: 0.8125rem;    /* 13px – Post content */
-  --text-label: 0.6875rem;   /* 11px – Labels, meta */
-  --text-micro: 0.625rem;    /* 10px – Badges, timestamps */
-  --text-nano: 0.5625rem;    /* 9px  – Ultra-small labels */
+  --text-display: 1.5rem; /* 24px – Brand / Hero */
+  --text-title: 0.875rem; /* 14px – Section titles */
+  --text-body: 0.8125rem; /* 13px – Post content */
+  --text-label: 0.6875rem; /* 11px – Labels, meta */
+  --text-micro: 0.625rem; /* 10px – Badges, timestamps */
+  --text-nano: 0.5625rem; /* 9px  – Ultra-small labels */
 
   /* Line Heights */
   --leading-tight: 1.3;
@@ -25,8 +25,8 @@
   --tracking-tight: -0.01em;
   --tracking-normal: 0em;
   --tracking-label: 0.04em;
-  --tracking-caps: 0.08em;    /* For UPPERCASE labels */
-  --tracking-wide: 0.12em;    /* For section headings */
+  --tracking-caps: 0.08em; /* For UPPERCASE labels */
+  --tracking-wide: 0.12em; /* For section headings */
 
   /* Exclusive App Palette */
   --color-app-50: #f5f7ff;
@@ -121,7 +121,7 @@
   }
 
   .app-card-hover {
-    @apply hover:border-app-300 hover:shadow-lg hover:shadow-app-100/50 dark:hover:border-app-900/50 dark:hover:shadow-black/50;
+    @apply hover:border-app-300 hover:shadow-app-100/50 dark:hover:border-app-900/50 hover:shadow-lg dark:hover:shadow-black/50;
   }
 
   .app-input {
@@ -165,33 +165,33 @@
   /* Section heading: "Market Insights", "Navigasi Cepat"
      → Like Facebook's "People You May Know" label style */
   .app-heading {
-    font-size: var(--text-micro);          /* 10px */
-    font-weight: 700;                      /* Bold, not Black */
-    letter-spacing: 0.02em;               /* Very subtle — was 0.12em (too much) */
-    text-transform: uppercase;            /* Keep for section dividers only */
+    font-size: var(--text-micro); /* 10px */
+    font-weight: 700; /* Bold, not Black */
+    letter-spacing: 0.02em; /* Very subtle — was 0.12em (too much) */
+    text-transform: uppercase; /* Keep for section dividers only */
     line-height: var(--leading-tight);
   }
 
   /* Card/post author name, prominent labels */
   .app-title {
-    font-size: var(--text-label);          /* 11px */
-    font-weight: 700;                      /* Bold */
-    letter-spacing: -0.01em;             /* Slightly tight = premium */
+    font-size: var(--text-label); /* 11px */
+    font-weight: 700; /* Bold */
+    letter-spacing: -0.01em; /* Slightly tight = premium */
     line-height: var(--leading-tight);
   }
 
   /* Post body content */
   .app-body {
-    font-size: var(--text-body);           /* 13px */
+    font-size: var(--text-body); /* 13px */
     font-weight: 400;
-    letter-spacing: 0em;                  /* Normal — no tracking on body text */
+    letter-spacing: 0em; /* Normal — no tracking on body text */
     line-height: var(--leading-body);
   }
 
   /* Timestamp, subtitle, secondary info */
   .app-meta {
-    font-size: var(--text-micro);          /* 10px */
-    font-weight: 400;                      /* Regular — was 500 (too emphasized) */
+    font-size: var(--text-micro); /* 10px */
+    font-weight: 400; /* Regular — was 500 (too emphasized) */
     letter-spacing: 0em;
     line-height: var(--leading-tight);
     color: var(--app-text-dim);
@@ -201,25 +201,25 @@
      → Like Facebook's "Like · Comment · Share" buttons
      Sentence case, semibold, ZERO tracking */
   .app-action-label {
-    font-size: var(--text-label);          /* 11px */
-    font-weight: 600;                      /* Semibold — was 700+uppercase */
-    letter-spacing: 0em;                  /* ZERO — was 0.04em (too spaced) */
-    text-transform: none;                 /* Sentence case — was uppercase */
+    font-size: var(--text-label); /* 11px */
+    font-weight: 600; /* Semibold — was 700+uppercase */
+    letter-spacing: 0em; /* ZERO — was 0.04em (too spaced) */
+    text-transform: none; /* Sentence case — was uppercase */
   }
 
   /* Navigation link labels: Beranda, Jaringan, etc. */
   .app-label {
-    font-size: var(--text-label);          /* 11px */
-    font-weight: 500;                      /* Medium — was 700 */
-    letter-spacing: 0em;                  /* Normal */
-    text-transform: none;                 /* Sentence case */
+    font-size: var(--text-label); /* 11px */
+    font-weight: 500; /* Medium — was 700 */
+    letter-spacing: 0em; /* Normal */
+    text-transform: none; /* Sentence case */
   }
 
   /* Ultra-small badge only: LVL 2, PTS — ONLY place uppercase is ok */
   .app-badge-text {
-    font-size: var(--text-nano);           /* 9px */
-    font-weight: 700;                      /* Bold — was 800 */
-    letter-spacing: 0.04em;              /* Subtle — was 0.08em */
+    font-size: var(--text-nano); /* 9px */
+    font-weight: 700; /* Bold — was 800 */
+    letter-spacing: 0.04em; /* Subtle — was 0.08em */
     text-transform: uppercase;
   }
 
@@ -247,14 +247,14 @@
 
   /* Ghost button — subtle but clearly interactive */
   .app-ghost-btn {
-    @apply rounded-xl px-4 py-2 text-center transition-all duration-200 border border-transparent;
+    @apply rounded-xl border border-transparent px-4 py-2 text-center transition-all duration-200;
     font-weight: 500;
 
     &:hover {
       @apply bg-slate-100 dark:bg-slate-900/50;
       border-color: var(--app-border);
     }
-    
+
     &.btn-danger:hover {
       @apply bg-red-50 text-red-600 dark:bg-red-900/10;
       border-color: rgba(239, 68, 68, 0.2);
@@ -288,7 +288,12 @@
   overflow-wrap: break-word;
 
   /* ── Headings ─────────────────────────────────────── */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
     font-weight: 800;
     letter-spacing: var(--tracking-tight);
@@ -297,15 +302,25 @@
     margin-top: 1.25em;
     margin-bottom: 0.5em;
   }
-  h1 { font-size: 1.25rem; }
-  h2 { font-size: 1.125rem; }
-  h3 { font-size: 1rem; }
-  h4 { font-size: var(--text-body); }
+  h1 {
+    font-size: 1.25rem;
+  }
+  h2 {
+    font-size: 1.125rem;
+  }
+  h3 {
+    font-size: 1rem;
+  }
+  h4 {
+    font-size: var(--text-body);
+  }
 
   /* ── Paragraphs ───────────────────────────────────── */
   p {
     margin-bottom: 0.875em;
-    &:last-child { margin-bottom: 0; }
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   /* ── Links ────────────────────────────────────────── */
@@ -314,12 +329,20 @@
     text-decoration: underline;
     text-underline-offset: 2px;
     transition: color 0.2s;
-    &:hover { color: #6b7eff; }
+    &:hover {
+      color: #6b7eff;
+    }
   }
 
   /* ── Bold / Italic ────────────────────────────────── */
-  strong { font-weight: 700; color: var(--app-text); }
-  em { font-style: italic; color: var(--app-text-muted); }
+  strong {
+    font-weight: 700;
+    color: var(--app-text);
+  }
+  em {
+    font-style: italic;
+    color: var(--app-text-muted);
+  }
 
   /* ── Inline code ──────────────────────────────────── */
   :not(pre) > code {
@@ -406,21 +429,30 @@
     color: var(--app-text-muted);
     font-style: italic;
 
-    p { margin-bottom: 0; }
+    p {
+      margin-bottom: 0;
+    }
   }
 
   /* ── Lists ────────────────────────────────────────── */
-  ul, ol {
+  ul,
+  ol {
     padding-left: 1.5em;
     margin-bottom: 0.875em;
 
     li {
       margin-bottom: 0.3em;
-      &::marker { color: #4a5dff; }
+      &::marker {
+        color: #4a5dff;
+      }
     }
   }
-  ul li { list-style-type: disc; }
-  ol li { list-style-type: decimal; }
+  ul li {
+    list-style-type: disc;
+  }
+  ol li {
+    list-style-type: decimal;
+  }
 
   /* ── Horizontal rule ──────────────────────────────── */
   hr {
@@ -449,7 +481,9 @@
       border: 1px solid var(--app-border);
       color: var(--app-text-muted);
     }
-    tr:hover td { background-color: var(--app-surface); }
+    tr:hover td {
+      background-color: var(--app-surface);
+    }
   }
 
   /* ── Math blocks (KaTeX) ──────────────────────────── */
@@ -462,7 +496,9 @@
     border-radius: 12px;
     text-align: center;
 
-    .katex { font-size: 1.1em; }
+    .katex {
+      font-size: 1.1em;
+    }
   }
 
   .math-error {
@@ -490,7 +526,9 @@
     font-weight: 600;
     margin: 1em 0;
 
-    &::after { content: "Memuat diagram…"; }
+    &::after {
+      content: "Memuat diagram…";
+    }
   }
 
   .mermaid-rendered {

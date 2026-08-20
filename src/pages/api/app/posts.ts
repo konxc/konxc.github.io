@@ -66,7 +66,10 @@ export const GET: APIRoute = async ({ request }) => {
     })
     .from(appPostComments)
     .where(
-      and(inArray(appPostComments.postId, postIds), isNull(appPostComments.parentId)),
+      and(
+        inArray(appPostComments.postId, postIds),
+        isNull(appPostComments.parentId),
+      ),
     )
     .groupBy(appPostComments.postId);
 
@@ -148,7 +151,9 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (content.length > 5000) {
     return new Response(
-      JSON.stringify({ error: "Konten terlalu panjang (maks. 5000 karakter)." }),
+      JSON.stringify({
+        error: "Konten terlalu panjang (maks. 5000 karakter).",
+      }),
       {
         status: 400,
         headers: { "Content-Type": "application/json" },

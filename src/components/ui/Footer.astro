@@ -236,14 +236,26 @@ const contactInfo = {
 
   /* === Footer Base — menggunakan semantic tokens — otomatis dark-aware === */
   .footer {
-    background-color: var(--bg-muted);
+    background-color: var(--bg-base);
     color: var(--text-base);
+    border-top: none;
   }
+
+  /* Membuat Newsletter di dalam footer menyatu sempurna (Seamless unity) */
+  .footer :global(.newsletter-section-default) {
+    background: transparent !important;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
+  .footer :global(.newsletter-section-default::before) {
+    opacity: 0.3; /* Subtle decorative glows */
+  }
+
   .footer.extended {
-    background: linear-gradient(to bottom, var(--bg-subtle), var(--bg-muted));
+    background-color: var(--bg-base);
   }
   .footer.minimal {
-    background-color: var(--bg-subtle);
+    background-color: var(--bg-base);
   }
 
   /* Main Footer */

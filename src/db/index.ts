@@ -1,8 +1,8 @@
 import path from "node:path";
+
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 
-import * as schema from "./schema";
 import {
   IS_PRODUCTION,
   getOptionalEnv,
@@ -10,14 +10,14 @@ import {
   validateServerRuntimeEnv,
 } from "../lib/server-env";
 
+import * as schema from "./schema";
+
 loadServerEnv();
 validateServerRuntimeEnv();
 
 const rawUrl =
   getOptionalEnv("TURSO_DATABASE_URL") ??
-  (IS_PRODUCTION
-    ? undefined
-    : "file:local.db");
+  (IS_PRODUCTION ? undefined : "file:local.db");
 
 // Convert relative file: path to absolute if it starts with file:
 let url = rawUrl;

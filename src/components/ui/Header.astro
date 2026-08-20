@@ -418,7 +418,9 @@ const serviceLinks = [
 
   .dropdown-item {
     @apply block rounded-md p-3 transition-colors;
-    &:hover { background-color: var(--bg-muted); }
+    &:hover {
+      background-color: var(--bg-muted);
+    }
   }
 
   .dropdown-item-title {
@@ -464,7 +466,9 @@ const serviceLinks = [
   .search-input {
     @apply flex-1 border-0 bg-transparent px-3 py-2 text-sm outline-none;
     color: var(--text-base);
-    &::placeholder { color: var(--text-placeholder); }
+    &::placeholder {
+      color: var(--text-placeholder);
+    }
   }
 
   .search-submit {
@@ -478,7 +482,9 @@ const serviceLinks = [
   .search-suggestion-item {
     @apply flex cursor-pointer items-center gap-2 rounded px-3 py-2 text-sm;
     color: var(--text-muted);
-    &:hover { background-color: var(--bg-muted); }
+    &:hover {
+      background-color: var(--bg-muted);
+    }
   }
 
   .cta-button {
@@ -543,8 +549,14 @@ const serviceLinks = [
   .mobile-nav-link {
     @apply hover:text-primary-600 block py-4 font-medium transition-colors;
     color: var(--text-secondary);
-    &:hover { color: var(--color-primary-600); }
-    .dark & { &:hover { color: #fff; } }
+    &:hover {
+      color: var(--color-primary-600);
+    }
+    .dark & {
+      &:hover {
+        color: #fff;
+      }
+    }
   }
 
   .mobile-dropdown-item-title {
@@ -564,7 +576,6 @@ const serviceLinks = [
   .mobile-cta-button {
     @apply bg-primary-600 hover:bg-primary-700 flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white transition-colors;
   }
-
 </style>
 
 <script>

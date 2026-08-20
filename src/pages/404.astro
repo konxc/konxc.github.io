@@ -7,118 +7,107 @@ export const prerender = true;
 ---
 
 <BlankLayout
-    title="Halaman Tidak Ditemukan | Koneksi"
-    description="Maaf, halaman yang Anda cari tidak dapat ditemukan."
+  title="Halaman Tidak Ditemukan | Koneksi"
+  description="Maaf, halaman yang Anda cari tidak dapat ditemukan."
 >
-    <div
-        class="selection:bg-primary-500/20 relative flex h-screen min-h-[100dvh] w-full items-center justify-center overflow-hidden bg-neutral-50 text-neutral-900"
-    >
-        <!-- Soft Background Elements -->
-        <div class="pointer-events-none absolute inset-0 z-0">
-            <div
-                class="bg-primary-100/50 absolute -top-[10%] -left-[10%] h-[40rem] w-[40rem] rounded-full blur-[100px]"
-            >
-            </div>
-            <div
-                class="bg-secondary-100/50 absolute -right-[10%] -bottom-[10%] h-[35rem] w-[35rem] rounded-full blur-[100px]"
-            >
-            </div>
-        </div>
-
-        <div
-            class="relative z-10 container mx-auto grid items-center gap-12 px-6 md:grid-cols-2"
-        >
-            <div class="text-left">
-                <!-- Status Badge -->
-                <div
-                    class="text-primary-600 mb-8 inline-flex items-center gap-2 rounded-full border border-neutral-100 bg-white px-4 py-1.5 text-xs font-semibold tracking-wide shadow-sm"
-                >
-                    <span
-                        class="bg-primary-500 flex h-2 w-2 animate-pulse rounded-full"
-                    ></span>
-                    404 ERROR
-                </div>
-
-                <h1
-                    class="mb-4 text-7xl font-black tracking-tighter text-neutral-900 md:text-8xl"
-                >
-                    Ops!
-                </h1>
-
-                <h2
-                    class="mb-6 text-2xl font-bold text-neutral-800 md:text-3xl"
-                >
-                    Halaman Hilang di Antariksa
-                </h2>
-
-                <p
-                    class="mb-10 max-w-md text-lg leading-relaxed text-neutral-600 md:text-xl"
-                >
-                    Sepertinya rute yang Anda tuju telah berpindah atau tidak
-                    pernah ada. Mari kembali ke jalur yang benar.
-                </p>
-
-                <div class="flex flex-col gap-4 sm:flex-row">
-                    <Button
-                        href="/"
-                        variant="primary"
-                        class="group min-w-[200px]"
-                    >
-                        Kembali ke Home
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="transition-transform group-hover:translate-x-1"
-                        >
-                            <path d="M5 12h14m-7-7 7 7-7 7"></path>
-                        </svg>
-                    </Button>
-                    <Button
-                        href="/app/feed"
-                        variant="secondary"
-                        class="min-w-[200px]"
-                    >
-                        Jelajahi Feed
-                    </Button>
-                </div>
-            </div>
-
-            <!-- Enhanced Decorative Illustration -->
-            <div class="relative hidden items-center justify-center md:flex">
-                <div class="relative w-full max-w-sm">
-                    <div
-                        class="bg-primary-100/30 absolute inset-0 animate-pulse rounded-full blur-3xl"
-                    >
-                    </div>
-                    <img
-                        src="/images/404/illustration.png"
-                        alt="404 Illustration"
-                        class="animate-float-clean relative z-10 h-auto w-full opacity-40 grayscale transition-all duration-700 group-hover:grayscale-0"
-                    />
-                </div>
-            </div>
-        </div>
-
-        <style>
-            @keyframes float-clean {
-                0%,
-                100% {
-                    transform: translateY(0);
-                }
-                50% {
-                    transform: translateY(-15px);
-                }
-            }
-            .animate-float-clean {
-                animation: float-clean 8s ease-in-out infinite;
-            }
-        </style>
+  <div
+    class="selection:bg-primary-500/20 relative flex h-screen min-h-[100dvh] w-full items-center justify-center overflow-hidden bg-neutral-50 text-neutral-900"
+  >
+    <!-- Soft Background Elements -->
+    <div class="pointer-events-none absolute inset-0 z-0">
+      <div
+        class="bg-primary-100/50 absolute -top-[10%] -left-[10%] h-[40rem] w-[40rem] rounded-full blur-[100px]"
+      >
+      </div>
+      <div
+        class="bg-secondary-100/50 absolute -right-[10%] -bottom-[10%] h-[35rem] w-[35rem] rounded-full blur-[100px]"
+      >
+      </div>
     </div>
+
+    <div
+      class="relative z-10 container mx-auto grid items-center gap-12 px-6 md:grid-cols-2"
+    >
+      <div class="text-left">
+        <!-- Status Badge -->
+        <div
+          class="text-primary-600 mb-8 inline-flex items-center gap-2 rounded-full border border-neutral-100 bg-white px-4 py-1.5 text-xs font-semibold tracking-wide shadow-sm"
+        >
+          <span class="bg-primary-500 flex h-2 w-2 animate-pulse rounded-full"
+          ></span>
+          404 ERROR
+        </div>
+
+        <h1
+          class="mb-4 text-7xl font-black tracking-tighter text-neutral-900 md:text-8xl"
+        >
+          Ops!
+        </h1>
+
+        <h2 class="mb-6 text-2xl font-bold text-neutral-800 md:text-3xl">
+          Halaman Hilang di Antariksa
+        </h2>
+
+        <p
+          class="mb-10 max-w-md text-lg leading-relaxed text-neutral-600 md:text-xl"
+        >
+          Sepertinya rute yang Anda tuju telah berpindah atau tidak pernah ada.
+          Mari kembali ke jalur yang benar.
+        </p>
+
+        <div class="flex flex-col gap-4 sm:flex-row">
+          <Button href="/" variant="primary" class="group min-w-[200px]">
+            Kembali ke Home
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="transition-transform group-hover:translate-x-1"
+            >
+              <path d="M5 12h14m-7-7 7 7-7 7"></path>
+            </svg>
+          </Button>
+          <Button href="/app/feed" variant="secondary" class="min-w-[200px]">
+            Jelajahi Feed
+          </Button>
+        </div>
+      </div>
+
+      <!-- Enhanced Decorative Illustration -->
+      <div class="relative hidden items-center justify-center md:flex">
+        <div class="relative w-full max-w-sm">
+          <div
+            class="bg-primary-100/30 absolute inset-0 animate-pulse rounded-full blur-3xl"
+          >
+          </div>
+          <img
+            src="/images/404/illustration.png"
+            alt="404 Illustration"
+            class="animate-float-clean relative z-10 h-auto w-full opacity-40 grayscale transition-all duration-700 group-hover:grayscale-0"
+          />
+        </div>
+      </div>
+    </div>
+
+    <style>
+      @keyframes float-clean {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+      }
+      .animate-float-clean {
+        animation: float-clean 8s ease-in-out infinite;
+      }
+    </style>
+  </div>
 </BlankLayout>
