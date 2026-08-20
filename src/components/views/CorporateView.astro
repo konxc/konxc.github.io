@@ -1,237 +1,382 @@
 ---
-import UnifiedLayout from "@layouts/UnifiedLayout.astro";
-import ModernHero from "@components/sections/ModernHero.astro";
-import PlatformShowcase from "@components/sections/PlatformShowcase.astro";
-import UmkmEmpowerment from "@components/sections/UmkmEmpowerment.astro";
-import Services from "@components/sections/Services.astro";
-import Button from "@components/ui/Button.astro";
+import UnifiedLayout from "../../layouts/UnifiedLayout.astro";
+import Button from "../ui/Button.astro";
 ---
 
-<UnifiedLayout
-  title="KonXC - Ekosistem Digital Mitra Terpercaya UMKM Indonesia"
-  description="Solusi teknologi terintegrasi untuk UMKM. Platform diskusi, learning hub, dan layanan IT Support hingga Digital Branding terlengkap."
-  showNewsletter={false}
-  headerVariant="default"
-  footerVariant="extended"
->
-  <!-- Main Hero -->
-  <ModernHero />
-
-  <!-- Our Platforms -->
-  <PlatformShowcase />
-
-  <!-- Services Grid -->
-  <section class="bg-site py-24" id="services">
-    <div class="container">
-      <div
-        class="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end"
-      >
-        <div class="max-w-2xl">
-          <h2 class="text-on-site mb-4 text-3xl font-bold lg:text-5xl">
-            Layanan Terintegrasi <br />
-            <span class="text-gradient">End-to-End</span>
-          </h2>
-          <p class="text-on-muted text-xl">
-            Dari pondasi infrastruktur hingga akselerasi branding digital. Kami
-            hadir di setiap titik sentuh bisnis Anda.
-          </p>
-        </div>
-        <Button variant="outline" href="#contact">Diskusi Project</Button>
-      </div>
-      <div data-aos="fade-up">
-        <Services />
-      </div>
-    </div>
-  </section>
-
-  <!-- UMKM Focus -->
-  <UmkmEmpowerment />
-
-  <!-- About Highlight - Premium Community Section -->
-  <section
-    class="bg-site text-on-site border-border-site/30 relative overflow-hidden border-y py-24 dark:border-none"
+<UnifiedLayout title="PT Koneksi Jaringan Indonesia | Official">
+  <div
+    class="bg-site text-on-site selection:bg-primary-500 font-sans antialiased selection:text-white"
   >
-    <!-- Decorative Background Elements -->
-    <div
-      class="bg-primary-600/5 dark:bg-primary-600/10 absolute top-0 right-0 h-full w-1/2 rounded-full blur-[120px]"
-    >
-    </div>
-    <div
-      class="bg-secondary-600/5 dark:bg-secondary-600/10 absolute bottom-0 left-0 h-2/3 w-1/3 rounded-full blur-[120px]"
-    >
-    </div>
+    <!-- HEADER / HERO GRID (Industrial Aesthetic) -->
+    <section class="border-border-site relative overflow-hidden border-b-2">
+      <!-- Background structural lines -->
+      <div
+        class="pointer-events-none absolute inset-0 z-0 opacity-10"
+        style="background-image: linear-gradient(var(--border-site) 1px, transparent 1px), linear-gradient(90deg, var(--border-site) 1px, transparent 1px); background-size: 40px 40px;"
+      >
+      </div>
 
-    <div class="relative z-10 container" data-aos="fade-up">
-      <div class="grid items-center gap-16 lg:grid-cols-2">
-        <div>
-          <h2 class="mb-8 text-4xl font-bold tracking-tight lg:text-5xl">
-            Rumah Bersama Komunitas <br />
-            <span class="text-gradient">Teknologi Indonesia</span>
-          </h2>
-          <p class="text-on-muted mb-10 text-xl leading-relaxed">
-            PT Koneksi Jaringan Indonesia (KonXC) bukan sekadar perusahaan IT.
-            Kami adalah ekosistem yang menghubungkan developer, inovator, dan
-            pebisnis untuk tumbuh bersama.
-          </p>
-          <div class="mb-12 grid grid-cols-2 gap-10">
-            <div>
-              <div
-                class="text-primary-600 dark:text-primary-400 mb-2 text-4xl font-bold"
+      <div class="relative z-10 container mx-auto px-4 lg:px-8">
+        <div class="grid min-h-[90vh] lg:grid-cols-12">
+          <!-- Hero Text Content -->
+          <div
+            class="border-border-site flex flex-col justify-center py-20 lg:col-span-8 lg:border-r-2 lg:py-0 lg:pr-16"
+          >
+            <div class="mb-8 inline-flex items-center gap-3">
+              <span class="bg-primary-600 h-3 w-3 animate-pulse rounded-none"
+              ></span>
+              <span
+                class="text-primary-600 font-mono text-xs font-bold tracking-widest uppercase"
+                >Sistem Operasional Aktif</span
               >
-                10+ Thn
-              </div>
-              <div
-                class="text-on-muted text-sm font-semibold tracking-wider uppercase"
-              >
-                Pengalaman
-              </div>
             </div>
-            <div>
-              <div
-                class="text-secondary-600 dark:text-secondary-400 mb-2 text-4xl font-bold"
+
+            <h1
+              class="mb-8 text-5xl leading-[1.05] font-black tracking-tight lg:text-7xl xl:text-8xl"
+            >
+              ARSITEKTUR DIGITAL <br />
+              <span
+                class="from-primary-600 to-secondary-600 bg-gradient-to-r bg-clip-text text-transparent"
+                >UNTUK MASA DEPAN</span
               >
-                5
-              </div>
-              <div
-                class="text-on-muted text-sm font-semibold tracking-wider uppercase"
+            </h1>
+
+            <p
+              class="text-on-muted mb-12 max-w-2xl text-xl leading-relaxed font-light lg:text-2xl"
+            >
+              PT Koneksi Jaringan Indonesia adalah fondasi teknologi bisnis
+              Anda. Kami merancang, membangun, dan mengelola ekosistem digital
+              skala enterprise hingga UMKM.
+            </p>
+
+            <div class="flex flex-col gap-4 sm:flex-row">
+              <a
+                href="#layanan"
+                class="group bg-primary-600 hover:bg-primary-700 relative inline-flex items-center justify-center px-8 py-4 font-mono font-bold tracking-wider text-white uppercase transition-all"
               >
-                Divisi Khusus
-              </div>
+                <span
+                  class="border-primary-600 absolute inset-0 translate-x-1 translate-y-1 border-2 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+                ></span>
+                <span class="relative">Eksplorasi Layanan</span>
+              </a>
+              <a
+                href="#contact"
+                class="group bg-surface text-on-site border-border-site relative inline-flex items-center justify-center border-2 px-8 py-4 font-mono font-bold tracking-wider uppercase transition-all hover:bg-neutral-100 dark:hover:bg-neutral-900"
+              >
+                Hubungi Engineering
+              </a>
             </div>
           </div>
-          <Button variant="primary" href="/blog">Eksplorasi Knowledge</Button>
-        </div>
-        <div class="relative">
-          <!-- Floating Interactive Card Representation -->
+
+          <!-- Metrics / Data Panel -->
           <div
-            class="border-border-site bg-surface shadow-soft-xl flex aspect-video items-center justify-center overflow-hidden rounded-[2.5rem] border dark:shadow-2xl"
+            class="border-border-site flex flex-col border-t-2 lg:col-span-4 lg:border-t-0"
           >
-            <div class="p-10 text-center">
-              <div
-                class="bg-primary-50 dark:bg-primary-900/30 mb-6 inline-flex h-20 w-20 items-center justify-center rounded-3xl text-5xl"
-              >
-                🤝
+            <div
+              class="border-border-site flex flex-1 flex-col justify-center border-b-2 p-8"
+            >
+              <div class="text-on-muted mb-2 font-mono text-sm uppercase">
+                Runtime / Durasi
               </div>
-              <div class="text-on-site mb-3 text-2xl font-bold">
-                Kolaborasi Tanpa Batas
-              </div>
-              <p class="text-on-muted mx-auto max-w-xs">
-                Membangun masa depan digital Indonesia melalui kekuatan
-                komunitas.
-              </p>
+              <div class="text-primary-600 text-6xl font-black">10+</div>
+              <div class="mt-2 text-xl font-bold">Tahun Pengalaman</div>
             </div>
-          </div>
-          <!-- Floating decorative glow -->
-          <div
-            class="bg-accent-500 absolute -right-4 -bottom-4 h-20 w-20 rounded-3xl opacity-20 blur-3xl dark:opacity-40"
-          >
+            <div
+              class="border-border-site bg-surface flex flex-1 flex-col justify-center border-b-2 p-8"
+            >
+              <div class="text-on-muted mb-2 font-mono text-sm uppercase">
+                Kapasitas Sektoral
+              </div>
+              <div class="text-secondary-600 text-6xl font-black">5</div>
+              <div class="mt-2 text-xl font-bold">Divisi Khusus</div>
+            </div>
+            <div class="flex flex-1 flex-col justify-center p-8">
+              <div class="text-on-muted mb-4 font-mono text-xs uppercase">
+                Status Infrastruktur
+              </div>
+              <div class="space-y-3">
+                <div
+                  class="border-border-site flex items-center justify-between border-b pb-2"
+                >
+                  <span class="font-mono text-sm">Cloud Native</span>
+                  <span class="font-mono text-sm text-green-500">ONLINE</span>
+                </div>
+                <div
+                  class="border-border-site flex items-center justify-between border-b pb-2"
+                >
+                  <span class="font-mono text-sm">Sistem Keamanan</span>
+                  <span class="font-mono text-sm text-green-500">SECURE</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-sm">Dukungan 24/7</span>
+                  <span class="text-primary-600 font-mono text-sm">ACTIVE</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact CTA -->
-  <section id="contact" class="bg-site py-24 lg:py-40">
-    <div class="container" data-aos="fade-up">
-      <div class="mx-auto max-w-5xl">
-        <div class="grid items-center gap-12 lg:grid-cols-5">
-          <div class="lg:col-span-2">
-            <h2 class="text-on-site mb-6 text-4xl font-bold lg:text-6xl">
-              Konsultasi <span class="text-gradient">Gratis</span>
-            </h2>
-            <p class="text-on-muted mb-8 text-xl">
-              Punya ide cemerlang atau butuh solusi cepat? Tim ahli kami siap
-              mendengarkan tantangan bisnis Anda.
+    <!-- SERVICES GRID -->
+    <section id="layanan" class="border-border-site bg-surface border-b-2">
+      <div class="container mx-auto px-4 py-20 lg:px-8 lg:py-32">
+        <div class="mb-16">
+          <h2
+            class="mb-4 text-4xl font-black tracking-tight uppercase lg:text-6xl"
+          >
+            Kapasitas<br />Layanan
+          </h2>
+          <div class="bg-primary-600 h-2 w-24"></div>
+        </div>
+
+        <!-- Industrial Grid Cards -->
+        <div
+          class="border-border-site grid border-2 md:grid-cols-2 lg:grid-cols-3"
+        >
+          <!-- Card 1 -->
+          <div
+            class="border-border-site group hover:bg-site border-b-2 p-10 transition-colors md:border-r-2 md:border-b-2 lg:border-b-0"
+          >
+            <div
+              class="text-border-site group-hover:text-primary-600 mb-6 font-mono text-4xl transition-colors"
+            >
+              01
+            </div>
+            <h3 class="mb-4 text-2xl font-bold uppercase">Cloud & Server</h3>
+            <p class="text-on-muted leading-relaxed">
+              Manajemen infrastruktur server, optimasi arsitektur cloud (AWS,
+              GCP, DigitalOcean), dan deployment sistem skala enterprise dengan
+              jaminan uptime.
             </p>
-            <div class="space-y-4">
-              <div class="text-on-site flex items-center gap-4">
-                <span class="text-primary-600 font-bold">📍</span> Jakarta, Indonesia
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="border-border-site bg-primary-600 group border-b-2 p-10 text-white lg:border-r-2 lg:border-b-0"
+          >
+            <div class="text-primary-300 mb-6 font-mono text-4xl">02</div>
+            <h3 class="mb-4 text-2xl font-bold uppercase">
+              Software Engineering
+            </h3>
+            <p class="text-primary-100 leading-relaxed">
+              Pengembangan web application, sistem backend kompleks, dan
+              integrasi API (Headless CMS) yang disesuaikan murni dengan alur
+              kerja bisnis Anda.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="border-border-site group hover:bg-site p-10 transition-colors"
+          >
+            <div
+              class="text-border-site group-hover:text-primary-600 mb-6 font-mono text-4xl transition-colors"
+            >
+              03
+            </div>
+            <h3 class="mb-4 text-2xl font-bold uppercase">IT Support UMKM</h3>
+            <p class="text-on-muted leading-relaxed">
+              Digitalisasi bisnis dari akar. Dukungan teknis komprehensif, setup
+              POS, manajemen inventaris, dan transformasi digital yang
+              terjangkau.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY BANNER -->
+    <section class="border-border-site overflow-hidden border-b-2">
+      <div class="container mx-auto px-4 lg:px-8">
+        <div class="grid min-h-[50vh] lg:grid-cols-2">
+          <div
+            class="border-border-site flex flex-col justify-center border-b-2 bg-black p-12 text-white lg:border-r-2 lg:border-b-0 lg:p-20 dark:bg-neutral-900"
+          >
+            <h2 class="mb-6 text-4xl font-black uppercase lg:text-5xl">
+              Membangun<br />Komunitas
+            </h2>
+            <p class="mb-10 max-w-md text-lg text-neutral-400">
+              Membangun masa depan digital Indonesia melalui kekuatan komunitas.
+              Kami mendukung penuh Open Source dan kolaborasi tanpa batas.
+            </p>
+            <div>
+              <a
+                href="/blog"
+                class="inline-flex items-center gap-4 border-2 border-white px-8 py-4 font-mono font-bold uppercase transition-colors hover:bg-white hover:text-black"
+              >
+                Eksplorasi Knowledge Base
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"
+                  ></path></svg
+                >
+              </a>
+            </div>
+          </div>
+          <div
+            class="bg-primary-600 relative flex items-center justify-center p-20"
+          >
+            <!-- Brutalist Pattern -->
+            <div
+              class="absolute inset-0 opacity-20"
+              style="background-image: repeating-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), repeating-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000); background-position: 0 0, 20px 20px; background-size: 40px 40px;"
+            >
+            </div>
+            <div class="relative z-10 text-9xl font-black text-black">
+              &lt;/&gt;
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM TERMINAL -->
+    <section id="contact" class="bg-site py-24 lg:py-40">
+      <div class="container mx-auto max-w-6xl px-4 lg:px-8">
+        <div
+          class="border-border-site grid gap-0 border-2 shadow-2xl lg:grid-cols-5"
+        >
+          <!-- Contact Info -->
+          <div
+            class="bg-surface border-border-site border-b-2 p-10 lg:col-span-2 lg:border-r-2 lg:border-b-0 lg:p-16"
+          >
+            <h2 class="mb-8 text-3xl font-black uppercase">
+              Terminal<br />Komunikasi
+            </h2>
+
+            <div class="space-y-8 font-mono">
+              <div>
+                <div class="text-on-muted mb-1 text-xs uppercase">
+                  Status / Lokasi
+                </div>
+                <div class="flex items-center gap-3 font-bold">
+                  <span class="bg-primary-600 h-2 w-2"></span> Jakarta, Indonesia
+                </div>
               </div>
-              <div class="text-on-site flex items-center gap-4">
-                <span class="text-primary-600 font-bold">✉️</span> info@konxc.space
+
+              <div>
+                <div class="text-on-muted mb-1 text-xs uppercase">
+                  Secure Channel
+                </div>
+                <div class="font-bold">info@konxc.space</div>
               </div>
-              <div class="text-on-site flex items-center gap-4 font-bold">
-                <span class="text-primary-600">📞</span> +62 882-0079-52010
+
+              <div>
+                <div class="text-on-muted mb-1 text-xs uppercase">
+                  Direct Line
+                </div>
+                <div class="text-xl font-bold">+62 882-0079-52010</div>
               </div>
             </div>
           </div>
-          <div class="lg:col-span-3">
-            <div
-              class="border-border-site bg-surface relative overflow-hidden rounded-[2.5rem] border p-8 shadow-xl lg:p-12"
-            >
-              <div
-                class="bg-primary-500/5 absolute top-0 right-0 h-32 w-32 translate-x-1/2 -translate-y-1/2 rounded-full"
-              >
-              </div>
-              <form id="contact-form" class="relative z-10 space-y-6">
-                <div class="grid gap-6 sm:grid-cols-2">
+
+          <!-- The Form -->
+          <div class="bg-site p-10 lg:col-span-3 lg:p-16">
+            <form id="contact-form" class="space-y-6">
+              <div class="grid gap-6 sm:grid-cols-2">
+                <div class="space-y-2">
+                  <label
+                    class="text-on-muted font-mono text-xs font-bold uppercase"
+                    >Nama Depan</label
+                  >
                   <input
                     type="text"
                     name="first_name"
-                    placeholder="Nama Depan"
                     required
-                    class="focus:ring-primary-500/10 border-border-site bg-site text-on-site placeholder-text-muted w-full rounded-2xl border px-5 py-4 transition-all outline-none focus:ring-4"
+                    class="bg-surface border-border-site text-on-site focus:border-primary-600 w-full border-2 px-4 py-3 font-mono transition-colors focus:outline-none"
                   />
+                </div>
+                <div class="space-y-2">
+                  <label
+                    class="text-on-muted font-mono text-xs font-bold uppercase"
+                    >Nama Belakang</label
+                  >
                   <input
                     type="text"
                     name="last_name"
-                    placeholder="Nama Belakang"
-                    class="focus:ring-primary-500/10 border-border-site bg-site text-on-site placeholder-text-muted w-full rounded-2xl border px-5 py-4 transition-all outline-none focus:ring-4"
+                    class="bg-surface border-border-site text-on-site focus:border-primary-600 w-full border-2 px-4 py-3 font-mono transition-colors focus:outline-none"
                   />
                 </div>
+              </div>
+
+              <div class="space-y-2">
+                <label
+                  class="text-on-muted font-mono text-xs font-bold uppercase"
+                  >Email Bisnis</label
+                >
                 <input
                   type="email"
                   name="email"
-                  placeholder="Email Bisnis"
                   required
-                  class="focus:ring-primary-500/10 border-border-site bg-site text-on-site placeholder-text-muted w-full rounded-2xl border px-5 py-4 transition-all outline-none focus:ring-4"
+                  class="bg-surface border-border-site text-on-site focus:border-primary-600 w-full border-2 px-4 py-3 font-mono transition-colors focus:outline-none"
                 />
+              </div>
+
+              <div class="space-y-2">
+                <label
+                  class="text-on-muted font-mono text-xs font-bold uppercase"
+                  >Departemen / Tujuan</label
+                >
                 <select
                   name="subject"
-                  class="focus:ring-primary-500/10 border-border-site bg-site text-on-site w-full cursor-pointer appearance-none rounded-2xl border px-5 py-4 transition-all outline-none focus:ring-4"
+                  class="bg-surface border-border-site text-on-site focus:border-primary-600 w-full cursor-pointer appearance-none rounded-none border-2 px-4 py-3 font-mono transition-colors focus:outline-none"
                 >
-                  <option value="consultation">Konsultasi Layanan</option>
-                  <option value="collaboration">Kerjasama / Partnership</option>
+                  <option value="consultation"
+                    >Konsultasi Infrastruktur & Layanan</option
+                  >
+                  <option value="collaboration">Kerjasama Partnership</option>
                   <option value="other">Pertanyaan Umum</option>
                 </select>
+              </div>
+
+              <div class="space-y-2">
+                <label
+                  class="text-on-muted font-mono text-xs font-bold uppercase"
+                  >Transmisi Pesan</label
+                >
                 <textarea
                   name="message"
                   rows="4"
-                  placeholder="Ceritakan kebutuhan Anda..."
                   required
-                  class="focus:ring-primary-500/10 border-border-site bg-site text-on-site placeholder-text-muted w-full resize-none rounded-2xl border px-5 py-4 transition-all outline-none focus:ring-4"
+                  class="bg-surface border-border-site text-on-site focus:border-primary-600 w-full resize-none border-2 px-4 py-3 font-mono transition-colors focus:outline-none"
                 ></textarea>
-                <button
-                  type="submit"
-                  class="dark:bg-primary-600 dark:hover:bg-primary-700 flex w-full items-center justify-center gap-3 rounded-2xl bg-neutral-900 py-5 font-bold text-white shadow-xl shadow-neutral-900/10 transition-all hover:bg-black active:scale-[0.98]"
+              </div>
+
+              <button
+                type="submit"
+                class="hover:bg-primary-600 dark:hover:bg-primary-500 flex w-full items-center justify-center gap-3 border-2 border-black bg-black py-5 font-mono font-bold text-white uppercase transition-colors dark:border-white dark:bg-white dark:text-black"
+              >
+                Kirim via Protokol WhatsApp
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"
+                  ></path></svg
                 >
-                  Kirim via WhatsApp
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"
-                    ></path></svg
-                  >
-                </button>
-              </form>
-            </div>
+              </button>
+            </form>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </UnifiedLayout>
 
 <script>
-  // WhatsApp form handling
+  // WhatsApp form handling strictly preserved
   const form = document.getElementById("contact-form") as HTMLFormElement;
   if (form) {
     form.addEventListener("submit", (e) => {
@@ -249,10 +394,10 @@ import Button from "@components/ui/Button.astro";
 
       const button = form.querySelector('button[type="submit"]');
       if (button) {
-        button.innerHTML = "Mengarahkan...";
+        button.innerHTML = "MENGARAHKAN...";
         setTimeout(() => {
           button.innerHTML =
-            'Kirim via WhatsApp <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+            'KIRIM VIA PROTOKOL WHATSAPP <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
           form.reset();
         }, 2000);
       }
