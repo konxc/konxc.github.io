@@ -314,8 +314,8 @@
 
     /* Shadow tokens derived from system */
     --shadow-base: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.05);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.06);
+    --shadow-md: 4px 4px 0px 0px rgba(0,0,0,1);
+    --shadow-lg: 8px 8px 0px 0px rgba(0,0,0,1);
 
     color-scheme: light;
   }
@@ -341,8 +341,8 @@
 
     /* Shadow tokens dark mode */
     --shadow-base: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.6), 0 4px 10px rgba(0, 0, 0, 0.4);
+    --shadow-md: 4px 4px 0px 0px rgba(0,0,0,1);
+    --shadow-lg: 8px 8px 0px 0px rgba(0,0,0,1);
 
     color-scheme: dark;
   }

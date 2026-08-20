@@ -17,21 +17,21 @@ const {
 } = Astro.props;
 
 const baseClasses =
-  "inline-flex items-center justify-center font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary-500/10";
+  "inline-flex items-center justify-center font-mono font-bold uppercase tracking-wider transition-all duration-200 border-2 focus:outline-none active:translate-y-1";
 
 const variantClasses = {
   primary:
-    "bg-primary-600 text-white hover:bg-primary-700 shadow-md shadow-primary-500/10",
+    "bg-primary-600 text-white border-primary-600 hover:bg-black hover:border-black dark:hover:bg-white dark:hover:text-black dark:hover:border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none",
   secondary:
-    "bg-surface text-text-on-site border-2 border-border-site hover:border-primary-500 hover:text-primary-600",
+    "bg-black text-white dark:bg-white dark:text-black border-black dark:border-white hover:bg-primary-600 hover:border-primary-600 hover:text-white dark:hover:bg-primary-500 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none",
   outline:
-    "bg-transparent text-text-on-site border-2 border-border-site hover:border-primary-500 hover:text-primary-600",
+    "bg-transparent text-on-site border-border-site hover:bg-primary-600 hover:text-white hover:border-primary-600 hover:shadow-none shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]",
 };
 
 const sizeClasses = {
-  sm: "px-4 py-2 text-sm rounded-lg",
-  md: "px-6 py-3 text-base rounded-xl",
-  lg: "px-8 py-4 text-lg rounded-xl",
+  sm: "px-4 py-2 text-xs rounded-none",
+  md: "px-6 py-3 text-sm rounded-none",
+  lg: "px-8 py-4 text-base rounded-none",
 };
 
 const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
