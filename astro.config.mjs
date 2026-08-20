@@ -1,3 +1,13 @@
+// Workaround for Qwik preloader under Vite 8 SSR
+if (typeof process !== "undefined" && typeof globalThis.document === "undefined") {
+  globalThis.document = {
+    createElement: () => ({ relList: { supports: () => false } }),
+    querySelector: () => null,
+    head: { appendChild: () => {} },
+    addEventListener: () => {},
+    baseURI: "http://localhost/"
+  };
+}
 // @ts-check
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
@@ -11,7 +21,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 export default defineConfig({
   site: "https://www.konxc.space",
 
-  integrations: [sitemap(), qwik(), astroIcon()],
+  integrations: [sitemap(), astroIcon()],
 
   vite: {
     plugins: [
